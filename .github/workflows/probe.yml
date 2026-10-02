@@ -1,0 +1,26 @@
+name: probe
+# One-off check: can a GitHub runner read the public MABA pages this site is built from?
+# Read-only. It prints the HTTP status and size of six pages and changes nothing.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: fetch six public pages
+        run: |
+          B=https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654
+          UA="HoopStatsMY-sync/1.0 (+https://etiennecheah.github.io/malaysiabasketballstatistics/)"
+          date -u
+          for p in schedule standings leaders match/2917946/boxscore match/2917946/playbyplay person/2568864/statistics; do
+            code=$(curl -sS -L -m 60 -A "$UA" -o page.html -w '%{http_code} %{size_download} bytes %{time_total}s' "$B/$p" || echo "curl failed")
+            echo "RESULT $p -> $code"
+            sleep 2
+          done
+          python3 --version
+          python3 -c "import numpy; print('numpy', numpy.__version__)" || echo "numpy missing"
+          node --version
+          nproc
