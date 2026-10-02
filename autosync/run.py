@@ -81,6 +81,22 @@ def event(s, text):
 
 
 # ---- what is due --------------------------------------------------------------------
+def open_comps():
+    """Competitions still being played although every listed fixture is finished
+    (data/open_comps.json): the organiser has not published the next games yet."""
+    p = os.path.join(ROOT, 'data', 'open_comps.json')
+    return {k for k in (json.load(open(p)) if os.path.exists(p) else {}) if not k.startswith('_')}
+
+
+def peek_slot(now):
+    """Such a competition's schedule page is looked at for new fixtures every half hour
+    from 18:00 to midnight Malaysia time and every two hours otherwise. Returns the
+    number of the current slot when it is one to look in, else None."""
+    slot = int(now // 1800)
+    hour = datetime.datetime.fromtimestamp(now, MYT).hour
+    return slot if (hour >= 18 or slot % 4 == 0) else None
+
+
 def open_fixtures(st, c):
     return [g for g in c['games'] if g[1] != 'COMPLETE' and g[0] not in st.not_played]
 
@@ -88,10 +104,13 @@ def open_fixtures(st, c):
 def plan(st, state, now):
     """Which competitions need looking at now, and whether this run should stay on."""
     today = datetime.datetime.fromtimestamp(now, MYT)
-    P = dict(due=[], overdue=[], daily=[], hold=False, next=None)
+    P = dict(due=[], overdue=[], daily=[], peek=[], hold=False, next=None)
+    more = open_comps()
     for c in st.bb['comps']:
         cid = c['id']
         opens = open_fixtures(st, c)
+        if cid in more and not opens:
+            P['peek'].append(cid)
         tips = [t for t in (tipoff(g[2]) for g in opens) if t]
         if any(t + POLL_FROM <= now <= t + POLL_UNTIL for t in tips):
             P['due'].append(cid)
@@ -100,7 +119,7 @@ def plan(st, state, now):
         if any(t + POLL_UNTIL < now <= t + OVERDUE_FOR for t in tips):
             P['overdue'].append(cid)
         last = max([t for t in (tipoff(g[2]) for g in c['games'] if g[1] == 'COMPLETE') if t] or [0])
-        if (opens or now - last < RECENT) and today.hour >= DAILY_HOUR and \
+        if (opens or cid in more or now - last < RECENT) and today.hour >= DAILY_HOUR and \
                 state['daily'].get(cid) != today.strftime('%Y-%m-%d'):
             # the old competitions whose only open fixtures the source never finished are not in here:
             # open_fixtures() leaves out everything listed in not_played.json
@@ -286,7 +305,7 @@ def main():
 
     # 2. watch
     st = Store()
-    last_poll, again, dirty = {}, False, False
+    last_poll, peeked, again, dirty = {}, {}, False, False
     while True:
         now = time.time()
         P = plan(st, state, now)
@@ -297,6 +316,11 @@ def main():
         for cid in P['overdue']:
             if cid not in P['due'] and now - max(last_poll.get(cid, 0), state['overdue_at'].get(cid, 0)) >= OVERDUE_EVERY:
                 todo.append((cid, 'overdue'))
+        slot = peek_slot(now)
+        for cid in P['peek']:
+            if slot is not None and peeked.get(cid) != slot and not any(t[0] == cid for t in todo):
+                todo.append((cid, 'peek'))
+                peeked[cid] = slot
         for cid in P['daily']:
             todo = [t for t in todo if t[0] != cid] + [(cid, 'daily')]
         for cid in {p['cid'] for p in state['pending'].values() if now >= p['next']} | \
@@ -337,7 +361,7 @@ def main():
             note_pending(state, cid, res, now)
             dirty = dirty or before != json.dumps(state['pending'], sort_keys=True) + json.dumps(state['lines_retry'], sort_keys=True)
             if not res['changed']:
-                if kind != 'due':
+                if kind not in ('due', 'peek'):
                     log('%s %s: nothing new' % (kind, c['name']))
                 continue
 

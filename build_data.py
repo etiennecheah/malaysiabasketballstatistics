@@ -326,9 +326,25 @@ def apply_playoffs(out):
             continue
         phase = {}
         for se in sp['series']:
+            bo = se.get('bo', sp.get('bo'))
             for i, mid in enumerate(se['games']):
                 phase[mid] = {'r': se['round'], 'n': se['n'], 'g': i + 1, 'of': len(se['games']),
-                              'm': ' vs '.join(se['teams'])}
+                              'm': ' vs '.join(se['teams']), **({'bo': bo} if bo else {})}
+        # A playoff game the sync brought in before anyone told us its round: every game on or
+        # after 'from' is a playoff game. Until it is listed in a series it is grouped with the
+        # other unlisted games between the same two teams and called just "Playoffs".
+        if sp.get('from'):
+            auto = {}
+            later = sorted((g for g in c['games'] if g['mid'] not in phase and (g.get('date') or '') >= sp['from']),
+                           key=lambda g: (g['date'], clock_minutes(g['time']), g['mid']))
+            for g in later:
+                key = frozenset((g['h'], g['a']))
+                a = auto.setdefault(key, {'n': len(auto) + 1, 'games': [], 'm': g['h'] + ' vs ' + g['a']})
+                a['games'].append(g['mid'])
+            for a in auto.values():
+                for i, mid in enumerate(a['games']):
+                    phase[mid] = {'r': 'Playoffs', 'n': a['n'], 'g': i + 1, 'of': len(a['games']), 'm': a['m'],
+                                  **({'bo': sp['bo']} if sp.get('bo') else {})}
         c['phase'] = phase
         tables = {'rs': {}, 'po': {}}
         for g in c['games']:
@@ -418,6 +434,9 @@ def main():
     # fixtures the source never finished, each with the reason (see sync_all.py)
     npp = os.path.join(D, 'not_played.json')
     not_played = json.load(open(npp)) if os.path.exists(npp) else {}
+    # competitions still being played although every listed fixture is finished (more games to come)
+    opp = os.path.join(D, 'open_comps.json')
+    open_comps = {k: v for k, v in (json.load(open(opp)) if os.path.exists(opp) else {}).items() if not k.startswith('_')}
     raw_boxes = {}
     bp = os.path.join(D, 'boxscores.json')
     if os.path.exists(bp):
@@ -560,6 +579,8 @@ def main():
         # an override the computed rule now agrees with keeps the rule's reason ('final')
         if c['id'] in CHAMP_OVERRIDE and champ != CHAMP_OVERRIDE[c['id']]:
             champ, champ_how = CHAMP_OVERRIDE[c['id']], 'confirmed'
+        if c['id'] in open_comps:            # not over yet: the last game played is not a final
+            champ, champ_how = None, None
 
         roster = {}
         for tid, rows in c['roster']:
@@ -609,7 +630,8 @@ def main():
             'id': cid, 'name': c['name'], 'label': label, 'year': year, 'gender': gender, 'level': lvl,
             'series': series,
             'teams': c['teams'], 'stand': stand, 'groups': groups,
-            'champ': champ, 'champHow': champ_how, **({'standFix': stand_fix} if stand_fix else {}), 'games': games, 'roster': roster,
+            'champ': champ, 'champHow': champ_how, **({'standFix': stand_fix} if stand_fix else {}),
+            **({'open': open_comps[c['id']]} if c['id'] in open_comps else {}), 'games': games, 'roster': roster,
             'players': players, 'leaders': leaders,
             'start': dates[0] if dates else None, 'end': dates[-1] if dates else None,
             'nGames': sum(1 for g in games if g['st'] != 'NOT_PLAYED'),

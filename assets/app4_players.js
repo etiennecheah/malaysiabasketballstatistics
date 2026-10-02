@@ -88,7 +88,7 @@ function compPlayersTable(cid) {
   if (!V.cols.some(x => x[0] === SORT.comp.key)) SORT.comp = { key: V.sort, dir: 'desc' };
   return `${c.split ? `<div class="phase-bar">${phaseSeg(c)}
       <span class="phase-note">${ph === 'rs' ? 'Regular season only — ' + (c.games.filter(g => g.st === 'COMPLETE' && !c.phase[g.mid]).length) + ' games'
-        : ph === 'po' ? 'Playoffs only — ' + Object.keys(c.phase).length + ' games (semi-finals and final)'
+        : ph === 'po' ? 'Playoffs only — ' + Object.keys(c.phase).length + ' games (' + phaseRounds(c) + ')'
         : 'Every game, as the source publishes the season line'}</span></div>` : ''}
   <div class="card cp-card">
     <div class="cp-bar">

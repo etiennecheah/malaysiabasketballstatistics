@@ -35,7 +35,7 @@ function compCard(c) {
   const foot = status === 'Completed'
     ? `Completed · ${c.nGames} game${c.nGames === 1 ? '' : 's'}`
     : status === 'In progress'
-      ? `In progress · ${c.nDone}/${c.nGames} played`
+      ? `In progress · ${compProgress(c)}`
       : `Scheduled · ${c.start ? 'starts ' + fmtDateShort(c.start) : 'not started'}`;
   const stat = (v, l) => `<span class="ccard-stat"><b>${v}</b><span>${l}</span></span>`;
   return `<a class="ccard" href="#/c/${c.id}">
@@ -104,7 +104,7 @@ function compHeader(c, active, title) {
         <div class="cx-sub">${title ? `<a href="#/c/${c.id}">${esc(c.label || c.name)}</a> · ` : ''}${facts.map(esc).join(' · ')}</div>
       </div>
       <div class="cx-pills">
-        <span class="cx-pill ${stCls}"><i></i>${esc(st)}${st === 'In progress' ? ' · ' + c.nDone + '/' + c.nGames : ''}</span>
+        <span class="cx-pill ${stCls}"><i></i>${esc(st)}${st === 'In progress' ? ' · ' + (c.nDone < c.nGames ? c.nDone + '/' + c.nGames : compProgress(c)) : ''}</span>
         ${c.champ ? `<span class="cx-pill gold"><i></i>Champion · ${esc(c.champ)}</span>` : ''}
       </div>
     </div>
@@ -118,18 +118,22 @@ function compSeries(c) {
   c.games.forEach(g => {
     const p = c.phase[g.mid]; if (!p) return;
     const k = p.r + ' ' + p.n;
-    const s = by[k] || (by[k] = { r: p.r, n: p.n, wins: {}, games: 0 });
+    const s = by[k] || (by[k] = { r: p.r, n: p.n, bo: p.bo || 0, wins: {}, games: 0 });
     if (g.st === 'COMPLETE') {
       s.games++;
       const w = g.hs > g.as ? g.h : g.a, l = g.hs > g.as ? g.a : g.h;
       s.wins[w] = (s.wins[w] || 0) + 1; s.wins[l] = s.wins[l] || 0;
     }
   });
-  const rank = r => r === 'Final' ? 0 : 1;
+  const rank = r => r === 'Final' ? 0 : /semi/i.test(r) ? 1 : /quarter/i.test(r) ? 2 : r === 'Playoffs' ? -1 : 3;
   return Object.values(by).sort((a, b) => rank(a.r) - rank(b.r) || a.n - b.n).map(s => {
     const t = Object.entries(s.wins).sort((a, b) => b[1] - a[1]);
     const multi = Object.values(by).filter(x => x.r === s.r).length > 1;
-    return { name: s.r + (multi ? ' ' + s.n : ''), w: t[0] && t[0][0], l: t[1] && t[1][0], score: t.length > 1 ? t[0][1] + '–' + t[1][1] : '' };
+    // a best-of series is only won once one side has more than half the games
+    const over = !s.bo || (t[0] && t[0][1] > s.bo / 2);
+    const verb = over ? 'beat' : t[1] && t[0][1] === t[1][1] ? 'level with' : 'lead';
+    return { name: s.r + (multi ? ' ' + s.n : ''), w: t[0] && t[0][0], l: t[1] && t[1][0], verb, bo: s.bo,
+      score: t.length > 1 ? t[0][1] + '–' + t[1][1] : '' };
   });
 }
 
@@ -195,7 +199,7 @@ function renderCompDash(cid) {
   const po = series.length ? `<div class="card cx-card">
       <div class="card-head">Playoffs</div>
       <div class="cx-list">${series.map(s => `<div class="cx-li cx-series">
-        <div class="cx-who"><div class="cx-nm">${esc(s.name)}</div><div class="cx-tm cx-tm-text">${s.w ? crest(s.w, 16) + ` <b>${esc(s.w)}</b> beat ${esc(s.l || '')}` : 'Not played yet'}</div></div>
+        <div class="cx-who"><div class="cx-nm">${esc(s.name)}</div><div class="cx-tm cx-tm-text">${s.w ? crest(s.w, 16) + ` <b>${esc(s.w)}</b> ${s.verb} ${esc(s.l || '')}` : 'Not played yet'}${s.bo ? ` <span class="cx-dim">· best of ${s.bo}</span>` : ''}</div></div>
         <div class="cx-v">${s.score}</div></div>`).join('')}</div>
     </div>` : '';
   const facts = [

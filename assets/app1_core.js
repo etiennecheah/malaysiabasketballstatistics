@@ -80,11 +80,19 @@ function phaseSeg(c) {
   const ph = phaseOf(c);
   return `<span class="seg phase-seg">${PHASES.map(([k, l]) => `<button class="seg-btn ${ph === k ? 'seg-on' : ''}" data-phase="${k}" data-phasecid="${c.id}">${l}</button>`).join('')}</span>`;
 }
-// "Semi-final 1 · Game 2" for a playoff game, '' otherwise
+// "Semi-final 1 · Game 2", "Quarter-final 2 · Game 1" for a playoff game, '' otherwise
+/* "quarter-finals", "semi-finals and final": the rounds a competition's playoff games belong to */
+function phaseRounds(c) {
+  const order = ['Quarter-final', 'Semi-final', 'Final', 'Playoffs'];
+  const seen = [...new Set(Object.values(c.phase || {}).map(p => p.r))].sort((x, y) => order.indexOf(x) - order.indexOf(y));
+  const names = seen.map(r => r === 'Final' ? 'final' : r === 'Playoffs' ? 'later rounds' : r.toLowerCase() + 's');
+  return names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : (names[0] || 'playoffs');
+}
 function phaseLabel(c, mid) {
   const p = c && c.phase && c.phase[mid];
   if (!p) return '';
-  return p.r + (p.r === 'Semi-final' ? ' ' + p.n : '') + ' · Game ' + p.g;
+  if (p.r === 'Playoffs') return 'Playoffs · Game ' + p.g;      // round not named yet
+  return p.r + (p.r !== 'Final' ? ' ' + p.n : '') + ' · Game ' + p.g;
 }
 
 // person id -> [{c: competition, p: that competition's stat line}]
@@ -550,9 +558,14 @@ function standTotals(c) {
   });
   return (STAND_TOT[c.id] = by);
 }
+/* "12/18" while fixtures remain; "60 played, more to come" when the organiser has not listed the next games yet */
+function compProgress(c) {
+  return c.nDone < c.nGames ? c.nDone + '/' + c.nGames + ' played' : c.nDone + ' played, more to come';
+}
 function compStatus(c) {
   if (c.nDone === 0) return 'Scheduled';
   if (c.nDone < c.nGames) return 'In progress';
+  if (c.open) return 'In progress';        // every listed game is played, but more are to come (data/open_comps.json)
   return 'Completed';
 }
 
