@@ -1,0 +1,122 @@
+name: sync
+# Keeps the site up to date. See README.md and autosync/run.py.
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Rebuild and publish even if nothing changed
+        type: boolean
+        default: false
+      built:
+        description: (internal) inputs the previous run just published
+        type: string
+        default: ''
+  push:
+    branches: [main]
+    paths: ['inbox/**', 'assets/**', 'data/**', 'autosync/**', '*.py', '.github/workflows/sync.yml']
+permissions:
+  contents: write
+  actions: write
+jobs:
+  gate:
+    # a half-hourly tick does nothing while another run is already watching
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      go: ${{ steps.g.outputs.go }}
+    steps:
+      - id: g
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          go=true
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            n=$(gh run list -R "$GITHUB_REPOSITORY" -w sync.yml -L 20 --json databaseId,status \
+                -q "[.[] | select(.status != \"completed\" and .databaseId != $GITHUB_RUN_ID)] | length" || echo 0)
+            if [ "$n" != "0" ]; then go=false; fi
+          fi
+          echo "go=$go" >> "$GITHUB_OUTPUT"
+  sync:
+    needs: gate
+    if: needs.gate.outputs.go == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    concurrency:
+      group: hoopstatsmy-sync
+      cancel-in-progress: false
+    outputs:
+      deploy: ${{ steps.run.outputs.deploy }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: unpack bundles dropped into inbox/
+        run: |
+          shopt -s nullglob
+          cd inbox 2>/dev/null || exit 0
+          for first in *.1of*; do                       # name.tar.xz.1of3 + .2of3 + .3of3 -> name.tar.xz
+            n=${first##*.1of}; base=${first%.1of*}; have=1
+            for i in $(seq 1 "$n"); do [ -f "$base.${i}of$n" ] || have=0; done
+            [ "$have" = 1 ] || { echo "$base: waiting for all $n parts"; continue; }
+            for i in $(seq 1 "$n"); do cat "$base.${i}of$n"; done > "$base"
+          done
+          cd ..
+          done=0
+          for b in inbox/*.tar.xz inbox/*.tar.gz; do
+            echo "unpacking $b"
+            tar -xf "$b" --no-same-owner --exclude='.git' --exclude='.git/*' --exclude='.github' --exclude='.github/*'
+            if [ -f .bundle-delete ]; then
+              while IFS= read -r p; do
+                case "$p" in ''|/*|*..*|.git*) ;; *) git rm -rq --ignore-unmatch -- "$p" ;; esac
+              done < .bundle-delete
+              rm -f .bundle-delete
+            fi
+            git rm -q --ignore-unmatch -- "$b" "$b".*of* || true
+            rm -f "$b" "$b".*of*
+            done=1
+          done
+          if [ "$done" = 1 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            if ! git diff --cached --quiet; then
+              git commit -qm "unpack inbox bundle"
+              git push -q origin HEAD:main
+            fi
+          fi
+      - id: run
+        if: hashFiles('autosync/run.py') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE: ${{ inputs.force }}
+          BUILT: ${{ inputs.built }}
+        run: python3 autosync/run.py
+      - if: steps.run.outputs.deploy == 'true'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+      - name: start a fresh run to keep watching
+        if: always() && steps.run.outputs.again == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run sync.yml -R "$GITHUB_REPOSITORY" -f built="${{ steps.run.outputs.built }}"
+      - name: mark the run failed if a sync or build failed
+        if: steps.run.outputs.fail == 'true'
+        run: exit 1
+  publish:
+    needs: sync
+    if: always() && needs.sync.outputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v5
