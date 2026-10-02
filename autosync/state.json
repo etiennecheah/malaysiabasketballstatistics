@@ -4,11 +4,26 @@
   "fp": "5ca4786efc4380ca90c7"
  },
  "daily": {},
- "fail": {},
+ "fail": {
+  "48654": {
+   "last": 1790975878.1814218,
+   "msg": "player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
+   "n": 1,
+   "next": 1790976478.1814218
+  },
+  "49965": {
+   "last": 1790975878.1814218,
+   "msg": "player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
+   "n": 1,
+   "next": 1790976478.1814218
+  }
+ },
  "full": {},
  "lines_retry": {},
  "log": [
-  "2026-10-03 00:51  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 SELANGOR TIGER 104-107 SUPERSPORTS x REX BBA"
+  "2026-10-03 00:51  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 SELANGOR TIGER 104-107 SUPERSPORTS x REX BBA",
+  "2026-10-03 05:23  FAILED 48654 (1): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
+  "2026-10-03 05:27  FAILED 49965 (1): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
