@@ -1,0 +1,6749 @@
+{
+ "_note": "Player honours kept by hand (the source publishes no awards). Supplied by the user 2026-09-29: Chee Wei Lim's list in chat, then 'Individual Awards part 1' (Word file) imported with awards_import.py, which maps each event heading to a competition via data/awards_events.json and each winner by name inside that competition's roster. cid links an honour to a database competition; honours without cid are from events the database does not cover. champ = the player's team won the competition. Award labels: MVP (MPP counts as MVP, the user's rule), Finals MVP, Top scorer, Top rebounder, Top assist, Top steal, Top block. Agong Cup men titles 2016-2019 for Ting Chun Hong and Wong Yi Hou added from the user's note (both won 2016/17/18/19/22/23/24/25; the database covers 2022 on).",
+ "620479": [
+  {
+   "year": 2026,
+   "cid": "49683",
+   "short": "D-League U23",
+   "team": "Johor Southern Tigers",
+   "champ": true,
+   "awards": [
+    "Finals MVP",
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2025,
+   "cid": "48103",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2024,
+   "cid": "40226",
+   "short": "MBL",
+   "team": "Johor Southern Tigers",
+   "champ": true,
+   "awards": []
+  },
+  {
+   "year": 2023,
+   "cid": "35879",
+   "short": "D-League U20",
+   "team": "Johor Southern Tigers (RED)",
+   "champ": true,
+   "awards": [
+    "Finals MVP",
+    "Top assist",
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2019,
+   "comp": "National U17 Championship",
+   "short": "National U17",
+   "team": "Johor",
+   "champ": true,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "National U15 Championship",
+   "short": "National U15",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2017,
+   "comp": "National U15 Championship",
+   "short": "National U15",
+   "team": "Johor",
+   "champ": true,
+   "awards": []
+  }
+ ],
+ "2318312": [
+  {
+   "year": 2026,
+   "cid": "49683",
+   "team": "Johor Southern Tigers",
+   "champ": true,
+   "awards": [
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2024,
+   "cid": "39599",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  }
+ ],
+ "1974719": [
+  {
+   "year": 2026,
+   "cid": "49683",
+   "team": "KL Titans",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "2767059": [
+  {
+   "year": 2026,
+   "cid": "49683",
+   "team": "Selangor Hornbills",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  },
+  {
+   "year": 2025,
+   "cid": "41337",
+   "team": "Kuala Lumpur",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  }
+ ],
+ "2568812": [
+  {
+   "year": 2026,
+   "cid": "49683",
+   "team": "KL Titans",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2023,
+   "cid": "36889",
+   "team": "MBC Rising Star",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "2022118": [
+  {
+   "year": 2026,
+   "cid": "49683",
+   "team": "Putrajaya Harimau",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  }
+ ],
+ "2730915": [
+  {
+   "year": 2026,
+   "cid": "48931",
+   "team": "Selangor 1",
+   "champ": true,
+   "awards": [
+    "MVP",
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2026,
+   "cid": "49217",
+   "team": "Selangor BA",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Asia Cup 2025",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2096758": [
+  {
+   "year": 2026,
+   "cid": "48931",
+   "team": "Sabah",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "2096764": [
+  {
+   "year": 2026,
+   "cid": "48931",
+   "team": "Johor 1",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "2386383": [
+  {
+   "year": 2026,
+   "cid": "48931",
+   "team": "Selangor 1",
+   "champ": true,
+   "awards": [
+    "Top steal"
+   ]
+  }
+ ],
+ "2386378": [
+  {
+   "year": 2026,
+   "cid": "48931",
+   "team": "Perak",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  },
+  {
+   "year": 2025,
+   "cid": "47558",
+   "team": "PERAK",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  }
+ ],
+ "2615380": [
+  {
+   "year": 2026,
+   "cid": "48931",
+   "team": "Selangor 1",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "1900464": [
+  {
+   "year": 2026,
+   "cid": "48932",
+   "team": "Selangor 1",
+   "champ": true,
+   "awards": [
+    "MVP"
+   ]
+  },
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2386496": [
+  {
+   "year": 2026,
+   "cid": "48932",
+   "team": "Selangor 1",
+   "champ": true,
+   "awards": [
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2025,
+   "cid": "47559",
+   "team": "SELANGOR 1",
+   "champ": true,
+   "awards": [
+    "Top scorer"
+   ]
+  }
+ ],
+ "2304680": [
+  {
+   "year": 2026,
+   "cid": "48932",
+   "team": "Sarawak",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "2253497": [
+  {
+   "year": 2026,
+   "cid": "48932",
+   "team": "Kuala Lumpur",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "2767093": [
+  {
+   "year": 2026,
+   "cid": "48932",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2026,
+   "cid": "49218",
+   "team": "NS Matrix Deers",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2025,
+   "cid": "47559",
+   "team": "NEGERI SEMBILAN",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  }
+ ],
+ "2096670": [
+  {
+   "year": 2026,
+   "cid": "48932",
+   "team": "Penang",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  },
+  {
+   "year": 2025,
+   "cid": "47559",
+   "team": "PENANG",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  },
+  {
+   "year": 2025,
+   "cid": "48105",
+   "team": "Penang",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  },
+  {
+   "year": 2025,
+   "cid": "41338",
+   "team": "Penang",
+   "champ": false,
+   "awards": [
+    "Top rebounder",
+    "MVP"
+   ]
+  },
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2769171": [
+  {
+   "year": 2026,
+   "cid": "48932",
+   "team": "Selangor 1",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2615319": [
+  {
+   "year": 2025,
+   "cid": "47558",
+   "team": "PAHANG 1",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top rebounder"
+   ]
+  }
+ ],
+ "2386377": [
+  {
+   "year": 2025,
+   "cid": "47558",
+   "team": "PERAK",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  }
+ ],
+ "2786740": [
+  {
+   "year": 2025,
+   "cid": "47558",
+   "team": "SELANGOR 1",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "2386334": [
+  {
+   "year": 2025,
+   "cid": "47558",
+   "team": "JOHOR",
+   "champ": true,
+   "awards": [
+    "Top steal"
+   ]
+  }
+ ],
+ "2249317": [
+  {
+   "year": 2025,
+   "cid": "47558",
+   "team": "JOHOR",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Asia Cup 2025",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2386502": [
+  {
+   "year": 2025,
+   "cid": "47559",
+   "team": "SELANGOR 1",
+   "champ": true,
+   "awards": [
+    "MVP",
+    "Top assist"
+   ]
+  }
+ ],
+ "2786697": [
+  {
+   "year": 2025,
+   "cid": "47559",
+   "team": "KUALA LUMPUR",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  },
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2786693": [
+  {
+   "year": 2025,
+   "cid": "47559",
+   "team": "SELANGOR 1",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "2252605": [
+  {
+   "year": 2025,
+   "cid": "48103",
+   "team": "Penang",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top scorer"
+   ]
+  }
+ ],
+ "2252562": [
+  {
+   "year": 2025,
+   "cid": "48103",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2025,
+   "comp": "SEA Games 2025 - 3x3 basketball (men)",
+   "short": "SEA Games 3x3",
+   "team": "Malaysia",
+   "medal": "bronze",
+   "champ": false,
+   "awards": [
+    "Bronze medal"
+   ]
+  },
+  {
+   "year": 2024,
+   "cid": "39599",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2023,
+   "cid": "37621",
+   "team": "NS Matrix Deers",
+   "champ": true,
+   "awards": [
+    "Finals MVP",
+    "MVP"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2022,
+   "cid": "35104",
+   "team": "NS Matrix Deers",
+   "champ": true,
+   "awards": [
+    "MVP",
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2022,
+   "comp": "FilBasket International Championship 2022",
+   "short": "FilBasket",
+   "mark": "FilBasket",
+   "team": "Harimau Malaysia",
+   "champ": true,
+   "awards": [
+    "MVP",
+    "All-Tournament First Team"
+   ]
+  },
+  {
+   "year": 2019,
+   "comp": "Agong Cup 2019 - Men",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": []
+  },
+  {
+   "year": 2019,
+   "comp": "FIBA Asia Cup Qualifiers 2019",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2018,
+   "comp": "Agong Cup 2018 - Men",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": []
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA Asia Cup SEABA Pre-Qualifiers 2018",
+   "short": "SEABA Pre-Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2017,
+   "comp": "Agong Cup 2017 - Men",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": []
+  },
+  {
+   "year": 2017,
+   "comp": "SEABA Men Championship 2017",
+   "short": "SEABA Championship",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2016,
+   "comp": "Agong Cup 2016 - Men",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": []
+  },
+  {
+   "year": 2015,
+   "comp": "National U20 Championship 2015",
+   "short": "National U20",
+   "team": "",
+   "champ": false,
+   "awards": [
+    "MVP"
+   ]
+  },
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Asia Cup 2014",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2012,
+   "comp": "National U16 Championship 2012",
+   "short": "National U16",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "DPOY"
+   ]
+  }
+ ],
+ "1957810": [
+  {
+   "year": 2026,
+   "cid": "49468",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2025,
+   "cid": "48103",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Asia Cup 2014",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "2444939": [
+  {
+   "year": 2025,
+   "cid": "48103",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  }
+ ],
+ "27512": [
+  {
+   "year": 2025,
+   "cid": "48103",
+   "team": "Putrajaya",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "Agong Cup 2018 - Men",
+   "short": "Agong Cup",
+   "team": "Pdrm",
+   "champ": false,
+   "awards": [
+    "DPOY"
+   ]
+  },
+  {
+   "year": 2017,
+   "comp": "Agong Cup 2017 - Men",
+   "short": "Agong Cup",
+   "team": "Melaka",
+   "champ": false,
+   "awards": [
+    "DPOY"
+   ]
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA Asia Cup 2011",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  },
+  {
+   "year": 2005,
+   "comp": "FIBA Asia Cup 2005",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 16th"
+  }
+ ],
+ "912448": [
+  {
+   "year": 2025,
+   "cid": "48105",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "MVP"
+   ]
+  },
+  {
+   "year": 2023,
+   "cid": "36890",
+   "team": "EST Rising Star",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "National U15 Championship 2018 - Girls",
+   "short": "National U15",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "DPOY"
+   ]
+  }
+ ],
+ "2688539": [
+  {
+   "year": 2025,
+   "cid": "48105",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "165364": [
+  {
+   "year": 2025,
+   "cid": "48105",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2019,
+   "comp": "Agong Cup 2019 - Women",
+   "short": "Agong Cup",
+   "team": "Segamat Basketball Association",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "Agong Cup 2018 - Women",
+   "short": "Agong Cup",
+   "team": "Segamat Basketball Association",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2016,
+   "comp": "FIBA U18 Women's Asia Cup 2016",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "2096657": [
+  {
+   "year": 2025,
+   "cid": "48105",
+   "team": "Penang",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "1845705": [
+  {
+   "year": 2025,
+   "cid": "48105",
+   "team": "Kuala Lumpur",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2019,
+   "comp": "Agong Cup 2019 - Women",
+   "short": "Agong Cup",
+   "team": "Kuala Lumpur",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2016,
+   "comp": "FIBA U18 Women's Asia Cup 2016",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Women's Asia Cup 2013",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "800742": [
+  {
+   "year": 2025,
+   "cid": "48105",
+   "team": "Kuala Lumpur",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Women's Asia Cup 2015",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  },
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Women's Asia Cup 2014",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "2786715": [
+  {
+   "year": 2025,
+   "cid": "41337",
+   "team": "Selangor 1",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "2568859": [
+  {
+   "year": 2025,
+   "cid": "41337",
+   "team": "Selangor 1",
+   "champ": true,
+   "awards": [
+    "Top rebounder",
+    "MVP"
+   ]
+  },
+  {
+   "year": 2025,
+   "cid": "41592",
+   "team": "Wild Marlin BC",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "2568796": [
+  {
+   "year": 2025,
+   "cid": "41337",
+   "team": "Selangor 1",
+   "champ": true,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "1900511": [
+  {
+   "year": 2025,
+   "cid": "41337",
+   "team": "Kelantan",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  }
+ ],
+ "2249340": [
+  {
+   "year": 2025,
+   "cid": "41337",
+   "team": "Selangor 2",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  },
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Asia Cup 2025",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2568840": [
+  {
+   "year": 2025,
+   "cid": "41338",
+   "team": "Selangor",
+   "champ": true,
+   "awards": [
+    "Finals MVP",
+    "Top scorer"
+   ]
+  }
+ ],
+ "2568862": [
+  {
+   "year": 2025,
+   "cid": "41338",
+   "team": "Kuala Lumpur",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2096699": [
+  {
+   "year": 2025,
+   "cid": "41338",
+   "team": "Pahang",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  }
+ ],
+ "2252577": [
+  {
+   "year": 2025,
+   "cid": "41338",
+   "team": "Johor 1",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  }
+ ],
+ "2786743": [
+  {
+   "year": 2025,
+   "cid": "41592",
+   "team": "MBC Kirin",
+   "champ": true,
+   "awards": [
+    "Top scorer"
+   ]
+  }
+ ],
+ "2022097": [
+  {
+   "year": 2025,
+   "cid": "41592",
+   "team": "MBC Kirin",
+   "champ": true,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "2022101": [
+  {
+   "year": 2025,
+   "cid": "41592",
+   "team": "MBC Kirin",
+   "champ": true,
+   "awards": [
+    "Top steal"
+   ]
+  }
+ ],
+ "2568804": [
+  {
+   "year": 2025,
+   "cid": "41592",
+   "team": "NS Matrix Deers",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  }
+ ],
+ "2615607": [
+  {
+   "year": 2025,
+   "cid": "41592",
+   "team": "MBC Kirin",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "2786683": [
+  {
+   "year": 2025,
+   "cid": "41593",
+   "team": "NS Matrix Deers",
+   "champ": false,
+   "awards": [
+    "Top scorer",
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2024,
+   "cid": "38334",
+   "team": "NS Matrix Deers",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2023,
+   "cid": "35880",
+   "team": "NS Matrix Deers",
+   "champ": true,
+   "awards": [
+    "Top scorer",
+    "Top steal",
+    "Finals MVP"
+   ]
+  }
+ ],
+ "2568886": [
+  {
+   "year": 2025,
+   "cid": "41593",
+   "team": "Selangor Selection",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "1900447": [
+  {
+   "year": 2026,
+   "cid": "49218",
+   "team": "EST Jersey",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2025,
+   "cid": "41593",
+   "team": "Selangor Selection",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "2468850": [
+  {
+   "year": 2025,
+   "cid": "41593",
+   "team": "Johor Southern Tigers",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  }
+ ],
+ "1974951": [
+  {
+   "year": 2025,
+   "cid": "41593",
+   "team": "NS Matrix Deers",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  },
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "2304356": [
+  {
+   "year": 2026,
+   "cid": "49218",
+   "team": "EST Jersey",
+   "champ": true,
+   "awards": [
+    "Top scorer",
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2026,
+   "comp": "SUKIPT 2026",
+   "short": "SUKIPT",
+   "team": "Sunway University",
+   "medal": "bronze",
+   "champ": false,
+   "awards": [
+    "Bronze medal"
+   ],
+   "pathOnly": true
+  },
+  {
+   "year": 2025,
+   "cid": "41593",
+   "team": "EST Jersey",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2025,
+   "comp": "Agong Cup 2025 - Women 3x3",
+   "short": "Agong Cup 3x3",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [],
+   "placing": "1st runner-up",
+   "pathOnly": true
+  },
+  {
+   "year": 2024,
+   "cid": "38334",
+   "team": "Selangor EST Jersey",
+   "champ": true,
+   "awards": [
+    "MVP",
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2023,
+   "cid": "37684",
+   "team": "Selangor",
+   "champ": true,
+   "awards": [
+    "MVP",
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2022,
+   "comp": "National U17 Championship 2022 - Girls",
+   "short": "National U17",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [],
+   "placing": "1st runner-up",
+   "pathOnly": true
+  },
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  },
+  {
+   "year": 2019,
+   "comp": "National U15 Championship 2019 - Girls",
+   "short": "National U15",
+   "team": "Selangor",
+   "champ": true,
+   "awards": []
+  }
+ ],
+ "1974771": [
+  {
+   "year": 2026,
+   "cid": "49217",
+   "team": "Penang Sunrise Youngsters",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2024,
+   "cid": "39528",
+   "team": "Penang Sunrise Youngsters",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  }
+ ],
+ "2767073": [
+  {
+   "year": 2026,
+   "cid": "49217",
+   "team": "Singapore (NYDP)",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "1900639": [
+  {
+   "year": 2026,
+   "cid": "49217",
+   "team": "KL Hornbills",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup 2023",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2023",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "2767068": [
+  {
+   "year": 2026,
+   "cid": "49217",
+   "team": "Alpha Wolves",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  }
+ ],
+ "2252619": [
+  {
+   "year": 2026,
+   "cid": "49217",
+   "team": "NS Matrix Deers",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup 2023",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2023",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "2386576": [
+  {
+   "year": 2026,
+   "cid": "49218",
+   "team": "KL Phoenix B",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "2767100": [
+  {
+   "year": 2026,
+   "cid": "49218",
+   "team": "Singapore (NYDP)",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "1425160": [
+  {
+   "year": 2026,
+   "cid": "49218",
+   "team": "KL Phoenix A",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  }
+ ],
+ "1954885": [
+  {
+   "year": 2025,
+   "cid": "47557",
+   "team": "MBC Rising Star",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "2381192": [
+  {
+   "year": 2025,
+   "cid": "47556",
+   "team": "NS Matrix Deers",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "2341473": [
+  {
+   "year": 2024,
+   "cid": "40226",
+   "team": "Johor Southern Tigers",
+   "champ": true,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2023,
+   "cid": "37621",
+   "team": "Johor Southern Tigers",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2022,
+   "cid": "35104",
+   "team": "Johor Southern Tigers",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "Agong Cup 2018 - Men",
+   "short": "Agong Cup",
+   "team": "Westsport Malaysia Dragon",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA Asia Cup SEABA Pre-Qualifiers 2018",
+   "short": "SEABA Pre-Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2017,
+   "comp": "SEABA Men Championship 2017",
+   "short": "SEABA Championship",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Asia Cup 2014",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Asia Cup 2013",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 9th"
+  }
+ ],
+ "2371573": [
+  {
+   "year": 2024,
+   "cid": "39599",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2024,
+   "cid": "40226",
+   "team": "NS Matrix Deers",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2022,
+   "cid": "35104",
+   "team": "NS Matrix Deers",
+   "champ": true,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2019,
+   "comp": "FIBA Asia Cup Qualifiers 2019",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA Asia Cup SEABA Pre-Qualifiers 2018",
+   "short": "SEABA Pre-Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2017,
+   "comp": "SEABA Men Championship 2017",
+   "short": "SEABA Championship",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2009,
+   "comp": "FIBA U16 Asia Cup 2009",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2252596": [
+  {
+   "year": 2024,
+   "cid": "39599",
+   "team": "Perak",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2022,
+   "cid": "34194",
+   "team": "MBC Kirin",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top scorer",
+    "All-Star Team"
+   ]
+  }
+ ],
+ "2341474": [
+  {
+   "year": 2024,
+   "cid": "39599",
+   "team": "Perak",
+   "champ": false,
+   "awards": [
+    "Top rebounder",
+    "MVP"
+   ]
+  }
+ ],
+ "2252595": [
+  {
+   "year": 2024,
+   "cid": "39599",
+   "team": "Perak",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Asia Cup 2015",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2615636": [
+  {
+   "year": 2024,
+   "cid": "39600",
+   "team": "Johor",
+   "champ": true,
+   "awards": [
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2024,
+   "cid": "39529",
+   "team": "Johor Southern Tigers",
+   "champ": false,
+   "awards": [
+    "Top scorer",
+    "Top rebounder",
+    "Top assist",
+    "MVP"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA Women's Asia Cup, Division B 2023",
+   "short": "FIBA Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 5th"
+  },
+  {
+   "year": 2019,
+   "comp": "National U17 Championship 2019 - Girls",
+   "short": "National U17",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Top scorer",
+    "MVP"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA U18 Women's Asia Cup 2018",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "52970": [
+  {
+   "year": 2024,
+   "cid": "39600",
+   "team": "Terengganu",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "27580": [
+  {
+   "year": 2024,
+   "cid": "39600",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA Women's Asia Cup, Division B 2023",
+   "short": "FIBA Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 5th"
+  },
+  {
+   "year": 2019,
+   "comp": "Agong Cup 2019 - Women",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "Agong Cup 2018 - Women",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Women's Asia Cup 2015",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA Women's Asia Cup 2013",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA Women's Asia Cup 2011",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2009,
+   "comp": "FIBA Women's Asia Cup 2009",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "2252572": [
+  {
+   "year": 2024,
+   "cid": "39600",
+   "team": "Kuala Lumpur",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "Agong Cup 2018 - Women",
+   "short": "Agong Cup",
+   "team": "Hatchers Sports Club",
+   "champ": false,
+   "awards": [
+    "DPOY"
+   ]
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Women's Asia Cup 2015",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  },
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Women's Asia Cup 2014",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA U16 Women's Asia Cup 2011",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "2302745": [
+  {
+   "year": 2024,
+   "cid": "39600",
+   "team": "Johor",
+   "champ": true,
+   "awards": [
+    "Top block"
+   ]
+  },
+  {
+   "year": 2019,
+   "comp": "Agong Cup 2019 - Women",
+   "short": "Agong Cup",
+   "team": "Segamat Basketball Association",
+   "champ": false,
+   "awards": [
+    "DPOY"
+   ]
+  }
+ ],
+ "1287260": [
+  {
+   "year": 2024,
+   "cid": "39600",
+   "team": "Johor",
+   "champ": true,
+   "awards": [
+    "MVP"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA Women's Asia Cup, Division B 2023",
+   "short": "FIBA Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 5th"
+  },
+  {
+   "year": 2016,
+   "comp": "FIBA U18 Women's Asia Cup 2016",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Women's Asia Cup 2015",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  }
+ ],
+ "2778736": [
+  {
+   "year": 2026,
+   "cid": "49468",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "MABA/MATRIX Cup 2018",
+   "short": "MATRIX Cup",
+   "team": "Penang",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top scorer"
+   ]
+  }
+ ],
+ "2767060": [
+  {
+   "year": 2026,
+   "cid": "49468",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Asia Cup 2025",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2778745": [
+  {
+   "year": 2026,
+   "cid": "49468",
+   "team": "Kelantan",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  }
+ ],
+ "2778758": [
+  {
+   "year": 2026,
+   "cid": "49468",
+   "team": "Putrajaya",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "2786651": [
+  {
+   "year": 2026,
+   "cid": "49468",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "1846134": [
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2019,
+   "comp": "FIBA Asia Cup Qualifiers 2019",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2012,
+   "comp": "National U16 Championship 2012",
+   "short": "National U16",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "2092911": [
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA Asia Cup SEABA Pre-Qualifiers 2018",
+   "short": "SEABA Pre-Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2017,
+   "comp": "SEABA Men Championship 2017",
+   "short": "SEABA Championship",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Asia Cup 2014",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2012,
+   "comp": "National U16 Championship 2012",
+   "short": "National U16",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "MVP"
+   ]
+  }
+ ],
+ "2371569": [
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2019,
+   "comp": "Agong Cup 2019 - Men",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2019,
+   "comp": "FIBA Asia Cup Qualifiers 2019",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2018,
+   "comp": "Agong Cup 2018 - Men",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA Asia Cup SEABA Pre-Qualifiers 2018",
+   "short": "SEABA Pre-Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2017,
+   "comp": "Agong Cup 2017 - Men",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": []
+  },
+  {
+   "year": 2016,
+   "comp": "Agong Cup 2016 - Men",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": []
+  },
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Asia Cup 2014",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "1287289": [
+  {
+   "year": 2019,
+   "comp": "FIBA Asia Cup Qualifiers 2019",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2018,
+   "comp": "Agong Cup 2018 - Men",
+   "short": "Agong Cup",
+   "team": "Ns Matrix",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA Asia Cup SEABA Pre-Qualifiers 2018",
+   "short": "SEABA Pre-Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Asia Cup 2015",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 16th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Asia Cup 2013",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 9th"
+  }
+ ],
+ "1846127": [
+  {
+   "year": 2018,
+   "comp": "Agong Cup 2018 - Men",
+   "short": "Agong Cup",
+   "team": "Westsport Malaysia Dragon",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "1975126": [
+  {
+   "year": 2018,
+   "comp": "Agong Cup 2018 - Women",
+   "short": "Agong Cup",
+   "team": "Hatchers Sports Club",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top rebounder"
+   ]
+  },
+  {
+   "year": 2017,
+   "comp": "Agong Cup 2017 - Women",
+   "short": "Agong Cup",
+   "team": "Sabah",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "2371567": [
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2019,
+   "comp": "Agong Cup 2019 - Men",
+   "short": "Agong Cup",
+   "team": "Westsport Malaysia Dragon",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top rebounder"
+   ]
+  },
+  {
+   "year": 2019,
+   "comp": "FIBA Asia Cup Qualifiers 2019",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA Asia Cup SEABA Pre-Qualifiers 2018",
+   "short": "SEABA Pre-Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Asia Cup 2015",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 16th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA Asia Cup 2013",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 15th"
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA Asia Cup 2011",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  },
+  {
+   "year": 2008,
+   "comp": "FIBA U18 Asia Cup 2008",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 15th"
+  }
+ ],
+ "800700": [
+  {
+   "year": 2019,
+   "comp": "Agong Cup 2019 - Men",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "Finals MVP",
+    "DPOY"
+   ]
+  },
+  {
+   "year": 2017,
+   "comp": "Agong Cup 2017 - Men",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "1286759": [
+  {
+   "year": 2019,
+   "comp": "Agong Cup 2019 - Men",
+   "short": "Agong Cup",
+   "team": "Miri Firehorse",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2017,
+   "comp": "Agong Cup 2017 - Men",
+   "short": "Agong Cup",
+   "team": "Pdrm",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Asia Cup 2015",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 16th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA Asia Cup 2013",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 15th"
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA Asia Cup 2011",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  },
+  {
+   "year": 2005,
+   "comp": "FIBA Asia Cup 2005",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 16th"
+  },
+  {
+   "year": 2003,
+   "comp": "FIBA U19 Basketball World Cup 2003",
+   "short": "FIBA U19 World Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 15th"
+  },
+  {
+   "year": 2002,
+   "comp": "FIBA U18 Asia Cup 2002",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  }
+ ],
+ "70530": [
+  {
+   "year": 2019,
+   "comp": "Agong Cup 2019 - Women",
+   "short": "Agong Cup",
+   "team": "Penang Stallions",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  },
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Women's Asia Cup 2014",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Women's Asia Cup 2013",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2092914": [
+  {
+   "year": 2019,
+   "comp": "FIBA Asia Cup Qualifiers 2019",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA Asia Cup SEABA Pre-Qualifiers 2018",
+   "short": "SEABA Pre-Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2017,
+   "comp": "Agong Cup 2017 - Men",
+   "short": "Agong Cup",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2017,
+   "comp": "SEABA Men Championship 2017",
+   "short": "SEABA Championship",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Asia Cup 2015",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 16th"
+  }
+ ],
+ "1286744": [
+  {
+   "year": 2017,
+   "comp": "Agong Cup 2017 - Men",
+   "short": "Agong Cup",
+   "team": "Pdrm",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA Asia Cup 2011",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  },
+  {
+   "year": 2005,
+   "comp": "FIBA Asia Cup 2005",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 16th"
+  }
+ ],
+ "27500": [
+  {
+   "year": 2023,
+   "comp": "FIBA Women's Asia Cup, Division B 2023",
+   "short": "FIBA Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 5th"
+  },
+  {
+   "year": 2017,
+   "comp": "Agong Cup 2017 - Women",
+   "short": "Agong Cup",
+   "team": "Kuala Lumpur",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Finals MVP",
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Women's Asia Cup 2015",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA Women's Asia Cup 2013",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2009,
+   "comp": "FIBA U16 Women's Asia Cup 2009",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "1845666": [
+  {
+   "year": 2023,
+   "comp": "FIBA Women's Asia Cup, Division B 2023",
+   "short": "FIBA Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 5th"
+  },
+  {
+   "year": 2017,
+   "comp": "Agong Cup 2017 - Women",
+   "short": "Agong Cup",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Women's Asia Cup 2015",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA Women's Asia Cup 2013",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA Women's Asia Cup 2011",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "27497": [
+  {
+   "year": 2025,
+   "cid": "48105",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2017,
+   "comp": "Agong Cup 2017 - Women",
+   "short": "Agong Cup",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "DPOY"
+   ]
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Women's Asia Cup 2015",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  },
+  {
+   "year": 2009,
+   "comp": "FIBA U16 Women's Asia Cup 2009",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "1091402": [
+  {
+   "year": 2019,
+   "comp": "National U17 Championship 2019 - Boys",
+   "short": "National U17",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "Top rebounder",
+    "Most promising tall talent",
+    "MVP"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "National U15 Championship 2018 - Boys",
+   "short": "National U15",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "1091368": [
+  {
+   "year": 2018,
+   "comp": "National U15 Championship 2018 - Boys",
+   "short": "National U15",
+   "team": "Penang",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  }
+ ],
+ "2568850": [
+  {
+   "year": 2023,
+   "cid": "35879",
+   "team": "Penang BA",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "National U15 Championship 2018 - Boys",
+   "short": "National U15",
+   "team": "Penang",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "2302706": [
+  {
+   "year": 2018,
+   "comp": "National U15 Championship 2018 - Girls",
+   "short": "National U15",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "1091543": [
+  {
+   "year": 2018,
+   "comp": "National U15 Championship 2018 - Girls",
+   "short": "National U15",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "Top scorer",
+    "MVP"
+   ]
+  }
+ ],
+ "1091547": [
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  },
+  {
+   "year": 2018,
+   "comp": "National U15 Championship 2018 - Girls",
+   "short": "National U15",
+   "team": "Wilayah Persekutuan",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "2568826": [
+  {
+   "year": 2019,
+   "comp": "National U15 Championship 2019 - Girls",
+   "short": "National U15",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "National U15 Championship 2018 - Girls",
+   "short": "National U15",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "2568851": [
+  {
+   "year": 2023,
+   "cid": "35880",
+   "team": "Johor Southern Tigers",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top rebounder"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "National U15 Championship 2018 - Girls",
+   "short": "National U15",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Most promising tall talent"
+   ]
+  }
+ ],
+ "1957820": [
+  {
+   "year": 2019,
+   "comp": "National U17 Championship 2019 - Boys",
+   "short": "National U17",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "2084370": [
+  {
+   "year": 2019,
+   "comp": "National U17 Championship 2019 - Boys",
+   "short": "National U17",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  }
+ ],
+ "hs-ng-yong-liang": [
+  {
+   "year": 2019,
+   "comp": "National U17 Championship 2019 - Boys",
+   "short": "National U17",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "DPOY"
+   ]
+  }
+ ],
+ "475653": [
+  {
+   "year": 2019,
+   "comp": "National U17 Championship 2019 - Girls",
+   "short": "National U17",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "1287316": [
+  {
+   "year": 2023,
+   "cid": "36890",
+   "team": "Hillcrest Grays",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  },
+  {
+   "year": 2019,
+   "comp": "National U17 Championship 2019 - Girls",
+   "short": "National U17",
+   "team": "Pdrm",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "1958859": [
+  {
+   "year": 2024,
+   "cid": "38334",
+   "team": "Selangor EST Jersey",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  },
+  {
+   "year": 2019,
+   "comp": "National U17 Championship 2019 - Girls",
+   "short": "National U17",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "1973906": [
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  },
+  {
+   "year": 2019,
+   "comp": "National U17 Championship 2019 - Girls",
+   "short": "National U17",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "DPOY",
+    "Most promising tall talent"
+   ]
+  },
+  {
+   "year": 2019,
+   "comp": "National U15 Championship 2019 - Girls",
+   "short": "National U15",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "2615568": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup 2023",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2023",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2022,
+   "cid": "34525",
+   "team": "Selangor(1)",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "1979736": [
+  {
+   "year": 2022,
+   "cid": "34525",
+   "team": "Sabah",
+   "champ": false,
+   "awards": [
+    "Top scorer",
+    "MVP"
+   ]
+  }
+ ],
+ "2797840": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup 2023",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2023",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2022,
+   "cid": "34525",
+   "team": "Johor(1)",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "1900555": [
+  {
+   "year": 2022,
+   "cid": "34525",
+   "team": "Perak",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "2252581": [
+  {
+   "year": 2022,
+   "cid": "34525",
+   "team": "Sabah",
+   "champ": false,
+   "awards": [
+    "DPOY"
+   ]
+  }
+ ],
+ "2568810": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup 2023",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2023",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2022,
+   "cid": "34525",
+   "team": "Selangor(1)",
+   "champ": true,
+   "awards": [
+    "Most promising tall talent"
+   ]
+  }
+ ],
+ "1900456": [
+  {
+   "year": 2024,
+   "cid": "39529",
+   "team": "Selangor EST Jersey",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  },
+  {
+   "year": 2022,
+   "comp": "National U15 Championship 2022 - Girls",
+   "short": "National U15",
+   "team": "Selangor 1",
+   "champ": false,
+   "awards": [
+    "Finals MVP",
+    "DPOY"
+   ]
+  }
+ ],
+ "2568822": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  },
+  {
+   "year": 2022,
+   "comp": "National U15 Championship 2022 - Girls",
+   "short": "National U15",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  }
+ ],
+ "1425152": [
+  {
+   "year": 2022,
+   "comp": "National U15 Championship 2022 - Girls",
+   "short": "National U15",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "1900258": [
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  },
+  {
+   "year": 2022,
+   "comp": "National U15 Championship 2022 - Girls",
+   "short": "National U15",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "1900264": [
+  {
+   "year": 2022,
+   "comp": "National U15 Championship 2022 - Girls",
+   "short": "National U15",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Most promising tall talent"
+   ]
+  }
+ ],
+ "1900446": [
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  },
+  {
+   "year": 2022,
+   "comp": "National U15 Championship 2022 - Girls",
+   "short": "National U15",
+   "team": "Selangor 1",
+   "champ": false,
+   "awards": [
+    "MVP"
+   ]
+  }
+ ],
+ "1091842": [
+  {
+   "year": 2019,
+   "comp": "National U15 Championship 2019 - Boys",
+   "short": "National U15",
+   "team": "Sabah",
+   "champ": false,
+   "awards": [
+    "Top scorer",
+    "Most promising tall talent",
+    "MVP"
+   ]
+  }
+ ],
+ "1091411": [
+  {
+   "year": 2019,
+   "comp": "National U15 Championship 2019 - Boys",
+   "short": "National U15",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "2786776": [
+  {
+   "year": 2023,
+   "cid": "35880",
+   "team": "EST Jersey x Rising Star",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  },
+  {
+   "year": 2019,
+   "comp": "National U15 Championship 2019 - Girls",
+   "short": "National U15",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "1091469": [
+  {
+   "year": 2019,
+   "comp": "National U15 Championship 2019 - Girls",
+   "short": "National U15",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "Top scorer",
+    "MVP"
+   ]
+  }
+ ],
+ "2786789": [
+  {
+   "year": 2019,
+   "comp": "National U15 Championship 2019 - Girls",
+   "short": "National U15",
+   "team": "Selangor",
+   "champ": false,
+   "awards": [
+    "Most promising tall talent"
+   ]
+  }
+ ],
+ "1962014": [
+  {
+   "year": 2026,
+   "cid": "49468",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2023,
+   "cid": "36889",
+   "team": "Speed Hunters",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "MABA/MATRIX Cup 2018",
+   "short": "MATRIX Cup",
+   "team": "Penang",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top scorer"
+   ]
+  }
+ ],
+ "1425025": [
+  {
+   "year": 2024,
+   "cid": "38335",
+   "team": "Kee Ming Holdings Basketball Club",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top scorer"
+   ]
+  }
+ ],
+ "1424976": [
+  {
+   "year": 2024,
+   "cid": "38335",
+   "team": "GoStrong",
+   "champ": false,
+   "awards": [
+    "Top rebounder",
+    "Top block"
+   ]
+  },
+  {
+   "year": 2024,
+   "cid": "39528",
+   "team": "GoStrong",
+   "champ": false,
+   "awards": [
+    "Top rebounder",
+    "Top block"
+   ]
+  },
+  {
+   "year": 2023,
+   "cid": "35879",
+   "team": "GoStrong",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  }
+ ],
+ "2252648": [
+  {
+   "year": 2024,
+   "cid": "38335",
+   "team": "Rising Star Juniors",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "2125923": [
+  {
+   "year": 2024,
+   "cid": "38335",
+   "team": "Kee Ming Holdings Basketball Club",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  }
+ ],
+ "2125928": [
+  {
+   "year": 2024,
+   "cid": "38335",
+   "team": "MBC Kirin",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  }
+ ],
+ "2302714": [
+  {
+   "year": 2024,
+   "cid": "38334",
+   "team": "Johor Southern Tigers",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA Women's Asia Cup, Division B 2023",
+   "short": "FIBA Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 5th"
+  },
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  }
+ ],
+ "2615599": [
+  {
+   "year": 2024,
+   "cid": "38334",
+   "team": "NS Matrix Deers",
+   "champ": false,
+   "awards": [
+    "Top assist",
+    "Top block"
+   ]
+  },
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  }
+ ],
+ "2371565": [
+  {
+   "year": 2025,
+   "comp": "SEA Games 2025 - 3x3 basketball (men)",
+   "short": "SEA Games 3x3",
+   "team": "Malaysia",
+   "medal": "bronze",
+   "champ": false,
+   "awards": [
+    "Bronze medal"
+   ]
+  },
+  {
+   "year": 2025,
+   "comp": "Agong Cup 2025 - Men 3x3",
+   "short": "Agong Cup 3x3",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": []
+  },
+  {
+   "year": 2024,
+   "cid": "40226",
+   "team": "Putrajaya Parkcity Heat",
+   "champ": false,
+   "awards": [
+    "MVP"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2022,
+   "cid": "34194",
+   "team": "NS Matrix Deers",
+   "champ": true,
+   "awards": [
+    "All-Star Team"
+   ]
+  },
+  {
+   "year": 2019,
+   "comp": "PUBA International Invitation 2019",
+   "short": "PUBA Invitational",
+   "team": "Malaysia National Team",
+   "champ": false,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2017,
+   "comp": "National U17 Championship 2017 - Boys",
+   "short": "National U17",
+   "team": "Negeri Sembilan",
+   "champ": false,
+   "awards": [
+    "MVP",
+    "Top scorer"
+   ]
+  }
+ ],
+ "1954877": [
+  {
+   "year": 2023,
+   "cid": "35879",
+   "team": "Johor Southern Tigers (RED)",
+   "champ": true,
+   "awards": [
+    "MVP"
+   ]
+  }
+ ],
+ "2568800": [
+  {
+   "year": 2023,
+   "cid": "35879",
+   "team": "GoStrong",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  }
+ ],
+ "2783542": [
+  {
+   "year": 2023,
+   "cid": "35880",
+   "team": "Johor Southern Tigers",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  }
+ ],
+ "2092916": [
+  {
+   "year": 2023,
+   "cid": "36889",
+   "team": "NS Matrix Deers",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  }
+ ],
+ "1286739": [
+  {
+   "year": 2023,
+   "cid": "36889",
+   "team": "Bahau NGV Panther",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2022,
+   "cid": "34194",
+   "team": "NS Matrix Deers",
+   "champ": true,
+   "awards": [
+    "All-Star Team"
+   ]
+  }
+ ],
+ "1958899": [
+  {
+   "year": 2024,
+   "cid": "39528",
+   "team": "Penang Sunrise Youngsters",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2023,
+   "cid": "36889",
+   "team": "Penang Sunrise Youngsters",
+   "champ": false,
+   "awards": [
+    "Top steal"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA U16 Asia Cup 2018",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2017",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "556411": [
+  {
+   "year": 2023,
+   "cid": "36889",
+   "team": "Penang Sunrise Youngsters",
+   "champ": false,
+   "awards": [
+    "Top block"
+   ]
+  }
+ ],
+ "1973857": [
+  {
+   "year": 2023,
+   "cid": "36890",
+   "team": "MKYC Dragons",
+   "champ": false,
+   "awards": [
+    "Top scorer",
+    "Top steal"
+   ]
+  }
+ ],
+ "2299192": [
+  {
+   "year": 2023,
+   "cid": "36890",
+   "team": "NS Matrix Deers",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA U18 Women's Asia Cup 2018",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "2252617": [
+  {
+   "year": 2024,
+   "cid": "39528",
+   "team": "MBC Kirin",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "2615561": [
+  {
+   "year": 2024,
+   "cid": "39528",
+   "team": "UCSI Eagles",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  }
+ ],
+ "2252627": [
+  {
+   "year": 2024,
+   "cid": "39528",
+   "team": "MBC Kirin",
+   "champ": true,
+   "awards": [
+    "MVP"
+   ]
+  }
+ ],
+ "2092917": [
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2022,
+   "cid": "34194",
+   "team": "NS Matrix Deers",
+   "champ": true,
+   "awards": [
+    "Finals MVP",
+    "All-Star Team"
+   ]
+  }
+ ],
+ "2778711": [
+  {
+   "year": 2022,
+   "cid": "34194",
+   "team": "KL Aseel",
+   "champ": false,
+   "awards": [
+    "All-Star Team"
+   ]
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Asia Cup 2015",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2302680": [
+  {
+   "year": 2022,
+   "cid": "34194",
+   "team": "KL Aseel",
+   "champ": false,
+   "awards": [
+    "All-Star Team"
+   ]
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA U16 Asia Cup 2018",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2017",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "2778709": [
+  {
+   "year": 2022,
+   "cid": "34194",
+   "team": "GoStrong",
+   "champ": false,
+   "awards": [
+    "All-Star Team"
+   ]
+  }
+ ],
+ "2371555": [
+  {
+   "year": 2022,
+   "cid": "34194",
+   "team": "Selangor XXIII",
+   "champ": false,
+   "awards": [
+    "All-Star Team"
+   ]
+  }
+ ],
+ "2615653": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Asia Cup 2025",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2096737": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Asia Cup 2025",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2096961": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Asia Cup 2025",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2096724": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Asia Cup 2025",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2568871": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Asia Cup 2025",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2253396": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Asia Cup 2025",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2252560": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Asia Cup 2025",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2096760": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Asia Cup 2025",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "1900615": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup 2023",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2023",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "2098073": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup 2023",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2023",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "2797839": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup 2023",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2023",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "2252632": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup 2023",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2023",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "1900577": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup 2023",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2023",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "1900700": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup 2023",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2023",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "1900583": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup 2023",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2023",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "556382": [
+  {
+   "year": 2018,
+   "comp": "FIBA U16 Asia Cup 2018",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2017",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "556384": [
+  {
+   "year": 2018,
+   "comp": "FIBA U16 Asia Cup 2018",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2017",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "556386": [
+  {
+   "year": 2018,
+   "comp": "FIBA U16 Asia Cup 2018",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2017",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "2371556": [
+  {
+   "year": 2018,
+   "comp": "FIBA U16 Asia Cup 2018",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2017",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "2299145": [
+  {
+   "year": 2018,
+   "comp": "FIBA U16 Asia Cup 2018",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2017",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "2786676": [
+  {
+   "year": 2018,
+   "comp": "FIBA U16 Asia Cup 2018",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2017",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "1286737": [
+  {
+   "year": 2018,
+   "comp": "FIBA U16 Asia Cup 2018",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Asia Cup, SEA Qualifiers 2017",
+   "short": "FIBA U16 SEA Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "1959988": [
+  {
+   "year": 2018,
+   "comp": "FIBA U16 Asia Cup 2018",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "2371560": [
+  {
+   "year": 2018,
+   "comp": "FIBA U16 Asia Cup 2018",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "32057": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Asia Cup 2015",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "1845450": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Asia Cup 2015",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2371557": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Asia Cup 2015",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "257210": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Asia Cup 2015",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "1907722": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Asia Cup 2015",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2084311": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Asia Cup 2015",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "56723": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Asia Cup 2015",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "32084": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Asia Cup 2015",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "1572393": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Asia Cup 2015",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "1846144": [
+  {
+   "year": 2019,
+   "comp": "FIBA Asia Cup Qualifiers 2019",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Asia Cup 2014",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Asia Cup 2013",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 9th"
+  }
+ ],
+ "1287140": [
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Asia Cup 2014",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Asia Cup 2013",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 9th"
+  }
+ ],
+ "2371570": [
+  {
+   "year": 2019,
+   "comp": "FIBA Asia Cup Qualifiers 2019",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Asia Cup 2014",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Asia Cup 2013",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 9th"
+  }
+ ],
+ "27842": [
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Asia Cup 2014",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "27734": [
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Asia Cup 2014",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "143547": [
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Asia Cup 2013",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 9th"
+  }
+ ],
+ "28127": [
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Asia Cup 2013",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 9th"
+  }
+ ],
+ "2304382": [
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Asia Cup 2013",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 9th"
+  }
+ ],
+ "2778761": [
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Asia Cup 2013",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 9th"
+  }
+ ],
+ "28317": [
+  {
+   "year": 2009,
+   "comp": "FIBA U16 Asia Cup 2009",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "27495": [
+  {
+   "year": 2009,
+   "comp": "FIBA U16 Asia Cup 2009",
+   "short": "FIBA U16 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "1286776": [
+  {
+   "year": 2013,
+   "comp": "FIBA Asia Cup 2013",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 15th"
+  },
+  {
+   "year": 2008,
+   "comp": "FIBA U18 Asia Cup 2008",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 15th"
+  }
+ ],
+ "27904": [
+  {
+   "year": 2015,
+   "comp": "FIBA Asia Cup 2015",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 16th"
+  },
+  {
+   "year": 2008,
+   "comp": "FIBA U18 Asia Cup 2008",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 15th"
+  }
+ ],
+ "27741": [
+  {
+   "year": 2017,
+   "comp": "SEABA Men Championship 2017",
+   "short": "SEABA Championship",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2003,
+   "comp": "FIBA U19 Basketball World Cup 2003",
+   "short": "FIBA U19 World Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 15th"
+  },
+  {
+   "year": 2002,
+   "comp": "FIBA U18 Asia Cup 2002",
+   "short": "FIBA U18 Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  }
+ ],
+ "2341467": [
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2019,
+   "comp": "FIBA Asia Cup Qualifiers 2019",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2018,
+   "comp": "FIBA Asia Cup SEABA Pre-Qualifiers 2018",
+   "short": "SEABA Pre-Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2017,
+   "comp": "SEABA Men Championship 2017",
+   "short": "SEABA Championship",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Asia Cup 2015",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 16th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA Asia Cup 2013",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 15th"
+  }
+ ],
+ "2092920": [
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  },
+  {
+   "year": 2019,
+   "comp": "FIBA Asia Cup Qualifiers 2019",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "1845447": [
+  {
+   "year": 2023,
+   "comp": "FIBA Asia Cup Qualifiers 2023",
+   "short": "FIBA Asia Cup Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Represented Malaysia"
+  }
+ ],
+ "2304364": [
+  {
+   "year": 2018,
+   "comp": "FIBA Asia Cup SEABA Pre-Qualifiers 2018",
+   "short": "SEABA Pre-Qualifiers",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2017,
+   "comp": "SEABA Men Championship 2017",
+   "short": "SEABA Championship",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA Asia Cup 2011",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "27507": [
+  {
+   "year": 2017,
+   "comp": "SEABA Men Championship 2017",
+   "short": "SEABA Championship",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Asia Cup 2015",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 16th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA Asia Cup 2013",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 15th"
+  }
+ ],
+ "2370362": [
+  {
+   "year": 2017,
+   "comp": "SEABA Men Championship 2017",
+   "short": "SEABA Championship",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 4th"
+  }
+ ],
+ "27509": [
+  {
+   "year": 2015,
+   "comp": "FIBA Asia Cup 2015",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 16th"
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA Asia Cup 2011",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "1845746": [
+  {
+   "year": 2013,
+   "comp": "FIBA Asia Cup 2013",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 15th"
+  }
+ ],
+ "1287234": [
+  {
+   "year": 2013,
+   "comp": "FIBA Asia Cup 2013",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 15th"
+  }
+ ],
+ "2786749": [
+  {
+   "year": 2011,
+   "comp": "FIBA Asia Cup 2011",
+   "short": "FIBA Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 11th"
+  }
+ ],
+ "2786735": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2096648": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2254169": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2386605": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2769783": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2096563": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2386532": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2096654": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "1900330": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2096673": [
+  {
+   "year": 2025,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2025",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "1900430": [
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  }
+ ],
+ "2465255": [
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  }
+ ],
+ "2769172": [
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  }
+ ],
+ "2026983": [
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "2568847": [
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  }
+ ],
+ "1900260": [
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  }
+ ],
+ "2786793": [
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  }
+ ],
+ "2197457": [
+  {
+   "year": 2024,
+   "comp": "FIBA U18 Women's Asia Cup 2024",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  }
+ ],
+ "1900400": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  }
+ ],
+ "2098060": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  }
+ ],
+ "1900261": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  }
+ ],
+ "2615650": [
+  {
+   "year": 2023,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2023",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 3rd"
+  }
+ ],
+ "1962029": [
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  }
+ ],
+ "2786791": [
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  }
+ ],
+ "797793": [
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  }
+ ],
+ "2568894": [
+  {
+   "year": 2022,
+   "comp": "FIBA U18 Women's Asia Cup, Division B 2022",
+   "short": "FIBA U18 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 1st"
+  }
+ ],
+ "2252576": [
+  {
+   "year": 2018,
+   "comp": "FIBA U18 Women's Asia Cup 2018",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "107234": [
+  {
+   "year": 2018,
+   "comp": "FIBA U18 Women's Asia Cup 2018",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2017",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 2nd"
+  }
+ ],
+ "2022692": [
+  {
+   "year": 2018,
+   "comp": "FIBA U18 Women's Asia Cup 2018",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2017",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 2nd"
+  }
+ ],
+ "2304360": [
+  {
+   "year": 2018,
+   "comp": "FIBA U18 Women's Asia Cup 2018",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2017",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 2nd"
+  }
+ ],
+ "2304361": [
+  {
+   "year": 2018,
+   "comp": "FIBA U18 Women's Asia Cup 2018",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2017",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 2nd"
+  }
+ ],
+ "556303": [
+  {
+   "year": 2018,
+   "comp": "FIBA U18 Women's Asia Cup 2018",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2017",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 2nd"
+  }
+ ],
+ "2125924": [
+  {
+   "year": 2018,
+   "comp": "FIBA U18 Women's Asia Cup 2018",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2017",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 2nd"
+  }
+ ],
+ "28205": [
+  {
+   "year": 2018,
+   "comp": "FIBA U18 Women's Asia Cup 2018",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "2786803": [
+  {
+   "year": 2018,
+   "comp": "FIBA U18 Women's Asia Cup 2018",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "2084355": [
+  {
+   "year": 2018,
+   "comp": "FIBA U18 Women's Asia Cup 2018",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "107230": [
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2017",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 2nd"
+  }
+ ],
+ "1845670": [
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2017",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 2nd"
+  }
+ ],
+ "1845627": [
+  {
+   "year": 2017,
+   "comp": "FIBA U16 Women's Asia Cup, Division B 2017",
+   "short": "FIBA U16 Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 2nd"
+  }
+ ],
+ "27708": [
+  {
+   "year": 2023,
+   "comp": "FIBA Women's Asia Cup, Division B 2023",
+   "short": "FIBA Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 5th"
+  },
+  {
+   "year": 2016,
+   "comp": "FIBA U18 Women's Asia Cup 2016",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Women's Asia Cup 2014",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Women's Asia Cup 2013",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2786703": [
+  {
+   "year": 2023,
+   "comp": "FIBA Women's Asia Cup, Division B 2023",
+   "short": "FIBA Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 5th"
+  },
+  {
+   "year": 2016,
+   "comp": "FIBA U18 Women's Asia Cup 2016",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Women's Asia Cup 2014",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Women's Asia Cup 2013",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "28374": [
+  {
+   "year": 2016,
+   "comp": "FIBA U18 Women's Asia Cup 2016",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Women's Asia Cup 2015",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  }
+ ],
+ "28248": [
+  {
+   "year": 2016,
+   "comp": "FIBA U18 Women's Asia Cup 2016",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "2755304": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Women's Asia Cup 2015",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  }
+ ],
+ "2341470": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Women's Asia Cup 2015",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  }
+ ],
+ "165370": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Women's Asia Cup 2015",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  }
+ ],
+ "2252612": [
+  {
+   "year": 2015,
+   "comp": "FIBA U16 Women's Asia Cup 2015",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  }
+ ],
+ "1286780": [
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Women's Asia Cup 2014",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA U16 Women's Asia Cup 2011",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "2252640": [
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Women's Asia Cup 2014",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Women's Asia Cup 2013",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "27705": [
+  {
+   "year": 2014,
+   "comp": "FIBA U18 Women's Asia Cup 2014",
+   "short": "FIBA U18 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "2568861": [
+  {
+   "year": 2013,
+   "comp": "FIBA U16 Women's Asia Cup 2013",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2252599": [
+  {
+   "year": 2023,
+   "comp": "FIBA Women's Asia Cup, Division B 2023",
+   "short": "FIBA Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 5th"
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Women's Asia Cup 2015",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA Women's Asia Cup 2013",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2009,
+   "comp": "FIBA U16 Women's Asia Cup 2009",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "27501": [
+  {
+   "year": 2015,
+   "comp": "FIBA Women's Asia Cup 2015",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  },
+  {
+   "year": 2009,
+   "comp": "FIBA U16 Women's Asia Cup 2009",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "2252603": [
+  {
+   "year": 2023,
+   "comp": "FIBA Women's Asia Cup, Division B 2023",
+   "short": "FIBA Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 5th"
+  },
+  {
+   "year": 2015,
+   "comp": "FIBA Women's Asia Cup 2015",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  },
+  {
+   "year": 2009,
+   "comp": "FIBA U16 Women's Asia Cup 2009",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "70535": [
+  {
+   "year": 2009,
+   "comp": "FIBA U16 Women's Asia Cup 2009",
+   "short": "FIBA U16 Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "1979739": [
+  {
+   "year": 2023,
+   "comp": "FIBA Women's Asia Cup, Division B 2023",
+   "short": "FIBA Women's Asia Cup Div. B",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 5th"
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA Women's Asia Cup 2011",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2009,
+   "comp": "FIBA Women's Asia Cup 2009",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ],
+ "2082470": [
+  {
+   "year": 2015,
+   "comp": "FIBA Women's Asia Cup 2015",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  }
+ ],
+ "2569780": [
+  {
+   "year": 2015,
+   "comp": "FIBA Women's Asia Cup 2015",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 10th"
+  },
+  {
+   "year": 2013,
+   "comp": "FIBA Women's Asia Cup 2013",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  }
+ ],
+ "2783546": [
+  {
+   "year": 2013,
+   "comp": "FIBA Women's Asia Cup 2013",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA Women's Asia Cup 2011",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2009,
+   "comp": "FIBA Women's Asia Cup 2009",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2007,
+   "comp": "FIBA Women's Asia Cup 2007",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  },
+  {
+   "year": 2005,
+   "comp": "FIBA Women's Asia Cup 2005",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2003,
+   "comp": "FIBA Women's Asia Cup 2003",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2569782": [
+  {
+   "year": 2013,
+   "comp": "FIBA Women's Asia Cup 2013",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 8th"
+  },
+  {
+   "year": 2011,
+   "comp": "FIBA Women's Asia Cup 2011",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2009,
+   "comp": "FIBA Women's Asia Cup 2009",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2007,
+   "comp": "FIBA Women's Asia Cup 2007",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 6th"
+  }
+ ],
+ "2569823": [
+  {
+   "year": 2011,
+   "comp": "FIBA Women's Asia Cup 2011",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  },
+  {
+   "year": 2009,
+   "comp": "FIBA Women's Asia Cup 2009",
+   "short": "FIBA Women's Asia Cup",
+   "team": "Malaysia",
+   "champ": false,
+   "awards": [],
+   "pathOnly": true,
+   "mark": "FIBA",
+   "src": "FIBA",
+   "placing": "Malaysia finished 7th"
+  }
+ ]
+}

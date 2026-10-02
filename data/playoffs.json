@@ -1,0 +1,19 @@
+{
+  "_note": "MBL playoff games and series, as given by the user 2026-09-29. Every other game in these competitions is regular season. MBL 2022 (35104) has no published player statistics and is left alone.",
+  "37621": {
+    "champion": "NS Matrix Deers",
+    "series": [
+      {"round": "Semi-final", "n": 1, "teams": ["NS Matrix Deers", "KL Aseel"], "games": ["2399202", "2399204"]},
+      {"round": "Semi-final", "n": 2, "teams": ["Johor Southern Tigers", "Penang Sunrise Youngsters"], "games": ["2399203", "2399205", "2399207"]},
+      {"round": "Final", "n": 1, "teams": ["Johor Southern Tigers", "NS Matrix Deers"], "games": ["2399208", "2399210"]}
+    ]
+  },
+  "40226": {
+    "champion": "Johor Southern Tigers",
+    "series": [
+      {"round": "Semi-final", "n": 1, "teams": ["NS Matrix Deers", "Johor Southern Tigers"], "games": ["2611132", "2611135", "2611136"]},
+      {"round": "Semi-final", "n": 2, "teams": ["Penang Sunrise Youngsters", "Sarawak Cola Warriors"], "games": ["2611133", "2611134"]},
+      {"round": "Final", "n": 1, "teams": ["Penang Sunrise Youngsters", "Johor Southern Tigers"], "games": ["2611138", "2611139"]}
+    ]
+  }
+}

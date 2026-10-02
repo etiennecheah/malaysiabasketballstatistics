@@ -1,0 +1,15 @@
+# built by the workflow, never committed
+/site.html
+/pbp/
+/_site/
+/data/site_data.json
+/data/bpm.json
+/data/lineups.json
+/data/stints.json
+/data/stints_full.json
+/data/pbp_games.json
+/data/pbp_periods.json
+/data/ws_check.json
+/data/*.tmp
+__pycache__/
+node_modules/

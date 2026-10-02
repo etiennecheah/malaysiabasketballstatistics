@@ -1,0 +1,104 @@
+{
+ "_note": "Hand-kept extras per player, supplied by the user. badges: short labels shown in the profile hero. moves: career steps outside the database (year, team, league), shown on the career path.",
+ "2252562": {
+  "badges": [
+   "SEA Games medalist",
+   "Asia import"
+  ],
+  "moves": [
+   {
+    "year": 2024,
+    "team": "Macau Black Bears",
+    "league": "EASL"
+   },
+   {
+    "year": 2025,
+    "team": "Omni Erdenet Miners",
+    "league": "The League (Mongolia)"
+   }
+  ]
+ },
+ "2371565": {
+  "badges": [
+   "SEA Games medalist"
+  ],
+  "moves": [],
+  "current": "Johor Southern Tigers"
+ },
+ "2304356": {
+  "badges": [
+   "FIBA U18 Asia Cup Div. B champion"
+  ],
+  "moves": [],
+  "nameLines": [
+   "Erica Ng",
+   "Mun Shuen"
+  ]
+ },
+ "1091547": {
+  "badges": [
+   "FIBA U18 Asia Cup Div. B champion"
+  ],
+  "moves": []
+ },
+ "1958859": {
+  "badges": [
+   "FIBA U18 Asia Cup Div. B champion"
+  ],
+  "moves": []
+ },
+ "1962029": {
+  "badges": [
+   "FIBA U18 Asia Cup Div. B champion"
+  ],
+  "moves": []
+ },
+ "1973906": {
+  "badges": [
+   "FIBA U18 Asia Cup Div. B champion"
+  ],
+  "moves": []
+ },
+ "2302714": {
+  "badges": [
+   "FIBA U18 Asia Cup Div. B champion"
+  ],
+  "moves": []
+ },
+ "2568894": {
+  "badges": [
+   "FIBA U18 Asia Cup Div. B champion"
+  ],
+  "moves": []
+ },
+ "2615599": {
+  "badges": [
+   "FIBA U18 Asia Cup Div. B champion"
+  ],
+  "moves": []
+ },
+ "2769172": {
+  "badges": [
+   "FIBA U18 Asia Cup Div. B champion"
+  ],
+  "moves": []
+ },
+ "2786776": {
+  "badges": [
+   "FIBA U18 Asia Cup Div. B champion"
+  ],
+  "moves": []
+ },
+ "2786791": {
+  "badges": [
+   "FIBA U18 Asia Cup Div. B champion"
+  ],
+  "moves": []
+ },
+ "797793": {
+  "badges": [
+   "FIBA U18 Asia Cup Div. B champion"
+  ],
+  "moves": []
+ }
+}

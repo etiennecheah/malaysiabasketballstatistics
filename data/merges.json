@@ -1,0 +1,191 @@
+{
+ "_comment": "Person records the source published more than once for the same human. Each group collapses to `canonical`; `name` overrides the display name (default: the canonical record's own name). Only merge a group when the members' competitions are disjoint - build fails loudly otherwise. Candidates found but NOT merged are listed in the project doc claude/person-merges.md.",
+ "groups": [
+  {
+   "canonical": "2371565",
+   "aliases": [
+    "1846140",
+    "1846143"
+   ],
+   "note": "Ooi, Xian Fu / Xian Fu Ooi x2 - dob 7/1/00, 187cm on both dated records"
+  },
+  {
+   "canonical": "2730915",
+   "aliases": [
+    "2755300",
+    "2767086"
+   ],
+   "note": "Cameron Jeremie Pagbe Tan x2 / Jeremie Pagbe, Cameron Tan - dob 3/5/09"
+  },
+  {
+   "canonical": "2341474",
+   "aliases": [
+    "2786675"
+   ],
+   "name": "Jin Yen Chin",
+   "note": "Jin Yen, Matthew Chin / Jin Yen Chin - 192cm both; the source wrote the same birthday as 5/3/99 and 3/5/99"
+  },
+  {
+   "canonical": "2786676",
+   "aliases": [
+    "2301997"
+   ],
+   "name": "Jun Kai, John Tang",
+   "note": "Jun Kai, Tang John is the same player with the surname misplaced"
+  },
+  {
+   "canonical": "2096646",
+   "aliases": [
+    "2455725"
+   ],
+   "name": "Yi Qian, Denise Koh",
+   "note": "the source misspelt Denise as Denies on 2455725 - dob 7/7/10, 165cm on both"
+  },
+  {
+   "canonical": "2253396",
+   "aliases": [
+    "2386501"
+   ],
+   "note": "Xian Yang, Isaac Au / Xian Yang, Issac Au - dob 8/26/09, 188cm, shirt 14, Negeri Sembilan on both"
+  },
+  {
+   "canonical": "1957810",
+   "aliases": [
+    "1959975"
+   ],
+   "note": "Khai Chiek, John Wong / Khai Chiek Wong - dob 9/27/96, 187cm, Johor Southern Tigers on both"
+  },
+  {
+   "canonical": "2568810",
+   "aliases": [
+    "2191577"
+   ],
+   "note": "Hao, Ivan Lee is the same player under a truncated name - it holds the 57th MATRIX U17, exactly the edition missing between the 56th and 58th on 2568810"
+  },
+  {
+   "canonical": "1846134",
+   "aliases": [
+    "1960024"
+   ],
+   "note": "Wei Young / Wei Yuong Liew - dob 1/10/96 on both, no shared competition"
+  },
+  {
+   "canonical": "2370342",
+   "aliases": [
+    "2252616"
+   ],
+   "name": "Tychique Bosango",
+   "note": "Bosango Tychique / Tychique Bosango - the same import at Parkcity Heat, name order flipped"
+  },
+  {
+   "canonical": "556413",
+   "aliases": [
+    "2105724"
+   ],
+   "name": "Jun Chiu Bong",
+   "note": "Jun Chu Bong is the same player - Chiu is the correct spelling"
+  },
+  {
+   "canonical": "1962014",
+   "aliases": [
+    "1885838",
+    "1979149",
+    "2501956",
+    "2688491",
+    "2778736"
+   ],
+   "name": "Keshmendip Singh Gill",
+   "note": "one player under six registrations (Keshmendip Gill / ... Azbeel Singh Gill / Azbeel Singh Gill Keshmendip / A/L Azbeel Singh Gill) - confirmed by the user 2026-09-29; competitions disjoint"
+  },
+  {
+   "canonical": "2092911",
+   "aliases": [
+    "2341446"
+   ],
+   "name": "Wen Qian, Anthony Liew",
+   "note": "Wen Quan, Anthony Liew is a misspelling - confirmed by the user 2026-09-29"
+  },
+  {
+   "canonical": "27497",
+   "aliases": [
+    "2688539"
+   ],
+   "name": "Yin Yin Chong",
+   "note": "Yinyin Chong is the same player (Selangor 2022, then Negeri Sembilan / NS Matrix Deers) - confirmed by the user 2026-09-29; competitions disjoint"
+  },
+  {
+   "canonical": "2299192",
+   "aliases": [
+    "2381192"
+   ],
+   "name": "Li Xuan Lee",
+   "note": "Lixuan Lee is the same player (NS Matrix Deers / Negeri Sembilan 2022-2026) - confirmed by the user 2026-09-30; competitions disjoint. 2295714 Li Xuan Lee (Hillcrest Grays) is a different player: shares competition 39529 with 2299192"
+  },
+  {
+   "canonical": "2371560",
+   "aliases": [
+    "1959988"
+   ],
+   "name": "Jun Xian Foo",
+   "note": "user confirmed 2026-09-30; same birthday 4/11/01, FIBA U16 2017/2018 roster matches both"
+  },
+  {
+   "canonical": "2304382",
+   "aliases": [
+    "2778761"
+   ],
+   "name": "Syahrul Ridzuan Rosli",
+   "note": "user confirmed 2026-09-30; 2778761 'Syahrul Ridzuan Bin Rosli', same birthday 2/12/98"
+  },
+  {
+   "canonical": "1900464",
+   "aliases": [
+    "2386605",
+    "2769783"
+   ],
+   "name": "Erma Ervina Ea Cheem",
+   "note": "user confirmed 2026-10-01 (FIBA girls import found them); same birthday 10/1/09; 2386605 'Ea Cheam', 2769783 'Erma Ervina'"
+  },
+  {
+   "canonical": "1900330",
+   "aliases": [
+    "2096673"
+   ],
+   "name": "Jackie Yuen",
+   "note": "user confirmed 2026-10-01 (FIBA girls import found them); same birthday 3/19/09; 2096673 'Yuen Jackie'"
+  },
+  {
+   "canonical": "1900430",
+   "aliases": [
+    "2465255"
+   ],
+   "name": "Pei Wen, Jolin Ting",
+   "note": "user confirmed 2026-10-01 (FIBA girls import found them); same birthday 9/1/08"
+  },
+  {
+   "canonical": "2615599",
+   "aliases": [
+    "2197457"
+   ],
+   "name": "Ler Yee Low",
+   "note": "user confirmed 2026-10-01 (FIBA girls import found them); same birthday 1/8/06; 2197457 'Ler Yee Lee'"
+  },
+  {
+   "canonical": "2304360",
+   "aliases": [
+    "2304361"
+   ],
+   "name": "Nur Adila Shahira Juraimi",
+   "note": "user confirmed 2026-10-01 (FIBA girls import found them); same birthday 5/22/02"
+  },
+  {
+   "canonical": "2341464",
+   "aliases": [
+    "2295677",
+    "2786057"
+   ],
+   "name": "Dylan Oh Nazmi Muhammad Jeffri Oh",
+   "note": "user confirmed 2026-10-01; 2295677 'Dylan Oh Nazmi Jeffri', 2786057 'Dylan Oh Nazmi Bin Muhammad Jeffri Oh' (no rosters/birthdays); 2341464 has the birthday 4/8/06 and 5 competitions"
+  }
+ ]
+}
