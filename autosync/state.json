@@ -1,13 +1,17 @@
 {
  "built": {
-  "at": 1790959806.7654176,
-  "fp": "e79621619b8cf313eafc"
+  "at": 1790959901.7984343,
+  "fp": "334616939b8d3b072fcf"
  },
  "daily": {},
  "fail": {},
  "full": {},
  "lines_retry": {},
- "log": [],
- "overdue_at": {},
+ "log": [
+  "2026-10-03 00:51  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 SELANGOR TIGER 104-107 SUPERSPORTS x REX BBA"
+ ],
+ "overdue_at": {
+  "48654": 1790959827.243155
+ },
  "pending": {}
 }
