@@ -98,13 +98,36 @@ def main():
     # the FIBA wordmark doubles as the competition mark for FIBA events
     if payload.get('logos', {}).get('fiba'):
         payload.setdefault('complogos', {})['fiba'] = payload['logos']['fiba']
-    # square head crops for the small avatar discs (see avatars.py)
-    try:
-        import avatars
-        payload['avatars'], nf = avatars.build(payload.get('photos', {}))
-        print('avatars: %d portraits, %d faces found' % (len(payload['avatars']), nf))
-    except ImportError as e:
-        print('avatars skipped:', e)
+    # Square head crops for the small avatar discs. avatars.py cuts them once (OpenCV finds the face)
+    # and they are kept in data/avatars/, each named after the portrait it was cut from, so the
+    # build itself needs no image libraries. A portrait without a crop is cut now if the libraries
+    # are installed; where they are not, the build stops rather than publish badly framed faces
+    # (which is what happened when the build first ran on GitHub, where OpenCV is not installed).
+    import base64, hashlib
+    photos = payload.get('photos', {})
+    adir = os.path.join(D, 'avatars')
+    av, todo = {}, {}
+    for pid, uri in photos.items():
+        p = os.path.join(adir, hashlib.sha1(uri.encode()).hexdigest()[:16] + '.webp')
+        if os.path.exists(p):
+            av[pid] = 'data:image/webp;base64,' + base64.b64encode(open(p, 'rb').read()).decode()
+        else:
+            todo[pid] = (uri, p)
+    if todo:
+        try:
+            import avatars
+        except ImportError as e:
+            raise SystemExit('avatars: %d portrait(s) have no face crop in data/avatars/ and one cannot be cut here (%s). '
+                             'Run build_site.py where OpenCV and Pillow are installed, then add data/avatars/.' % (len(todo), e))
+        os.makedirs(adir, exist_ok=True)
+        made, nf = avatars.build({pid: u for pid, (u, p) in todo.items()})
+        for pid, (u, p) in todo.items():
+            with open(p, 'wb') as f:
+                f.write(base64.b64decode(made[pid].split(',', 1)[1]))
+        print('avatars: cut %d new face crops, %d faces found' % (len(made), nf))
+        av = {pid: av.get(pid) or made[pid] for pid in photos}        # the portraits' order
+    payload['avatars'] = av
+    print('avatars: %d for %d portraits' % (len(av), len(photos)))
     data = json.dumps(payload, separators=(',', ':'))
     js = '\n\n'.join(open(os.path.join(A, p)).read() for p in PARTS)
 

@@ -25,10 +25,13 @@ const path = require('path');
     title: (document.querySelector('.hm-title') || {}).textContent || '',
     tiles: document.querySelectorAll('.hm-tile').length,
     comps: typeof COMPS !== 'undefined' ? COMPS.length : 0,
+    faces: typeof DB !== 'undefined' ? Object.keys(DB.photos || {}).filter(k => !(DB.avatars && DB.avatars[k])).length : -1,
+    photos: typeof DB !== 'undefined' ? Object.keys(DB.photos || {}).length : 0,
   }));
   if (!home.title) errors.push('Home did not render');
   if (!home.tiles) errors.push('Home shows no latest results');
   if (home.comps < 70) errors.push('only ' + home.comps + ' competitions in the page data');
+  if (home.faces !== 0) errors.push(home.faces + ' of ' + home.photos + ' portraits have no face crop for the small avatar discs');
 
   await go('/games');
   const cards = await page.evaluate(() => document.querySelectorAll('.gcard').length);
