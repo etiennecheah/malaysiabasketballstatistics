@@ -2,6 +2,7 @@
 const SITE = 'HOOPSTATS MY';
 
 function navShell(links, sub) {
+  const statsPage = /^#\/stats/.test(location.hash) ? (/^#\/stats\/clutch/.test(location.hash) ? 'clutch' : 'lineups') : '';
   return `
   <div class="nav">
     <div class="nav-left">
@@ -15,6 +16,7 @@ function navShell(links, sub) {
         <span class="sun">☀</span><span class="moon">☾</span>
       </button>
     </div>
+    ${typeof STATS !== 'undefined' ? STATS.navMenu(statsPage) : ''}
   </div>
   ${typeof liveBar === 'function' ? liveBar() : ''}
   ${sub}`;
@@ -33,10 +35,12 @@ function siteLinks(state) {
           ['#/pathway', 'Pathway', state === 'pathway'],
           ['#/teams', 'Teams', state === 'teams-hub' || state === 'team-global'],
           ['#/games', 'Games', state === 'games'],
+          ['stats', 'Stats', state === 'stats'],            // a button: it opens the Lineups / Clutch menu
           ['#/compare', 'Compare', state === 'compare'],
           ['#/videos', 'Videos', state === 'videos'],
           ['#/formulas', 'Formulas', state === 'formulas']]
-    .map(([h, t, a]) => `<a href="${h}" class="nav-link ${a ? 'active' : ''}">${esc(t)}</a>`).join('');
+    .map(([h, t, a]) => h === 'stats' ? (typeof STATS !== 'undefined' ? STATS.navButton(a) : '')
+      : `<a href="${h}" class="nav-link ${a ? 'active' : ''}">${esc(t)}</a>`).join('');
 }
 
 function renderNav(state, cid, tab) {
@@ -46,13 +50,15 @@ function renderNav(state, cid, tab) {
   if (!cid || state === 'hub' || state === 'global-players' || state === 'player' || state === 'compare'
       || state === 'formulas' || state === 'videos' || state === 'games' || state === 'notfound'
       || state === 'teams-hub' || state === 'team-global' || state === 'pathway' || state === 'cfam'
-      || state === 'home' || state === 'live' || state === 'me') {
+      || state === 'home' || state === 'live' || state === 'me' || state === 'stats') {
     const links = siteLinks(state);
-    const label = state === 'compare' ? 'Compare' : state === 'formulas' ? 'Formulas'
+    const label = state === 'stats' ? 'Stats' : state === 'compare' ? 'Compare' : state === 'formulas' ? 'Formulas'
       : state === 'videos' ? 'Videos' : state === 'games' ? 'Games'
       : (state === 'teams-hub' || state === 'team-global') ? 'Teams'
       : (state === 'global-players' || state === 'player') ? 'Players' : 'Competitions';
-    const crumb = state === 'compare'
+    const crumb = state === 'stats'
+      ? '<span class="subnav-crumb" id="st-crumb"></span>'
+      : state === 'compare'
       ? '<span class="subnav-crumb">two players, inside a competition they both played</span>'
       : state === 'formulas'
       ? '<span class="subnav-crumb">what every abbreviation means, and where the number comes from</span>'
@@ -117,6 +123,9 @@ function route() {
     state = 'team-global'; body = renderTeamGlobal(decodeURIComponent(parts[1]));
   } else if (parts[0] === 'games') {
     state = 'games'; body = renderGames();
+  } else if (parts[0] === 'stats') {
+    // Stats: Lineups and Clutch, chosen from the menu under the Stats tab
+    state = 'stats'; tab = parts[1] === 'clutch' ? 'clutch' : 'lineups'; body = renderStats(tab);
   } else if (parts[0] === 'videos') {
     state = 'videos'; body = renderVideos();
   } else if (parts[0] === 'cf' && parts[1]) {

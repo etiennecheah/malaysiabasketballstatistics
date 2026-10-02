@@ -8,7 +8,7 @@ This repository holds what the site is built from and the job that keeps it up t
 |---|---|
 | `data/` | The database: fixtures, standings and leaders (`backbone.json`), season lines (`persons.json`), box scores (`boxscores.json`), raw play-by-play (`pbp_raw/`), logos, portraits and the hand-kept files (national caps, honours, merges, imports). |
 | `assets/` | The site's scripts and stylesheet. |
-| `build_*.py` | The build: `build_data` → `build_lineups` → `build_bpm` → `build_pbp` → `build_site` produce one `index.html` and `pbp/<competition>.js`. |
+| `build_*.py` | The build: `build_data` → `build_lineups` → `build_bpm` → `build_pbp` → `build_stats` → `build_site` produce one `index.html`, `pbp/<competition>.js` and, for the Stats pages (Lineups, Clutch), `stats/lu/<competition>.js` and `stats/cl/<competition>.js`. |
 | `autosync/` | The automatic sync: reads the public MABA competition pages on Genius Sports, applies new results with checks, rebuilds and publishes. |
 | `.github/workflows/sync.yml` | Runs it. |
 | `inbox/` | Drop a `.tar.gz` / `.tar.xz` bundle here to change files in the repository; the workflow unpacks it and removes it. |

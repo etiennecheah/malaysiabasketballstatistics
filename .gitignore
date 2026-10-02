@@ -1,6 +1,7 @@
 # built by the workflow, never committed
 /site.html
 /pbp/
+/stats/
 /_site/
 /data/site_data.json
 /data/bpm.json
@@ -10,6 +11,9 @@
 /data/pbp_games.json
 /data/pbp_periods.json
 /data/ws_check.json
+/data/lineup_stats.json
+/data/clutch.json
+/data/stats_index.json
 /data/*.tmp
 __pycache__/
 node_modules/

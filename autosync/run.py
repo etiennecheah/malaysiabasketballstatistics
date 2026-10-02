@@ -25,7 +25,7 @@ from store import Store, Gate, tipoff, done, MYT   # noqa: E402
 SITE = 'https://etiennecheah.github.io/malaysiabasketballstatistics/'
 STATE = os.path.join(HERE, 'state.json')
 OUT = os.path.join(ROOT, '_site')
-BUILD = ['build_data.py', 'build_lineups.py', 'build_bpm.py', 'build_pbp.py', 'build_site.py']
+BUILD = ['build_data.py', 'build_lineups.py', 'build_bpm.py', 'build_pbp.py', 'build_stats.py', 'build_site.py']
 
 HOLD_BEFORE = 30 * 60        # a run that starts this close to tip-off stays on
 POLL_FROM = 60 * 60          # no game ends sooner than an hour after tip-off
@@ -204,6 +204,7 @@ def build(fp, why):
     os.makedirs(OUT)
     shutil.copy(os.path.join(ROOT, 'site.html'), os.path.join(OUT, 'index.html'))
     shutil.copytree(os.path.join(ROOT, 'pbp'), os.path.join(OUT, 'pbp'))
+    shutil.copytree(os.path.join(ROOT, 'stats'), os.path.join(OUT, 'stats'))      # Lineups and Clutch, one file per competition
     json.dump({'inputs': fp, 'built': datetime.datetime.now(MYT).strftime('%Y-%m-%d %H:%M MYT'), 'why': why,
                'commit': sh('git', 'rev-parse', 'HEAD', check=False)},
               open(os.path.join(OUT, 'build.json'), 'w'))

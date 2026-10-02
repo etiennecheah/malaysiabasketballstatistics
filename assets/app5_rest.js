@@ -388,7 +388,8 @@ document.addEventListener('input', e => {
   }
 });
 
-function afterRender() { /* hook for post-render work */ }
+/* post-render work: the Stats pages wire their filters and the Stats menu once the page is in place */
+function afterRender() { if (typeof statsAfterRender === 'function') statsAfterRender(); }
 
 window.addEventListener('hashchange', route);
 route();

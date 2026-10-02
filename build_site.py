@@ -9,7 +9,7 @@ D = os.path.join(R, 'data')
 PARTS = ['app1_core.js', 'app2_nav.js', 'app3_comp.js', 'app3b_family.js', 'app4_players.js',
          'app4b_profile.js', 'app4c_impact.js', 'app4d_radar.js', 'app4e_compare.js',
          'app4f_bpm.js', 'app4g_formulas.js', 'app4h_videos.js', 'app4i_games.js',
-         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app5_rest.js']
+         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app5_rest.js']
 
 def main():
     css = open(os.path.join(A, 'style.css')).read()
@@ -98,6 +98,10 @@ def main():
     # the FIBA wordmark doubles as the competition mark for FIBA events
     if payload.get('logos', {}).get('fiba'):
         payload.setdefault('complogos', {})['fiba'] = payload['logos']['fiba']
+    # the Stats pages (Lineups, Clutch): which competitions each offers; the numbers load per competition
+    sp = os.path.join(D, 'stats_index.json')
+    if os.path.exists(sp):
+        payload['stats'] = json.load(open(sp))
     # Square head crops for the small avatar discs. avatars.py cuts them once (OpenCV finds the face)
     # and they are kept in data/avatars/, each named after the portrait it was cut from, so the
     # build itself needs no image libraries. A portrait without a crop is cut now if the libraries

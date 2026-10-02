@@ -41,6 +41,17 @@ const path = require('path');
   const pcards = await page.evaluate(() => document.querySelectorAll('.pcard').length);
   if (!pcards) errors.push('Players page shows no players');
 
+  // the Stats pages pull one file per competition from stats/: both must fill their tables
+  for (const [route, body] of [['/stats/lineups', 'st-lu-tbody'], ['/stats/clutch', 'st-cl-tbody']]) {
+    await go(route);
+    let rows = 0;
+    for (let i = 0; i < 40 && !rows; i++) {
+      rows = await page.evaluate(id => { const t = document.getElementById(id); return t && !t.querySelector('.st-empty') ? t.querySelectorAll('tr').length : 0; }, body);
+      if (!rows) await page.waitForTimeout(150);
+    }
+    if (!rows) errors.push('Stats page ' + route + ' did not fill its table');
+  }
+
   for (const [cid, mid] of games) {
     await go('/c/' + cid + '/box/' + mid);
     const r = await page.evaluate(([cid, mid]) => {
