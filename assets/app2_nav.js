@@ -30,6 +30,7 @@ function subnav(label, crumb, links) {
 
 function siteLinks(state) {
   return [['#/', 'Home', state === 'home' || state === 'live'],
+          ['#/news', 'News', state === 'news'],
           ['#/players', 'Players', state === 'global-players' || state === 'player'],
           ['#/competitions', 'Competitions', state === 'hub' || state === 'notfound' || state === 'comp' || state === 'cfam'],
           ['#/pathway', 'Pathway', state === 'pathway'],
@@ -50,14 +51,16 @@ function renderNav(state, cid, tab) {
   if (!cid || state === 'hub' || state === 'global-players' || state === 'player' || state === 'compare'
       || state === 'formulas' || state === 'videos' || state === 'games' || state === 'notfound'
       || state === 'teams-hub' || state === 'team-global' || state === 'pathway' || state === 'cfam'
-      || state === 'home' || state === 'live' || state === 'me' || state === 'stats') {
+      || state === 'home' || state === 'live' || state === 'me' || state === 'stats' || state === 'news') {
     const links = siteLinks(state);
-    const label = state === 'stats' ? 'Stats' : state === 'compare' ? 'Compare' : state === 'formulas' ? 'Formulas'
+    const label = state === 'stats' ? 'Stats' : state === 'news' ? 'News' : state === 'compare' ? 'Compare' : state === 'formulas' ? 'Formulas'
       : state === 'videos' ? 'Videos' : state === 'games' ? 'Games'
       : (state === 'teams-hub' || state === 'team-global') ? 'Teams'
       : (state === 'global-players' || state === 'player') ? 'Players' : 'Competitions';
     const crumb = state === 'stats'
       ? '<span class="subnav-crumb" id="st-crumb"></span>'
+      : state === 'news'
+      ? '<span class="subnav-crumb">signings, transfers, departures and injuries, newest first</span>'
       : state === 'compare'
       ? '<span class="subnav-crumb">two players, inside a competition they both played</span>'
       : state === 'formulas'
@@ -123,6 +126,8 @@ function route() {
     state = 'team-global'; body = renderTeamGlobal(decodeURIComponent(parts[1]));
   } else if (parts[0] === 'games') {
     state = 'games'; body = renderGames();
+  } else if (parts[0] === 'news') {
+    state = 'news'; body = renderNews();
   } else if (parts[0] === 'stats') {
     // Stats: Lineups and Clutch, chosen from the menu under the Stats tab
     state = 'stats'; tab = parts[1] === 'clutch' ? 'clutch' : 'lineups'; body = renderStats(tab);

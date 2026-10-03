@@ -270,7 +270,11 @@ function playerCard(r) {
      club side — keeps his state flag, because that is all the source has. */
   const recent = career.slice().sort((a, b) => (b.c.year || 0) - (a.c.year || 0))
     .map(x => x.p.team).filter(Boolean);
-  const latest = recent.find(n => !stateSlug(n)) || recent[0] || '';
+  const dbLatest = recent.find(n => !stateSlug(n)) || recent[0] || '';
+  // a signing or a departure in the News is newer than any box score: it names the team he is with now
+  const nt = typeof newsTeam === 'function' ? newsTeam(pid) : null;
+  const latest = nt ? nt.team : dbLatest;
+  const teamLine = nt && !nt.team ? 'Free agent' : (latest || 'no team published');
 
   const stat = (v, l) => `<span class="pcard-stat"><b>${fmt1(v)}</b><span>${l}</span></span>`;
   /* The portraits are studio cut-outs, so the figure stands on the divider
@@ -278,15 +282,15 @@ function playerCard(r) {
      has published none — 4,902 of 4,906 players — an oversized monogram takes
      the same corner instead. */
   return `<a class="pcard" href="#/p/${pid}">
-    <div class="bloom" style="--team:${teamBloom(latest)}"><i class="b1"></i><i class="b2"></i></div>
+    <div class="bloom" style="--team:${teamBloom(latest || dbLatest)}"><i class="b1"></i><i class="b2"></i></div>
     <div class="grain"></div>
     <div class="pcard-in">
       <div class="pcard-body">
         <div class="pcard-main">
           <div class="pcard-eyebrow">${esc(bio.pos || '—')} · ${span}</div>
           <div class="pcard-name">${esc(r.name)}</div>
-          <div class="pcard-marks">${latest ? teamMark(latest) : ''}<span class="pcard-team">${esc(latest || 'no team published')}</span></div>
-          <div class="pcard-chips">${titles.length
+          <div class="pcard-marks">${latest ? teamMark(latest) : ''}<span class="pcard-team">${esc(teamLine)}</span></div>
+          <div class="pcard-chips">${nt ? `<span class="pcard-chip pcard-chip-new">${esc(newsTeamChip(pid))}</span>` : ''}${titles.length
             ? titles.map(x => `<span class="pcard-chip">${esc(tierShort(x.key))}${x.n > 1 ? ' ×' + x.n : ''}</span>`).join('')
             : `<span class="pcard-chip pcard-chip-none">${r.nComps} competition${r.nComps === 1 ? '' : 's'} · no title</span>`}</div>
         </div>

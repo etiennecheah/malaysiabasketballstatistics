@@ -9,7 +9,53 @@ D = os.path.join(R, 'data')
 PARTS = ['app1_core.js', 'app2_nav.js', 'app3_comp.js', 'app3b_family.js', 'app4_players.js',
          'app4b_profile.js', 'app4c_impact.js', 'app4d_radar.js', 'app4e_compare.js',
          'app4f_bpm.js', 'app4g_formulas.js', 'app4h_videos.js', 'app4i_games.js',
-         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app5_rest.js']
+         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app5_rest.js']
+
+NEWS_TYPES = ('signing', 'transfer', 'departure', 'injury', 'return', 'retirement', 'national', 'other')
+
+
+def load_news(payload):
+    """data/news.json -> the News page's items, newest first. Each item's player is tied to
+    his profile: by the pid given, or by looking the name up (same words in any order, so
+    'Wee Yong Gan' finds 'Yong Gan Wee'). An item whose player is not found stays, without a card."""
+    import re
+    p = os.path.join(D, 'news.json')
+    if not os.path.exists(p):
+        return []
+    try:
+        raw = json.load(open(p, encoding='utf-8'))
+    except ValueError as e:
+        raise SystemExit('data/news.json is not valid JSON: %s' % e)
+    items = raw.get('items', []) if isinstance(raw, dict) else raw
+    persons, palias = payload['persons'], payload.get('palias') or {}
+    words = lambda s: tuple(sorted(re.sub(r'[^a-z0-9 ]+', ' ', str(s).lower()).split()))
+    by_words = {}
+    for pid, name in persons.items():
+        by_words.setdefault(words(name), []).append(pid)
+    out, loose = [], []
+    for i, it in enumerate(items):
+        date = str(it.get('date') or '')
+        if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', date) or not str(it.get('text') or '').strip():
+            raise SystemExit('data/news.json item %d needs a date (YYYY-MM-DD) and a text' % (i + 1))
+        o = {'date': date, 'type': it.get('type') if it.get('type') in NEWS_TYPES else 'other', 'text': str(it['text']).strip()}
+        for k in ('name', 'to', 'from', 'league', 'note', 'link'):
+            if str(it.get(k) or '').strip():
+                o[k] = str(it[k]).strip()
+        pid = str(it.get('pid') or '').strip()
+        pid = palias.get(pid, pid)
+        if pid not in persons:
+            hit = by_words.get(words(it.get('name') or ''), [])
+            pid = hit[0] if len(hit) == 1 else ''
+        if pid:
+            o['pid'] = pid
+        else:
+            loose.append(o.get('name') or o['text'][:40])
+        out.append((date, -i, o))
+    out.sort(key=lambda x: (x[0], x[1]), reverse=True)
+    print('news: %d items, %d tied to a profile%s' % (len(out), len(out) - len(loose),
+                                                      (' | not found: ' + '; '.join(loose)) if loose else ''))
+    return [o for _, _, o in out]
+
 
 def main():
     css = open(os.path.join(A, 'style.css')).read()
@@ -98,6 +144,8 @@ def main():
     # the FIBA wordmark doubles as the competition mark for FIBA events
     if payload.get('logos', {}).get('fiba'):
         payload.setdefault('complogos', {})['fiba'] = payload['logos']['fiba']
+    # the News page: signings, transfers, departures, injuries (data/news.json, hand-kept)
+    payload['news'] = load_news(payload)
     # the Stats pages (Lineups, Clutch): which competitions each offers; the numbers load per competition
     sp = os.path.join(D, 'stats_index.json')
     if os.path.exists(sp):

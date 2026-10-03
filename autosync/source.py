@@ -25,7 +25,8 @@ _last = threading.local()
 
 
 class SourceError(Exception):
-    pass
+    """The source did not give us the page. status is the HTTP status when it answered with an error."""
+    status = None
 
 
 def _saved(url, folder):
@@ -57,11 +58,20 @@ def get(url, tries=3, timeout=75):
                     raw = gzip.decompress(raw)
                 _last.t = time.time()
                 return raw.decode('utf-8', 'replace')
+        except urllib.error.HTTPError as e:
+            # the source answered: "not found" is final, a server error is tried once more
+            err = e
+            _last.t = time.time()
+            if e.code < 500 or k >= 1:
+                break
+            time.sleep(2)
         except (urllib.error.URLError, OSError, EOFError) as e:
             err = e
             _last.t = time.time()
             time.sleep(2 + 3 * k)
-    raise SourceError('%s: %s' % (url, err))
+    x = SourceError('%s: %s' % (url, err))
+    x.status = getattr(err, 'code', None)
+    raise x
 
 
 def soup(html):

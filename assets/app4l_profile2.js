@@ -95,14 +95,20 @@ function pvData(pid) {
   // an approved birthday, height or weight replaces the source's
   const bio = typeof accOverBio === 'function' ? accOverBio(pid, Object.assign({}, bio0)) : bio0;
   const extra = (DB.playerExtras || {})[pid] || {};
-  const moves = extra.moves || [];
+  // career steps outside the database: the hand-kept ones, plus a signing abroad reported in the News
+  const moves = (extra.moves || []).slice();
+  (typeof newsMoves === 'function' ? newsMoves(pid) : []).forEach(m => {
+    if (!moves.some(x => x.year === m.year && String(x.team).toLowerCase() === m.team.toLowerCase())) moves.push(m);
+  });
+  // the team he is with now: the News (a signing is newer than any box score), else the hand-kept one
+  const nt = typeof newsTeam === 'function' ? newsTeam(pid) : null;
   // titles grouped by competition: "8× Agong Cup", "2× MBL"
   const tg = {};
   hon.filter(h => h.champ).forEach(h => { const t = tg[h.short] || (tg[h.short] = { short: h.short, years: [] }); t.years.push(h.year); });
   const titles = Object.values(tg).map(t => Object.assign(t, { n: t.years.length, years: t.years.sort((a, b) => a - b) }))
     .sort((a, b) => b.n - a.n || Math.max(...b.years) - Math.max(...a.years));
   const years = rows.map(r => r.c.year).concat(allHon.map(h => h.year), moves.map(m => m.year)).filter(Boolean);
-  PV.data = { pid, rows, tiers, log, hon, pathHon, isTitle, bio, titles, badges: extra.badges || [], moves, current: extra.current || '', span: years.length ? [Math.min(...years), Math.max(...years)] : null };
+  PV.data = { pid, rows, tiers, log, hon, pathHon, isTitle, bio, titles, badges: extra.badges || [], moves, current: (nt && nt.team) || extra.current || '', span: years.length ? [Math.min(...years), Math.max(...years)] : null };
   return PV.data;
 }
 const pvHonOf = (d, r) => d.hon.find(h => h.cid === r.c.id);

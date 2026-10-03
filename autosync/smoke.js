@@ -41,6 +41,10 @@ const path = require('path');
   const pcards = await page.evaluate(() => document.querySelectorAll('.pcard').length);
   if (!pcards) errors.push('Players page shows no players');
 
+  await go('/news');
+  const news = await page.evaluate(() => ({ want: (typeof DB !== 'undefined' && DB.news || []).length, got: document.querySelectorAll('.nw-item').length }));
+  if (news.want !== news.got) errors.push('News page shows ' + news.got + ' of ' + news.want + ' items');
+
   // the Stats pages pull one file per competition from stats/: both must fill their tables
   for (const [route, body] of [['/stats/lineups', 'st-lu-tbody'], ['/stats/clutch', 'st-cl-tbody']]) {
     await go(route);

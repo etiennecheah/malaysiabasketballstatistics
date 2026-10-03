@@ -1,0 +1,47 @@
+{
+ "_note": "Player news for the News page, supplied by the user. One entry per item. date: YYYY-MM-DD. type: signing, transfer, departure, injury, return, retirement, national or other. name: the player as the item writes him; pid: his id in this database (the number in his profile link, #/p/<pid>) - leave it out and the build looks the name up. to / from: the teams, as the site spells them. league: for a club outside Malaysia. text: the item itself. note: an optional second line. A signing or transfer makes 'to' the player's newest team on his card and profile until the database has later games for him.",
+ "items": [
+  {
+   "date": "2026-10-02",
+   "type": "signing",
+   "name": "Wee Yong Gan",
+   "pid": "1973897",
+   "to": "KL Titans",
+   "text": "Wee Yong Gan signed with KL Titans."
+  },
+  {
+   "date": "2026-10-01",
+   "type": "signing",
+   "name": "Tem Zhen Jie",
+   "pid": "1845447",
+   "to": "Johor Southern Tigers",
+   "text": "Tem Zhen Jie signed with Johor Southern Tigers."
+  },
+  {
+   "date": "2026-09-30",
+   "type": "signing",
+   "name": "Tychique Bosango",
+   "pid": "2370342",
+   "to": "Omni Erdenet Miners",
+   "league": "The League (Mongolia)",
+   "text": "Omni Erdenet Miners announced the signing of Tychique Bosango.",
+   "note": "Tychi Bosango is a Malaysia naturalised player; he will play in Mongolia as an Asian import."
+  },
+  {
+   "date": "2026-09-22",
+   "type": "signing",
+   "name": "Maegen Mahadevan",
+   "pid": "2778711",
+   "to": "Johor Southern Tigers",
+   "text": "Maegen Mahadevan signed with Johor Southern Tigers."
+  },
+  {
+   "date": "2026-09-08",
+   "type": "departure",
+   "name": "Maegen Mahadevan",
+   "pid": "2778711",
+   "from": "NS Matrix Deers",
+   "text": "Maegen Mahadevan announced he has left NS Matrix Deers after 3 years of service."
+  }
+ ]
+}

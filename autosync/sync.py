@@ -264,23 +264,37 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
 
         def one(pid):
             return pid, source.pstats(fetch(B + 'person/' + pid + '/statistics'))
-        written, failed = set(), []
+        # who took the floor in the games just read (a 0:00 line is a player who was only listed)
+        played = {p['pid'] for m in res['new_games'] for p in st.boxes[m]['p']
+                  if p.get('pid') and p.get('min') not in ('', '0:00', '00:00', None)}
+        written, failed, absent, gone = set(), [], [], []
         with cf.ThreadPoolExecutor(WORKERS) as ex:
             futs = {ex.submit(one, p): p for p in sorted(pids)}
             for fu in cf.as_completed(futs):
+                pid = futs[fu]
                 try:
-                    pid, (heads, rows) = fu.result()
+                    _, (heads, rows) = fu.result()
                 except source.SourceError as e:
-                    failed.append(futs[fu])
+                    # The source answers 500 (or 404) for the statistics page of a player it has no
+                    # line for - and, on a bad day, for some it had one for last week. Nothing is
+                    # published for him now: whatever we hold is kept. It is a failure only for a
+                    # player of the game just read, whose line has to move.
+                    if getattr(e, 'status', None) in (404, 500) and pid not in played:
+                        absent.append(pid)
+                    else:
+                        failed.append(pid)
                     continue
-                if heads is None:
-                    continue                # no statistics table: he has not played
+                if heads is None or not rows:
+                    # no statistics table, or an empty one (only "Competition | Team")
+                    (failed if pid in played else absent).append(pid)
+                    continue
                 miss = [k for k in list(SRC) + ['Team', 'Competition'] if k not in heads]
                 if miss:
-                    raise Gate('player statistics page lost columns: ' + ', '.join(miss[:5]))
+                    raise Gate('player %s: statistics page lost columns: %s' % (pid, ', '.join(miss[:5])))
                 row = next((r for r in rows if r[0].strip().lower() == want), None) or (rows[0] if len(rows) == 1 else None)
                 if row is None:
-                    continue                # listed at 0:00 only: the source publishes no line
+                    gone.append(pid)        # he has lines, but none for this competition: listed at 0:00 only
+                    continue
                 line = to_line(heads, row).split('\t')
                 line[0] = canon_team(line[0], known)
                 line = '\t'.join(line)
@@ -288,16 +302,20 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
                     lines_changed += 1
                 st.persons[cid + ':' + pid] = line
                 written.add(pid)
+        held = [p for p in absent if (cid + ':' + p) in st.persons]
+        if held:
+            note('%d player page(s) not published by the source now: the lines we hold are kept' % len(held))
         if failed:
             res['lines_failed'] = sorted(failed)
             note('season lines not read for %d player(s): tried again next time' % len(failed))
         if lines == 'all' and not failed:
-            drop = [p for p in c['players'] if p not in written]
+            # the source really publishes no line for him in this competition any more
+            drop = [p for p in c['players'] if p in gone]
             if len(drop) > max(3, len(c['players']) // 20):
                 raise Gate('%d of %d season lines would disappear' % (len(drop), len(c['players'])))
             for p in drop:
                 st.persons.pop(cid + ':' + p, None)
-            c['players'] = sorted(written)
+            c['players'] = sorted((set(c['players']) - set(drop)) | written)
         else:
             c['players'] = sorted(set(c['players']) | written)
 
