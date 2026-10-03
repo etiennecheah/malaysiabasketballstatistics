@@ -1,21 +1,16 @@
 {
  "built": {
-  "at": 1791007150.2762687,
-  "fp": "2990b4b9b8f2ec0b3607"
+  "at": 1791009020.1991947,
+  "fp": "c064768647aee10a0f85"
  },
  "daily": {
-  "48654": "2026-10-03"
+  "48654": "2026-10-03",
+  "49965": "2026-10-03"
  },
- "fail": {
-  "49965": {
-   "last": 1791007173.9806633,
-   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/standings?phaseName=Preliminary%20Round&: HTTP Error 500: Internal Server Error",
-   "n": 3,
-   "next": 1791007353.9806633
-  }
- },
+ "fail": {},
  "full": {
-  "48654": 1791007173.9806633
+  "48654": 1791007173.9806633,
+  "49965": 1791008731.955976
  },
  "lines_retry": {},
  "log": [
@@ -24,7 +19,8 @@
   "2026-10-03 05:27  FAILED 49965 (1): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
   "2026-10-03 08:49  FAILED 48654 (2): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
   "2026-10-03 08:49  FAILED 49965 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/standings: HTTP Error 500: Internal Server Error",
-  "2026-10-03 14:04  FAILED 49965 (3): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/standings?phaseName=Preliminary%20Round&: HTTP Error 500: Internal Server Error"
+  "2026-10-03 14:04  FAILED 49965 (3): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/standings?phaseName=Preliminary%20Round&: HTTP Error 500: Internal Server Error",
+  "2026-10-03 14:30  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [8 player page(s) not published by the source now: the lines we hold are kept]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
