@@ -6,16 +6,16 @@
  "daily": {},
  "fail": {
   "48654": {
-   "last": 1790975878.1814218,
+   "last": 1790988185.9720442,
    "msg": "player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
-   "n": 1,
-   "next": 1790976478.1814218
+   "n": 2,
+   "next": 1790989385.9720442
   },
   "49965": {
-   "last": 1790975878.1814218,
-   "msg": "player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
-   "n": 1,
-   "next": 1790976478.1814218
+   "last": 1790988185.9720442,
+   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/standings: HTTP Error 500: Internal Server Error",
+   "n": 2,
+   "next": 1790988305.9720442
   }
  },
  "full": {},
@@ -23,7 +23,9 @@
  "log": [
   "2026-10-03 00:51  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 SELANGOR TIGER 104-107 SUPERSPORTS x REX BBA",
   "2026-10-03 05:23  FAILED 48654 (1): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
-  "2026-10-03 05:27  FAILED 49965 (1): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM"
+  "2026-10-03 05:27  FAILED 49965 (1): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
+  "2026-10-03 08:49  FAILED 48654 (2): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
+  "2026-10-03 08:49  FAILED 49965 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/standings: HTTP Error 500: Internal Server Error"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
