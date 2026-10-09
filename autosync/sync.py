@@ -143,6 +143,42 @@ def canon_team(team, known):
 
 
 # ---- one competition -------------------------------------------------------------------
+def flip_name(n):
+    """'Surname, Given[, English]' as the roster pages write it -> 'Given[, English] Surname',
+    the order the box scores and the rest of the site use."""
+    if ',' not in n:
+        return n.strip()
+    sur, rest = n.split(',', 1)
+    return rest.strip() + ' ' + sur.strip()
+
+
+def sync_rosters(st, c, B, fetch, note):
+    """Teams page and every team's roster page. A team the source has added joins the
+    competition; a roster page that comes back empty keeps the one we hold."""
+    T = source.teams(fetch(B + 'teams'))
+    if not T:
+        note('the teams page lists no teams: ours kept')
+        return
+    reg, preg = st.bb['teamReg'], st.bb['personReg']
+    for tid, name in T:
+        reg.setdefault(tid, name)
+        if tid not in c['teams']:
+            c['teams'].append(tid)
+    held = {tid: rows for tid, rows in c['roster']}
+    got = 0
+    for tid, name in T:
+        rows = source.roster(fetch(B + 'team/' + tid + '/roster'))
+        if not rows:
+            continue
+        got += 1
+        held[tid] = [[r[0]] + r[2:9] for r in rows]
+        for r in rows:
+            preg.setdefault(r[0], flip_name(r[1]))
+    c['roster'] = [[tid, held[tid]] for tid in c['teams'] if tid in held]
+    if got < len(T):
+        note('rosters published for %d of %d teams' % (got, len(T)))
+
+
 def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), extra_pids=(), fetch=source.get, log=print):
     """Returns a dict: changed, new_games, box_missing, pbp_missing, pbp_found, notes.
 
@@ -232,8 +268,13 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
     for g in out:
         if g[1] == 'COMPLETE' and g[0] in st.boxes:
             g[8] = 1
-    before = json.dumps([c['games'], c['stand'], c['lead'], c['players']], sort_keys=True)
+    before = json.dumps([c['games'], c['stand'], c['lead'], c['players'], c['teams'], c['roster']], sort_keys=True)
     c['games'] = out
+
+    # ---- teams and rosters, on the daily pass of a competition still being played (a
+    # roster is often published only days before tip-off, and squads change during it)
+    if force and any(g[1] != 'COMPLETE' and g[0] not in st.not_played for g in out):
+        sync_rosters(st, c, B, fetch, note)
 
     # ---- standings, every phase and pool
     if need_box or force:
@@ -323,7 +364,7 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
         else:
             c['players'] = sorted(set(c['players']) | written)
 
-    after = json.dumps([c['games'], c['stand'], c['lead'], c['players']], sort_keys=True)
+    after = json.dumps([c['games'], c['stand'], c['lead'], c['players'], c['teams'], c['roster']], sort_keys=True)
     res['changed'] = bool(before != after or res['new_games'] or res['pbp_found'] or lines_changed)
     res['fx_changed'] = fx_changed
     res['lines_changed'] = lines_changed

@@ -2405,6 +2405,32 @@
     ]
    ],
    "nolines": true
+  },
+  {
+   "id": "50247",
+   "name": "MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men",
+   "teams": [
+    "204483",
+    "204478",
+    "204477",
+    "204482",
+    "204480",
+    "204479",
+    "204481"
+   ],
+   "roster": []
+  },
+  {
+   "id": "50248",
+   "name": "MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women",
+   "teams": [
+    "195486",
+    "204693",
+    "204695",
+    "204692",
+    "204694"
+   ],
+   "roster": []
   }
  ],
  "teamReg": {
@@ -2423,7 +2449,19 @@
   "159207": "Sarawak",
   "159206": "Selangor 1",
   "159213": "Selangor 2",
-  "159211": "Terengganu"
+  "159211": "Terengganu",
+  "204483": "ATM",
+  "204478": "Johor",
+  "204477": "Negeri Sembilan",
+  "204482": "Pahang",
+  "204480": "PDRM",
+  "204479": "Perak",
+  "204481": "Selangor",
+  "195486": "Johor",
+  "204693": "Kelantan",
+  "204695": "Negeri Sembilan",
+  "204692": "Sarawak",
+  "204694": "Selangor"
  },
  "personReg": {
   "1974922": "Jun Le, Christy Ho",

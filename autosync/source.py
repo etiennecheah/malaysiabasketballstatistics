@@ -185,6 +185,36 @@ def leaders(html):
     return out
 
 
+# ---- teams and rosters --------------------------------------------------------------
+def teams(html):
+    """The competition's teams page -> [(team id, name)], in page order, each once."""
+    out, seen = [], set()
+    for a in soup(html).select('a[href*="/team/"]'):
+        m = re.search(r'/team/(\d+)', a.get('href') or '')
+        name = re.sub(r'\s+', ' ', _t(a))
+        if m and name and m.group(1) not in seen:
+            seen.add(m.group(1))
+            out.append((m.group(1), name))
+    return out
+
+
+def roster(html):
+    """A team's roster page -> [[pid, name, num, dob, age, ht, wt, pos, nat]] (the source's
+    'Player Name | Shirt Number | Date of Birth | Age | Height | Weight | Position | Nationality')."""
+    out = []
+    for t in soup(html).select('table'):
+        heads = [_t(h) for h in t.select('th')]
+        if 'Player Name' not in heads:
+            continue
+        for r in t.select('tbody tr'):
+            c = _cells(r)
+            pid = _pid(r.select_one('a[href*="/person/"]'))
+            if pid and len(c) >= 8:
+                out.append([pid, re.sub(r'\s+', ' ', c[0])] + c[1:8])
+        break
+    return out
+
+
 # ---- a player's published season lines -------------------------------------------
 def pstats(html):
     for t in soup(html).select('table'):

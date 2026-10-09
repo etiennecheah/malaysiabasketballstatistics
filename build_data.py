@@ -605,6 +605,7 @@ def main():
                 rb = raw_boxes.get(mid, {}).get('p', [])
                 if mid in played_anyway and {ln.get('team') for ln in rb} == {h, a}:
                     row['st'] = 'COMPLETE'
+                    row['box'] = 1
                     row.pop('np')
             # A finished game the source lists without a score (all 23 of the 2024
             # Agong Cup men's games but one) still has its box score. The players'
