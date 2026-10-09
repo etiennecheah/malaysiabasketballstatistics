@@ -726,6 +726,10 @@ def main():
             'series': series,
             'teams': c['teams'], 'stand': stand, 'groups': groups,
             'champ': champ, 'champHow': champ_how, **({'standFix': stand_fix} if stand_fix else {}),
+            # hand-built competitions (manual_comps.json) can carry the final placings the
+            # organisers announced and a note on how their group tables were made
+            **({'final': c['final']} if c.get('final') else {}),
+            **({'standNote': c['standNote']} if c.get('standNote') else {}),
             **({'open': open_comps[c['id']]} if c['id'] in open_comps else {}), 'games': games, 'roster': roster,
             'players': players, 'leaders': leaders,
             'start': dates[0] if dates else None, 'end': dates[-1] if dates else None,

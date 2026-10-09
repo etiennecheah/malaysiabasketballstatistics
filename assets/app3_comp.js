@@ -311,16 +311,43 @@ function standTable(cid, rows, compact) {
   </table></div>`;
 }
 
+/* Final placings of a championship decided by knockout and classification games,
+   1st to last, with each team's whole record in the competition (c.final, hand-built
+   competitions only: [[place, team, how]]). */
+function finalCard(c) {
+  if (!c.final || !c.final.length) return '';
+  const rec = {};
+  c.games.forEach(g => {
+    if (g.st !== 'COMPLETE' || g.hs == null || g.as == null) return;
+    [[g.h, g.hs, g.as], [g.a, g.as, g.hs]].forEach(([t, f, x]) => {
+      const r = rec[t] || (rec[t] = { w: 0, l: 0, pf: 0, pa: 0 });
+      r.pf += f; r.pa += x; if (f > x) r.w++; else r.l++;
+    });
+  });
+  const medal = p => p === 1 ? 'gold' : p === 2 ? 'silver' : p === 3 ? 'bronze' : '';
+  return `<div class="card final-card">
+    <div class="card-head">Final standings<span class="hint">${c.final.length} teams · decided by the knockout and classification games</span></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th class="nosort">Place</th><th class="left nosort">Team</th><th class="nosort">W</th><th class="nosort">L</th><th class="nosort">For</th><th class="nosort">Agst</th><th class="nosort">Diff</th><th class="left nosort" style="padding-right:20px;">How</th></tr></thead>
+      <tbody>${c.final.map(([p, t, how]) => { const r = rec[t] || { w: 0, l: 0, pf: 0, pa: 0 }; return `<tr class="${p === 1 ? 'cx-me' : ''}">
+        <td><span class="final-place ${medal(p)}">${p}</span></td>
+        <td class="left"><div class="team">${crest(t)}${teamLinkC(c.id, t)}</div></td>
+        <td>${r.w}</td><td>${r.l}</td><td>${r.pf}</td><td>${r.pa}</td><td>${fmtPM(r.pf - r.pa)}</td>
+        <td class="left" style="padding-right:20px;color:var(--text-muted);">${esc(how || '')}</td></tr>`; }).join('')}</tbody>
+    </table></div>
+  </div>`;
+}
+
 function renderStandings(cid) {
   const c = COMP_BY_ID[cid];
   if (!c.stand.length) return page(c, 'Standings', `<div class="card"><div class="empty-row"><span class="empty-dot"></span>This competition's source page publishes no standings table.</div></div>`);
   const nSb = c.games.filter(g => g.sb).length;
   const fix = c.standFix || [];
-  const note = `<div class="note">${fix.length
+  const note = c.standNote ? `<div class="note">${esc(c.standNote)}</div>` : `<div class="note">${fix.length
     ? `The source's table${fix.length > 1 ? 's' : ''} for ${fix.map(t => esc(groupParts(t).name || t)).join(' and ')} stopped updating before the group games were finished, so ${fix.length > 1 ? 'they are' : 'it is'} rebuilt here from the results: 2 points a win, 1 a loss, ordered by points and then points difference (head-to-head is not applied). ${nSb} game${nSb === 1 ? '' : 's'} had no published score; ${nSb === 1 ? 'its score is' : 'their scores are'} the sum of each team's points in the box score.${fix.length < c.groups.length ? ' Other tables are as published.' : ''}`
     : 'Standings exactly as published by the competition\'s own standings page — position, games played, win/loss, points for and against, difference, win percentage and competition points.'}${c.groups.length > 1 ? ` The source publishes each group on its own page; all ${c.groups.length} are shown here, in the order they were played. Knockout rounds publish no table — their results are under Games.` : ''}</div>`;
   if (c.groups.length <= 1) {
-    return page(c, 'Standings', `<div class="card">${standTable(cid, c.stand)}${note}</div>`);
+    return page(c, 'Standings', `${finalCard(c)}<div class="card">${standTable(cid, c.stand)}${note}</div>`);
   }
   // one section per phase, each group a card of its own
   const phases = [];
@@ -333,6 +360,7 @@ function renderStandings(cid) {
   // the source numbers some pools out of order (NXT's Group B is pool 1)
   phases.forEach(ph => ph.groups.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true })));
   return page(c, 'Standings', `
+    ${finalCard(c)}
     ${c.champ ? `<div class="champ-line">${crest(c.champ, 22)}<span><b>${esc(c.champ)}</b> won the competition${c.champHow === 'final' ? ' — decided in the final, not by any group table' : ''}.</span></div>` : ''}
     ${phases.map(ph => `
       ${ph.phase ? `<div class="stand-phase">${esc(ph.phase)}<span>${ph.groups.length} group${ph.groups.length === 1 ? '' : 's'}</span></div>` : ''}

@@ -3360,3 +3360,12 @@
     .nw-card{ padding:14px 15px 16px; }
     .nw-head{ font-size:17px; }
   }
+
+/* Final standings card (hand-built championships with classification games) */
+.final-card{ margin-bottom:16px; }
+.final-card tr.cx-me td{ background:var(--accent-2-soft); }
+.final-place{ display:inline-flex; align-items:center; justify-content:center; min-width:26px; height:26px; border-radius:13px;
+  font-family:var(--display); font-weight:700; font-size:13px; color:var(--text); background:var(--surface-alt); }
+.final-place.gold{ background:#E9B949; color:#1D1607; }
+.final-place.silver{ background:#C3C8D0; color:#16181C; }
+.final-place.bronze{ background:#C98A55; color:#1E1208; }
