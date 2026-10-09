@@ -14,6 +14,48 @@ PARTS = ['app1_core.js', 'app2_nav.js', 'app3_comp.js', 'app3b_family.js', 'app4
 NEWS_TYPES = ('signing', 'transfer', 'departure', 'injury', 'return', 'retirement', 'national', 'other')
 
 
+
+# the career path's short name for a competition (app4l_profile2.js pvShortKey + app1_core.js
+# tierShort); hand-kept honours are written with it ("National U15", "Agong Cup", "MBL")
+_PV_SHORT = {'MABA/MATRIX 17 & Below': 'National', 'MILO Lum Mun Chak Cup': 'National'}
+_TIER_ABBR = {'Malaysia D-League': 'D-League', 'Major Basketball League': 'MBL',
+              'MABA/MATRIX 17 & Below': 'MATRIX 17U', 'MILO Lum Mun Chak Cup': 'Lum Mun Chak',
+              'MABA/MATRIX Cup': 'MATRIX Cup', 'Schools Championship': 'Schools',
+              'NXT Championship': 'NXT', 'Sukan Malaysia': 'SUKMA', 'Sukan Selangor': 'SUKSES',
+              "Women's Basketball Alliance": 'WMBA'}
+
+
+def path_short(c):
+    s, lvl = c.get('series') or '', c.get('level') or ''
+    if s in _PV_SHORT:
+        return _PV_SHORT[s] + (' ' + lvl if lvl and lvl != 'Open' else '')
+    a = _TIER_ABBR.get(s, s)
+    return a if lvl == 'Open' else a + ' ' + lvl
+
+
+def honour_targets(payload):
+    """person id -> [(year, short name, competition id, team)] for every line with games."""
+    keys = payload['pkeys']
+    gi = keys.index('g')
+    out = {}
+    for c in payload['comps']:
+        sh = path_short(c)
+        for r in c['players']:
+            if len(r) > gi and r[gi]:
+                out.setdefault(r[0], []).append((c.get('year'), sh, c['id'], r[1] or ''))
+    return out
+
+
+def link_honour(h, lines):
+    """The competition a cid-less honour describes: same year, same short name, and the
+    player's team there when the honour names one. Only an unambiguous match counts."""
+    cand = [x for x in lines if x[0] == h.get('year') and x[1] == h.get('short')]
+    if h.get('team') and len(cand) > 1:
+        t = str(h['team']).strip().lower()
+        cand = [x for x in cand if x[3].strip().lower() == t]
+    return cand[0][2] if len(cand) == 1 else None
+
+
 def load_news(payload):
     """data/news.json -> the News page's items, newest first. Each item's player is tied to
     his profile: by the pid given, or by looking the name up (same words in any order, so
@@ -90,12 +132,22 @@ def main():
     if os.path.exists(hp):
         H = {}
         alias = payload.get('palias', {})
+        linkable = honour_targets(payload)
+        linked = 0
         for k, v in json.load(open(hp)).items():
             if k.startswith('_'):
                 continue
             k = alias.get(k, k)          # an honour filed on a merged-away id follows the player
             dst = H.setdefault(k, [])
             for h in v:
+                # an honour typed in before its competition was imported names no cid; once the
+                # player's line for that event is in the database, the honour belongs to it, or the
+                # career path shows the event twice (once as the honour, once as the stat line)
+                if not h.get('cid') and not h.get('pathOnly'):
+                    c = link_honour(h, linkable.get(k, []))
+                    if c:
+                        h = dict(h, cid=c)
+                        linked += 1
                 same = next((x for x in dst if (h.get('cid') and x.get('cid') == h.get('cid')) or
                              (not h.get('cid') and not x.get('cid') and x.get('year') == h.get('year') and x.get('short') == h.get('short'))), None)
                 if same:
@@ -105,6 +157,8 @@ def main():
                     dst.append(dict(h))
             dst.sort(key=lambda x: -(x.get('year') or 0))
         payload['honours'] = H
+        if linked:
+            print('honours: %d linked to a competition now in the database' % linked)
     # people the user asked to add who have no competition in the database yet
     xp = os.path.join(D, 'extra_persons.json')
     if os.path.exists(xp):

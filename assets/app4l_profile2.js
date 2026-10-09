@@ -246,6 +246,14 @@ function pvPath(d) {
   d.hon.concat(d.pathHon).filter(h => !h.cid || !d.rows.some(r => r.c.id === h.cid)).forEach(h => { (by[h.year] = by[h.year] || []).push({ h }); });
   d.moves.forEach(m => { (by[m.year] = by[m.year] || []).push({ m }); });
   const ys = Object.keys(by).sort();
+  // two events of one year can share a short name: a qualifying round and its finals
+  // ("National U17" twice), or two invitationals. Name the qualifier as one, and give
+  // any other pair the team the player was with, so neither reads as a repeated entry.
+  const isQ = r => /qualif/i.test(r.c.name || '');
+  const nShort = {}, nMain = {};
+  d.rows.forEach(r => { const k = r.c.year + '|' + r.short; nShort[k] = (nShort[k] || 0) + 1; if (!isQ(r)) nMain[k] = (nMain[k] || 0) + 1; });
+  const rowLabel = r => nShort[r.c.year + '|' + r.short] > 1 && isQ(r) ? r.short + ' qualifier' : r.short;
+  const rowTeam = r => !isQ(r) && nMain[r.c.year + '|' + r.short] > 1 && r.p.team ? `<div class="tm">${esc(pvCase(r.p.team))}</div>` : '';
   const lines = (champ, awards, placing) => {
     const gold = [champ ? '★ Champion' : ''].concat(awards.filter(a => /MVP/.test(a)).map(a => '★ ' + a)).filter(Boolean);
     return (gold.length ? `<div class="st">${gold.join('<br>')}</div>` : '') + (placing ? `<div class="pl">◆ ${esc(placing)}</div>` : '') + awards.filter(a => !/MVP/.test(a)).map(a => pvMedalCls(a) ? `<div class="md ${pvMedalCls(a)}">● ${esc(a)}</div>` : `<div class="aw">${esc(a)}</div>`).join('');
@@ -254,7 +262,7 @@ function pvPath(d) {
     if (x.m) return `<div class="it abroad">${crest(x.m.team, 18)}<span>${esc(x.m.team)}</span></div><div class="aw lg">↗ ${esc(x.m.league)} · signed</div>`;
     if (x.h) return `<div class="it ${x.h.champ ? 'win' : ''}" ${x.h.team ? `title="${esc(pvCase(x.h.team))}"` : ''}>${pvMark(x.h, 18)}<span>${x.h.cid ? `<a href="#/c/${x.h.cid}">${esc(x.h.short)}</a>` : esc(x.h.short)}</span></div>${x.h.pathOnly && x.h.team ? `<div class="tm">${esc(pvCase(x.h.team))}</div>` : ''}${lines(x.h.champ, x.h.awards, x.h.placing)}`;
     const r = x.r, h = pvHonOf(d, r), win = d.isTitle(r) || (h && h.champ);
-    return `<a class="it ${win ? 'win' : ''}" href="#/c/${r.c.id}">${crest(r.p.team, 18)}<span>${esc(r.short)}</span></a>${lines(win, h ? h.awards : [])}`;
+    return `<a class="it ${win ? 'win' : ''}" href="#/c/${r.c.id}" title="${esc(r.c.label || r.c.name)}">${crest(r.p.team, 18)}<span>${esc(rowLabel(r))}</span></a>${rowTeam(r)}${lines(win, h ? h.awards : [])}`;
   };
   const rank = x => x.m ? 5 : x.h ? (x.h.champ ? 1 : 0) + x.h.awards.length : (d.isTitle(x.r) ? 1 : 0) + ((pvHonOf(d, x.r) || {}).awards || []).length;
   return `<div class="pv-path" style="--n:${ys.length}">${ys.map(y => { const pre = by[y].every(x => x.h || x.m) && !by[y].some(x => x.m);
