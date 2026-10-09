@@ -254,7 +254,11 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
 
     # ---- published season lines
     lines_changed = 0
-    if lines == 'all':
+    if c.get('nolines'):
+        # the source publishes no season lines for this competition (2022 MATRIX U17 Girls):
+        # the build makes them from the box scores, so there is nothing to read or retry
+        pids = set()
+    elif lines == 'all':
         pids = set(c['players']) | {p['pid'] for g in out if g[0] in st.boxes for p in st.boxes[g[0]]['p'] if p.get('pid')}
     else:
         pids = set(new_pids) | set(extra_pids)

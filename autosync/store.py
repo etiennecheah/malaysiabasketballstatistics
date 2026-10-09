@@ -22,6 +22,30 @@ class Store:
         npp = os.path.join(d, 'not_played.json')
         self.not_played = json.load(open(npp)) if os.path.exists(npp) else {}
         self.pbp_new = {}
+        self.queued = self._queue(d)
+
+    def _queue(self, d):
+        """Competitions waiting to be imported (data/add_comps.json): the teams, rosters and
+        names read by hand, with no fixtures. They join the backbone in memory here; the
+        first sync of each reads everything else from the source, and its save makes the
+        competition permanent. One already in the backbone is skipped."""
+        qp = os.path.join(d, 'add_comps.json')
+        if not os.path.exists(qp):
+            return []
+        q = json.load(open(qp))
+        have = {c['id'] for c in self.bb['comps']}
+        added = []
+        for c in q.get('comps', []):
+            if c['id'] in have:
+                continue
+            self.bb['comps'].append(dict(c, games=[], stand=[], lead=[], players=[]))
+            added.append(c['id'])
+        if added:
+            for k, v in q.get('teamReg', {}).items():
+                self.bb['teamReg'].setdefault(k, v)
+            for k, v in q.get('personReg', {}).items():
+                self.bb['personReg'].setdefault(k, v)
+        return added
 
     def comp(self, cid):
         return next(c for c in self.bb['comps'] if c['id'] == cid)

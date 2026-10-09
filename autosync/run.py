@@ -118,6 +118,13 @@ def plan(st, state, now):
             P['hold'] = True
         if any(t + POLL_UNTIL < now <= t + OVERDUE_FOR for t in tips):
             P['overdue'].append(cid)
+        if not c['games']:
+            # a competition added with its teams and rosters but no fixtures yet: the first
+            # pass reads everything the source has (fixtures, every box score and play-by-play,
+            # standings, leaders, season lines), whatever the date and however old the event
+            if state['daily'].get(cid) != today.strftime('%Y-%m-%d'):
+                P['daily'].append(cid)
+            continue
         last = max([t for t in (tipoff(g[2]) for g in c['games'] if g[1] == 'COMPLETE') if t] or [0])
         if (opens or cid in more or now - last < RECENT) and today.hour >= DAILY_HOUR and \
                 state['daily'].get(cid) != today.strftime('%Y-%m-%d'):

@@ -528,8 +528,10 @@ def main():
     # Box scores and roster names recovered by hand after the competition was first read
     # (data/recovered.json). Whatever the portal sync holds for the same game or person wins.
     rp = os.path.join(D, 'recovered.json')
+    played_anyway = {}
     if os.path.exists(rp):
         RC = json.load(open(rp))
+        played_anyway = RC.get('played', {})
         nb = sum(1 for m, b in RC.get('boxes', {}).items() if raw_boxes.setdefault(m, b) is b)
         for k, v in RC.get('personReg', {}).items():
             bb['personReg'].setdefault(k, v)
@@ -580,6 +582,7 @@ def main():
 
     comps_out = []
     box_line_log = []
+    box_only = []
     for c in bb['comps']:
         cid = c['id']
         known = [team_reg[t] for t in c['teams'] if t in team_reg]
@@ -596,6 +599,13 @@ def main():
             if mid in not_played:
                 row['st'] = 'NOT_PLAYED'
                 row['np'] = not_played[mid]
+                # ... unless its box score exists after all (the source marked it final but left the
+                # score off the fixture list): then it was played, and the score comes from the box
+                # (listed in data/recovered.json "played", and only when that box has both teams)
+                rb = raw_boxes.get(mid, {}).get('p', [])
+                if mid in played_anyway and {ln.get('team') for ln in rb} == {h, a}:
+                    row['st'] = 'COMPLETE'
+                    row.pop('np')
             # A finished game the source lists without a score (all 23 of the 2024
             # Agong Cup men's games but one) still has its box score. The players'
             # points add up to the team score in 2,143 of 2,146 games that do publish
@@ -682,6 +692,19 @@ def main():
         # Player stat lines, emitted as schema-ordered arrays (['pid','team'] + PF_KEYS)
         # so the 41 key names aren't repeated 9,424 times in the payload.
         players = []
+        # a player with box-score minutes always gets a line: the source's statistics page is
+        # empty for some seasons (2022 MATRIX U17) and for players whose page failed when read;
+        # box_season_lines() then builds it from the box scores
+        listed = set(c['players'])
+        for g in games:
+            if g['st'] != 'COMPLETE':
+                continue
+            for ln in raw_boxes.get(g['mid'], {}).get('p', []):
+                p = ln.get('pid')
+                if p and p not in listed and p in bb['personReg'] and _secs(ln.get('min')) > 0:
+                    c['players'].append(p)
+                    listed.add(p)
+                    box_only.append((cid, p))
         from_box = box_season_lines(cid, c, games, raw_boxes, persons)
         if from_box:
             box_line_log.append((cid, sorted(from_box)))
@@ -748,9 +771,12 @@ def main():
                     name_to_tid[nm] = tid
                     team_reg[tid] = nm
 
+    if box_only:
+        print('players with box-score minutes but no listed line: %d (%s)' % (
+            len(box_only), ', '.join(sorted({c for c, _ in box_only}))))
     if box_line_log:
         print('season lines rebuilt from box scores: %s' % '; '.join(
-            '%s %s' % (cid, ','.join(p)) for cid, p in box_line_log))
+            '%s %s' % (cid, ','.join(p) if len(p) <= 8 else '%d players' % len(p)) for cid, p in box_line_log))
 
     photos = load_photos(pidmap, set(person_reg))
     logos = load_logos()
