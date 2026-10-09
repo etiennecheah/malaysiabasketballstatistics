@@ -63,6 +63,10 @@ def clock_minutes(tm):
 # Sarawak; Negeri Sembilan won it (the user: an eight-peat of Agong Cup titles).
 CHAMP_OVERRIDE = {'39599': 'Negeri Sembilan'}
 
+# competitions whose source name does not say which series they belong to: the 2019 Agong
+# Cup is published as "61st MABA/MATRIX National Basketball Championship For Men/Women"
+SERIES_OVERRIDE = {'25502': 'Agong Cup', '25503': 'Agong Cup'}
+
 def champion(games, stand, groups, name=''):
     """Who won a finished competition, and how that was decided.
 
@@ -182,7 +186,7 @@ def split_team_cell(cell, known):
     return cell, ''
 
 
-def comp_meta(name, games):
+def comp_meta(name, games, cid_hint=None):
     """Derive year / gender / age level / series from the competition name and its fixtures."""
     n = name
     low = n.lower()
@@ -214,14 +218,16 @@ def comp_meta(name, games):
         lvl = 'U23'
     elif re.search(r'u20|under[- ]?20', low):
         lvl = 'U20'
-    elif re.search(r'17\s*&\s*below|u17', low):
+    elif re.search(r'17\s*&\s*(below|under)|u17', low):
         lvl = 'U17'
-    elif re.search(r'15\s*&\s*below|u15', low):
+    elif re.search(r'15\s*&\s*(below|under)|u15', low):
         lvl = 'U15'
     elif re.search(r'school|sekolah|nxt', low):
         lvl = 'Youth'
 
-    if low.startswith('fiba'):
+    if cid_hint in SERIES_OVERRIDE:
+        series = SERIES_OVERRIDE[cid_hint]
+    elif low.startswith('fiba'):
         series = 'FIBA'
     elif 'd-league' in low:
         series = 'Malaysia D-League'
@@ -229,8 +235,10 @@ def comp_meta(name, games):
         series = 'Agong Cup'
     elif 'lum mun chak' in low:
         series = 'MILO Lum Mun Chak Cup'
-    elif 'matrix' in low and '17' in low:
-        series = 'MABA/MATRIX 17 & Below'
+    elif ('matrix' in low and '17' in low) or 'njbc' in low or re.search(r'17\s*&\s*under', low):
+        series = 'MABA/MATRIX 17 & Below'          # 2019: "55th MABA 17 & Under NJBC"
+    elif 'maba cup' in low:
+        series = 'MABA/MATRIX Cup'                 # 2019: "25th MABA Cup", the 28th-30th are MABA/MATRIX Cup
     elif 'matrix cup' in low or 'matrix' in low:
         series = 'MABA/MATRIX Cup'
     elif 'sukan malaysia' in low:
@@ -631,7 +639,7 @@ def main():
                     row['ff'] = 1
             games.append(row)
 
-        year, gender, lvl, series = comp_meta(c['name'], games)
+        year, gender, lvl, series = comp_meta(c['name'], games, c['id'])
 
         # Every group the competition publishes. The source serves one group per
         # page (phase x pool), so a championship with four groups is four tables;

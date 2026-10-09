@@ -117,12 +117,15 @@ def apply(bb, persons, boxes, pidmap, names):
             raise AssertionError('merge collides on stat line %s' % nk)
         persons[nk] = persons.pop(k)
 
+    played = lambda ln: str(ln.get('min') or '') not in ('', '0:00', '00:00')
     box = 0
     for mid, b in boxes.items():
-        seen = set()
+        seen = {}
+        keep = []
         for line in b.get('p', []):
             p = line.get('pid')
             if not p:
+                keep.append(line)
                 continue
             q = m(p)
             if q != p:
@@ -130,8 +133,19 @@ def apply(bb, persons, boxes, pidmap, names):
                 box += 1
             key = (q, line.get('team'))
             if key in seen:
+                # a player registered twice for one event is listed twice in its box scores;
+                # for a confirmed "rebuild" group the line where he did not play is dropped
+                old = seen[key]
+                if q in REBUILD and not (played(old) and played(line)):
+                    if played(line):
+                        keep[keep.index(old)] = line
+                        seen[key] = line
+                    continue
                 raise AssertionError('merge collides in game %s: two lines for %s' % (mid, q))
-            seen.add(key)
+            seen[key] = line
+            keep.append(line)
+        if len(keep) != len(b.get('p', [])):
+            b['p'] = keep
 
     return {'groups': len(set(pidmap.values())), 'records': len(pidmap),
             'lines': lines, 'box_lines': box, 'roster_rows': rows}

@@ -167,7 +167,10 @@ def sync_rosters(st, c, B, fetch, note):
     held = {tid: rows for tid, rows in c['roster']}
     got = 0
     for tid, name in T:
-        rows = source.roster(fetch(B + 'team/' + tid + '/roster'))
+        try:
+            rows = source.roster(fetch(B + 'team/' + tid + '/roster'))
+        except source.SourceError:
+            rows = []
         if not rows:
             continue
         got += 1
@@ -242,7 +245,14 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
     new_pids = set()
     for m in need_box:
         f = theirs[m]
-        b = source.box(fetch(B + 'match/' + m + '/boxscore'))
+        try:
+            b = source.box(fetch(B + 'match/' + m + '/boxscore'))
+        except source.SourceError as e:
+            # one page the source failed to serve (it answers 500 under load, most of all for
+            # old games rendered cold) costs that game only: it is retried with the missing ones
+            res['box_missing'].append(m)
+            note('%s: box score page failed (%s): tried again later' % (m, getattr(e, 'status', '') or 'error'))
+            continue
         if b is None or not b['home']['players'] or not b['away']['players']:
             res['box_missing'].append(m)
             note('%s: finished %s-%s, box score not published yet' % (m, f[5], f[7]))
@@ -258,7 +268,12 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
                     st.bb['personReg'][r['pid']] = r['name']
     for m in need_pbp:
         f = theirs[m]
-        ev = source.pbp(fetch(B + 'match/' + m + '/playbyplay'))
+        try:
+            ev = source.pbp(fetch(B + 'match/' + m + '/playbyplay'))
+        except source.SourceError as e:
+            res['pbp_missing'].append(m)
+            note('%s: play-by-play page failed (%s): tried again later' % (m, getattr(e, 'status', '') or 'error'))
+            continue
         if pbp_ok(ev, f):
             st.pbp_new[m] = ev
             res['pbp_found'].append(m)
