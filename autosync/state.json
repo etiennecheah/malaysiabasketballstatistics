@@ -1,13 +1,14 @@
 {
  "built": {
-  "at": 1791577447.2913067,
-  "fp": "c4d99b469fb373408064"
+  "at": 1791578104.842581,
+  "fp": "34befcb4cd6121eba91e"
  },
  "daily": {
   "25340": "2026-10-10",
   "25341": "2026-10-10",
   "25502": "2026-10-10",
   "25503": "2026-10-10",
+  "26279": "2026-10-10",
   "35136": "2026-10-10",
   "48654": "2026-10-10",
   "49965": "2026-10-10",
@@ -16,6 +17,7 @@
  },
  "fail": {},
  "full": {
+  "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
   "48654": 1791007173.9806633,
   "49965": 1791008731.955976,
@@ -103,7 +105,8 @@
   "2026-10-10 03:50  sync: 55th MABA 17 & Under NJBC for Boys \u2014 Kuala Lumpur 130-20 Putrajaya; Sarawak 45-53 PDRM; Johor 1 94-65 Labuan; Negeri Sembilan 79-71 Pahang; Putrajaya 34-87 Penang; Terengganu 72-74 Perak; Labuan 60-48 Sarawak; Johor 1 76-50 PDRM; Sabah 52-61 Negeri Sembilan; Sarawak 56-65 Johor 1; PDRM 53-51 Labuan; Perak 54-81 Selangor; Pahang 96-72 Sabah; Penang 59-62 Kuala Lumpur; Sabah 112-51 Putrajaya; Terengganu 76-63 Labuan; Perak 61-78 Negeri Sembilan; PDRM 36-38 Kuala Lumpur; Selangor 91-75 Pahang; Johor 1 78-66 Penang; Putrajaya 37-81 Labuan; Penang 66-61 PDRM; Pahang 68-88 Perak; Johor 1 77-58 Kuala Lumpur; Selangor 44-45 Negeri Sembilan; Putrajaya 43-78 Sarawak; Sabah 76-79 Terengganu; Pahang 77-62 PDRM; Selangor 69-45 Kuala Lumpur; Johor 1 75-53 Negeri Sembilan; Perak 72-73 Penang; Kuala Lumpur 46-50 Negeri Sembilan; Selangor 56-66 Johor 1; play-by-play of Selangor v Terengganu  [1312929: box score page failed (500): tried again later; season lines not read for 22 player(s): tried again next time]",
   "2026-10-10 04:06  sync: 55th MABA 17 & Under NJBC for Girls \u2014 Johor 88-31 Terengganu; PDRM 57-77 Selangor; Penang 53-59 Sarawak; Labuan 39-68 Sabah; Sabah 48-42 Penang; Sarawak 34-86 PDRM; Selangor 97-22 Labuan; Putrajaya 26-91 Terengganu; Negeri Sembilan 62-26 Kuala Lumpur; Perak 50-80 Johor; Terengganu 27-81 Negeri Sembilan; Perak 54-60 Kuala Lumpur; Johor 114-24 Putrajaya; Sarawak 33-112 Selangor; PDRM 57-27 Sabah; Penang 56-53 Labuan; Labuan 15-79 PDRM; Penang 21-85 Selangor; Sabah 59-38 Sarawak; Putrajaya 8-97 Negeri Sembilan; Terengganu 39-85 Perak; Johor 83-45 Kuala Lumpur; Perak 103-28 Putrajaya; Kuala Lumpur 63-40 Terengganu; Negeri Sembilan 48-47 Johor; Sarawak 67-51 Labuan; PDRM 65-39 Penang; Selangor 92-34 Sabah; Putrajaya 16-75 Labuan; Negeri Sembilan 47-39 PDRM; Terengganu 36-65 Penang; Selangor 42-59 Johor; Perak 54-46 Sarawak; Kuala Lumpur 37-74 Sabah; PDRM 30-66 Selangor; Negeri Sembilan 53-49 Johor; play-by-play of Negeri Sembilan v Perak; play-by-play of Kuala Lumpur v Putrajaya  [1312947: box score page failed (500): tried again later; 1312949: box score page failed (500): tried again later; 1312962: play-by-play not published yet; 1312956: play-by-play does not reach the final score yet; season lines not read for 4 player(s): tried again next time]",
   "2026-10-10 04:10  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 8 teams]",
-  "2026-10-10 04:24  sync: 61st MABA/MATRIX National Basketball Championship For Men \u2014 Speed Hunters 71-52 Horng Tat Motorpart; Knight Fury 59-74 Firehorse; Westports Malaysia Dragons 72-47 Perak; Negeri Sembilan 92-55 NS Matrix; Horng Tat Motorpart 57-71 Sam Tiong Keng Youth; ATM 48-79 Westports Malaysia Dragons; Speed Hunters 44-68 Knight Fury; Perak 54-80 Negeri Sembilan; ATM 50-81 Perak; Knight Fury 89-65 Horng Tat Motorpart; Firehorse 103-37 Sam Tiong Keng Youth; NS Matrix 69-80 Westports Malaysia Dragons; Negeri Sembilan 126-40 ATM; Sam Tiong Keng Youth 58-52 Knight Fury; Speed Hunters 36-75 Firehorse; Perak 49-74 NS Matrix; Horng Tat Motorpart 42-105 Firehorse; Sam Tiong Keng Youth 87-79 Speed Hunters; NS Matrix 68-60 ATM; Westports Malaysia Dragons 58-93 Negeri Sembilan; NS Matrix 78-53 Sam Tiong Keng Youth; Perak 45-86 Firehorse; Negeri Sembilan 81-72 Firehorse; Westports Malaysia Dragons 66-56 NS Matrix; Firehorse 67-60 NS Matrix; Negeri Sembilan 77-53 Westports Malaysia Dragons  [season lines not read for 2 player(s): tried again next time]"
+  "2026-10-10 04:24  sync: 61st MABA/MATRIX National Basketball Championship For Men \u2014 Speed Hunters 71-52 Horng Tat Motorpart; Knight Fury 59-74 Firehorse; Westports Malaysia Dragons 72-47 Perak; Negeri Sembilan 92-55 NS Matrix; Horng Tat Motorpart 57-71 Sam Tiong Keng Youth; ATM 48-79 Westports Malaysia Dragons; Speed Hunters 44-68 Knight Fury; Perak 54-80 Negeri Sembilan; ATM 50-81 Perak; Knight Fury 89-65 Horng Tat Motorpart; Firehorse 103-37 Sam Tiong Keng Youth; NS Matrix 69-80 Westports Malaysia Dragons; Negeri Sembilan 126-40 ATM; Sam Tiong Keng Youth 58-52 Knight Fury; Speed Hunters 36-75 Firehorse; Perak 49-74 NS Matrix; Horng Tat Motorpart 42-105 Firehorse; Sam Tiong Keng Youth 87-79 Speed Hunters; NS Matrix 68-60 ATM; Westports Malaysia Dragons 58-93 Negeri Sembilan; NS Matrix 78-53 Sam Tiong Keng Youth; Perak 45-86 Firehorse; Negeri Sembilan 81-72 Firehorse; Westports Malaysia Dragons 66-56 NS Matrix; Firehorse 67-60 NS Matrix; Negeri Sembilan 77-53 Westports Malaysia Dragons  [season lines not read for 2 player(s): tried again next time]",
+  "2026-10-10 04:35  sync: 25th MABA Cup National Basketball Championship 2019 \u2014 Pulau Pinang 52-82 Sarawak; Negeri Sembilan 70-71 Labuan; Pahang 45-64 Sabah; Terengganu 58-55 ATM; Sabah 66-51 Terengganu; ATM 41-51 Pahang; Labuan 63-53 Pulau Pinang; Sarawak 41-72 Negeri Sembilan; Negeri Sembilan 69-60 Pulau Pinang; Labuan 54-55 Sarawak; Terengganu 65-74 Pahang; Sabah 77-66 ATM; Negeri Sembilan 72-39 Pahang; Sabah 64-56 Labuan; Pulau Pinang 74-52 ATM; Sarawak 68-62 Terengganu; Labuan 59-35 Pahang; Negeri Sembilan 56-42 Sabah"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
