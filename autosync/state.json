@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791578541.7596192,
-  "fp": "dc8fed0074052447217c"
+  "at": 1791578682.996695,
+  "fp": "b8f7a1942299b5699904"
  },
  "daily": {
   "25340": "2026-10-10",
@@ -15,14 +15,7 @@
   "50247": "2026-10-10",
   "50248": "2026-10-10"
  },
- "fail": {
-  "25503": {
-   "last": 1791578267.3437526,
-   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/25503/schedule: HTTP Error 500: Internal Server Error",
-   "n": 1,
-   "next": 1791578327.3437526
-  }
- },
+ "fail": {},
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
@@ -31,21 +24,7 @@
   "50247": 1791568099.5156078,
   "50248": 1791568255.422654
  },
- "lines_retry": {
-  "25503": {
-   "n": 1,
-   "next": 1791572047.5215976,
-   "pids": [
-    "107027",
-    "107097",
-    "1287144",
-    "1292693",
-    "2026985",
-    "2252612",
-    "27612"
-   ]
-  }
- },
+ "lines_retry": {},
  "log": [
   "2026-10-03 00:51  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 SELANGOR TIGER 104-107 SUPERSPORTS x REX BBA",
   "2026-10-03 05:23  FAILED 48654 (1): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
@@ -71,7 +50,8 @@
   "2026-10-10 04:37  sync: 61st MABA/MATRIX National Basketball Championship For Men \u2014 fixtures, standings or season lines updated",
   "2026-10-10 04:37  FAILED 25503 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25503/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 04:39  sync: 55th MABA 17 & Under NJBC for Girls \u2014 fixtures, standings or season lines updated  [1312956: play-by-play does not reach the final score yet; 1312962: play-by-play not published yet]",
-  "2026-10-10 04:42  sync: 55th MABA 17 & Under NJBC for Boys \u2014 fixtures, standings or season lines updated"
+  "2026-10-10 04:42  sync: 55th MABA 17 & Under NJBC for Boys \u2014 fixtures, standings or season lines updated",
+  "2026-10-10 04:44  sync: 61st MABA/MATRIX National Basketball Championship for Women \u2014 play-by-play of Segamat v Kuala Lumpur; play-by-play of NS Matrix v PUTRAJAYA"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
@@ -88,18 +68,6 @@
    "kind": "pbp",
    "next": 1791578867.3437526,
    "since": 1791575455.130416
-  },
-  "1329599": {
-   "cid": "25503",
-   "kind": "pbp",
-   "next": 1791572047.5215976,
-   "since": 1791571447.5215976
-  },
-  "1329609": {
-   "cid": "25503",
-   "kind": "pbp",
-   "next": 1791572047.5215976,
-   "since": 1791571447.5215976
   }
  }
 }
