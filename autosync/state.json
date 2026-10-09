@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791578383.3825817,
-  "fp": "6b070502f40013e60c46"
+  "at": 1791578541.7596192,
+  "fp": "dc8fed0074052447217c"
  },
  "daily": {
   "25340": "2026-10-10",
@@ -32,34 +32,6 @@
   "50248": 1791568255.422654
  },
  "lines_retry": {
-  "25340": {
-   "n": 1,
-   "next": 1791574732.3627534,
-   "pids": [
-    "1288292",
-    "1288306",
-    "1288307",
-    "1288309",
-    "1288311",
-    "1288341",
-    "1288342",
-    "1288344",
-    "1288351",
-    "1884922",
-    "1954877",
-    "2084330",
-    "2125915",
-    "2371566",
-    "2568812",
-    "556262",
-    "556393",
-    "747263",
-    "797701",
-    "797722",
-    "797726",
-    "797735"
-   ]
-  },
   "25503": {
    "n": 1,
    "next": 1791572047.5215976,
@@ -98,7 +70,8 @@
   "2026-10-10 04:35  sync: 25th MABA Cup National Basketball Championship 2019 \u2014 Pulau Pinang 52-82 Sarawak; Negeri Sembilan 70-71 Labuan; Pahang 45-64 Sabah; Terengganu 58-55 ATM; Sabah 66-51 Terengganu; ATM 41-51 Pahang; Labuan 63-53 Pulau Pinang; Sarawak 41-72 Negeri Sembilan; Negeri Sembilan 69-60 Pulau Pinang; Labuan 54-55 Sarawak; Terengganu 65-74 Pahang; Sabah 77-66 ATM; Negeri Sembilan 72-39 Pahang; Sabah 64-56 Labuan; Pulau Pinang 74-52 ATM; Sarawak 68-62 Terengganu; Labuan 59-35 Pahang; Negeri Sembilan 56-42 Sabah",
   "2026-10-10 04:37  sync: 61st MABA/MATRIX National Basketball Championship For Men \u2014 fixtures, standings or season lines updated",
   "2026-10-10 04:37  FAILED 25503 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25503/schedule: HTTP Error 500: Internal Server Error",
-  "2026-10-10 04:39  sync: 55th MABA 17 & Under NJBC for Girls \u2014 fixtures, standings or season lines updated  [1312956: play-by-play does not reach the final score yet; 1312962: play-by-play not published yet]"
+  "2026-10-10 04:39  sync: 55th MABA 17 & Under NJBC for Girls \u2014 fixtures, standings or season lines updated  [1312956: play-by-play does not reach the final score yet; 1312962: play-by-play not published yet]",
+  "2026-10-10 04:42  sync: 55th MABA 17 & Under NJBC for Boys \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
