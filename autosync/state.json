@@ -1,18 +1,20 @@
 {
  "built": {
-  "at": 1791568077.5568416,
-  "fp": "16a42d1e199ebf329212"
+  "at": 1791568235.145235,
+  "fp": "9f0fa8f0db8efc8ef8b6"
  },
  "daily": {
   "35136": "2026-10-10",
   "48654": "2026-10-09",
-  "49965": "2026-10-09"
+  "49965": "2026-10-09",
+  "50247": "2026-10-10"
  },
  "fail": {},
  "full": {
   "35136": 1791565381.5329828,
   "48654": 1791007173.9806633,
-  "49965": 1791008731.955976
+  "49965": 1791008731.955976,
+  "50247": 1791568099.5156078
  },
  "lines_retry": {},
  "log": [
@@ -25,7 +27,8 @@
   "2026-10-03 14:30  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [8 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-09 23:32  FAILED 35136 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/35136/match/2220385/boxscore: HTTP Error 500: Internal Server Error",
   "2026-10-09 23:41  FAILED 35136 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/35136/match/2220414/boxscore: HTTP Error 500: Internal Server Error",
-  "2026-10-10 01:14  sync: 56th MABA/MATRIX 17 & Below National Basketball Championship for Girls 2022 \u2014 Kuala Lumpur 1 61-39 Melaka; Perak 84-28 Pahang; Johor 1 58-57 Sarawak; Selangor 1 75-38 Johor 2; Penang 65-31 Kelantan; Kelantan 14-89 Negeri Sembilan; Johor 2 36-71 Perak; Selangor 2 58-54 Johor 1; Labuan 21-83 Sarawak; Melaka 57-66 Sabah; Terengganu 29-65 Penang; Johor 1 78-28 Labuan; Sarawak 50-53 Selangor 2; Sabah 66-21 Kedah; Selangor 1 63-42 Perak; Johor 2 81-53 Pahang; Negeri Sembilan 76-19 Terengganu; Pahang 37-93 Selangor 1; Labuan 18-71 Selangor 2; Terengganu 51-43 Kelantan; Sabah 54-55 Kuala Lumpur 1; Kedah 40-63 Melaka; Negeri Sembilan 76-45 Penang; Kelantan 48-61 Pahang; Labuan 56-46 Kedah; Terengganu 39-67 Johor 2; Sarawak 56-43 Melaka; Perak 61-59 Sabah; Negeri Sembilan 47-27 Selangor 2; Penang 53-73 Johor 1; Selangor 1 71-36 Kuala Lumpur 1; Johor 1 39-69 Negeri Sembilan; Sabah 57-68 Selangor 1; Kelantan 46-12 Kedah; Kuala Lumpur 1 43-51 Perak; Terengganu 51-86 Melaka; Selangor 2 59-45 Penang; Penang 45-84 Sabah; Pahang 46-47 Labuan; Johor 1 38-55 Kuala Lumpur 1; Johor 2 37-56 Sarawak; Negeri Sembilan 59-29 Perak; Selangor 1 69-25 Selangor 2; Perak 79-42 Selangor 2; Negeri Sembilan 62-49 Selangor 1"
+  "2026-10-10 01:14  sync: 56th MABA/MATRIX 17 & Below National Basketball Championship for Girls 2022 \u2014 Kuala Lumpur 1 61-39 Melaka; Perak 84-28 Pahang; Johor 1 58-57 Sarawak; Selangor 1 75-38 Johor 2; Penang 65-31 Kelantan; Kelantan 14-89 Negeri Sembilan; Johor 2 36-71 Perak; Selangor 2 58-54 Johor 1; Labuan 21-83 Sarawak; Melaka 57-66 Sabah; Terengganu 29-65 Penang; Johor 1 78-28 Labuan; Sarawak 50-53 Selangor 2; Sabah 66-21 Kedah; Selangor 1 63-42 Perak; Johor 2 81-53 Pahang; Negeri Sembilan 76-19 Terengganu; Pahang 37-93 Selangor 1; Labuan 18-71 Selangor 2; Terengganu 51-43 Kelantan; Sabah 54-55 Kuala Lumpur 1; Kedah 40-63 Melaka; Negeri Sembilan 76-45 Penang; Kelantan 48-61 Pahang; Labuan 56-46 Kedah; Terengganu 39-67 Johor 2; Sarawak 56-43 Melaka; Perak 61-59 Sabah; Negeri Sembilan 47-27 Selangor 2; Penang 53-73 Johor 1; Selangor 1 71-36 Kuala Lumpur 1; Johor 1 39-69 Negeri Sembilan; Sabah 57-68 Selangor 1; Kelantan 46-12 Kedah; Kuala Lumpur 1 43-51 Perak; Terengganu 51-86 Melaka; Selangor 2 59-45 Penang; Penang 45-84 Sabah; Pahang 46-47 Labuan; Johor 1 38-55 Kuala Lumpur 1; Johor 2 37-56 Sarawak; Negeri Sembilan 59-29 Perak; Selangor 1 69-25 Selangor 2; Perak 79-42 Selangor 2; Negeri Sembilan 62-49 Selangor 1",
+  "2026-10-10 01:50  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [rosters published for 0 of 7 teams]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
