@@ -58,7 +58,7 @@ function matchHead(cid, mid, tab) {
     <div class="card mmatch">
       <div class="matchup-head">
         <div class="mside">${crest(g.h, 48)}<div><div class="m-name">${esc(g.h)}</div><div class="m-rec">${esc(fmtDate(g.date))}</div></div></div>
-        <div class="m-mid"><div class="m-score">${fmt0(g.hs)} – ${fmt0(g.as)}</div><div class="m-status">${g.st === 'COMPLETE' ? (g.sb ? 'Final · score from the box score' : 'Final') : g.st === 'NOT_PLAYED' ? 'Not played' : esc(g.st)}</div>${phaseLabel(c, mid) ? `<div class="m-round"><span class="po-tag">${esc(phaseLabel(c, mid))}</span></div>` : ''}</div>
+        <div class="m-mid"><div class="m-score">${fmt0(g.hs)} – ${fmt0(g.as)}</div><div class="m-status">${g.st === 'COMPLETE' ? (g.ff ? 'Forfeit · awarded 20–0' : g.hs == null ? 'Final · score not published' : g.sb ? 'Final · score from the box score' : 'Final') : g.st === 'NOT_PLAYED' ? 'Not played' : esc(g.st)}</div>${phaseLabel(c, mid) ? `<div class="m-round"><span class="po-tag">${esc(phaseLabel(c, mid))}</span></div>` : ''}</div>
         <div class="mside right">${crest(g.a, 48)}<div><div class="m-name">${esc(g.a)}</div><div class="m-rec">${esc(g.venue || '')}</div></div></div>
       </div>
       ${perTable}

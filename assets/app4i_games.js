@@ -128,7 +128,7 @@ function gameCard(c, g) {
     </div>`;
   const status = live ? `<span class="lv-tag"><span class="lv-dot"></span>LIVE</span><span class="gc-clock">${esc(liveClock(lv.d))}</span>`
     : g.st === 'NOT_PLAYED' ? `<span data-imtip="${esc(g.np || 'Never played')}">Not played</span>`
-    : fin ? (hide ? 'Played' : 'Final')
+    : fin ? (hide ? 'Played' : g.ff ? 'Forfeit' : done && g.hs == null ? 'Final · no score published' : 'Final')
     : stale ? 'In progress at the last update'
     : (g.time ? esc(g.time) : 'Scheduled');
   const foot = live ? `<a class="gc-box gc-follow" href="#/live/${g.mid}">Follow the game →</a>`

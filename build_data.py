@@ -99,6 +99,74 @@ def champion(games, stand, groups, name=''):
     return None, None
 
 
+def plausible(v, lo, hi):
+    """A typed height or weight outside what a person can measure (a 255 cm guard,
+    a 10 kg forward) is a data-entry slip on the source: shown as unknown instead."""
+    return v if isinstance(v, (int, float)) and lo <= v <= hi else None
+
+
+def _secs(m):
+    try:
+        a, b = str(m).split(':')
+        return int(a) * 60 + int(b)
+    except ValueError:
+        return 0
+
+
+def box_season_lines(cid, c, games, raw_boxes, persons):
+    """Season lines rebuilt from the box scores, in the source's tab format, for the
+    two cases where the source's own line is wrong:
+      * the player has box-score minutes but no statistics page line at all (the
+        source's player page failed or came back empty when the line was read);
+      * the player played for two clubs in the competition and the source's line
+        covers only one stint (a mid-season move, a loan for the playoffs).
+    Counting stats are summed; shooting, game score, wins and losses are derived;
+    rates that need the team's possessions are left blank. The line carries the
+    club of the player's latest game. -> {pid: tab line}"""
+    by_mid = {g['mid']: g for g in games if g['st'] == 'COMPLETE'}
+    per = {}
+    for mid, g in by_mid.items():
+        for ln in raw_boxes.get(mid, {}).get('p', []):
+            pid = ln.get('pid')
+            if pid and _secs(ln.get('min')) > 0:
+                per.setdefault(pid, []).append((g, ln))
+    out = {}
+    for pid in c['players']:
+        apps = per.get(pid)
+        if not apps:
+            continue
+        raw = persons.get(cid + ':' + pid)
+        teams = {ln.get('team') for _, ln in apps}
+        if raw is not None:
+            vals = raw.split('\t')
+            src_g = num(vals[1 + PF_KEYS.index('g')]) if len(vals) > 1 + PF_KEYS.index('g') else None
+            if len(teams) < 2 or (src_g or 0) >= len(apps):
+                continue
+        apps.sort(key=lambda x: (x[0]['date'] or '', clock_minutes(x[0]['time']), x[0]['mid']))
+        t = {k: 0 for k in ('fga', 'fgm', 'pf', 'fta', 'ftm', 'dreb', 'oreb', 'tpa', 'tpm', 'tov',
+                            'twopa', 'twopm', 'pm', 'pts', 'ast', 'stl', 'blk', 'eff')}
+        secs = w = l = 0
+        for g, ln in apps:
+            for k in t:
+                v = num(ln.get(k, ''))
+                t[k] += v if isinstance(v, (int, float)) else 0
+            secs += _secs(ln.get('min'))
+            mine, theirs = (g['hs'], g['as']) if ln.get('team') == g['h'] else (g['as'], g['hs'])
+            if mine is not None and theirs is not None:
+                w += mine > theirs
+                l += mine < theirs
+        t['reb'] = t['oreb'] + t['dreb']
+        tsa = t['fga'] + 0.44 * t['fta']
+        d = dict(t, g=len(apps), w=w, l=l, min='%d:%02d' % (secs // 60, secs % 60),
+                 tsa=round(tsa, 1), tspct=round(t['pts'] / (2 * tsa) * 100, 1) if tsa else '',
+                 gmsc=round(t['pts'] + 0.4 * t['fgm'] - 0.7 * t['fga'] - 0.4 * (t['fta'] - t['ftm'])
+                            + 0.7 * t['oreb'] + 0.3 * t['dreb'] + t['stl'] + 0.7 * t['ast']
+                            + 0.7 * t['blk'] - 0.4 * t['pf'] - t['tov'], 1))
+        fmt = lambda v: ('%g' % v) if isinstance(v, (int, float)) else (v or '')
+        out[pid] = '\t'.join([apps[-1][1].get('team') or ''] + [fmt(d.get(k, '')) for k in PF_KEYS])
+    return out
+
+
 def split_team_cell(cell, known):
     """Standings cell is 'Team NameCODE' concatenated. Recover the name using known team names."""
     cell = (cell or '').strip()
@@ -276,6 +344,7 @@ TEAM_RENAME = {
     'MBC': 'MBC Kirin',
     'Pegasus': 'Pegasus Sports',
     'Angkatan Tentera Malaysia': 'ATM',                   # the Armed Forces side
+    'Putrajaya Harimau': 'Harimau',                       # the source's own newer name (D-League 2026 U23)
 }
 SKIP_RENAME = {'photos', 'logos', 'flags', 'complogos', 'persons', 'palias'}
 
@@ -456,6 +525,16 @@ def main():
         raw_boxes.update(M.get('boxes', {}))
         print('manual competitions: %d' % len(M.get('comps', [])))
 
+    # Box scores and roster names recovered by hand after the competition was first read
+    # (data/recovered.json). Whatever the portal sync holds for the same game or person wins.
+    rp = os.path.join(D, 'recovered.json')
+    if os.path.exists(rp):
+        RC = json.load(open(rp))
+        nb = sum(1 for m, b in RC.get('boxes', {}).items() if raw_boxes.setdefault(m, b) is b)
+        for k, v in RC.get('personReg', {}).items():
+            bb['personReg'].setdefault(k, v)
+        print('recovered: %d box scores, %d roster names' % (nb, len(RC.get('personReg', {}))))
+
     # Collapse the source's duplicate person records before anything is aggregated,
     # so career totals, the tier split, the box scores and BPM all see one player.
     pidmap, mnames = merges.load(D)
@@ -476,13 +555,17 @@ def main():
                     teams.append(line['team'])
             rows = []
             for line in b.get('p', []):
-                row = [line.get('pid') or '',
-                       teams.index(line['team']) if line.get('team') in teams else -1]
+                # a person id the source never registered has no profile to link to:
+                # drop it and keep the printed name instead of showing "Unknown player"
+                pid = line.get('pid') or ''
+                if pid and pid not in bb['personReg']:
+                    pid = ''
+                row = [pid, teams.index(line['team']) if line.get('team') in teams else -1]
                 for k in ['num', 'min', 'pts', 'fgm', 'fga', 'twopm', 'twopa', 'tpm', 'tpa',
                           'ftm', 'fta', 'oreb', 'dreb', 'ast', 'pf', 'tov', 'stl', 'blk', 'pm', 'eff']:
                     row.append(num(line.get(k, '')))
                 # the name is only needed when the source gives no person link
-                row.append('' if line.get('pid') else (line.get('name') or ''))
+                row.append('' if pid else (line.get('name') or ''))
                 while len(row) > 2 and (row[-1] is None or row[-1] == ''):
                     row.pop()
                 rows.append(row)
@@ -496,6 +579,7 @@ def main():
         name_to_tid.setdefault(nm, tid)
 
     comps_out = []
+    box_line_log = []
     for c in bb['comps']:
         cid = c['id']
         known = [team_reg[t] for t in c['teams'] if t in team_reg]
@@ -527,6 +611,13 @@ def main():
                 if tot[0] and tot[1]:
                     sc = {bx['t'][0]: tot[0], bx['t'][1]: tot[1]}
                     row['hs'], row['as'], row['sb'] = int(sc[h]), int(sc[a]), 1
+            # A 20-0 result with nobody scoring in the box score (or no box score at
+            # all) is a forfeit, not a game: flagged so pages label it and leave it out
+            # of scoring averages and margins.
+            if row['st'] == 'COMPLETE' and {row['hs'], row['as']} == {20, 0}:
+                bxp = boxes.get(mid)
+                if not bxp or not any((ln[4] or 0) for ln in bxp['p'] if len(ln) > 4):
+                    row['ff'] = 1
             games.append(row)
 
         year, gender, lvl, series = comp_meta(c['name'], games)
@@ -585,14 +676,18 @@ def main():
         roster = {}
         for tid, rows in c['roster']:
             roster[tid] = [{'pid': r[0], 'num': r[1], 'dob': r[2], 'age': num(r[3]),
-                            'ht': num(r[4]), 'wt': num(r[5]), 'pos': r[6], 'nat': r[7]} for r in rows]
+                            'ht': plausible(num(r[4]), 120, 235), 'wt': plausible(num(r[5]), 25, 200),
+                            'pos': r[6], 'nat': r[7]} for r in rows]
 
         # Player stat lines, emitted as schema-ordered arrays (['pid','team'] + PF_KEYS)
         # so the 41 key names aren't repeated 9,424 times in the payload.
         players = []
+        from_box = box_season_lines(cid, c, games, raw_boxes, persons)
+        if from_box:
+            box_line_log.append((cid, sorted(from_box)))
         for pid in c['players']:
             row = [pid, ''] + [None] * len(PF_KEYS)
-            raw = persons.get(cid + ':' + pid)
+            raw = from_box.get(pid) or persons.get(cid + ':' + pid)
             if raw is not None:
                 vals = raw.split('\t')
                 row[1] = vals[0] if vals else ''
@@ -648,6 +743,10 @@ def main():
                     tid = 'x' + str(abs(hash(nm)) % 10 ** 8)
                     name_to_tid[nm] = tid
                     team_reg[tid] = nm
+
+    if box_line_log:
+        print('season lines rebuilt from box scores: %s' % '; '.join(
+            '%s %s' % (cid, ','.join(p)) for cid, p in box_line_log))
 
     photos = load_photos(pidmap, set(person_reg))
     logos = load_logos()

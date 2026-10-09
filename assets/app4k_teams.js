@@ -143,7 +143,8 @@ function teamIndex() {
       [[g.h, g.hs, g.as], [g.a, g.as, g.hs]].forEach(([nm, f, a]) => {
         if (!nm) return;
         const r = res[nm] || (res[nm] = { gp: 0, w: 0, l: 0, pf: 0, pa: 0 });
-        r.gp++; if (f > a) r.w++; else if (f < a) r.l++; r.pf += +f; r.pa += +a;
+        r.gp++; if (f > a) r.w++; else if (f < a) r.l++;
+        if (!g.ff) { r.pf += +f; r.pa += +a; }       // a forfeit's 20-0 is a result, not points
       });
     });
     (c.teams || []).forEach(tid => {

@@ -18,6 +18,11 @@ of silently double-counting or dropping a line.
 import json
 import os
 
+# canonical ids whose group was confirmed although two of its records sit in one
+# competition (the source registered the same player twice for one event): there
+# the two stat lines are dropped and build_data rebuilds one from the box scores
+REBUILD = set()
+
 
 def load(d):
     """-> (alias pid -> canonical pid, canonical pid -> display name override)."""
@@ -38,6 +43,8 @@ def load(d):
             pidmap[a] = canon
         if g.get('name'):
             names[canon] = g['name']
+        if g.get('rebuild'):
+            REBUILD.add(canon)
     # an alias must not itself be someone else's canonical
     for a, c in pidmap.items():
         if a in {v for v in pidmap.values()}:
@@ -66,6 +73,9 @@ def apply(bb, persons, boxes, pidmap, names):
         for p in comp['players']:
             q = m(p)
             if q in seen:
+                if q in REBUILD:
+                    lines += 1
+                    continue
                 raise AssertionError('merge collides in competition %s: two records for %s'
                                      % (comp['id'], q))
             seen.add(q)
@@ -92,10 +102,18 @@ def apply(bb, persons, boxes, pidmap, names):
             roster.append([tid, out])
         comp['roster'] = roster
 
+        # the competition's own leaders boards name players by person id too
+        for cat in comp.get('lead') or []:
+            cat[1] = [[m(r[0])] + list(r[1:]) for r in cat[1]]
+
     for k in [k for k in persons if k.split(':', 1)[1] in pidmap]:
         cid, pid = k.split(':', 1)
         nk = cid + ':' + m(pid)
         if nk in persons:
+            if m(pid) in REBUILD:
+                # one player, two lines in one competition: neither is the whole season
+                persons.pop(k); persons.pop(nk)
+                continue
             raise AssertionError('merge collides on stat line %s' % nk)
         persons[nk] = persons.pop(k)
 

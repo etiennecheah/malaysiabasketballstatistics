@@ -171,9 +171,11 @@ function renderCompDash(cid) {
   const recent = done.slice().sort((a, b) => (b.date || '').localeCompare(a.date || '')).slice(0, 6);
   const upcoming = c.games.filter(isUpcoming).slice(0, 6);
   const topEff = compLeaderTop(c, 'Efficiency');
-  const biggest = done.map(g => Object.assign({ m: Math.abs((g.hs || 0) - (g.as || 0)) }, g))
+  // forfeits (20-0, nobody played) and finals the source left without a score are results, not scoring
+  const scored = done.filter(g => !g.ff && g.hs != null && g.as != null);
+  const biggest = scored.map(g => Object.assign({ m: Math.abs(g.hs - g.as) }, g))
     .sort((a, b) => b.m - a.m)[0];
-  const ppg = done.length ? done.reduce((a, g) => a + (g.hs || 0) + (g.as || 0), 0) / done.length / 2 : null;
+  const ppg = scored.length ? scored.reduce((a, g) => a + g.hs + g.as, 0) / scored.length / 2 : null;
   const series = compSeries(c);
   const standCard = c.groups.length > 1 ? dashGroups(c) : c.stand.length ? `<div class="card cx-card">
       <div class="card-head">Standings<span class="hint">As published</span><a class="cx-right cx-more" href="#/c/${cid}/standings">Full table →</a></div>
@@ -223,6 +225,13 @@ function renderCompDash(cid) {
   </div>`;
 }
 
+/* a finished result that is not an ordinary game: a forfeit, or a final with no score published */
+function gameFlag(g) {
+  if (g.ff) return '<span class="po-tag ff-tag" data-imtip="Awarded 20–0 by forfeit; nobody played">Forfeit</span>';
+  if (g.st === 'COMPLETE' && g.hs == null) return '<span class="po-tag ff-tag" data-imtip="The source marks this game final but never published its score">Score not published</span>';
+  return '';
+}
+
 function gameRow(cid, g) {
   // a game the live feed is following: its score and clock, and the row leads to the live page
   const lv = typeof fixtureLive === 'function' ? fixtureLive(g) : null;
@@ -244,7 +253,7 @@ function gameRow(cid, g) {
     <div class="r-date"><div class="d1">${fmtDateShort(g.date)}</div><div>${g.date ? g.date.slice(0, 4) : ''}</div></div>
     <div class="team ${complete ? (hw ? 'win' : 'loss') : ''}">${crest(g.h)}<span class="name">${esc(g.h)}</span><span class="score">${complete ? fmt0(g.hs) : ''}</span></div>
     <div class="team ${complete ? (aw ? 'win' : 'loss') : ''}">${crest(g.a)}<span class="name">${esc(g.a)}</span><span class="score">${complete ? fmt0(g.as) : ''}</span></div>
-    <div class="venue">${phaseLabel(COMP_BY_ID[cid], g.mid) ? `<div class="po-line"><span class="po-tag">${esc(phaseLabel(COMP_BY_ID[cid], g.mid))}</span></div>` : ''}${esc(g.venue || '')}${clickable ? `<span class="box-link">${hasPbp(g.mid) ? 'Play-by-play' : 'Match'} →</span>`
+    <div class="venue">${phaseLabel(COMP_BY_ID[cid], g.mid) || g.ff || (complete && g.hs == null) ? `<div class="po-line">${phaseLabel(COMP_BY_ID[cid], g.mid) ? `<span class="po-tag">${esc(phaseLabel(COMP_BY_ID[cid], g.mid))}</span> ` : ''}${gameFlag(g)}</div>` : ''}${esc(g.venue || '')}${clickable ? `<span class="box-link">${hasPbp(g.mid) ? 'Play-by-play' : 'Match'} →</span>`
       : g.st === 'NOT_PLAYED' ? `<span class="box-link np-flag" data-imtip="${esc(g.np || 'Never played')}">Not played</span>`
       : (complete ? '' : `<span class="box-link" style="color:var(--text-faint);font-weight:500;">${esc(g.time || 'Scheduled')}</span>`)}</div>
   </div>`;
