@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791578241.6674974,
-  "fp": "3770dc02d8fc0b426462"
+  "at": 1791578383.3825817,
+  "fp": "6b070502f40013e60c46"
  },
  "daily": {
   "25340": "2026-10-10",
@@ -15,7 +15,14 @@
   "50247": "2026-10-10",
   "50248": "2026-10-10"
  },
- "fail": {},
+ "fail": {
+  "25503": {
+   "last": 1791578267.3437526,
+   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/25503/schedule: HTTP Error 500: Internal Server Error",
+   "n": 1,
+   "next": 1791578327.3437526
+  }
+ },
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
@@ -51,16 +58,6 @@
     "797722",
     "797726",
     "797735"
-   ]
-  },
-  "25341": {
-   "n": 1,
-   "next": 1791576055.130416,
-   "pids": [
-    "1287514",
-    "1288534",
-    "2022693",
-    "2026981"
    ]
   },
   "25503": {
@@ -99,7 +96,9 @@
   "2026-10-10 04:10  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 8 teams]",
   "2026-10-10 04:24  sync: 61st MABA/MATRIX National Basketball Championship For Men \u2014 Speed Hunters 71-52 Horng Tat Motorpart; Knight Fury 59-74 Firehorse; Westports Malaysia Dragons 72-47 Perak; Negeri Sembilan 92-55 NS Matrix; Horng Tat Motorpart 57-71 Sam Tiong Keng Youth; ATM 48-79 Westports Malaysia Dragons; Speed Hunters 44-68 Knight Fury; Perak 54-80 Negeri Sembilan; ATM 50-81 Perak; Knight Fury 89-65 Horng Tat Motorpart; Firehorse 103-37 Sam Tiong Keng Youth; NS Matrix 69-80 Westports Malaysia Dragons; Negeri Sembilan 126-40 ATM; Sam Tiong Keng Youth 58-52 Knight Fury; Speed Hunters 36-75 Firehorse; Perak 49-74 NS Matrix; Horng Tat Motorpart 42-105 Firehorse; Sam Tiong Keng Youth 87-79 Speed Hunters; NS Matrix 68-60 ATM; Westports Malaysia Dragons 58-93 Negeri Sembilan; NS Matrix 78-53 Sam Tiong Keng Youth; Perak 45-86 Firehorse; Negeri Sembilan 81-72 Firehorse; Westports Malaysia Dragons 66-56 NS Matrix; Firehorse 67-60 NS Matrix; Negeri Sembilan 77-53 Westports Malaysia Dragons  [season lines not read for 2 player(s): tried again next time]",
   "2026-10-10 04:35  sync: 25th MABA Cup National Basketball Championship 2019 \u2014 Pulau Pinang 52-82 Sarawak; Negeri Sembilan 70-71 Labuan; Pahang 45-64 Sabah; Terengganu 58-55 ATM; Sabah 66-51 Terengganu; ATM 41-51 Pahang; Labuan 63-53 Pulau Pinang; Sarawak 41-72 Negeri Sembilan; Negeri Sembilan 69-60 Pulau Pinang; Labuan 54-55 Sarawak; Terengganu 65-74 Pahang; Sabah 77-66 ATM; Negeri Sembilan 72-39 Pahang; Sabah 64-56 Labuan; Pulau Pinang 74-52 ATM; Sarawak 68-62 Terengganu; Labuan 59-35 Pahang; Negeri Sembilan 56-42 Sabah",
-  "2026-10-10 04:37  sync: 61st MABA/MATRIX National Basketball Championship For Men \u2014 fixtures, standings or season lines updated"
+  "2026-10-10 04:37  sync: 61st MABA/MATRIX National Basketball Championship For Men \u2014 fixtures, standings or season lines updated",
+  "2026-10-10 04:37  FAILED 25503 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25503/schedule: HTTP Error 500: Internal Server Error",
+  "2026-10-10 04:39  sync: 55th MABA 17 & Under NJBC for Girls \u2014 fixtures, standings or season lines updated  [1312956: play-by-play does not reach the final score yet; 1312962: play-by-play not published yet]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
@@ -108,13 +107,13 @@
   "1312956": {
    "cid": "25341",
    "kind": "pbp",
-   "next": 1791576055.130416,
+   "next": 1791578867.3437526,
    "since": 1791575455.130416
   },
   "1312962": {
    "cid": "25341",
    "kind": "pbp",
-   "next": 1791576055.130416,
+   "next": 1791578867.3437526,
    "since": 1791575455.130416
   },
   "1329599": {
