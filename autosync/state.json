@@ -1,9 +1,10 @@
 {
  "built": {
-  "at": 1791574107.8486042,
-  "fp": "8ef95d4c194222ab539c"
+  "at": 1791575431.297964,
+  "fp": "f3885af6596a9bbe077b"
  },
  "daily": {
+  "25340": "2026-10-10",
   "25503": "2026-10-10",
   "35136": "2026-10-10",
   "48654": "2026-10-09",
@@ -12,12 +13,6 @@
   "50248": "2026-10-10"
  },
  "fail": {
-  "25340": {
-   "last": 1791571447.5215976,
-   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/25340/leaders: HTTP Error 500: Internal Server Error",
-   "n": 1,
-   "next": 1791571507.5215976
-  },
   "25341": {
    "last": 1791571447.5215976,
    "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/25341/schedule: HTTP Error 500: Internal Server Error",
@@ -39,6 +34,34 @@
   "50248": 1791568255.422654
  },
  "lines_retry": {
+  "25340": {
+   "n": 1,
+   "next": 1791574732.3627534,
+   "pids": [
+    "1288292",
+    "1288306",
+    "1288307",
+    "1288309",
+    "1288311",
+    "1288341",
+    "1288342",
+    "1288344",
+    "1288351",
+    "1884922",
+    "1954877",
+    "2084330",
+    "2125915",
+    "2371566",
+    "2568812",
+    "556262",
+    "556393",
+    "747263",
+    "797701",
+    "797722",
+    "797726",
+    "797735"
+   ]
+  },
   "25503": {
    "n": 1,
    "next": 1791572047.5215976,
@@ -69,7 +92,8 @@
   "2026-10-10 03:00  FAILED 25340 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25340/leaders: HTTP Error 500: Internal Server Error",
   "2026-10-10 03:00  FAILED 25341 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25341/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 03:13  FAILED 25502 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25502/standings?phaseName=Normal%20Seasons&poolNumber=1&: HTTP Error 500: Internal Server Error",
-  "2026-10-10 03:28  sync: 61st MABA/MATRIX National Basketball Championship for Women \u2014 Kuala Lumpur 54-38 Stallions; Segamat 108-23 PERAK; Negeri Sembilan 83-22 NS Matrix; Stallions 96-26 PUTRAJAYA; NS Matrix 46-57 Segamat; PERAK 39-81 Kuala Lumpur; NS Matrix 72-19 PERAK; Kuala Lumpur 96-38 PUTRAJAYA; Negeri Sembilan 89-24 Stallions; PUTRAJAYA 29-107 Negeri Sembilan; Segamat 73-48 Kuala Lumpur; Stallions 50-38 PERAK; PUTRAJAYA 32-109 Segamat; PERAK 25-98 Negeri Sembilan; NS Matrix 54-57 Stallions; Negeri Sembilan 78-37 Kuala Lumpur; PUTRAJAYA 48-59 PERAK; Kuala Lumpur 69-55 NS Matrix; Segamat 56-87 Negeri Sembilan; Negeri Sembilan 76-43 Segamat; play-by-play of Segamat v Stallions  [1329609: box score page failed (500): tried again later; 1329611: box score page failed (500): tried again later; 1329599: play-by-play page failed (500): tried again later; 1329609: play-by-play page failed (500): tried again later; season lines not read for 7 player(s): tried again next time]"
+  "2026-10-10 03:28  sync: 61st MABA/MATRIX National Basketball Championship for Women \u2014 Kuala Lumpur 54-38 Stallions; Segamat 108-23 PERAK; Negeri Sembilan 83-22 NS Matrix; Stallions 96-26 PUTRAJAYA; NS Matrix 46-57 Segamat; PERAK 39-81 Kuala Lumpur; NS Matrix 72-19 PERAK; Kuala Lumpur 96-38 PUTRAJAYA; Negeri Sembilan 89-24 Stallions; PUTRAJAYA 29-107 Negeri Sembilan; Segamat 73-48 Kuala Lumpur; Stallions 50-38 PERAK; PUTRAJAYA 32-109 Segamat; PERAK 25-98 Negeri Sembilan; NS Matrix 54-57 Stallions; Negeri Sembilan 78-37 Kuala Lumpur; PUTRAJAYA 48-59 PERAK; Kuala Lumpur 69-55 NS Matrix; Segamat 56-87 Negeri Sembilan; Negeri Sembilan 76-43 Segamat; play-by-play of Segamat v Stallions  [1329609: box score page failed (500): tried again later; 1329611: box score page failed (500): tried again later; 1329599: play-by-play page failed (500): tried again later; 1329609: play-by-play page failed (500): tried again later; season lines not read for 7 player(s): tried again next time]",
+  "2026-10-10 03:50  sync: 55th MABA 17 & Under NJBC for Boys \u2014 Kuala Lumpur 130-20 Putrajaya; Sarawak 45-53 PDRM; Johor 1 94-65 Labuan; Negeri Sembilan 79-71 Pahang; Putrajaya 34-87 Penang; Terengganu 72-74 Perak; Labuan 60-48 Sarawak; Johor 1 76-50 PDRM; Sabah 52-61 Negeri Sembilan; Sarawak 56-65 Johor 1; PDRM 53-51 Labuan; Perak 54-81 Selangor; Pahang 96-72 Sabah; Penang 59-62 Kuala Lumpur; Sabah 112-51 Putrajaya; Terengganu 76-63 Labuan; Perak 61-78 Negeri Sembilan; PDRM 36-38 Kuala Lumpur; Selangor 91-75 Pahang; Johor 1 78-66 Penang; Putrajaya 37-81 Labuan; Penang 66-61 PDRM; Pahang 68-88 Perak; Johor 1 77-58 Kuala Lumpur; Selangor 44-45 Negeri Sembilan; Putrajaya 43-78 Sarawak; Sabah 76-79 Terengganu; Pahang 77-62 PDRM; Selangor 69-45 Kuala Lumpur; Johor 1 75-53 Negeri Sembilan; Perak 72-73 Penang; Kuala Lumpur 46-50 Negeri Sembilan; Selangor 56-66 Johor 1; play-by-play of Selangor v Terengganu  [1312929: box score page failed (500): tried again later; season lines not read for 22 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
