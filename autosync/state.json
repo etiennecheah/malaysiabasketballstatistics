@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791618513.9716885,
-  "fp": "ae2e330c8b207bec9b21"
+  "at": 1791618667.933228,
+  "fp": "93a9805ab95f2a866b33"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -44,15 +44,6 @@
   "50248": 1791568255.422654
  },
  "lines_retry": {
-  "21374": {
-   "n": 1,
-   "next": 1791613410.1735935,
-   "pids": [
-    "107064",
-    "107230",
-    "107231"
-   ]
-  },
   "22128": {
    "n": 2,
    "next": 1791617153.9178715,
@@ -86,7 +77,6 @@
   }
  },
  "log": [
-  "2026-10-03 08:49  FAILED 49965 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/standings: HTTP Error 500: Internal Server Error",
   "2026-10-03 14:04  FAILED 49965 (3): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/standings?phaseName=Preliminary%20Round&: HTTP Error 500: Internal Server Error",
   "2026-10-03 14:30  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [8 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-09 23:32  FAILED 35136 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/35136/match/2220385/boxscore: HTTP Error 500: Internal Server Error",
@@ -125,7 +115,8 @@
   "2026-10-10 15:41  sync: 55th MABA 17 & Under NJBC for Boys \u2014 Selangor 98-44 Terengganu  [season lines not read for 1 player(s): tried again next time]",
   "2026-10-10 15:44  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Wanita (Women) \u2014 play-by-play of Pahang v Selangor",
   "2026-10-10 15:46  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Women \u2014 fixtures, standings or season lines updated",
-  "2026-10-10 15:48  sync: 24th MABA CUP 2018 \u2014 play-by-play of Ansara v Perak"
+  "2026-10-10 15:48  sync: 24th MABA CUP 2018 \u2014 play-by-play of Ansara v Perak",
+  "2026-10-10 15:51  sync: 54th MABA 17 & Under NJBC for Girls \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
