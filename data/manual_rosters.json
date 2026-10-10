@@ -1,0 +1,983 @@
+{
+ "_note": "Rosters read by hand from MABA's Instagram post of the 5v5 rosters (8 Oct 2026), for teams whose roster page the Genius Sports source has not published. Rows: [shirt number, name, height cm, person id]. A person id links the player to his existing profile (matched by name, then by team history); null = a new player, given the id mr-<cid>-<tid>-<number> and the name as printed. build_data.py uses a team's rows only while the source has no roster page for that team. Sarawak (women) was not in the post.",
+ "50247": {
+  "src": "MABA Instagram, 8 Oct 2026 (instagram.com/p/DeQmwzzD4yB)",
+  "teams": {
+   "Negeri Sembilan": [
+    [
+     "71",
+     "Ong Wei Yong",
+     180,
+     "2371573"
+    ],
+    [
+     "11",
+     "Wong Yi Hou",
+     191,
+     "2371569"
+    ],
+    [
+     "27",
+     "Ting Chun Hong",
+     191,
+     "2252562"
+    ],
+    [
+     "22",
+     "Chang Zi Fueng",
+     196,
+     "2371570"
+    ],
+    [
+     "18",
+     "Lee Jing Hung",
+     195,
+     "2302680"
+    ],
+    [
+     "9",
+     "Jayson Lee Shu Wen",
+     180,
+     "2252605"
+    ],
+    [
+     "23",
+     "Chong Zhen Yang",
+     180,
+     "2568842"
+    ],
+    [
+     "3",
+     "Tiong Ing Kun",
+     180,
+     "107204"
+    ],
+    [
+     "8",
+     "De Wee Yiang",
+     183,
+     "2092920"
+    ],
+    [
+     "31",
+     "Hiew Jia Hao",
+     183,
+     "2092917"
+    ],
+    [
+     "10",
+     "Michael Munnesvicky",
+     183,
+     "2778709"
+    ],
+    [
+     "24",
+     "Tan Chee Wey",
+     183,
+     "1286737"
+    ],
+    [
+     "33",
+     "Ooi Xian Fu",
+     188,
+     "2371565"
+    ],
+    [
+     "12",
+     "Lim Ting Xuan",
+     190,
+     "1091402"
+    ]
+   ],
+   "PDRM": [
+    [
+     "1",
+     "Lee Chun Fei",
+     178,
+     "2615562"
+    ],
+    [
+     "2",
+     "Michelangelo Kong Bang Sheng",
+     181,
+     null
+    ],
+    [
+     "5",
+     "Raphael Kong Bang Shuai",
+     181,
+     null
+    ],
+    [
+     "6",
+     "Khoo Wei Lin",
+     175,
+     "2252619"
+    ],
+    [
+     "7",
+     "Goh Wei Shern",
+     180,
+     "1900534"
+    ],
+    [
+     "8",
+     "Ing Zhin Yuen",
+     186,
+     "2568841"
+    ],
+    [
+     "22",
+     "Mikel Rohit A/L Kingsley Daniel",
+     182,
+     "2767060"
+    ],
+    [
+     "17",
+     "Siow Gen Liang",
+     190,
+     "2568804"
+    ],
+    [
+     "18",
+     "Ng Zhi Yi",
+     186,
+     "1974710"
+    ],
+    [
+     "99",
+     "Eman Ajmal Bin Jamal",
+     177,
+     null
+    ],
+    [
+     "34",
+     "Tan Wei Long",
+     187,
+     "1846127"
+    ],
+    [
+     "11",
+     "Matthew Ashton Lim U Kiat",
+     178,
+     "2786651"
+    ]
+   ],
+   "Selangor": [
+    [
+     "0",
+     "Tang Yuan Hao",
+     180,
+     "2568866"
+    ],
+    [
+     "1",
+     "San Zhe Yee",
+     175,
+     "1900726"
+    ],
+    [
+     "5",
+     "Henrique Chia Soo Jie",
+     182,
+     "2786714"
+    ],
+    [
+     "7",
+     "Yap Zen Haw",
+     178,
+     "2568864"
+    ],
+    [
+     "10",
+     "Hor Xue Kai",
+     183,
+     "2465318"
+    ],
+    [
+     "11",
+     "Chew Ming You",
+     178,
+     "2786704"
+    ],
+    [
+     "13",
+     "Chin Chun Wei",
+     186,
+     "2299156"
+    ],
+    [
+     "16",
+     "Chiam Jet Chern",
+     173,
+     "2568820"
+    ],
+    [
+     "17",
+     "Ivan Lee Hao Zhe",
+     188,
+     "2568810"
+    ],
+    [
+     "19",
+     "San Chu Huay",
+     175,
+     "2252560"
+    ],
+    [
+     "23",
+     "Kovidh Toh Chen Yip",
+     190,
+     "2252554"
+    ],
+    [
+     "31",
+     "Kennth Yap Hao Yi",
+     180,
+     null
+    ],
+    [
+     "33",
+     "Goh Zen Bin",
+     180,
+     "1900698"
+    ],
+    [
+     "77",
+     "Cameron Jeremie Pagbe Tan",
+     186,
+     "2730915"
+    ],
+    [
+     "88",
+     "Tang Zi Weng",
+     184,
+     "2786746"
+    ]
+   ],
+   "ATM": [
+    [
+     "4",
+     "Dylan Oh Nazmi Bin Muhammad Jeffri Oh",
+     170,
+     "2341464"
+    ],
+    [
+     "5",
+     "Sin Chun Kit",
+     175,
+     "2615561"
+    ],
+    [
+     "6",
+     "Ryan Long Jie Hong",
+     183,
+     "2786796"
+    ],
+    [
+     "7",
+     "Muhammad Syaril Bin Surip",
+     179,
+     "2778720"
+    ],
+    [
+     "8",
+     "Adli Najdat Bin Azwanddin",
+     197,
+     "2786752"
+    ],
+    [
+     "9",
+     "Kua Yee Luen",
+     194,
+     "56723"
+    ],
+    [
+     "10",
+     "Lakksman A/L Ganapathy",
+     189,
+     "2778758"
+    ],
+    [
+     "11",
+     "Hensler Kwan Xue Sen",
+     181,
+     "2371568"
+    ],
+    [
+     "12",
+     "Tee Jing Hao",
+     200,
+     "2249324"
+    ],
+    [
+     "13",
+     "Nik Muhammad Hafizudin Bin Nik Hamzah",
+     190,
+     "2304381"
+    ],
+    [
+     "14",
+     "Mohd Ekyas Khan Bin Mohd Anuar",
+     198,
+     null
+    ],
+    [
+     "15",
+     "Sharwhin A/L Siva Ragu",
+     210,
+     "2092916"
+    ],
+    [
+     "16",
+     "Delbero Jukimin",
+     167,
+     null
+    ],
+    [
+     "17",
+     "Rheishman Kumar A/L Ganesamurthy",
+     190,
+     "2797846"
+    ],
+    [
+     "18",
+     "Muhammad Hadeef Khan Bin Mohamad Khan",
+     170,
+     "2778724"
+    ]
+   ],
+   "Pahang": [
+    [
+     "11",
+     "Teng Wei Chew",
+     195,
+     "556411"
+    ],
+    [
+     "8",
+     "Izac Tay Chee Qian",
+     173,
+     "2386400"
+    ],
+    [
+     "0",
+     "Liang Kah Wei",
+     170,
+     "2386393"
+    ],
+    [
+     "3",
+     "Tan Kuan Hong",
+     188,
+     "2786687"
+    ],
+    [
+     "26",
+     "Ng Hee Wei",
+     185,
+     "2568815"
+    ],
+    [
+     "2",
+     "Yap Chun Hong",
+     171,
+     "2370363"
+    ],
+    [
+     "21",
+     "Chiang Wei Sheng",
+     182,
+     "1975140"
+    ],
+    [
+     "10",
+     "Lim Jian Yu",
+     178,
+     "32084"
+    ],
+    [
+     "13",
+     "Chiang Wei Er",
+     186,
+     "1287224"
+    ],
+    [
+     "18",
+     "Kor Ming Yuan",
+     190,
+     "2299197"
+    ],
+    [
+     "12",
+     "Chong Yeat Han",
+     179,
+     "2252667"
+    ],
+    [
+     "25",
+     "Mak Lok Seng",
+     192,
+     "2341467"
+    ]
+   ],
+   "Perak": [
+    [
+     "1",
+     "Cheah Zi Hong",
+     170,
+     "2371572"
+    ],
+    [
+     "2",
+     "Wong Chin Yong",
+     192,
+     "1845746"
+    ],
+    [
+     "3",
+     "Teoh Yi Kang",
+     172,
+     "1958899"
+    ],
+    [
+     "6",
+     "Lim Jun Wei",
+     176,
+     "2615574"
+    ],
+    [
+     "7",
+     "Tem Zhen Jie",
+     177,
+     "1845447"
+    ],
+    [
+     "45",
+     "Goh Yan Qing",
+     196,
+     "1287209"
+    ],
+    [
+     "18",
+     "Wee Yong Gan",
+     175,
+     "1973897"
+    ],
+    [
+     "15",
+     "Chin Jin Yen",
+     191,
+     "2341474"
+    ],
+    [
+     "23",
+     "Keshmendip Singh Gill",
+     188,
+     "1962014"
+    ],
+    [
+     "25",
+     "Choo Wei Hong",
+     198,
+     "27507"
+    ],
+    [
+     "26",
+     "Lai Kok Weng",
+     182,
+     "2252596"
+    ],
+    [
+     "12",
+     "Tan Jing Yong",
+     190,
+     "28036"
+    ],
+    [
+     "66",
+     "Yap Zhi Wei",
+     193,
+     "1572393"
+    ],
+    [
+     "31",
+     "Yeong Wei Jie",
+     173,
+     "1900542"
+    ],
+    [
+     "00",
+     "Thea Zhong Shin",
+     188,
+     "1845450"
+    ]
+   ],
+   "Johor": [
+    [
+     "0",
+     "Lim Chee Wei",
+     175,
+     "620479"
+    ],
+    [
+     "1",
+     "John Wong Khai Chiek",
+     188,
+     "1957810"
+    ],
+    [
+     "4",
+     "Brandon Kho Tze Hen",
+     186,
+     "2797839"
+    ],
+    [
+     "5",
+     "Maegen Mahadevan A/L Suresh Mahadevan",
+     196,
+     "2778711"
+    ],
+    [
+     "8",
+     "Brian Tang Kia Wee",
+     183,
+     "2318312"
+    ],
+    [
+     "10",
+     "Damian Ghai Chong Kee",
+     186,
+     "2786658"
+    ],
+    [
+     "11",
+     "Ng Yong Liang",
+     193,
+     "1287317"
+    ],
+    [
+     "77",
+     "Heng Yee Tong",
+     184,
+     "2341473"
+    ],
+    [
+     "20",
+     "Chong Soon Kang",
+     196,
+     "797690"
+    ],
+    [
+     "21",
+     "Te Yi Hang",
+     187,
+     "1885900"
+    ],
+    [
+     "22",
+     "John Tang Jun Kai",
+     185,
+     "2786676"
+    ],
+    [
+     "28",
+     "Lee Joon Kang",
+     178,
+     "2371557"
+    ],
+    [
+     "37",
+     "Ivan Chia Jia Yu",
+     185,
+     "2797840"
+    ],
+    [
+     "44",
+     "Chin Cheng Wah",
+     183,
+     "1286738"
+    ],
+    [
+     "99",
+     "Tan Hoong Shen",
+     187,
+     "2688492"
+    ]
+   ]
+  }
+ },
+ "50248": {
+  "src": "MABA Instagram, 8 Oct 2026 (instagram.com/p/DeQmwzzD4yB)",
+  "teams": {
+   "Negeri Sembilan": [
+    [
+     "23",
+     "Pang Hui Pin",
+     175,
+     "27580"
+    ],
+    [
+     "6",
+     "Saw Wei Yin",
+     168,
+     "1845666"
+    ],
+    [
+     "35",
+     "Yap Fook Yee",
+     174,
+     "27500"
+    ],
+    [
+     "3",
+     "Chia Mun Yi",
+     170,
+     "2786703"
+    ],
+    [
+     "9",
+     "Magdelene Low Phey Chyi",
+     169,
+     "2252599"
+    ],
+    [
+     "22",
+     "Hiew Kylie",
+     166,
+     "2381193"
+    ],
+    [
+     "10",
+     "Sammi Tan",
+     175,
+     "1973906"
+    ],
+    [
+     "99",
+     "Joey Sim",
+     161,
+     "2786683"
+    ],
+    [
+     "12",
+     "Hin Jia Qian",
+     170,
+     "2568822"
+    ],
+    [
+     "5",
+     "Connie Chua Xin Ni",
+     165,
+     "1962018"
+    ],
+    [
+     "0",
+     "Ashley Lim Xiao Chii",
+     160,
+     "2252625"
+    ],
+    [
+     "11",
+     "Mah Xin Tian",
+     163,
+     "2786728"
+    ],
+    [
+     "25",
+     "Chong Yin Yin",
+     166,
+     "27497"
+    ],
+    [
+     "24",
+     "Foo Suet Ying",
+     176,
+     "1287260"
+    ],
+    [
+     "26",
+     "Sandra Choe Yan Ting",
+     176,
+     "2786791"
+    ]
+   ],
+   "Selangor": [
+    [
+     "2",
+     "Yap Yu Jing",
+     168,
+     "28372"
+    ],
+    [
+     "3",
+     "Ong Shin Pei",
+     166,
+     "1973857"
+    ],
+    [
+     "7",
+     "Audrey Heng Qui Feng",
+     160,
+     "1091869"
+    ],
+    [
+     "8",
+     "Fang Bi Yi",
+     166,
+     "32254"
+    ],
+    [
+     "9",
+     "Ng Sin Yi",
+     170,
+     "2341470"
+    ],
+    [
+     "10",
+     "Low Hoi Khei",
+     168,
+     "52970"
+    ],
+    [
+     "11",
+     "Wong Shin Lin",
+     169,
+     "2786707"
+    ],
+    [
+     "12",
+     "Esther Lim Jia Xin",
+     167,
+     "2568826"
+    ],
+    [
+     "13",
+     "Evon Lim Yee Wern",
+     168,
+     "70530"
+    ],
+    [
+     "14",
+     "Goh Yi Xuan",
+     162,
+     "2304383"
+    ],
+    [
+     "17",
+     "Lee Jo Rynn",
+     174,
+     "70535"
+    ],
+    [
+     "31",
+     "Ong Shin Jiun",
+     155,
+     "2615634"
+    ],
+    [
+     "77",
+     "Yong Kai Xin",
+     165,
+     "2615582"
+    ],
+    [
+     "98",
+     "Crystal Cheng Hui Jing",
+     170,
+     "2786671"
+    ],
+    [
+     "70",
+     "Tan Hao Yuan",
+     162,
+     "107230"
+    ]
+   ],
+   "Johor": [
+    [
+     "9",
+     "Tan Sin Jie",
+     169,
+     "2615636"
+    ],
+    [
+     "4",
+     "Tan Pei Jie",
+     169,
+     "165364"
+    ],
+    [
+     "14",
+     "Er Zi Jie",
+     173,
+     "2302714"
+    ],
+    [
+     "8",
+     "Ooi Poh Yee",
+     175,
+     "2252603"
+    ],
+    [
+     "21",
+     "Lim Jing Zhe",
+     173,
+     "1845670"
+    ],
+    [
+     "12",
+     "Kalaimathi Rajintiran",
+     184,
+     "1979739"
+    ],
+    [
+     "10",
+     "Tan Jia Yin",
+     163,
+     "107027"
+    ],
+    [
+     "3",
+     "Khoo Kar Syuen",
+     163,
+     "1845705"
+    ],
+    [
+     "6",
+     "Khu Qian Qian",
+     165,
+     "2252606"
+    ],
+    [
+     "24",
+     "Lee Mei Chyi",
+     169,
+     "2252598"
+    ],
+    [
+     "2",
+     "Ng Yu Feng",
+     168,
+     "2252640"
+    ],
+    [
+     "18",
+     "Chan Ke Jing",
+     165,
+     "2615586"
+    ],
+    [
+     "19",
+     "Eng Dong Ling",
+     164,
+     "2783542"
+    ],
+    [
+     "7",
+     "Yong Sin Lu",
+     168,
+     "2084355"
+    ],
+    [
+     "33",
+     "Dorcas Wee Shi Mei",
+     170,
+     "2252612"
+    ]
+   ],
+   "Kelantan": [
+    [
+     "7",
+     "Angela Chong Siaw Liang",
+     159,
+     "2191722"
+    ],
+    [
+     "23",
+     "Ding Zi Qin",
+     161,
+     "1900449"
+    ],
+    [
+     "9",
+     "Lee Tze Yu",
+     166,
+     null
+    ],
+    [
+     "5",
+     "Tew Hui Yi",
+     170,
+     null
+    ],
+    [
+     "6",
+     "Lim Yan Yin",
+     168,
+     null
+    ],
+    [
+     "11",
+     "Loo Si En",
+     175,
+     "1091472"
+    ],
+    [
+     "16",
+     "Chung Yu Hui",
+     172,
+     "2568869"
+    ],
+    [
+     "8",
+     "Amber Lim Hien Ching",
+     155,
+     null
+    ],
+    [
+     "1",
+     "Yan Xiang Yu",
+     154,
+     null
+    ],
+    [
+     "29",
+     "Ooi Chet Yee",
+     160,
+     "1885173"
+    ],
+    [
+     "28",
+     "Quinn Chua Xin Yu",
+     163,
+     null
+    ],
+    [
+     "66",
+     "Soon Jya-Bei",
+     168,
+     "2253543"
+    ],
+    [
+     "0",
+     "Kim Hae Lim",
+     157,
+     "2568824"
+    ],
+    [
+     "99",
+     "Stephanie Chong Siaw Shan",
+     155,
+     null
+    ],
+    [
+     "18",
+     "Fang Li Xuen",
+     168,
+     null
+    ]
+   ]
+  }
+ }
+}

@@ -503,6 +503,11 @@ def _mins(s):
         return 0.0
 
 
+def _name_key(n):
+    """A name as a set of words, order and A/L, bin, binti ignored ("TAN WEI LONG" = "Wei Long Tan")."""
+    return frozenset(w for w in re.split(r'[\s,]+', (n or '').upper()) if w and w not in ('A/L', 'A/P', 'BIN', 'BINTI'))
+
+
 def main():
     bb = json.load(open(os.path.join(D, 'backbone.json')))
     persons = {}
@@ -545,6 +550,46 @@ def main():
         for k, v in RC.get('personReg', {}).items():
             bb['personReg'].setdefault(k, v)
         print('recovered: %d box scores, %d roster names' % (nb, len(RC.get('personReg', {}))))
+
+    # Rosters read by hand from another publication (data/manual_rosters.json), for teams whose
+    # roster page the source has not published yet. Each row names a person id where the player
+    # is already in the database; a new player gets a stable id of his own ("mr-<cid>-<tid>-<no>").
+    # The moment the source publishes a team's roster page, that page wins and the hand copy
+    # for the team is ignored.
+    roster_src = {}
+    mrp = os.path.join(D, 'manual_rosters.json')
+    if os.path.exists(mrp):
+        MR = {k: v for k, v in json.load(open(mrp)).items() if not k.startswith('_')}
+        by_cid = {c['id']: c for c in bb['comps']}
+        added = 0
+        for cid, spec in MR.items():
+            c = by_cid.get(cid)
+            if not c:
+                continue
+            held = {tid for tid, rows in c['roster'] if rows}
+            tid_of = {bb['teamReg'].get(t, '').lower(): t for t in c['teams']}
+            for team, rows in spec.get('teams', {}).items():
+                tid = tid_of.get(team.lower())
+                if not tid or tid in held:
+                    continue
+                # once this team has box scores here, a new player is found in them by name, so
+                # he is one person whatever the source's roster page does later
+                seen = {}
+                for g in c['games']:
+                    for ln in raw_boxes.get(g[0], {}).get('p', []):
+                        if ln.get('pid') and (ln.get('team') or '').lower() == team.lower():
+                            seen.setdefault(_name_key(ln.get('name') or bb['personReg'].get(ln['pid'], '')), ln['pid'])
+                out_rows = []
+                for no, name, ht, pid in rows:
+                    if not pid:
+                        pid = seen.get(_name_key(name)) or 'mr-%s-%s-%s' % (cid, tid, no)
+                        bb['personReg'].setdefault(pid, name)
+                    out_rows.append([pid, str(no), '', '', str(ht or ''), '', '', ''])
+                c['roster'] = [r for r in c['roster'] if r[0] != tid] + [[tid, out_rows]]
+                roster_src.setdefault(cid, {})[tid] = spec.get('src', '')
+                added += len(out_rows)
+        if added:
+            print('hand rosters: %d players in %d team(s)' % (added, sum(len(v) for v in roster_src.values())))
 
     # Collapse the source's duplicate person records before anything is aggregated,
     # so career totals, the tier split, the box scores and BPM all see one player.
@@ -764,6 +809,7 @@ def main():
             **({'final': c['final']} if c.get('final') else {}),
             **({'standNote': c['standNote']} if c.get('standNote') else {}),
             **({'open': open_comps[c['id']]} if c['id'] in open_comps else {}), 'games': games, 'roster': roster,
+            **({'rosterSrc': roster_src[c['id']]} if c['id'] in roster_src else {}),
             'players': players, 'leaders': leaders,
             'start': dates[0] if dates else None, 'end': dates[-1] if dates else None,
             'nGames': sum(1 for g in games if g['st'] != 'NOT_PLAYED'),

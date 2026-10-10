@@ -474,7 +474,7 @@ function renderTeam(cid, tid, tab) {
   const alsoIn = (TEAM_COMPS[tid] || []).filter(x => x !== cid);
 
   const tabs = [['roster', 'Roster'], ['results', 'Results']];
-  const body = tab === 'results' ? teamResults(cid, name, games) : teamRoster(cid, [...rosterPids], roster, statByPid);
+  const body = tab === 'results' ? teamResults(cid, name, games) : teamRoster(cid, [...rosterPids], roster, statByPid, tid);
   return `<div class="page">
     <div class="crumb"><a href="#/c/${cid}/teams">Teams</a> / ${esc(name)}</div>
     <div class="header">
@@ -493,7 +493,8 @@ function renderTeam(cid, tid, tab) {
   </div>`;
 }
 
-function teamRoster(cid, pids, roster, statByPid) {
+function teamRoster(cid, pids, roster, statByPid, tid) {
+  const handSrc = ((COMP_BY_ID[cid] || {}).rosterSrc || {})[tid];
   const bioByPid = {}; roster.forEach(r => { bioByPid[r.pid] = r; });
   const rows = pids.map(pid => ({ pid: pid, b: bioByPid[pid] || {}, p: statByPid[pid] || {} }))
     .sort((a, b) => (Number(a.b.num) || 999) - (Number(b.b.num) || 999) || personName(a.pid).localeCompare(personName(b.pid)));
@@ -513,7 +514,7 @@ function teamRoster(cid, pids, roster, statByPid) {
         </tr>`;
       }).join('')}</tbody>
     </table></div>
-    <div class="note">Bio columns come from the competition's published team roster page; blanks mean the source doesn't publish that field for this player. ${anyStats ? 'Per-game figures are computed from the player\'s own published season totals.' : 'No per-player statistics are published for this team in this competition yet.'}</div>
+    <div class="note">${handSrc ? `Roster read from ${esc(handSrc)}: the source has not published this team's roster page yet, and its page replaces this list once it does.` : 'Bio columns come from the competition\'s published team roster page; blanks mean the source doesn\'t publish that field for this player.'} ${anyStats ? 'Per-game figures are computed from the player\'s own published season totals.' : 'No per-player statistics are published for this team in this competition yet.'}</div>
   </div>`;
 }
 
