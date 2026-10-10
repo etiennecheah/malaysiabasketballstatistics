@@ -32,8 +32,16 @@ CI = dict(num=0, name=1, min=2, pts=3, fgm=4, fga=5, twopm=7, twopa=8, tpm=10, t
           ftm=13, fta=14, oreb=16, dreb=17, ast=18, pf=19, tov=20, stl=21, blk=22, pm=23, eff=24)
 
 
-def box_lines(b, f):
-    """A parsed box score -> the stored rows, or a Gate if it does not add up."""
+SUM_SLACK = 3      # points the source's own player rows may miss by when its totals row agrees with the scoreboard
+
+
+def box_lines(b, f, warn=None):
+    """A parsed box score -> the stored rows, or a Gate if it does not add up.
+
+    The source sometimes credits a point or two to nobody: every player row is there and its
+    totals row matches the scoreboard, but the players' points add to one less (2018 U17 Boys,
+    886163: Negeri Sembilan 67 v 68). That is the source's own slip, not a page we misread, so
+    it is kept as published and reported through `warn`; a bigger gap still stops the sync."""
     mid = f[0]
     lines = []
     for side, team, score in (('home', f[4], f[5]), ('away', f[6], f[7])):
@@ -46,7 +54,11 @@ def box_lines(b, f):
             raise Gate('%s: only %d players listed for %s' % (mid, len(t['players']), team))
         pts = sum(int(p['c'][3] or 0) for p in t['players'] if (p['c'][3] or '0').lstrip('-').isdigit())
         if str(pts) != score:
-            raise Gate('%s: %s players\' points add to %d, scoreboard says %s' % (mid, team, pts, score))
+            msg = '%s: %s players\' points add to %d, scoreboard says %s' % (mid, team, pts, score)
+            if warn and score.isdigit() and abs(pts - int(score)) <= SUM_SLACK:
+                warn(msg + ' (the source\'s totals row agrees with the scoreboard: kept as published)')
+            else:
+                raise Gate(msg)
         for pl in t['players']:
             cc = pl['c']
             line = {'pid': pl['pid'] or '', 'team': team, 'name': cc[1]}
@@ -257,7 +269,7 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
             res['box_missing'].append(m)
             note('%s: finished %s-%s, box score not published yet' % (m, f[5], f[7]))
             continue
-        rows = box_lines(b, f)
+        rows = box_lines(b, f, warn=note)
         st.boxes[m] = {'p': rows}
         by_mid[m][8] = 1
         res['new_games'].append(m)

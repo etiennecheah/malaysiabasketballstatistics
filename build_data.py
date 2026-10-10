@@ -353,6 +353,7 @@ TEAM_RENAME = {
     'Pegasus': 'Pegasus Sports',
     'Angkatan Tentera Malaysia': 'ATM',                   # the Armed Forces side
     'Putrajaya Harimau': 'Harimau',                       # the source's own newer name (D-League 2026 U23)
+    'Johore': 'Johor',                                    # the old spelling on the 2018 source pages
 }
 SKIP_RENAME = {'photos', 'logos', 'flags', 'complogos', 'persons', 'palias'}
 
