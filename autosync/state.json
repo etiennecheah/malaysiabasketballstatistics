@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791615930.121608,
-  "fp": "aa395fa4638fc1e7461d"
+  "at": 1791616141.0630157,
+  "fp": "9f77936c035e24d8843d"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -25,6 +25,18 @@
    "msg": "886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
    "n": 2,
    "next": 1791615960.5611403
+  },
+  "23322": {
+   "last": 1791615953.9178715,
+   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/23322/schedule: HTTP Error 500: Internal Server Error",
+   "n": 1,
+   "next": 1791616013.9178715
+  },
+  "23328": {
+   "last": 1791615953.9178715,
+   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/23328/schedule: HTTP Error 500: Internal Server Error",
+   "n": 1,
+   "next": 1791616013.9178715
   }
  },
  "full": {
@@ -46,13 +58,14 @@
    ]
   },
   "22128": {
-   "n": 1,
-   "next": 1791614367.666037,
+   "n": 2,
+   "next": 1791617153.9178715,
    "pids": [
-    "1286772",
-    "1287140",
-    "1287143",
-    "912374"
+    "2370364",
+    "2371570",
+    "2778711",
+    "28054",
+    "32106"
    ]
   },
   "22289": {
@@ -105,7 +118,10 @@
   "2026-10-10 14:45  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Lelaki (Men) \u2014 Selangor 121-67 Terengganu; Melaka 97-79 Pulau Pinang; Terengganu 80-93 Johor; Pahang 79-105 Selangor; Negeri Sembilan 67-69 Perak; Melaka 53-79 Negeri Sembilan; Johor 105-71 Pahang; Pulau Pinang 61-75 Wilayah Persekutuan; Sarawak 65-82 Johor; Pahang 78-60 Terengganu; Wilayah Persekutuan 107-80 Melaka; Pulau Pinang 54-77 Perak; Terengganu 61-79 Sarawak; Perak 73-76 Selangor; Negeri Sembilan 80-86 Perak; Johor 87-61 Selangor; play-by-play of Sarawak v Pahang; play-by-play of Wilayah Persekutuan v Negeri Sembilan; play-by-play of Perak v Melaka; play-by-play of Selangor v Sarawak; play-by-play of Negeri Sembilan v Pulau Pinang; play-by-play of Johor v Selangor; play-by-play of Johor v Negeri Sembilan  [944413: box score page failed (500): tried again later; 944414: box score page failed (500): tried again later; 944415: box score page failed (500): tried again later; 944421: box score page failed (500): tried again later; 944429: box score page failed (500): tried again later; 944430: box score page failed (500): tried again later; 944431: box score page failed (500): tried again later; 962513: box score page failed (500): tried again later; 944420: play-by-play page failed (500): tried again later; 944431: play-by-play not published yet; season lines not read for 4 player(s): tried again next time]",
   "2026-10-10 14:46  FAILED 21375 (2): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
   "2026-10-10 14:55  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Wanita (Women) \u2014 Terengganu 40-78 Selangor; Johor 103-23 Pahang; Melaka 40-85 Wilayah Persekutuan; Perak 47-63 Pulau Pinang; Negeri Sembilan 63-43 Melaka; Wilayah Persekutuan 105-36 Perak; Selangor 82-34 Sarawak; Pahang 34-107 Terengganu; Sarawak 79-42 Pahang; Terengganu 53-74 Johor; Perak 55-84 Melaka; Pulau Pinang 43-62 Negeri Sembilan; Wilayah Persekutuan 76-70 Negeri Sembilan; Melaka 50-30 Pulau Pinang; Johor 70-41 Sarawak; Pahang 30-97 Selangor; Sarawak 73-72 Terengganu; Selangor 71-63 Johor; Pulau Pinang 33-93 Wilayah Persekutuan; Negeri Sembilan 85-37 Perak; Selangor 56-33 Negeri Sembilan; Wilayah Persekutuan 58-60 Johor; Negeri Sembilan 49-75 Wilayah Persekutuan; Selangor 69-61 Johor  [944407: play-by-play not published yet; season lines not read for 4 player(s): tried again next time]",
-  "2026-10-10 15:05  sync: 24th MABA CUP 2018 \u2014 Pahang 93-46 Ansara; Terengganu 91-57 Putrajaya; Perak 61-42 ATM; Negeri Sembilan 64-45 Sarawak; Titans 73-53 Go Strong; Ansara 47-90 Terengganu; Putrajaya 55-72 Perak; Pulau Pinang 74-47 Titans; ATM 49-70 Pahang; Ansara 65-49 Putrajaya; Terengganu 86-68 Perak; Pulau Pinang 51-129 Negeri Sembilan; Sarawak 75-53 Go Strong; Pahang 75-66 Terengganu; Putrajaya 44-83 ATM; Negeri Sembilan 110-45 Go Strong; Sarawak 65-36 Titans; Pahang 103-42 Putrajaya; Ansara 53-65 Perak; Terengganu 59-67 ATM; Pulau Pinang 84-65 Sarawak; Titans 40-110 Negeri Sembilan; Perak 56-97 Pahang; ATM 104-63 Ansara; Go Strong 58-68 Pulau Pinang; Go Strong 67-58 Ansara; Titans 31-101 ATM; Negeri Sembilan 67-44 Terengganu; Pahang 55-49 Pulau Pinang; Ansara 84-75 Putrajaya; Sarawak 60-52 Perak; Terengganu 71-61 Pulau Pinang; Negeri Sembilan 72-70 Pahang  [1065250: play-by-play page failed (500): tried again later; season lines not read for 1 player(s): tried again next time]"
+  "2026-10-10 15:05  sync: 24th MABA CUP 2018 \u2014 Pahang 93-46 Ansara; Terengganu 91-57 Putrajaya; Perak 61-42 ATM; Negeri Sembilan 64-45 Sarawak; Titans 73-53 Go Strong; Ansara 47-90 Terengganu; Putrajaya 55-72 Perak; Pulau Pinang 74-47 Titans; ATM 49-70 Pahang; Ansara 65-49 Putrajaya; Terengganu 86-68 Perak; Pulau Pinang 51-129 Negeri Sembilan; Sarawak 75-53 Go Strong; Pahang 75-66 Terengganu; Putrajaya 44-83 ATM; Negeri Sembilan 110-45 Go Strong; Sarawak 65-36 Titans; Pahang 103-42 Putrajaya; Ansara 53-65 Perak; Terengganu 59-67 ATM; Pulau Pinang 84-65 Sarawak; Titans 40-110 Negeri Sembilan; Perak 56-97 Pahang; ATM 104-63 Ansara; Go Strong 58-68 Pulau Pinang; Go Strong 67-58 Ansara; Titans 31-101 ATM; Negeri Sembilan 67-44 Terengganu; Pahang 55-49 Pulau Pinang; Ansara 84-75 Putrajaya; Sarawak 60-52 Perak; Terengganu 71-61 Pulau Pinang; Negeri Sembilan 72-70 Pahang  [1065250: play-by-play page failed (500): tried again later; season lines not read for 1 player(s): tried again next time]",
+  "2026-10-10 15:06  FAILED 23322 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/23322/schedule: HTTP Error 500: Internal Server Error",
+  "2026-10-10 15:06  FAILED 23328 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/23328/schedule: HTTP Error 500: Internal Server Error",
+  "2026-10-10 15:09  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Lelaki (Men) \u2014 Perak 95-91 Wilayah Persekutuan; play-by-play of Melaka v Negeri Sembilan  [season lines not read for 5 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
@@ -164,18 +180,6 @@
    "kind": "pbp",
    "next": 1791615360.5611403,
    "since": 1791614760.5611403
-  },
-  "944420": {
-   "cid": "22128",
-   "kind": "pbp",
-   "next": 1791614367.666037,
-   "since": 1791613767.666037
-  },
-  "944431": {
-   "cid": "22128",
-   "kind": "box",
-   "next": 1791614367.666037,
-   "since": 1791613767.666037
   }
  },
  "rechecked": {
