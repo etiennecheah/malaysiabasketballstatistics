@@ -1,13 +1,14 @@
 {
  "built": {
-  "at": 1791616141.0630157,
-  "fp": "9f77936c035e24d8843d"
+  "at": 1791617204.8872588,
+  "fp": "dbe69aefd327e088e263"
  },
  "daily": {
   "21374": "2026-10-10",
   "22128": "2026-10-10",
   "22289": "2026-10-10",
   "23277": "2026-10-10",
+  "23322": "2026-10-10",
   "25340": "2026-10-10",
   "25341": "2026-10-10",
   "25502": "2026-10-10",
@@ -21,16 +22,10 @@
  },
  "fail": {
   "21375": {
-   "last": 1791614760.5611403,
+   "last": 1791616164.51486,
    "msg": "886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
-   "n": 2,
-   "next": 1791615960.5611403
-  },
-  "23322": {
-   "last": 1791615953.9178715,
-   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/23322/schedule: HTTP Error 500: Internal Server Error",
-   "n": 1,
-   "next": 1791616013.9178715
+   "n": 3,
+   "next": 1791618564.51486
   },
   "23328": {
    "last": 1791615953.9178715,
@@ -84,6 +79,19 @@
    "pids": [
     "2252691"
    ]
+  },
+  "23322": {
+   "n": 1,
+   "next": 1791616764.51486,
+   "pids": [
+    "1124037",
+    "1124039",
+    "1124068",
+    "1124069",
+    "2371573",
+    "271763",
+    "27507"
+   ]
   }
  },
  "log": [
@@ -121,7 +129,9 @@
   "2026-10-10 15:05  sync: 24th MABA CUP 2018 \u2014 Pahang 93-46 Ansara; Terengganu 91-57 Putrajaya; Perak 61-42 ATM; Negeri Sembilan 64-45 Sarawak; Titans 73-53 Go Strong; Ansara 47-90 Terengganu; Putrajaya 55-72 Perak; Pulau Pinang 74-47 Titans; ATM 49-70 Pahang; Ansara 65-49 Putrajaya; Terengganu 86-68 Perak; Pulau Pinang 51-129 Negeri Sembilan; Sarawak 75-53 Go Strong; Pahang 75-66 Terengganu; Putrajaya 44-83 ATM; Negeri Sembilan 110-45 Go Strong; Sarawak 65-36 Titans; Pahang 103-42 Putrajaya; Ansara 53-65 Perak; Terengganu 59-67 ATM; Pulau Pinang 84-65 Sarawak; Titans 40-110 Negeri Sembilan; Perak 56-97 Pahang; ATM 104-63 Ansara; Go Strong 58-68 Pulau Pinang; Go Strong 67-58 Ansara; Titans 31-101 ATM; Negeri Sembilan 67-44 Terengganu; Pahang 55-49 Pulau Pinang; Ansara 84-75 Putrajaya; Sarawak 60-52 Perak; Terengganu 71-61 Pulau Pinang; Negeri Sembilan 72-70 Pahang  [1065250: play-by-play page failed (500): tried again later; season lines not read for 1 player(s): tried again next time]",
   "2026-10-10 15:06  FAILED 23322 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/23322/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 15:06  FAILED 23328 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/23328/schedule: HTTP Error 500: Internal Server Error",
-  "2026-10-10 15:09  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Lelaki (Men) \u2014 Perak 95-91 Wilayah Persekutuan; play-by-play of Melaka v Negeri Sembilan  [season lines not read for 5 player(s): tried again next time]"
+  "2026-10-10 15:09  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Lelaki (Men) \u2014 Perak 95-91 Wilayah Persekutuan; play-by-play of Melaka v Negeri Sembilan  [season lines not read for 5 player(s): tried again next time]",
+  "2026-10-10 15:12  FAILED 21375 (3): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
+  "2026-10-10 15:26  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Men \u2014 Speed Hunters 48-98 Knight Fury; Negeri Sembilan 94-53 Westports Malaysia Dragons; STK 44-110 NS Matrix 2; MABA Selection 93-44 ATM; Labuan 77-64 Firehorse; STK 56-98 Westports Malaysia Dragons; Knight Fury 82-65 Labuan; PDRM 59-47 NS Matrix 2; Firehorse 71-56 Speed Hunters; Perak 62-64 Pahang; Speed Hunters 74-97 Labuan; NS Matrix 2 77-61 Perak; Firehorse 60-69 Knight Fury; Pahang 51-90 PDRM; NS Matrix 2 60-67 Westports Malaysia Dragons; Westports Malaysia Dragons 85-45 MABA Selection; ATM 28-120 Negeri Sembilan; Knight Fury 73-80 NS Matrix 2; Westports Malaysia Dragons 71-47 Labuan; Knight Fury 68-46 Labuan; Negeri Sembilan 136-26 MABA Selection; ATM 40-117 Westports Malaysia Dragons; PDRM 90-56 Perak; Pahang 64-73 NS Matrix 2; ATM 52-125 Perak; MABA Selection 64-89 Pahang; Negeri Sembilan 97-67 NS Matrix 2; PDRM 74-61 Westports Malaysia Dragons; NS Matrix 2 95-65 Westports Malaysia Dragons; Negeri Sembilan 67-63 PDRM  [1069346: play-by-play page failed (500): tried again later; season lines not read for 7 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
@@ -132,6 +142,12 @@
    "kind": "pbp",
    "next": 1791615936.826299,
    "since": 1791615336.826299
+  },
+  "1069346": {
+   "cid": "23322",
+   "kind": "pbp",
+   "next": 1791616764.51486,
+   "since": 1791616164.51486
   },
   "1312929": {
    "cid": "25340",
