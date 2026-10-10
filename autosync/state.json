@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791617896.7336667,
-  "fp": "e65f4ef1a01c44e6c004"
+  "at": 1791618115.8407714,
+  "fp": "38f6991f11e329a3d391"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -27,6 +27,12 @@
    "msg": "886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
    "n": 3,
    "next": 1791618564.51486
+  },
+  "22128": {
+   "last": 1791617920.0944588,
+   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/22128/schedule: HTTP Error 500: Internal Server Error",
+   "n": 1,
+   "next": 1791617980.0944588
   }
  },
  "full": {
@@ -96,6 +102,13 @@
     "2082470"
    ]
   },
+  "25340": {
+   "n": 1,
+   "next": 1791618520.0944588,
+   "pids": [
+    "862040"
+   ]
+  },
   "25341": {
    "n": 1,
    "next": 1791618224.6418853,
@@ -106,7 +119,6 @@
   }
  },
  "log": [
-  "2026-10-03 00:51  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 SELANGOR TIGER 104-107 SUPERSPORTS x REX BBA",
   "2026-10-03 05:23  FAILED 48654 (1): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
   "2026-10-03 05:27  FAILED 49965 (1): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
   "2026-10-03 08:49  FAILED 48654 (2): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
@@ -144,7 +156,9 @@
   "2026-10-10 15:12  FAILED 21375 (3): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
   "2026-10-10 15:26  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Men \u2014 Speed Hunters 48-98 Knight Fury; Negeri Sembilan 94-53 Westports Malaysia Dragons; STK 44-110 NS Matrix 2; MABA Selection 93-44 ATM; Labuan 77-64 Firehorse; STK 56-98 Westports Malaysia Dragons; Knight Fury 82-65 Labuan; PDRM 59-47 NS Matrix 2; Firehorse 71-56 Speed Hunters; Perak 62-64 Pahang; Speed Hunters 74-97 Labuan; NS Matrix 2 77-61 Perak; Firehorse 60-69 Knight Fury; Pahang 51-90 PDRM; NS Matrix 2 60-67 Westports Malaysia Dragons; Westports Malaysia Dragons 85-45 MABA Selection; ATM 28-120 Negeri Sembilan; Knight Fury 73-80 NS Matrix 2; Westports Malaysia Dragons 71-47 Labuan; Knight Fury 68-46 Labuan; Negeri Sembilan 136-26 MABA Selection; ATM 40-117 Westports Malaysia Dragons; PDRM 90-56 Perak; Pahang 64-73 NS Matrix 2; ATM 52-125 Perak; MABA Selection 64-89 Pahang; Negeri Sembilan 97-67 NS Matrix 2; PDRM 74-61 Westports Malaysia Dragons; NS Matrix 2 95-65 Westports Malaysia Dragons; Negeri Sembilan 67-63 PDRM  [1069346: play-by-play page failed (500): tried again later; season lines not read for 7 player(s): tried again next time]",
   "2026-10-10 15:33  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Women \u2014 Negeri Sembilan 71-53 Matrix Basketball Club; Kuala Lumpur 51-85 Hatchers; Negeri Sembilan 99-31 Kuala Lumpur; Hatchers 56-51 Segamat BA; Kuala Lumpur 38-71 Segamat BA; Matrix Basketball Club 41-78 Hatchers; Segamat BA 72-60 Matrix Basketball Club; Hatchers 57-75 Negeri Sembilan; Kuala Lumpur 25-74 Matrix Basketball Club; play-by-play of Negeri Sembilan v Segamat BA  [1069377: box score page failed (500): tried again later; season lines not read for 2 player(s): tried again next time]",
-  "2026-10-10 15:38  sync: 55th MABA 17 & Under NJBC for Girls \u2014 Negeri Sembilan 76-44 Perak; Kuala Lumpur 83-14 Putrajaya  [1312956: play-by-play does not reach the final score yet; 1312962: play-by-play not published yet; season lines not read for 2 player(s): tried again next time]"
+  "2026-10-10 15:38  sync: 55th MABA 17 & Under NJBC for Girls \u2014 Negeri Sembilan 76-44 Perak; Kuala Lumpur 83-14 Putrajaya  [1312956: play-by-play does not reach the final score yet; 1312962: play-by-play not published yet; season lines not read for 2 player(s): tried again next time]",
+  "2026-10-10 15:38  FAILED 22128 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/22128/schedule: HTTP Error 500: Internal Server Error",
+  "2026-10-10 15:41  sync: 55th MABA 17 & Under NJBC for Boys \u2014 Selangor 98-44 Terengganu  [season lines not read for 1 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
@@ -161,12 +175,6 @@
    "kind": "pbp",
    "next": 1791616764.51486,
    "since": 1791616164.51486
-  },
-  "1312929": {
-   "cid": "25340",
-   "kind": "box",
-   "next": 1791612810.1735156,
-   "since": 1791602009.1735137
   },
   "1312956": {
    "cid": "25341",
