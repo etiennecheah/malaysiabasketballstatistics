@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791618403.7750468,
-  "fp": "a3e43bb6c957c72c2b74"
+  "at": 1791618513.9716885,
+  "fp": "ae2e330c8b207bec9b21"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -64,13 +64,6 @@
     "32106"
    ]
   },
-  "23277": {
-   "n": 1,
-   "next": 1791615936.826299,
-   "pids": [
-    "2252691"
-   ]
-  },
   "23322": {
    "n": 1,
    "next": 1791616764.51486,
@@ -93,7 +86,6 @@
   }
  },
  "log": [
-  "2026-10-03 08:49  FAILED 48654 (2): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
   "2026-10-03 08:49  FAILED 49965 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/standings: HTTP Error 500: Internal Server Error",
   "2026-10-03 14:04  FAILED 49965 (3): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/standings?phaseName=Preliminary%20Round&: HTTP Error 500: Internal Server Error",
   "2026-10-03 14:30  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [8 player page(s) not published by the source now: the lines we hold are kept]",
@@ -132,18 +124,13 @@
   "2026-10-10 15:38  FAILED 22128 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/22128/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 15:41  sync: 55th MABA 17 & Under NJBC for Boys \u2014 Selangor 98-44 Terengganu  [season lines not read for 1 player(s): tried again next time]",
   "2026-10-10 15:44  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Wanita (Women) \u2014 play-by-play of Pahang v Selangor",
-  "2026-10-10 15:46  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Women \u2014 fixtures, standings or season lines updated"
+  "2026-10-10 15:46  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Women \u2014 fixtures, standings or season lines updated",
+  "2026-10-10 15:48  sync: 24th MABA CUP 2018 \u2014 play-by-play of Ansara v Perak"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
  },
  "pending": {
-  "1065250": {
-   "cid": "23277",
-   "kind": "pbp",
-   "next": 1791615936.826299,
-   "since": 1791615336.826299
-  },
   "1069346": {
    "cid": "23322",
    "kind": "pbp",
