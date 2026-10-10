@@ -1,9 +1,10 @@
 {
  "built": {
-  "at": 1791612783.082349,
-  "fp": "969f173767fd217db491"
+  "at": 1791613742.805212,
+  "fp": "1bd4aac3936a11f440cd"
  },
  "daily": {
+  "21374": "2026-10-10",
   "25340": "2026-10-10",
   "25341": "2026-10-10",
   "25502": "2026-10-10",
@@ -24,7 +25,17 @@
   "50247": 1791568099.5156078,
   "50248": 1791568255.422654
  },
- "lines_retry": {},
+ "lines_retry": {
+  "21374": {
+   "n": 1,
+   "next": 1791613410.1735935,
+   "pids": [
+    "107064",
+    "107230",
+    "107231"
+   ]
+  }
+ },
  "log": [
   "2026-10-03 00:51  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 SELANGOR TIGER 104-107 SUPERSPORTS x REX BBA",
   "2026-10-03 05:23  FAILED 48654 (1): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
@@ -51,12 +62,31 @@
   "2026-10-10 04:37  FAILED 25503 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25503/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 04:39  sync: 55th MABA 17 & Under NJBC for Girls \u2014 fixtures, standings or season lines updated  [1312956: play-by-play does not reach the final score yet; 1312962: play-by-play not published yet]",
   "2026-10-10 04:42  sync: 55th MABA 17 & Under NJBC for Boys \u2014 fixtures, standings or season lines updated",
-  "2026-10-10 04:44  sync: 61st MABA/MATRIX National Basketball Championship for Women \u2014 play-by-play of Segamat v Kuala Lumpur; play-by-play of NS Matrix v PUTRAJAYA"
+  "2026-10-10 04:44  sync: 61st MABA/MATRIX National Basketball Championship for Women \u2014 play-by-play of Segamat v Kuala Lumpur; play-by-play of NS Matrix v PUTRAJAYA",
+  "2026-10-10 14:29  sync: 54th MABA 17 & Under NJBC for Girls \u2014 Kedah 27-60 Negeri Sembilan; Perak 42-51 Penang; Negeri Sembilan 57-32 Perak; Johore 102-14 Kedah; Perak 67-52 Kedah; Penang 41-58 Johore; Negeri Sembilan 51-44 Penang; Johore 69-42 Perak; Penang 64-65 Kedah; Negeri Sembilan 47-49 Johore; WP Kuala Lumpur 61-66 Sabah; Kelantan 24-106 Selangor; Malacca 29-91 Sarawak; Sabah 91-34 Kelantan; Sarawak 58-61 WP Kuala Lumpur; Selangor 99-21 Malacca; Kelantan 36-69 Sarawak; Sabah 35-56 Selangor; WP Kuala Lumpur 59-46 Malacca; Selangor 64-31 WP Kuala Lumpur; Sarawak 66-80 Sabah; Malacca 54-67 Kelantan; Kelantan 39-71 WP Kuala Lumpur; Sabah 58-45 Malacca; Sarawak 43-66 Selangor; Kedah 58-77 Malacca; Kedah 43-60 Kelantan; Perak 43-82 Sarawak; Penang 58-60 WP Kuala Lumpur; Johore 76-47 Sabah; Selangor 60-32 Negeri Sembilan; Sabah 49-47 Negeri Sembilan; Johore 51-47 Selangor  [season lines not read for 3 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
  },
  "pending": {
+  "1312929": {
+   "cid": "25340",
+   "kind": "box",
+   "next": 1791612810.1735156,
+   "since": 1791602009.1735137
+  },
+  "1312947": {
+   "cid": "25341",
+   "kind": "box",
+   "next": 1791612810.1735718,
+   "since": 1791602009.1735713
+  },
+  "1312949": {
+   "cid": "25341",
+   "kind": "box",
+   "next": 1791612810.17358,
+   "since": 1791602009.1735795
+  },
   "1312956": {
    "cid": "25341",
    "kind": "pbp",
@@ -68,6 +98,25 @@
    "kind": "pbp",
    "next": 1791614638.471216,
    "since": 1791575455.130416
+  },
+  "1329609": {
+   "cid": "25503",
+   "kind": "box",
+   "next": 1791612810.1735847,
+   "since": 1791602009.1735845
+  },
+  "1329611": {
+   "cid": "25503",
+   "kind": "box",
+   "next": 1791612810.173589,
+   "since": 1791602009.1735888
   }
+ },
+ "rechecked": {
+  "1312929": "25340",
+  "1312947": "25341",
+  "1312949": "25341",
+  "1329609": "25503",
+  "1329611": "25503"
  }
 }
