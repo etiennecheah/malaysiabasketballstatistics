@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791618115.8407714,
-  "fp": "38f6991f11e329a3d391"
+  "at": 1791618272.370089,
+  "fp": "e863b06a0d4949e57f71"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -64,16 +64,6 @@
     "32106"
    ]
   },
-  "22289": {
-   "n": 1,
-   "next": 1791615360.5611403,
-   "pids": [
-    "2304361",
-    "32254",
-    "32276",
-    "32282"
-   ]
-  },
   "23277": {
    "n": 1,
    "next": 1791615936.826299,
@@ -119,7 +109,6 @@
   }
  },
  "log": [
-  "2026-10-03 05:23  FAILED 48654 (1): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
   "2026-10-03 05:27  FAILED 49965 (1): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
   "2026-10-03 08:49  FAILED 48654 (2): player statistics page lost columns: BLKR, Index, Gm Sc, FGA, FGM",
   "2026-10-03 08:49  FAILED 49965 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/standings: HTTP Error 500: Internal Server Error",
@@ -158,7 +147,8 @@
   "2026-10-10 15:33  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Women \u2014 Negeri Sembilan 71-53 Matrix Basketball Club; Kuala Lumpur 51-85 Hatchers; Negeri Sembilan 99-31 Kuala Lumpur; Hatchers 56-51 Segamat BA; Kuala Lumpur 38-71 Segamat BA; Matrix Basketball Club 41-78 Hatchers; Segamat BA 72-60 Matrix Basketball Club; Hatchers 57-75 Negeri Sembilan; Kuala Lumpur 25-74 Matrix Basketball Club; play-by-play of Negeri Sembilan v Segamat BA  [1069377: box score page failed (500): tried again later; season lines not read for 2 player(s): tried again next time]",
   "2026-10-10 15:38  sync: 55th MABA 17 & Under NJBC for Girls \u2014 Negeri Sembilan 76-44 Perak; Kuala Lumpur 83-14 Putrajaya  [1312956: play-by-play does not reach the final score yet; 1312962: play-by-play not published yet; season lines not read for 2 player(s): tried again next time]",
   "2026-10-10 15:38  FAILED 22128 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/22128/schedule: HTTP Error 500: Internal Server Error",
-  "2026-10-10 15:41  sync: 55th MABA 17 & Under NJBC for Boys \u2014 Selangor 98-44 Terengganu  [season lines not read for 1 player(s): tried again next time]"
+  "2026-10-10 15:41  sync: 55th MABA 17 & Under NJBC for Boys \u2014 Selangor 98-44 Terengganu  [season lines not read for 1 player(s): tried again next time]",
+  "2026-10-10 15:44  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Wanita (Women) \u2014 play-by-play of Pahang v Selangor"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
@@ -199,12 +189,6 @@
    "kind": "box",
    "next": 1791612810.173589,
    "since": 1791602009.1735888
-  },
-  "944407": {
-   "cid": "22289",
-   "kind": "pbp",
-   "next": 1791615360.5611403,
-   "since": 1791614760.5611403
   }
  },
  "rechecked": {
