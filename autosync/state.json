@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791617204.8872588,
-  "fp": "dbe69aefd327e088e263"
+  "at": 1791617602.2202163,
+  "fp": "7befa912372c140f8e6b"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -9,6 +9,7 @@
   "22289": "2026-10-10",
   "23277": "2026-10-10",
   "23322": "2026-10-10",
+  "23328": "2026-10-10",
   "25340": "2026-10-10",
   "25341": "2026-10-10",
   "25502": "2026-10-10",
@@ -26,12 +27,6 @@
    "msg": "886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
    "n": 3,
    "next": 1791618564.51486
-  },
-  "23328": {
-   "last": 1791615953.9178715,
-   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/23328/schedule: HTTP Error 500: Internal Server Error",
-   "n": 1,
-   "next": 1791616013.9178715
   }
  },
  "full": {
@@ -92,6 +87,14 @@
     "271763",
     "27507"
    ]
+  },
+  "23328": {
+   "n": 1,
+   "next": 1791617828.355238,
+   "pids": [
+    "2022692",
+    "2082470"
+   ]
   }
  },
  "log": [
@@ -131,7 +134,8 @@
   "2026-10-10 15:06  FAILED 23328 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/23328/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 15:09  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Lelaki (Men) \u2014 Perak 95-91 Wilayah Persekutuan; play-by-play of Melaka v Negeri Sembilan  [season lines not read for 5 player(s): tried again next time]",
   "2026-10-10 15:12  FAILED 21375 (3): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
-  "2026-10-10 15:26  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Men \u2014 Speed Hunters 48-98 Knight Fury; Negeri Sembilan 94-53 Westports Malaysia Dragons; STK 44-110 NS Matrix 2; MABA Selection 93-44 ATM; Labuan 77-64 Firehorse; STK 56-98 Westports Malaysia Dragons; Knight Fury 82-65 Labuan; PDRM 59-47 NS Matrix 2; Firehorse 71-56 Speed Hunters; Perak 62-64 Pahang; Speed Hunters 74-97 Labuan; NS Matrix 2 77-61 Perak; Firehorse 60-69 Knight Fury; Pahang 51-90 PDRM; NS Matrix 2 60-67 Westports Malaysia Dragons; Westports Malaysia Dragons 85-45 MABA Selection; ATM 28-120 Negeri Sembilan; Knight Fury 73-80 NS Matrix 2; Westports Malaysia Dragons 71-47 Labuan; Knight Fury 68-46 Labuan; Negeri Sembilan 136-26 MABA Selection; ATM 40-117 Westports Malaysia Dragons; PDRM 90-56 Perak; Pahang 64-73 NS Matrix 2; ATM 52-125 Perak; MABA Selection 64-89 Pahang; Negeri Sembilan 97-67 NS Matrix 2; PDRM 74-61 Westports Malaysia Dragons; NS Matrix 2 95-65 Westports Malaysia Dragons; Negeri Sembilan 67-63 PDRM  [1069346: play-by-play page failed (500): tried again later; season lines not read for 7 player(s): tried again next time]"
+  "2026-10-10 15:26  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Men \u2014 Speed Hunters 48-98 Knight Fury; Negeri Sembilan 94-53 Westports Malaysia Dragons; STK 44-110 NS Matrix 2; MABA Selection 93-44 ATM; Labuan 77-64 Firehorse; STK 56-98 Westports Malaysia Dragons; Knight Fury 82-65 Labuan; PDRM 59-47 NS Matrix 2; Firehorse 71-56 Speed Hunters; Perak 62-64 Pahang; Speed Hunters 74-97 Labuan; NS Matrix 2 77-61 Perak; Firehorse 60-69 Knight Fury; Pahang 51-90 PDRM; NS Matrix 2 60-67 Westports Malaysia Dragons; Westports Malaysia Dragons 85-45 MABA Selection; ATM 28-120 Negeri Sembilan; Knight Fury 73-80 NS Matrix 2; Westports Malaysia Dragons 71-47 Labuan; Knight Fury 68-46 Labuan; Negeri Sembilan 136-26 MABA Selection; ATM 40-117 Westports Malaysia Dragons; PDRM 90-56 Perak; Pahang 64-73 NS Matrix 2; ATM 52-125 Perak; MABA Selection 64-89 Pahang; Negeri Sembilan 97-67 NS Matrix 2; PDRM 74-61 Westports Malaysia Dragons; NS Matrix 2 95-65 Westports Malaysia Dragons; Negeri Sembilan 67-63 PDRM  [1069346: play-by-play page failed (500): tried again later; season lines not read for 7 player(s): tried again next time]",
+  "2026-10-10 15:33  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Women \u2014 Negeri Sembilan 71-53 Matrix Basketball Club; Kuala Lumpur 51-85 Hatchers; Negeri Sembilan 99-31 Kuala Lumpur; Hatchers 56-51 Segamat BA; Kuala Lumpur 38-71 Segamat BA; Matrix Basketball Club 41-78 Hatchers; Segamat BA 72-60 Matrix Basketball Club; Hatchers 57-75 Negeri Sembilan; Kuala Lumpur 25-74 Matrix Basketball Club; play-by-play of Negeri Sembilan v Segamat BA  [1069377: box score page failed (500): tried again later; season lines not read for 2 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
