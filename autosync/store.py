@@ -30,9 +30,11 @@ class Store:
         first sync of each reads everything else from the source, and its save makes the
         competition permanent. One already in the backbone is skipped."""
         qp = os.path.join(d, 'add_comps.json')
+        self.recheck_box = {}
         if not os.path.exists(qp):
             return []
         q = json.load(open(qp))
+        self.recheck_box = {k: v for k, v in q.get('recheck_box', {}).items() if not k.startswith('_')}
         have = {c['id'] for c in self.bb['comps']}
         added = []
         for c in q.get('comps', []):

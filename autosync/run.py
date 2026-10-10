@@ -147,7 +147,10 @@ def note_pending(state, cid, res, now):
     for kind, key in (('box', 'box_missing'), ('pbp', 'pbp_missing')):
         for m in res[key]:
             p = state['pending'].setdefault(m, {'cid': cid, 'kind': kind, 'since': now})
-            p['kind'] = kind
+            # a game missing both waits as 'box': retrying its box score reads its play-by-play too,
+            # while a 'pbp' retry never asks for the box score again
+            if kind == 'box' or m not in res['box_missing']:
+                p['kind'] = kind
             age = now - p['since']
             p['next'] = now + (600 if age < 3 * 3600 else 3600 if age < 48 * 3600 else 86400)
     for m in res['new_games']:
@@ -313,7 +316,18 @@ def main():
 
     # 2. watch
     st = Store()
-    last_poll, peeked, again, dirty = {}, {}, False, False
+    # box scores a hand check found on the source but an import did not get (data/add_comps.json
+    # "recheck_box"): queued once as missing boxes, so the ordinary retry reads them
+    rc = state.setdefault('rechecked', {})
+    queued_recheck = False
+    for cid, mids in st.recheck_box.items():
+        for m in mids:
+            if m not in st.boxes and m not in state['pending'] and m not in rc:
+                state['pending'][m] = {'cid': cid, 'kind': 'box', 'since': time.time() - 3 * 3600 - 1, 'next': time.time()}
+                rc[m] = cid
+                log('box score of %s queued for another try' % m)
+                queued_recheck = True
+    last_poll, peeked, again, dirty = {}, {}, False, queued_recheck
     while True:
         now = time.time()
         P = plan(st, state, now)

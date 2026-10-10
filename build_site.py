@@ -143,7 +143,7 @@ def main():
                 # an honour typed in before its competition was imported names no cid; once the
                 # player's line for that event is in the database, the honour belongs to it, or the
                 # career path shows the event twice (once as the honour, once as the stat line)
-                if not h.get('cid') and not h.get('pathOnly'):
+                if not h.get('cid'):
                     c = link_honour(h, linkable.get(k, []))
                     if c:
                         h = dict(h, cid=c)

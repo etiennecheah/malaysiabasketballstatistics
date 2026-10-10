@@ -65,7 +65,7 @@ CHAMP_OVERRIDE = {'39599': 'Negeri Sembilan'}
 
 # competitions whose source name does not say which series they belong to: the 2019 Agong
 # Cup is published as "61st MABA/MATRIX National Basketball Championship For Men/Women"
-SERIES_OVERRIDE = {'25502': 'Agong Cup', '25503': 'Agong Cup'}
+SERIES_OVERRIDE = {'25502': 'Agong Cup', '25503': 'Agong Cup', '23322': 'Agong Cup', '23328': 'Agong Cup'}
 
 def champion(games, stand, groups, name=''):
     """Who won a finished competition, and how that was decided.
@@ -241,7 +241,7 @@ def comp_meta(name, games, cid_hint=None):
         series = 'MABA/MATRIX Cup'                 # 2019: "25th MABA Cup", the 28th-30th are MABA/MATRIX Cup
     elif 'matrix cup' in low or 'matrix' in low:
         series = 'MABA/MATRIX Cup'
-    elif 'sukan malaysia' in low:
+    elif 'sukan malaysia' in low or 'sukma' in low:        # 2018: "Kejohanan Bola Keranjang Sukma Perak XIX"
         series = 'Sukan Malaysia'
     elif 'sukan selangor' in low or 'sukses' in low:
         series = 'Sukan Selangor'

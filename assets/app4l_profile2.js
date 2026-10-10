@@ -274,8 +274,10 @@ function pvPath(d) {
   const item = x => {
     if (x.m) return `<div class="it abroad">${crest(x.m.team, 18)}<span>${esc(x.m.team)}</span></div><div class="aw lg">↗ ${esc(x.m.league)} · signed</div>`;
     if (x.h) return `<div class="it ${x.h.champ ? 'win' : ''}" ${x.h.team ? `title="${esc(pvCase(x.h.team))}"` : ''}>${pvMark(x.h, 18)}<span>${x.h.cid ? `<a href="#/c/${x.h.cid}">${esc(x.h.short)}</a>` : esc(x.h.short)}</span></div>${x.h.pathOnly && x.h.team ? `<div class="tm">${esc(pvCase(x.h.team))}</div>` : ''}${lines(x.h.champ, x.h.awards, x.h.placing)}`;
-    const r = x.r, h = pvHonOf(d, r), win = d.isTitle(r) || (h && h.champ);
-    return `<a class="it ${win ? 'win' : ''}" href="#/c/${r.c.id}" title="${esc(r.c.label || r.c.name)}">${crest(r.p.team, 18)}<span>${esc(rowLabel(r))}</span></a>${lines(win, h ? h.awards : [])}`;
+    // a path-only honour of the same event (a runner-up finish typed in before the event was
+    // imported) belongs on this entry, not beside it as a second one
+    const r = x.r, h = pvHonOf(d, r), ph = d.pathHon.find(p => p.cid === r.c.id), win = d.isTitle(r) || (h && h.champ);
+    return `<a class="it ${win ? 'win' : ''}" href="#/c/${r.c.id}" title="${esc(r.c.label || r.c.name)}">${crest(r.p.team, 18)}<span>${esc(rowLabel(r))}</span></a>${lines(win, (h ? h.awards : []).concat(ph ? ph.awards.filter(a => !(h && h.awards.includes(a))) : []), ph && ph.placing)}`;
   };
   const rank = x => x.m ? 5 : x.h ? (x.h.champ ? 1 : 0) + x.h.awards.length : (d.isTitle(x.r) ? 1 : 0) + ((pvHonOf(d, x.r) || {}).awards || []).length;
   return `<div class="pv-path" style="--n:${ys.length}">${ys.map(y => { const pre = by[y].every(x => x.h || x.m) && !by[y].some(x => x.m);
