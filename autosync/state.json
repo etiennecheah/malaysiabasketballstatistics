@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791636040.9544146,
-  "fp": "e5cbe39046f1d958e437"
+  "at": 1791636170.5705242,
+  "fp": "b1033bf057aec27e3cba"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -31,20 +31,8 @@
   "50247": 1791568099.5156078,
   "50248": 1791568255.422654
  },
- "lines_retry": {
-  "21375": {
-   "n": 1,
-   "next": 1791635650.8981502,
-   "pids": [
-    "2252591",
-    "556391",
-    "556405",
-    "862039"
-   ]
-  }
- },
+ "lines_retry": {},
  "log": [
-  "2026-10-10 01:14  sync: 56th MABA/MATRIX 17 & Below National Basketball Championship for Girls 2022 \u2014 Kuala Lumpur 1 61-39 Melaka; Perak 84-28 Pahang; Johor 1 58-57 Sarawak; Selangor 1 75-38 Johor 2; Penang 65-31 Kelantan; Kelantan 14-89 Negeri Sembilan; Johor 2 36-71 Perak; Selangor 2 58-54 Johor 1; Labuan 21-83 Sarawak; Melaka 57-66 Sabah; Terengganu 29-65 Penang; Johor 1 78-28 Labuan; Sarawak 50-53 Selangor 2; Sabah 66-21 Kedah; Selangor 1 63-42 Perak; Johor 2 81-53 Pahang; Negeri Sembilan 76-19 Terengganu; Pahang 37-93 Selangor 1; Labuan 18-71 Selangor 2; Terengganu 51-43 Kelantan; Sabah 54-55 Kuala Lumpur 1; Kedah 40-63 Melaka; Negeri Sembilan 76-45 Penang; Kelantan 48-61 Pahang; Labuan 56-46 Kedah; Terengganu 39-67 Johor 2; Sarawak 56-43 Melaka; Perak 61-59 Sabah; Negeri Sembilan 47-27 Selangor 2; Penang 53-73 Johor 1; Selangor 1 71-36 Kuala Lumpur 1; Johor 1 39-69 Negeri Sembilan; Sabah 57-68 Selangor 1; Kelantan 46-12 Kedah; Kuala Lumpur 1 43-51 Perak; Terengganu 51-86 Melaka; Selangor 2 59-45 Penang; Penang 45-84 Sabah; Pahang 46-47 Labuan; Johor 1 38-55 Kuala Lumpur 1; Johor 2 37-56 Sarawak; Negeri Sembilan 59-29 Perak; Selangor 1 69-25 Selangor 2; Perak 79-42 Selangor 2; Negeri Sembilan 62-49 Selangor 1",
   "2026-10-10 01:50  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [rosters published for 0 of 7 teams]",
   "2026-10-10 01:52  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated  [rosters published for 0 of 5 teams]",
   "2026-10-10 03:00  FAILED 25340 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25340/leaders: HTTP Error 500: Internal Server Error",
@@ -83,7 +71,8 @@
   "2026-10-10 15:53  FAILED 21375 (4): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
   "2026-10-10 15:55  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Men \u2014 play-by-play of Negeri Sembilan v MABA Selection",
   "2026-10-10 16:00  sync: 61st MABA/MATRIX National Basketball Championship for Women \u2014 NS Matrix 62-15 PUTRAJAYA; Segamat 67-47 Stallions  [1 player page(s) not published by the source now: the lines we hold are kept; season lines not read for 2 player(s): tried again next time]",
-  "2026-10-10 20:40  sync: 54th MABA 17 & Under NJBC for Boys \u2014 WP Kuala Lumpur 75-46 Kedah; Kedah 33-97 Perak; Perak 54-63 WP Kuala Lumpur; Selangor 64-60 Penang; Penang 81-60 Terengganu; Terengganu 44-95 Selangor; Negeri Sembilan 81-53 Sabah; Sabah 80-93 Pahang; Pahang 47-56 Negeri Sembilan; Sarawak 72-61 Malacca; Johore 81-70 Kelantan; Malacca 68-70 Johore; Kelantan 48-70 Sarawak; Malacca 74-53 Kelantan; Johore 64-89 Sarawak; WP Kuala Lumpur 56-65 Penang; Perak 56-66 Selangor; Penang 63-57 Perak; Selangor 57-61 WP Kuala Lumpur; Negeri Sembilan 68-58 Sarawak; Pahang 46-72 Johore; Sarawak 92-71 Pahang; Johore 42-80 Negeri Sembilan; Kedah 78-79 Sabah; Terengganu 63-64 Malacca; Kedah 70-62 Terengganu; Terengganu 49-60 Kelantan; Sabah 75-84 Malacca; Perak 72-68 Pahang; Selangor 81-48 Johore; Negeri Sembilan 61-43 WP Kuala Lumpur; Penang 62-68 Sarawak; Johore 66-76 WP Kuala Lumpur; Selangor 37-58 Negeri Sembilan  [886163: Negeri Sembilan players' points add to 67, scoreboard says 68 (the source's totals row agrees with the scoreboard: kept as published); season lines not read for 4 player(s): tried again next time]"
+  "2026-10-10 20:40  sync: 54th MABA 17 & Under NJBC for Boys \u2014 WP Kuala Lumpur 75-46 Kedah; Kedah 33-97 Perak; Perak 54-63 WP Kuala Lumpur; Selangor 64-60 Penang; Penang 81-60 Terengganu; Terengganu 44-95 Selangor; Negeri Sembilan 81-53 Sabah; Sabah 80-93 Pahang; Pahang 47-56 Negeri Sembilan; Sarawak 72-61 Malacca; Johore 81-70 Kelantan; Malacca 68-70 Johore; Kelantan 48-70 Sarawak; Malacca 74-53 Kelantan; Johore 64-89 Sarawak; WP Kuala Lumpur 56-65 Penang; Perak 56-66 Selangor; Penang 63-57 Perak; Selangor 57-61 WP Kuala Lumpur; Negeri Sembilan 68-58 Sarawak; Pahang 46-72 Johore; Sarawak 92-71 Pahang; Johore 42-80 Negeri Sembilan; Kedah 78-79 Sabah; Terengganu 63-64 Malacca; Kedah 70-62 Terengganu; Terengganu 49-60 Kelantan; Sabah 75-84 Malacca; Perak 72-68 Pahang; Selangor 81-48 Johore; Negeri Sembilan 61-43 WP Kuala Lumpur; Penang 62-68 Sarawak; Johore 66-76 WP Kuala Lumpur; Selangor 37-58 Negeri Sembilan  [886163: Negeri Sembilan players' points add to 67, scoreboard says 68 (the source's totals row agrees with the scoreboard: kept as published); season lines not read for 4 player(s): tried again next time]",
+  "2026-10-10 20:42  sync: 54th MABA 17 & Under NJBC for Boys \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
