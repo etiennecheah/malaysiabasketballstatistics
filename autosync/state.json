@@ -1,11 +1,12 @@
 {
  "built": {
-  "at": 1791614735.8982034,
-  "fp": "8de0dbc3cf9a8ac465a5"
+  "at": 1791615310.7125359,
+  "fp": "13d9638e6c0a5d92d837"
  },
  "daily": {
   "21374": "2026-10-10",
   "22128": "2026-10-10",
+  "22289": "2026-10-10",
   "25340": "2026-10-10",
   "25341": "2026-10-10",
   "25502": "2026-10-10",
@@ -19,10 +20,10 @@
  },
  "fail": {
   "21375": {
-   "last": 1791613767.666037,
+   "last": 1791614760.5611403,
    "msg": "886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
-   "n": 1,
-   "next": 1791614367.666037
+   "n": 2,
+   "next": 1791615960.5611403
   }
  },
  "full": {
@@ -51,6 +52,16 @@
     "1287140",
     "1287143",
     "912374"
+   ]
+  },
+  "22289": {
+   "n": 1,
+   "next": 1791615360.5611403,
+   "pids": [
+    "2304361",
+    "32254",
+    "32276",
+    "32282"
    ]
   }
  },
@@ -83,7 +94,9 @@
   "2026-10-10 04:44  sync: 61st MABA/MATRIX National Basketball Championship for Women \u2014 play-by-play of Segamat v Kuala Lumpur; play-by-play of NS Matrix v PUTRAJAYA",
   "2026-10-10 14:29  sync: 54th MABA 17 & Under NJBC for Girls \u2014 Kedah 27-60 Negeri Sembilan; Perak 42-51 Penang; Negeri Sembilan 57-32 Perak; Johore 102-14 Kedah; Perak 67-52 Kedah; Penang 41-58 Johore; Negeri Sembilan 51-44 Penang; Johore 69-42 Perak; Penang 64-65 Kedah; Negeri Sembilan 47-49 Johore; WP Kuala Lumpur 61-66 Sabah; Kelantan 24-106 Selangor; Malacca 29-91 Sarawak; Sabah 91-34 Kelantan; Sarawak 58-61 WP Kuala Lumpur; Selangor 99-21 Malacca; Kelantan 36-69 Sarawak; Sabah 35-56 Selangor; WP Kuala Lumpur 59-46 Malacca; Selangor 64-31 WP Kuala Lumpur; Sarawak 66-80 Sabah; Malacca 54-67 Kelantan; Kelantan 39-71 WP Kuala Lumpur; Sabah 58-45 Malacca; Sarawak 43-66 Selangor; Kedah 58-77 Malacca; Kedah 43-60 Kelantan; Perak 43-82 Sarawak; Penang 58-60 WP Kuala Lumpur; Johore 76-47 Sabah; Selangor 60-32 Negeri Sembilan; Sabah 49-47 Negeri Sembilan; Johore 51-47 Selangor  [season lines not read for 3 player(s): tried again next time]",
   "2026-10-10 14:33  FAILED 21375 (1): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
-  "2026-10-10 14:45  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Lelaki (Men) \u2014 Selangor 121-67 Terengganu; Melaka 97-79 Pulau Pinang; Terengganu 80-93 Johor; Pahang 79-105 Selangor; Negeri Sembilan 67-69 Perak; Melaka 53-79 Negeri Sembilan; Johor 105-71 Pahang; Pulau Pinang 61-75 Wilayah Persekutuan; Sarawak 65-82 Johor; Pahang 78-60 Terengganu; Wilayah Persekutuan 107-80 Melaka; Pulau Pinang 54-77 Perak; Terengganu 61-79 Sarawak; Perak 73-76 Selangor; Negeri Sembilan 80-86 Perak; Johor 87-61 Selangor; play-by-play of Sarawak v Pahang; play-by-play of Wilayah Persekutuan v Negeri Sembilan; play-by-play of Perak v Melaka; play-by-play of Selangor v Sarawak; play-by-play of Negeri Sembilan v Pulau Pinang; play-by-play of Johor v Selangor; play-by-play of Johor v Negeri Sembilan  [944413: box score page failed (500): tried again later; 944414: box score page failed (500): tried again later; 944415: box score page failed (500): tried again later; 944421: box score page failed (500): tried again later; 944429: box score page failed (500): tried again later; 944430: box score page failed (500): tried again later; 944431: box score page failed (500): tried again later; 962513: box score page failed (500): tried again later; 944420: play-by-play page failed (500): tried again later; 944431: play-by-play not published yet; season lines not read for 4 player(s): tried again next time]"
+  "2026-10-10 14:45  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Lelaki (Men) \u2014 Selangor 121-67 Terengganu; Melaka 97-79 Pulau Pinang; Terengganu 80-93 Johor; Pahang 79-105 Selangor; Negeri Sembilan 67-69 Perak; Melaka 53-79 Negeri Sembilan; Johor 105-71 Pahang; Pulau Pinang 61-75 Wilayah Persekutuan; Sarawak 65-82 Johor; Pahang 78-60 Terengganu; Wilayah Persekutuan 107-80 Melaka; Pulau Pinang 54-77 Perak; Terengganu 61-79 Sarawak; Perak 73-76 Selangor; Negeri Sembilan 80-86 Perak; Johor 87-61 Selangor; play-by-play of Sarawak v Pahang; play-by-play of Wilayah Persekutuan v Negeri Sembilan; play-by-play of Perak v Melaka; play-by-play of Selangor v Sarawak; play-by-play of Negeri Sembilan v Pulau Pinang; play-by-play of Johor v Selangor; play-by-play of Johor v Negeri Sembilan  [944413: box score page failed (500): tried again later; 944414: box score page failed (500): tried again later; 944415: box score page failed (500): tried again later; 944421: box score page failed (500): tried again later; 944429: box score page failed (500): tried again later; 944430: box score page failed (500): tried again later; 944431: box score page failed (500): tried again later; 962513: box score page failed (500): tried again later; 944420: play-by-play page failed (500): tried again later; 944431: play-by-play not published yet; season lines not read for 4 player(s): tried again next time]",
+  "2026-10-10 14:46  FAILED 21375 (2): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
+  "2026-10-10 14:55  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Wanita (Women) \u2014 Terengganu 40-78 Selangor; Johor 103-23 Pahang; Melaka 40-85 Wilayah Persekutuan; Perak 47-63 Pulau Pinang; Negeri Sembilan 63-43 Melaka; Wilayah Persekutuan 105-36 Perak; Selangor 82-34 Sarawak; Pahang 34-107 Terengganu; Sarawak 79-42 Pahang; Terengganu 53-74 Johor; Perak 55-84 Melaka; Pulau Pinang 43-62 Negeri Sembilan; Wilayah Persekutuan 76-70 Negeri Sembilan; Melaka 50-30 Pulau Pinang; Johor 70-41 Sarawak; Pahang 30-97 Selangor; Sarawak 73-72 Terengganu; Selangor 71-63 Johor; Pulau Pinang 33-93 Wilayah Persekutuan; Negeri Sembilan 85-37 Perak; Selangor 56-33 Negeri Sembilan; Wilayah Persekutuan 58-60 Johor; Negeri Sembilan 49-75 Wilayah Persekutuan; Selangor 69-61 Johor  [944407: play-by-play not published yet; season lines not read for 4 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
@@ -130,6 +143,12 @@
    "kind": "box",
    "next": 1791612810.173589,
    "since": 1791602009.1735888
+  },
+  "944407": {
+   "cid": "22289",
+   "kind": "pbp",
+   "next": 1791615360.5611403,
+   "since": 1791614760.5611403
   },
   "944420": {
    "cid": "22128",
