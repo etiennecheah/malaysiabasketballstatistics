@@ -269,7 +269,16 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
             res['box_missing'].append(m)
             note('%s: finished %s-%s, box score not published yet' % (m, f[5], f[7]))
             continue
-        rows = box_lines(b, f, warn=note)
+        try:
+            rows = box_lines(b, f, warn=note)
+        except Gate as e:
+            # a box score that does not add up yet (the source still filling it in: two players listed
+            # for a team, totals behind the scoreboard) costs that game only. Its result stands from the
+            # fixture list and the box is read again with the missing ones, instead of the whole
+            # competition, and every other finished game, waiting for it
+            res['box_missing'].append(m)
+            note('%s: box score not complete yet (%s): tried again later' % (m, str(e).split(': ', 1)[-1]))
+            continue
         st.boxes[m] = {'p': rows}
         by_mid[m][8] = 1
         res['new_games'].append(m)

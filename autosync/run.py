@@ -27,7 +27,11 @@ STATE = os.path.join(HERE, 'state.json')
 OUT = os.path.join(ROOT, '_site')
 BUILD = ['build_data.py', 'build_lineups.py', 'build_bpm.py', 'build_pbp.py', 'build_stats.py', 'build_site.py']
 
-HOLD_BEFORE = 30 * 60        # a run that starts this close to tip-off stays on
+HOLD_BEFORE = 14 * 3600      # a run that starts this close to tip-off stays on. GitHub starts the scheduled
+                             # runs only every few hours, so during a tournament a run is kept alive across
+                             # the night (each hands over to a fresh one when its time budget runs out)
+                             # rather than hoping the timer fires before the first game of the day
+RETRY_HOLD = 45 * 60         # a competition whose failed sync is due again this soon keeps the run on
 POLL_FROM = 60 * 60          # no game ends sooner than an hour after tip-off
 POLL_UNTIL = 4.5 * 3600      # after that it is "overdue" and looked at every half hour
 OVERDUE_FOR = 48 * 3600
@@ -133,6 +137,10 @@ def plan(st, state, now):
             P['daily'].append(cid)
     for mid, p in state['pending'].items():
         if now - p['since'] < 3 * 3600:
+            P['hold'] = True
+    for key, f in state['fail'].items():
+        if key != 'build' and f.get('next', 0) - now < RETRY_HOLD and (key in more or any(
+                open_fixtures(st, c) for c in st.bb['comps'] if c['id'] == key)):
             P['hold'] = True
     return P
 
@@ -280,6 +288,12 @@ def full_lines_due(st, state, cid, now):
 def main():
     state = load_state()
     head = sh('git', 'rev-parse', 'HEAD')
+    if sh('git', 'log', '-1', '--format=%s', check=False) == 'unpack inbox bundle':
+        # new code or data was just uploaded, often to fix exactly what failed: try those again now
+        # instead of waiting out their back-off
+        for key, f in state['fail'].items():
+            if key != 'build':
+                f['next'] = 0
     fp = fingerprint()
     force = os.environ.get('FORCE') == 'true'
     built = os.environ.get('BUILT') or ''
