@@ -2,6 +2,14 @@
  "_note": "Player news for the News page, supplied by the user. One entry per item. date: YYYY-MM-DD. type: signing, transfer, departure, injury, return, retirement, national or other. name: the player as the item writes him; pid: his id in this database (the number in his profile link, #/p/<pid>) - leave it out and the build looks the name up. to / from: the teams, as the site spells them. league: for a club outside Malaysia. text: the item itself. note: an optional second line. A signing or transfer makes 'to' the player's newest team on his card and profile until the database has later games for him.",
  "items": [
   {
+   "date": "2026-10-11",
+   "type": "signing",
+   "name": "Cheah Zi Hong",
+   "pid": "2371572",
+   "to": "KL Titans",
+   "text": "KL Titans announced the signing of Cheah Zi Hong."
+  },
+  {
    "date": "2026-10-06",
    "type": "signing",
    "name": "Dhayalan G Vadivelavan",
