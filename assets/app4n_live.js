@@ -19,7 +19,14 @@
 
 const LIVE_RELAY = 'https://hoopstatsmy-live.etiennecheah26.workers.dev';
 const LIVE_BEFORE = 20 * 60e3, LIVE_AFTER = 3.5 * 3600e3;
-const LIVE = { games: {}, timer: null, last: 0, fails: 0, now: null };
+const LIVE = { games: {}, timer: null, last: 0, fails: 0, now: null, per: 'all', scoring: false };
+/* the play-by-play filter on the live game page: a period, or scoring plays only */
+function livePlaysFilter(per, scoring) {
+  if (per != null) LIVE.per = per;
+  if (scoring != null) LIVE.scoring = scoring;
+  const page = document.getElementById('live-game');
+  if (page) page.innerHTML = liveGameInner(page.dataset.mid);
+}
 
 /* tip-off as a timestamp: the fixture's date and time are Malaysian (UTC+8) */
 function liveStart(g) {
@@ -88,7 +95,12 @@ function liveRefresh() {
   const side = document.getElementById('lv-hero-side');
   if (side && typeof hmHeroSide === 'function') side.innerHTML = hmHeroSide();
   const page = document.getElementById('live-game');
-  if (page) page.innerHTML = liveGameInner(page.dataset.mid);
+  if (page) {
+    const box = page.querySelector('.lv-plays'), top = box ? box.scrollTop : 0;
+    page.innerHTML = liveGameInner(page.dataset.mid);
+    const box2 = page.querySelector('.lv-plays');
+    if (box2 && top) box2.scrollTop = top;
+  }
   // the fixture lists: the Games page and a competition's schedule
   if (typeof gamesLiveRefresh === 'function') gamesLiveRefresh();
   if (typeof scheduleLiveRefresh === 'function') scheduleLiveRefresh();
@@ -277,7 +289,18 @@ function liveGameInner(mid) {
   const qh = Array.from({ length: qn }, (_, i) => `<th>${i < 4 ? 'Q' + (i + 1) : 'OT' + (i > 4 ? i - 3 : '')}</th>`).join('');
   const qr = t => Array.from({ length: qn }, (_, i) => `<td>${t.q[i] != null ? t.q[i] : ''}</td>`).join('') + `<td class="lv-qt">${t.score}</td>`;
   const pen = t => t.fouls >= 4 ? ' · penalty' : '';
-  const plays = (d.plays || []).filter(p => p.type !== 'substitution' || p.name);
+  const allPlays = (d.plays || []).filter(p => p.type !== 'substitution' || p.name);
+  const pers = [...new Set(allPlays.map(livePeriod))].reverse();          // oldest period first
+  if (LIVE.per !== 'all' && !pers.includes(LIVE.per)) LIVE.per = 'all';
+  const isScore = p => p.scoring && p.made && (p.type === '2pt' || p.type === '3pt' || p.type === 'freethrow');
+  const plays = allPlays.filter(p => (LIVE.per === 'all' || livePeriod(p) === LIVE.per) && (!LIVE.scoring || isScore(p)));
+  const full = d.v >= 2;                       // relay v1 sent only the newest 40 plays
+  const chip = (k, label) => `<button type="button" class="lv-chip${LIVE.per === k ? ' on' : ''}" onclick="livePlaysFilter('${k}')">${label}</button>`;
+  const filt = `<div class="lv-pfilt">${chip('all', 'All')}${pers.map(k => chip(k, k)).join('')}
+    <label class="lv-pscoring"><input type="checkbox" ${LIVE.scoring ? 'checked' : ''} onchange="livePlaysFilter(null, this.checked)"> Scoring only</label></div>`;
+  const tot = t => t.tot || t.pl.reduce((o, p) => { ['pts', 'reb', 'oreb', 'dreb', 'ast', 'stl', 'blk', 'tov', 'pf', 'fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta']
+    .forEach(k => { o[k] = (o[k] || 0) + (p[k] || 0); }); return o; }, {});
+  const pct = (m, a) => a ? Math.round(100 * m / a) + '%' : '–';
   let prev = null;
   return `<div class="lv-crumb"><a href="#/games">Games</a> › <a href="#/c/${g.cid}">${esc(liveCompName(g.cid))}</a> › ${esc(h.name)} vs ${esc(a.name)}</div>
   <section class="lv-stage">
@@ -293,9 +316,10 @@ function liveGameInner(mid) {
   <div class="lv-fresh"><span><span class="lv-dot lv-dot-ok"></span>Score, clock, players and plays · <b>${liveAgo(x.at)}</b></span>
     <span class="lvb-grow"></span><span>${fin ? 'This game is over. It joins the season stats at the next update of the database.' : 'Updates by itself every 30 s — no need to reload'}</span></div>
   <div class="lv-cols">
-    <section><h2 class="lv-h2">Play-by-play <span>newest first · last ${plays.length}</span></h2>
-      <div class="card lv-plays">${plays.map(p => {
-        const sc = p.scoring && p.made && (p.type === '2pt' || p.type === '3pt' || p.type === 'freethrow');
+    <section><h2 class="lv-h2">Play-by-play <span>newest first · ${full ? plays.length + (plays.length === 1 ? ' play' : ' plays') : 'latest ' + plays.length}</span></h2>
+      ${filt}
+      <div class="card lv-plays">${plays.length ? '' : '<div class="lv-pnone">No plays for this filter yet.</div>'}${plays.map(p => {
+        const sc = isScore(p);
         const per = livePeriod(p);
         const head = per !== prev ? `<div class="lv-pper">${esc(per)}</div>` : '';
         prev = per;
@@ -308,11 +332,18 @@ function liveGameInner(mid) {
       }).join('')}</div></section>
     <section><h2 class="lv-h2">${fin ? 'Box score' : 'Live box score'}</h2>
       ${d.teams.map(t => `<div class="card lv-box"><div class="lv-box-h">${crest(t.name, 22)}<b>${esc(t.name)}</b><span>${t.score}</span></div>
-        <div class="table-wrap"><table class="lv-boxt"><thead><tr><th>#</th><th class="lv-l">Player</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>STL</th><th>BLK</th><th>FG</th><th>3PT</th><th>FT</th><th>PF</th><th>+/-</th></tr></thead>
+        <div class="table-wrap"><table class="lv-boxt"><thead><tr><th>#</th><th class="lv-l">Player</th><th>MIN</th><th>PTS</th><th>REB</th><th title="Offensive rebounds">OR</th><th>AST</th><th title="Turnovers">TO</th><th>STL</th><th>BLK</th><th>FG</th><th>3PT</th><th>FT</th><th>PF</th><th>+/-</th></tr></thead>
         <tbody>${t.pl.slice().sort((p, q) => q.pts - p.pts || (q.min > p.min ? 1 : -1)).map(p => `<tr class="${p.on && !fin ? 'lv-on' : ''}${p.min === '0:00' && !p.pts ? ' lv-dnp' : ''}">
           <td>${esc(p.no)}</td><td class="lv-l">${livePlayer(g.cid, t.name, p)}${p.on && !fin ? ' <span class="lv-court" title="On court">●</span>' : ''}</td>
-          <td>${esc(p.min)}</td><td class="lv-pts">${p.pts}</td><td>${p.reb}</td><td>${p.ast}</td><td>${p.stl}</td><td>${p.blk}</td>
-          <td>${p.fgm}/${p.fga}</td><td>${p.tpm}/${p.tpa}</td><td>${p.ftm}/${p.fta}</td><td>${p.pf}</td><td>${p.pm > 0 ? '+' + p.pm : p.pm}</td></tr>`).join('')}</tbody></table></div></div>`).join('')}
+          <td>${esc(p.min)}</td><td class="lv-pts">${p.pts}</td><td>${p.reb}</td><td>${p.oreb}</td><td>${p.ast}</td><td>${p.tov}</td><td>${p.stl}</td><td>${p.blk}</td>
+          <td>${p.fgm}/${p.fga}</td><td>${p.tpm}/${p.tpa}</td><td>${p.ftm}/${p.fta}</td><td>${p.pf}</td><td>${p.pm > 0 ? '+' + p.pm : p.pm}</td></tr>`).join('')}</tbody>
+          <tfoot>${(() => { const o = tot(t); return `<tr class="lv-tot"><td></td><td class="lv-l">Totals</td><td></td><td class="lv-pts">${o.pts}</td><td>${o.reb}</td><td>${o.oreb}</td><td>${o.ast}</td><td>${o.tov}</td><td>${o.stl}</td><td>${o.blk}</td>
+            <td>${o.fgm}/${o.fga}</td><td>${o.tpm}/${o.tpa}</td><td>${o.ftm}/${o.fta}</td><td>${o.pf}</td><td></td></tr>
+            <tr class="lv-pctrow"><td></td><td class="lv-l">${t.tot && (t.tot.teamReb || t.tot.teamTov) ? `incl. team: ${t.tot.teamReb} reb, ${t.tot.teamTov} TO` : ''}</td><td colspan="8"></td>
+            <td>${pct(o.fgm, o.fga)}</td><td>${pct(o.tpm, o.tpa)}</td><td>${pct(o.ftm, o.fta)}</td><td colspan="2"></td></tr>`; })()}</tfoot></table></div></div>`).join('')}
+      ${h.tot && a.tot ? `<div class="card lv-tstats"><div class="lv-box-h"><b>Team stats</b></div><table class="lv-boxt lv-tst"><thead><tr><th class="lv-l"></th><th>${esc(h.code || h.name)}</th><th>${esc(a.code || a.name)}</th></tr></thead><tbody>
+        ${[['Points in the paint', 'paint'], ['Fast-break points', 'fast'], ['Second-chance points', 'second'], ['Points off turnovers', 'offTov'], ['Bench points', 'bench'], ['Turnovers', 'tov'], ['Rebounds', 'reb'], ['Biggest lead', 'biggestLead']]
+          .map(([l, k]) => `<tr><td class="lv-l">${l}</td><td>${h.tot[k]}</td><td>${a.tot[k]}</td></tr>`).join('')}</tbody></table></div>` : ''}
       <div class="note">Live figures come straight from Genius Sports' LiveStats feed through the HoopStatsMY relay and can
         change as the scorer corrects them. Season averages, leaders, standings and BPM don't move during a game.</div>
     </section>

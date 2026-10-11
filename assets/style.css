@@ -2508,6 +2508,19 @@
   .lv-boxt td:last-child, .lv-boxt th:last-child{ padding-right:14px; }
   .lv-boxt tr.lv-dnp td{ color:var(--text-faint); }
   .lv-court{ color:var(--live); font-size:10px; vertical-align:1px; }
+  /* the whole play-by-play (relay v2): its own scroll box, a period filter, a scoring-only switch */
+  .lv-plays{ max-height:min(78vh, 980px); overflow-y:auto; overscroll-behavior:contain; }
+  .lv-pfilt{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+  .lv-chip{ appearance:none; cursor:pointer; border:1px solid var(--border); background:var(--surface); color:var(--text-muted);
+            font:600 12.5px var(--body); padding:5px 12px; border-radius:100px; min-height:30px; }
+  .lv-chip:hover{ color:var(--text); border-color:var(--text-faint); }
+  .lv-chip.on{ background:var(--on-bg); border-color:var(--on-bg); color:var(--on-fg); }
+  .lv-pscoring{ display:inline-flex; align-items:center; gap:6px; margin-left:auto; font-size:12.5px; color:var(--text-muted); cursor:pointer; }
+  .lv-pnone{ padding:18px 14px; color:var(--text-faint); }
+  .lv-boxt tfoot td{ border-bottom:0; }
+  .lv-boxt tr.lv-tot td{ font-weight:700; border-top:1px solid var(--border); }
+  .lv-boxt tr.lv-pctrow td{ color:var(--text-faint); font-size:12px; padding-top:0; }
+  .lv-tst td, .lv-tst th{ text-align:right; } .lv-tst td:nth-child(2), .lv-tst td:nth-child(3){ font-weight:600; }
   /* eleven site links now (Home, News and Stats joined the bar): tighten it so it still fits one
      line on a laptop. The search box gives way first, then the padding; below that the row scrolls. */
   .wordmark{ white-space:nowrap; }
