@@ -24,10 +24,10 @@
  },
  "fail": {
   "50247": {
-   "last": 1791665306.1994884,
-   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/schedule: HTTP Error 500: Internal Server Error",
-   "n": 1,
-   "next": 1791665366.1994884
+   "last": 1791677579.7714193,
+   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/standings: HTTP Error 500: Internal Server Error",
+   "n": 2,
+   "next": 1791677699.7714193
   }
  },
  "full": {
@@ -40,7 +40,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-10 03:00  FAILED 25340 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25340/leaders: HTTP Error 500: Internal Server Error",
   "2026-10-10 03:00  FAILED 25341 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25341/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 03:13  FAILED 25502 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25502/standings?phaseName=Normal%20Seasons&poolNumber=1&: HTTP Error 500: Internal Server Error",
   "2026-10-10 03:28  sync: 61st MABA/MATRIX National Basketball Championship for Women \u2014 Kuala Lumpur 54-38 Stallions; Segamat 108-23 PERAK; Negeri Sembilan 83-22 NS Matrix; Stallions 96-26 PUTRAJAYA; NS Matrix 46-57 Segamat; PERAK 39-81 Kuala Lumpur; NS Matrix 72-19 PERAK; Kuala Lumpur 96-38 PUTRAJAYA; Negeri Sembilan 89-24 Stallions; PUTRAJAYA 29-107 Negeri Sembilan; Segamat 73-48 Kuala Lumpur; Stallions 50-38 PERAK; PUTRAJAYA 32-109 Segamat; PERAK 25-98 Negeri Sembilan; NS Matrix 54-57 Stallions; Negeri Sembilan 78-37 Kuala Lumpur; PUTRAJAYA 48-59 PERAK; Kuala Lumpur 69-55 NS Matrix; Segamat 56-87 Negeri Sembilan; Negeri Sembilan 76-43 Segamat; play-by-play of Segamat v Stallions  [1329609: box score page failed (500): tried again later; 1329611: box score page failed (500): tried again later; 1329599: play-by-play page failed (500): tried again later; 1329609: play-by-play page failed (500): tried again later; season lines not read for 7 player(s): tried again next time]",
@@ -79,7 +78,8 @@
   "2026-10-10 20:40  sync: 54th MABA 17 & Under NJBC for Boys \u2014 WP Kuala Lumpur 75-46 Kedah; Kedah 33-97 Perak; Perak 54-63 WP Kuala Lumpur; Selangor 64-60 Penang; Penang 81-60 Terengganu; Terengganu 44-95 Selangor; Negeri Sembilan 81-53 Sabah; Sabah 80-93 Pahang; Pahang 47-56 Negeri Sembilan; Sarawak 72-61 Malacca; Johore 81-70 Kelantan; Malacca 68-70 Johore; Kelantan 48-70 Sarawak; Malacca 74-53 Kelantan; Johore 64-89 Sarawak; WP Kuala Lumpur 56-65 Penang; Perak 56-66 Selangor; Penang 63-57 Perak; Selangor 57-61 WP Kuala Lumpur; Negeri Sembilan 68-58 Sarawak; Pahang 46-72 Johore; Sarawak 92-71 Pahang; Johore 42-80 Negeri Sembilan; Kedah 78-79 Sabah; Terengganu 63-64 Malacca; Kedah 70-62 Terengganu; Terengganu 49-60 Kelantan; Sabah 75-84 Malacca; Perak 72-68 Pahang; Selangor 81-48 Johore; Negeri Sembilan 61-43 WP Kuala Lumpur; Penang 62-68 Sarawak; Johore 66-76 WP Kuala Lumpur; Selangor 37-58 Negeri Sembilan  [886163: Negeri Sembilan players' points add to 67, scoreboard says 68 (the source's totals row agrees with the scoreboard: kept as published); season lines not read for 4 player(s): tried again next time]",
   "2026-10-10 20:42  sync: 54th MABA 17 & Under NJBC for Boys \u2014 fixtures, standings or season lines updated",
   "2026-10-11 04:48  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [26 player page(s) not published by the source now: the lines we hold are kept]",
-  "2026-10-11 04:52  FAILED 50247 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/schedule: HTTP Error 500: Internal Server Error"
+  "2026-10-11 04:52  FAILED 50247 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/schedule: HTTP Error 500: Internal Server Error",
+  "2026-10-11 08:14  FAILED 50247 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/standings: HTTP Error 500: Internal Server Error"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
@@ -88,13 +88,13 @@
   "1312956": {
    "cid": "25341",
    "kind": "pbp",
-   "next": 1791668906.1994884,
+   "next": 1791681179.7714193,
    "since": 1791575455.130416
   },
   "1312962": {
    "cid": "25341",
    "kind": "pbp",
-   "next": 1791668906.1994884,
+   "next": 1791681179.7714193,
    "since": 1791575455.130416
   }
  },
