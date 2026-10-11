@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791697560.1826155,
-  "fp": "bcd4353d9748a7c30e80"
+  "at": 1791697661.297165,
+  "fp": "d7beb6befc9d921b36d6"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -19,17 +19,10 @@
   "35136": "2026-10-10",
   "48654": "2026-10-11",
   "49965": "2026-10-11",
-  "50247": "2026-10-10",
+  "50247": "2026-10-11",
   "50248": "2026-10-11"
  },
- "fail": {
-  "50247": {
-   "last": 1791677579.7714193,
-   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/standings: HTTP Error 500: Internal Server Error",
-   "n": 2,
-   "next": 1791677699.7714193
-  }
- },
+ "fail": {},
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
@@ -40,7 +33,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-10 03:00  FAILED 25341 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25341/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 03:13  FAILED 25502 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25502/standings?phaseName=Normal%20Seasons&poolNumber=1&: HTTP Error 500: Internal Server Error",
   "2026-10-10 03:28  sync: 61st MABA/MATRIX National Basketball Championship for Women \u2014 Kuala Lumpur 54-38 Stallions; Segamat 108-23 PERAK; Negeri Sembilan 83-22 NS Matrix; Stallions 96-26 PUTRAJAYA; NS Matrix 46-57 Segamat; PERAK 39-81 Kuala Lumpur; NS Matrix 72-19 PERAK; Kuala Lumpur 96-38 PUTRAJAYA; Negeri Sembilan 89-24 Stallions; PUTRAJAYA 29-107 Negeri Sembilan; Segamat 73-48 Kuala Lumpur; Stallions 50-38 PERAK; PUTRAJAYA 32-109 Segamat; PERAK 25-98 Negeri Sembilan; NS Matrix 54-57 Stallions; Negeri Sembilan 78-37 Kuala Lumpur; PUTRAJAYA 48-59 PERAK; Kuala Lumpur 69-55 NS Matrix; Segamat 56-87 Negeri Sembilan; Negeri Sembilan 76-43 Segamat; play-by-play of Segamat v Stallions  [1329609: box score page failed (500): tried again later; 1329611: box score page failed (500): tried again later; 1329599: play-by-play page failed (500): tried again later; 1329609: play-by-play page failed (500): tried again later; season lines not read for 7 player(s): tried again next time]",
   "2026-10-10 03:50  sync: 55th MABA 17 & Under NJBC for Boys \u2014 Kuala Lumpur 130-20 Putrajaya; Sarawak 45-53 PDRM; Johor 1 94-65 Labuan; Negeri Sembilan 79-71 Pahang; Putrajaya 34-87 Penang; Terengganu 72-74 Perak; Labuan 60-48 Sarawak; Johor 1 76-50 PDRM; Sabah 52-61 Negeri Sembilan; Sarawak 56-65 Johor 1; PDRM 53-51 Labuan; Perak 54-81 Selangor; Pahang 96-72 Sabah; Penang 59-62 Kuala Lumpur; Sabah 112-51 Putrajaya; Terengganu 76-63 Labuan; Perak 61-78 Negeri Sembilan; PDRM 36-38 Kuala Lumpur; Selangor 91-75 Pahang; Johor 1 78-66 Penang; Putrajaya 37-81 Labuan; Penang 66-61 PDRM; Pahang 68-88 Perak; Johor 1 77-58 Kuala Lumpur; Selangor 44-45 Negeri Sembilan; Putrajaya 43-78 Sarawak; Sabah 76-79 Terengganu; Pahang 77-62 PDRM; Selangor 69-45 Kuala Lumpur; Johor 1 75-53 Negeri Sembilan; Perak 72-73 Penang; Kuala Lumpur 46-50 Negeri Sembilan; Selangor 56-66 Johor 1; play-by-play of Selangor v Terengganu  [1312929: box score page failed (500): tried again later; season lines not read for 22 player(s): tried again next time]",
@@ -79,7 +71,8 @@
   "2026-10-10 20:42  sync: 54th MABA 17 & Under NJBC for Boys \u2014 fixtures, standings or season lines updated",
   "2026-10-11 04:48  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [26 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-11 04:52  FAILED 50247 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/schedule: HTTP Error 500: Internal Server Error",
-  "2026-10-11 08:14  FAILED 50247 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/standings: HTTP Error 500: Internal Server Error"
+  "2026-10-11 08:14  FAILED 50247 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/standings: HTTP Error 500: Internal Server Error",
+  "2026-10-11 13:47  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155
