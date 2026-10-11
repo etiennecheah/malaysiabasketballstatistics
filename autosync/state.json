@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791749058.5134313,
-  "fp": "2412f1f473d2793b5c59"
+  "at": 1791749192.0977073,
+  "fp": "3bf5f149530ed24e6602"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -20,7 +20,7 @@
   "48654": "2026-10-12",
   "49965": "2026-10-12",
   "50247": "2026-10-12",
-  "50248": "2026-10-11"
+  "50248": "2026-10-12"
  },
  "fail": {},
  "full": {
@@ -33,7 +33,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-10 04:37  sync: 61st MABA/MATRIX National Basketball Championship For Men \u2014 fixtures, standings or season lines updated",
   "2026-10-10 04:37  FAILED 25503 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/25503/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 04:39  sync: 55th MABA 17 & Under NJBC for Girls \u2014 fixtures, standings or season lines updated  [1312956: play-by-play does not reach the final score yet; 1312962: play-by-play not published yet]",
   "2026-10-10 04:42  sync: 55th MABA 17 & Under NJBC for Boys \u2014 fixtures, standings or season lines updated",
@@ -72,7 +71,8 @@
   "2026-10-11 22:39  FAILED 50247 (4): 2938172: only 2 players listed for Johor",
   "2026-10-11 23:59  FAILED 50247 (5): 2938172: only 2 players listed for Johor",
   "2026-10-12 02:33  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 ATM 61-112 Perak; play-by-play of Johor v Selangor; play-by-play of Negeri Sembilan v PDRM  [2938172: box score not complete yet (only 2 players listed for Johor): tried again later; 2938174: box score not complete yet (only 1 players listed for Negeri Sembilan): tried again later]",
-  "2026-10-12 04:04  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [2 player page(s) not published by the source now: the lines we hold are kept]"
+  "2026-10-12 04:04  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [2 player page(s) not published by the source now: the lines we hold are kept]",
+  "2026-10-12 04:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated  [rosters published for 4 of 5 teams]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
