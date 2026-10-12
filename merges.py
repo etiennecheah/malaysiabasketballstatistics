@@ -52,6 +52,102 @@ def load(d):
     return pidmap, names
 
 
+# ---- the same person under a new id -----------------------------------------------------
+# Genius Sports sometimes registers every player of a new tournament afresh (the 2026 Agong Cup:
+# 2830455..2832001), so a game that has just been played opens a second profile beside the one
+# the player already has. A record is joined to the older one automatically only when all of:
+#   * every competition it appears in has a game within RECENT_DAYS of the newest game we hold,
+#     and the other record has appeared somewhere else before;
+#   * the two names are the same words (order, commas, A/L, bin and binti ignored), at least two;
+#   * exactly one older record has that name;
+#   * the same side of the game (men's or women's competitions);
+#   * the two have played for a team with a name word in common (Johor, PDRM, Selangor ...);
+#   * they never appear in the same game, and in a competition they share they are on the same team;
+#   * the pair is not listed under "separate" in merges.json.
+# Anything less certain is left for a person to decide.
+import datetime
+import re
+
+RECENT_DAYS = 45
+_NOISE = {'basketball', 'club', 'bc', 'ba', 'team', 'selection', 'the', 'association', 'and', 'x', 'of'}
+
+
+def _key(n):
+    return frozenset(w for w in re.split(r'[\s,\-]+', (n or '').upper()) if w and w not in ('A/L', 'A/P', 'AL', 'AP', 'BIN', 'BINTI'))
+
+
+def _when(g):
+    try:
+        return datetime.datetime.strptime(g[2].strip(), '%b %d, %Y, %I:%M %p')
+    except (ValueError, AttributeError, IndexError):
+        return None
+
+
+def auto(bb, persons, boxes, pidmap, d):
+    """-> {new record id: older record id} for the cases above (ids already merged are left alone)."""
+    path = os.path.join(d, 'merges.json')
+    doc = json.load(open(path)) if os.path.exists(path) else {}
+    separate = {frozenset(p) for p in doc.get('separate', [])}
+    reg, treg = bb['personReg'], bb['teamReg']
+    m = lambda p: pidmap.get(p, p)
+    newest = max((t for c in bb['comps'] for g in c['games'] for t in [_when(g)] if t), default=None)
+    if newest is None:
+        return {}
+    comps, teams, recent, women = {}, {}, set(), set()
+    cteam, games = {}, {}            # (pid, cid) -> team names there; pid -> games with a box line
+    for c in bb['comps']:
+        if any(t and (newest - t).days <= RECENT_DAYS for t in map(_when, c['games'])):
+            recent.add(c['id'])
+        if re.search(r'women|girls|wanita|perempuan|\(w\)', c['name'], re.I):
+            women.add(c['id'])
+        tid_name = {t: treg.get(t, '') for t in c['teams']}
+        for tid, rows in c['roster']:
+            for r in rows:
+                if r and r[0]:
+                    comps.setdefault(m(r[0]), set()).add(c['id'])
+                    teams.setdefault(m(r[0]), set()).add(tid_name.get(tid) or treg.get(tid, ''))
+                    cteam.setdefault((m(r[0]), c['id']), set()).add((tid_name.get(tid) or treg.get(tid, '')).lower())
+        for p in c['players']:
+            comps.setdefault(m(p), set()).add(c['id'])
+            line = persons.get(c['id'] + ':' + p)
+            if line:
+                teams.setdefault(m(p), set()).add(line.split('\t')[0])
+        for g in c['games']:
+            for ln in (boxes.get(g[0]) or {}).get('p', []):
+                if ln.get('pid'):
+                    comps.setdefault(m(ln['pid']), set()).add(c['id'])
+                    teams.setdefault(m(ln['pid']), set()).add(ln.get('team') or '')
+                    cteam.setdefault((m(ln['pid']), c['id']), set()).add((ln.get('team') or '').lower())
+                    games.setdefault(m(ln['pid']), set()).add(g[0])
+    words = lambda ts: {w for t in ts for w in re.split(r'[^a-z]+', (t or '').lower()) if len(w) > 2 and w not in _NOISE}
+    byname = {}
+    for p in comps:
+        if p in reg and p not in pidmap:
+            byname.setdefault(_key(reg[p]), []).append(p)
+    out = {}
+    for k, ps in byname.items():
+        if len(k) < 2 or len(ps) < 2:
+            continue
+        new = [p for p in ps if comps[p] <= recent]
+        old = [p for p in ps if not comps[p] <= recent]
+        if len(old) != 1:
+            continue
+        o = old[0]
+        for n in new:
+            if frozenset((n, o)) in separate or games.get(n, set()) & games.get(o, set()):
+                continue                 # two people in the same game are two people
+            # in a competition they share, they must be on the same team (one record from the
+            # roster page, the other from a box score read before the source had him registered)
+            if any(not (cteam.get((n, c), set()) & cteam.get((o, c), set())) for c in comps[n] & comps[o]):
+                continue
+            if bool(comps[n] & women) != bool(comps[o] & women) or (comps[n] - women and comps[n] & women):
+                continue
+            if not words(teams.get(n, ())) & words(teams.get(o, ())):
+                continue
+            out[n] = o
+    return out
+
+
 def apply(bb, persons, boxes, pidmap, names):
     """Rewrite backbone, stat lines and box scores in place. Returns a report dict."""
     if not pidmap:

@@ -594,6 +594,13 @@ def main():
     # Collapse the source's duplicate person records before anything is aggregated,
     # so career totals, the tier split, the box scores and BPM all see one player.
     pidmap, mnames = merges.load(D)
+    # a new record of a player we already have, under the same name (see merges.auto)
+    auto = merges.auto(bb, persons, raw_boxes, pidmap, D)
+    for a, c in sorted(auto.items()):
+        pidmap[a] = c
+    if auto:
+        print('joined %d new record(s) to the player\'s existing profile: %s' % (len(auto), ', '.join(
+            '%s %s -> %s' % (a, bb['personReg'].get(a, ''), c) for a, c in sorted(auto.items()))))
     rep = merges.apply(bb, persons, raw_boxes, pidmap, mnames)
     if pidmap:
         print('merged %d duplicate person records into %d players '
