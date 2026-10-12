@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791797622.9017644,
-  "fp": "f46d9d913e4b4947e023"
+  "at": 1791804784.6344888,
+  "fp": "e11e4609902f334d38f3"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -31,9 +31,26 @@
   "50247": 1791748819.5762823,
   "50248": 1791568255.422654
  },
- "lines_retry": {},
+ "lines_retry": {
+  "50247": {
+   "n": 1,
+   "next": 1791805274.0609574,
+   "pids": [
+    "1091402",
+    "1287224",
+    "2252667",
+    "2299197",
+    "2341467",
+    "2370363",
+    "2386393",
+    "2386400",
+    "2568842",
+    "32084",
+    "556411"
+   ]
+  }
+ },
  "log": [
-  "2026-10-10 04:44  sync: 61st MABA/MATRIX National Basketball Championship for Women \u2014 play-by-play of Segamat v Kuala Lumpur; play-by-play of NS Matrix v PUTRAJAYA",
   "2026-10-10 14:29  sync: 54th MABA 17 & Under NJBC for Girls \u2014 Kedah 27-60 Negeri Sembilan; Perak 42-51 Penang; Negeri Sembilan 57-32 Perak; Johore 102-14 Kedah; Perak 67-52 Kedah; Penang 41-58 Johore; Negeri Sembilan 51-44 Penang; Johore 69-42 Perak; Penang 64-65 Kedah; Negeri Sembilan 47-49 Johore; WP Kuala Lumpur 61-66 Sabah; Kelantan 24-106 Selangor; Malacca 29-91 Sarawak; Sabah 91-34 Kelantan; Sarawak 58-61 WP Kuala Lumpur; Selangor 99-21 Malacca; Kelantan 36-69 Sarawak; Sabah 35-56 Selangor; WP Kuala Lumpur 59-46 Malacca; Selangor 64-31 WP Kuala Lumpur; Sarawak 66-80 Sabah; Malacca 54-67 Kelantan; Kelantan 39-71 WP Kuala Lumpur; Sabah 58-45 Malacca; Sarawak 43-66 Selangor; Kedah 58-77 Malacca; Kedah 43-60 Kelantan; Perak 43-82 Sarawak; Penang 58-60 WP Kuala Lumpur; Johore 76-47 Sabah; Selangor 60-32 Negeri Sembilan; Sabah 49-47 Negeri Sembilan; Johore 51-47 Selangor  [season lines not read for 3 player(s): tried again next time]",
   "2026-10-10 14:33  FAILED 21375 (1): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
   "2026-10-10 14:45  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Lelaki (Men) \u2014 Selangor 121-67 Terengganu; Melaka 97-79 Pulau Pinang; Terengganu 80-93 Johor; Pahang 79-105 Selangor; Negeri Sembilan 67-69 Perak; Melaka 53-79 Negeri Sembilan; Johor 105-71 Pahang; Pulau Pinang 61-75 Wilayah Persekutuan; Sarawak 65-82 Johor; Pahang 78-60 Terengganu; Wilayah Persekutuan 107-80 Melaka; Pulau Pinang 54-77 Perak; Terengganu 61-79 Sarawak; Perak 73-76 Selangor; Negeri Sembilan 80-86 Perak; Johor 87-61 Selangor; play-by-play of Sarawak v Pahang; play-by-play of Wilayah Persekutuan v Negeri Sembilan; play-by-play of Perak v Melaka; play-by-play of Selangor v Sarawak; play-by-play of Negeri Sembilan v Pulau Pinang; play-by-play of Johor v Selangor; play-by-play of Johor v Negeri Sembilan  [944413: box score page failed (500): tried again later; 944414: box score page failed (500): tried again later; 944415: box score page failed (500): tried again later; 944421: box score page failed (500): tried again later; 944429: box score page failed (500): tried again later; 944430: box score page failed (500): tried again later; 944431: box score page failed (500): tried again later; 962513: box score page failed (500): tried again later; 944420: play-by-play page failed (500): tried again later; 944431: play-by-play not published yet; season lines not read for 4 player(s): tried again next time]",
@@ -72,7 +89,8 @@
   "2026-10-12 04:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated  [rosters published for 4 of 5 teams]",
   "2026-10-12 15:38  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Johor 115-51 Selangor; Negeri Sembilan 95-61 PDRM",
   "2026-10-12 17:23  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 ATM 66-89 Johor  [2938175: final 66-89 read from the live feed (the schedule page does not show it as final yet); 2938175: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 66 (ATM))]",
-  "2026-10-12 17:33  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 ATM 66-89 Johor  [2938175: the source's box score replaces the one from the live feed]"
+  "2026-10-12 17:33  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 ATM 66-89 Johor  [2938175: the source's box score replaces the one from the live feed]",
+  "2026-10-12 19:33  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 75-119 Negeri Sembilan  [2938178: final 75-119 read from the live feed (the schedule page does not show it as final yet); season lines not read for 11 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
