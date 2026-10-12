@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791835374.3316813,
-  "fp": "9558bef76412f010be30"
+  "at": 1791835499.8467822,
+  "fp": "04d474c3069c2bd57238"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -20,7 +20,7 @@
   "48654": "2026-10-13",
   "49965": "2026-10-13",
   "50247": "2026-10-13",
-  "50248": "2026-10-12"
+  "50248": "2026-10-13"
  },
  "fail": {},
  "full": {
@@ -33,7 +33,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-10 14:46  FAILED 21375 (2): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
   "2026-10-10 14:55  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Wanita (Women) \u2014 Terengganu 40-78 Selangor; Johor 103-23 Pahang; Melaka 40-85 Wilayah Persekutuan; Perak 47-63 Pulau Pinang; Negeri Sembilan 63-43 Melaka; Wilayah Persekutuan 105-36 Perak; Selangor 82-34 Sarawak; Pahang 34-107 Terengganu; Sarawak 79-42 Pahang; Terengganu 53-74 Johor; Perak 55-84 Melaka; Pulau Pinang 43-62 Negeri Sembilan; Wilayah Persekutuan 76-70 Negeri Sembilan; Melaka 50-30 Pulau Pinang; Johor 70-41 Sarawak; Pahang 30-97 Selangor; Sarawak 73-72 Terengganu; Selangor 71-63 Johor; Pulau Pinang 33-93 Wilayah Persekutuan; Negeri Sembilan 85-37 Perak; Selangor 56-33 Negeri Sembilan; Wilayah Persekutuan 58-60 Johor; Negeri Sembilan 49-75 Wilayah Persekutuan; Selangor 69-61 Johor  [944407: play-by-play not published yet; season lines not read for 4 player(s): tried again next time]",
   "2026-10-10 15:05  sync: 24th MABA CUP 2018 \u2014 Pahang 93-46 Ansara; Terengganu 91-57 Putrajaya; Perak 61-42 ATM; Negeri Sembilan 64-45 Sarawak; Titans 73-53 Go Strong; Ansara 47-90 Terengganu; Putrajaya 55-72 Perak; Pulau Pinang 74-47 Titans; ATM 49-70 Pahang; Ansara 65-49 Putrajaya; Terengganu 86-68 Perak; Pulau Pinang 51-129 Negeri Sembilan; Sarawak 75-53 Go Strong; Pahang 75-66 Terengganu; Putrajaya 44-83 ATM; Negeri Sembilan 110-45 Go Strong; Sarawak 65-36 Titans; Pahang 103-42 Putrajaya; Ansara 53-65 Perak; Terengganu 59-67 ATM; Pulau Pinang 84-65 Sarawak; Titans 40-110 Negeri Sembilan; Perak 56-97 Pahang; ATM 104-63 Ansara; Go Strong 58-68 Pulau Pinang; Go Strong 67-58 Ansara; Titans 31-101 ATM; Negeri Sembilan 67-44 Terengganu; Pahang 55-49 Pulau Pinang; Ansara 84-75 Putrajaya; Sarawak 60-52 Perak; Terengganu 71-61 Pulau Pinang; Negeri Sembilan 72-70 Pahang  [1065250: play-by-play page failed (500): tried again later; season lines not read for 1 player(s): tried again next time]",
   "2026-10-10 15:06  FAILED 23322 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/23322/schedule: HTTP Error 500: Internal Server Error",
@@ -72,7 +71,8 @@
   "2026-10-12 19:33  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 75-119 Negeri Sembilan  [2938178: final 75-119 read from the live feed (the schedule page does not show it as final yet); season lines not read for 11 player(s): tried again next time]",
   "2026-10-12 21:31  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 113-69 Selangor  [2938180: final 113-69 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]",
   "2026-10-12 21:59  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
-  "2026-10-13 04:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated"
+  "2026-10-13 04:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
+  "2026-10-13 04:04  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
