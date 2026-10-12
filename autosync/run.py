@@ -161,11 +161,15 @@ def note_pending(state, cid, res, now):
                 p['kind'] = kind
             age = now - p['since']
             p['next'] = now + (600 if age < 3 * 3600 else 3600 if age < 48 * 3600 else 86400)
+    # a game whose box score is still missing (or held from the live feed) keeps waiting as 'box',
+    # whatever else came in for it: finding its play-by-play must not end the wait for its box score
     for m in res['new_games']:
-        if m in state['pending'] and state['pending'][m]['kind'] == 'box' and m not in res['pbp_missing']:
+        if m in state['pending'] and state['pending'][m]['kind'] == 'box' and m not in res['pbp_missing'] \
+                and m not in res['box_missing']:
             state['pending'].pop(m)
     for m in res['pbp_found']:
-        state['pending'].pop(m, None)
+        if m not in res['box_missing']:
+            state['pending'].pop(m, None)
     for m in [m for m, p in state['pending'].items() if now - p['since'] > 7 * 86400]:
         state['pending'].pop(m)
     if res['lines_failed']:
@@ -375,7 +379,7 @@ def main():
             rb, rp = pending_due(state, cid, now)
             full = kind == 'daily' and full_lines_due(st, state, cid, now)
             try:
-                res = sync.sync_comp(st, cid, lines='all' if full else 'new', force=(kind == 'daily'),
+                res = sync.sync_comp(st, cid, lines='all' if full else 'new', force=(kind == 'daily'), now=now,
                                      retry_box=rb, retry_pbp=rp, extra_pids=state['lines_retry'].get(cid, {}).get('pids', ()),
                                      log=log)
             except (Gate, sync.source.SourceError) as e:
