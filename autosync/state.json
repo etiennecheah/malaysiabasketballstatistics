@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791813441.522345,
-  "fp": "b47443113cca374a05a5"
+  "at": 1791813558.290536,
+  "fp": "9fb650c7a8aeed12a959"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -31,18 +31,8 @@
   "50247": 1791748819.5762823,
   "50248": 1791568255.422654
  },
- "lines_retry": {
-  "50247": {
-   "n": 1,
-   "next": 1791812300.8327482,
-   "pids": [
-    "2568866",
-    "2831960"
-   ]
-  }
- },
+ "lines_retry": {},
  "log": [
-  "2026-10-10 14:33  FAILED 21375 (1): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
   "2026-10-10 14:45  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Lelaki (Men) \u2014 Selangor 121-67 Terengganu; Melaka 97-79 Pulau Pinang; Terengganu 80-93 Johor; Pahang 79-105 Selangor; Negeri Sembilan 67-69 Perak; Melaka 53-79 Negeri Sembilan; Johor 105-71 Pahang; Pulau Pinang 61-75 Wilayah Persekutuan; Sarawak 65-82 Johor; Pahang 78-60 Terengganu; Wilayah Persekutuan 107-80 Melaka; Pulau Pinang 54-77 Perak; Terengganu 61-79 Sarawak; Perak 73-76 Selangor; Negeri Sembilan 80-86 Perak; Johor 87-61 Selangor; play-by-play of Sarawak v Pahang; play-by-play of Wilayah Persekutuan v Negeri Sembilan; play-by-play of Perak v Melaka; play-by-play of Selangor v Sarawak; play-by-play of Negeri Sembilan v Pulau Pinang; play-by-play of Johor v Selangor; play-by-play of Johor v Negeri Sembilan  [944413: box score page failed (500): tried again later; 944414: box score page failed (500): tried again later; 944415: box score page failed (500): tried again later; 944421: box score page failed (500): tried again later; 944429: box score page failed (500): tried again later; 944430: box score page failed (500): tried again later; 944431: box score page failed (500): tried again later; 962513: box score page failed (500): tried again later; 944420: play-by-play page failed (500): tried again later; 944431: play-by-play not published yet; season lines not read for 4 player(s): tried again next time]",
   "2026-10-10 14:46  FAILED 21375 (2): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
   "2026-10-10 14:55  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Wanita (Women) \u2014 Terengganu 40-78 Selangor; Johor 103-23 Pahang; Melaka 40-85 Wilayah Persekutuan; Perak 47-63 Pulau Pinang; Negeri Sembilan 63-43 Melaka; Wilayah Persekutuan 105-36 Perak; Selangor 82-34 Sarawak; Pahang 34-107 Terengganu; Sarawak 79-42 Pahang; Terengganu 53-74 Johor; Perak 55-84 Melaka; Pulau Pinang 43-62 Negeri Sembilan; Wilayah Persekutuan 76-70 Negeri Sembilan; Melaka 50-30 Pulau Pinang; Johor 70-41 Sarawak; Pahang 30-97 Selangor; Sarawak 73-72 Terengganu; Selangor 71-63 Johor; Pulau Pinang 33-93 Wilayah Persekutuan; Negeri Sembilan 85-37 Perak; Selangor 56-33 Negeri Sembilan; Wilayah Persekutuan 58-60 Johor; Negeri Sembilan 49-75 Wilayah Persekutuan; Selangor 69-61 Johor  [944407: play-by-play not published yet; season lines not read for 4 player(s): tried again next time]",
@@ -81,7 +71,8 @@
   "2026-10-12 17:23  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 ATM 66-89 Johor  [2938175: final 66-89 read from the live feed (the schedule page does not show it as final yet); 2938175: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 66 (ATM))]",
   "2026-10-12 17:33  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 ATM 66-89 Johor  [2938175: the source's box score replaces the one from the live feed]",
   "2026-10-12 19:33  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 75-119 Negeri Sembilan  [2938178: final 75-119 read from the live feed (the schedule page does not show it as final yet); season lines not read for 11 player(s): tried again next time]",
-  "2026-10-12 21:31  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 113-69 Selangor  [2938180: final 113-69 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]"
+  "2026-10-12 21:31  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 113-69 Selangor  [2938180: final 113-69 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]",
+  "2026-10-12 21:59  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
