@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791883549.35826,
-  "fp": "aaf7b4829a64bb252677"
+  "at": 1791891103.103452,
+  "fp": "5cc8dd6b763fe05983e2"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -24,10 +24,10 @@
  },
  "fail": {
   "50247": {
-   "last": 1791884026.7816932,
-   "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 7\nrecovered: 20 box scores, 11 roster names\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 872, in <module>\n    main()\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 604, in main\n    rep = merges.apply(bb, persons, raw_boxes, pidmap, mnames)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/merges.p",
-   "n": 1,
-   "next": 1791884626.7816932
+   "last": 1791888280.0089934,
+   "msg": "games we hold as final are no longer final on the source: 2938182",
+   "n": 4,
+   "next": 1791893080.0089934
   }
  },
  "full": {
@@ -46,13 +46,38 @@
     "2252605",
     "2568866"
    ]
+  },
+  "50248": {
+   "n": 1,
+   "next": 1791891579.3493652,
+   "pids": [
+    "1287260",
+    "1845666",
+    "1974969",
+    "1975092",
+    "1975126",
+    "2026981",
+    "2252572",
+    "2252599",
+    "2381188",
+    "2381193",
+    "2688537",
+    "2688539",
+    "2688540",
+    "27500",
+    "27580",
+    "2786685",
+    "2786791",
+    "2831995",
+    "2831996",
+    "2831997",
+    "2831998",
+    "2831999",
+    "861905"
+   ]
   }
  },
  "log": [
-  "2026-10-10 15:26  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Men \u2014 Speed Hunters 48-98 Knight Fury; Negeri Sembilan 94-53 Westports Malaysia Dragons; STK 44-110 NS Matrix 2; MABA Selection 93-44 ATM; Labuan 77-64 Firehorse; STK 56-98 Westports Malaysia Dragons; Knight Fury 82-65 Labuan; PDRM 59-47 NS Matrix 2; Firehorse 71-56 Speed Hunters; Perak 62-64 Pahang; Speed Hunters 74-97 Labuan; NS Matrix 2 77-61 Perak; Firehorse 60-69 Knight Fury; Pahang 51-90 PDRM; NS Matrix 2 60-67 Westports Malaysia Dragons; Westports Malaysia Dragons 85-45 MABA Selection; ATM 28-120 Negeri Sembilan; Knight Fury 73-80 NS Matrix 2; Westports Malaysia Dragons 71-47 Labuan; Knight Fury 68-46 Labuan; Negeri Sembilan 136-26 MABA Selection; ATM 40-117 Westports Malaysia Dragons; PDRM 90-56 Perak; Pahang 64-73 NS Matrix 2; ATM 52-125 Perak; MABA Selection 64-89 Pahang; Negeri Sembilan 97-67 NS Matrix 2; PDRM 74-61 Westports Malaysia Dragons; NS Matrix 2 95-65 Westports Malaysia Dragons; Negeri Sembilan 67-63 PDRM  [1069346: play-by-play page failed (500): tried again later; season lines not read for 7 player(s): tried again next time]",
-  "2026-10-10 15:33  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Women \u2014 Negeri Sembilan 71-53 Matrix Basketball Club; Kuala Lumpur 51-85 Hatchers; Negeri Sembilan 99-31 Kuala Lumpur; Hatchers 56-51 Segamat BA; Kuala Lumpur 38-71 Segamat BA; Matrix Basketball Club 41-78 Hatchers; Segamat BA 72-60 Matrix Basketball Club; Hatchers 57-75 Negeri Sembilan; Kuala Lumpur 25-74 Matrix Basketball Club; play-by-play of Negeri Sembilan v Segamat BA  [1069377: box score page failed (500): tried again later; season lines not read for 2 player(s): tried again next time]",
-  "2026-10-10 15:38  sync: 55th MABA 17 & Under NJBC for Girls \u2014 Negeri Sembilan 76-44 Perak; Kuala Lumpur 83-14 Putrajaya  [1312956: play-by-play does not reach the final score yet; 1312962: play-by-play not published yet; season lines not read for 2 player(s): tried again next time]",
-  "2026-10-10 15:38  FAILED 22128 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/22128/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 15:41  sync: 55th MABA 17 & Under NJBC for Boys \u2014 Selangor 98-44 Terengganu  [season lines not read for 1 player(s): tried again next time]",
   "2026-10-10 15:44  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Wanita (Women) \u2014 play-by-play of Pahang v Selangor",
   "2026-10-10 15:46  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Women \u2014 fixtures, standings or season lines updated",
@@ -88,7 +113,11 @@
   "2026-10-13 13:48  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
   "2026-10-13 15:24  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Perak 95-62 Pahang  [2938182: final 95-62 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]",
   "2026-10-13 17:25  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 42-114 Negeri Sembilan  [2938184: final 42-114 read from the live feed (the schedule page does not show it as final yet); 2938184: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 42 (Selangor))]",
-  "2026-10-13 17:35  FAILED 50247 (1): /usr/bin/python3 build_data.py"
+  "2026-10-13 17:35  FAILED 50247 (1): /usr/bin/python3 build_data.py",
+  "2026-10-13 17:44  FAILED 50247 (2): games we hold as final are no longer final on the source: 2938182",
+  "2026-10-13 18:04  FAILED 50247 (3): games we hold as final are no longer final on the source: 2938182",
+  "2026-10-13 18:44  FAILED 50247 (4): games we hold as final are no longer final on the source: 2938182",
+  "2026-10-13 19:31  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Sarawak 43-104 Negeri Sembilan  [2938224: final 43-104 read from the live feed (the schedule page does not show it as final yet); season lines not read for 23 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
