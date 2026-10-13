@@ -22,7 +22,14 @@
   "50247": "2026-10-13",
   "50248": "2026-10-13"
  },
- "fail": {},
+ "fail": {
+  "50247": {
+   "last": 1791884026.7816932,
+   "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 7\nrecovered: 20 box scores, 11 roster names\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 872, in <module>\n    main()\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 604, in main\n    rep = merges.apply(bb, persons, raw_boxes, pidmap, mnames)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/merges.p",
+   "n": 1,
+   "next": 1791884626.7816932
+  }
+ },
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
@@ -31,9 +38,17 @@
   "50247": 1791835200.640428,
   "50248": 1791568255.422654
  },
- "lines_retry": {},
+ "lines_retry": {
+  "50247": {
+   "n": 1,
+   "next": 1791884626.7816932,
+   "pids": [
+    "2252605",
+    "2568866"
+   ]
+  }
+ },
  "log": [
-  "2026-10-10 15:12  FAILED 21375 (3): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
   "2026-10-10 15:26  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Men \u2014 Speed Hunters 48-98 Knight Fury; Negeri Sembilan 94-53 Westports Malaysia Dragons; STK 44-110 NS Matrix 2; MABA Selection 93-44 ATM; Labuan 77-64 Firehorse; STK 56-98 Westports Malaysia Dragons; Knight Fury 82-65 Labuan; PDRM 59-47 NS Matrix 2; Firehorse 71-56 Speed Hunters; Perak 62-64 Pahang; Speed Hunters 74-97 Labuan; NS Matrix 2 77-61 Perak; Firehorse 60-69 Knight Fury; Pahang 51-90 PDRM; NS Matrix 2 60-67 Westports Malaysia Dragons; Westports Malaysia Dragons 85-45 MABA Selection; ATM 28-120 Negeri Sembilan; Knight Fury 73-80 NS Matrix 2; Westports Malaysia Dragons 71-47 Labuan; Knight Fury 68-46 Labuan; Negeri Sembilan 136-26 MABA Selection; ATM 40-117 Westports Malaysia Dragons; PDRM 90-56 Perak; Pahang 64-73 NS Matrix 2; ATM 52-125 Perak; MABA Selection 64-89 Pahang; Negeri Sembilan 97-67 NS Matrix 2; PDRM 74-61 Westports Malaysia Dragons; NS Matrix 2 95-65 Westports Malaysia Dragons; Negeri Sembilan 67-63 PDRM  [1069346: play-by-play page failed (500): tried again later; season lines not read for 7 player(s): tried again next time]",
   "2026-10-10 15:33  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Women \u2014 Negeri Sembilan 71-53 Matrix Basketball Club; Kuala Lumpur 51-85 Hatchers; Negeri Sembilan 99-31 Kuala Lumpur; Hatchers 56-51 Segamat BA; Kuala Lumpur 38-71 Segamat BA; Matrix Basketball Club 41-78 Hatchers; Segamat BA 72-60 Matrix Basketball Club; Hatchers 57-75 Negeri Sembilan; Kuala Lumpur 25-74 Matrix Basketball Club; play-by-play of Negeri Sembilan v Segamat BA  [1069377: box score page failed (500): tried again later; season lines not read for 2 player(s): tried again next time]",
   "2026-10-10 15:38  sync: 55th MABA 17 & Under NJBC for Girls \u2014 Negeri Sembilan 76-44 Perak; Kuala Lumpur 83-14 Putrajaya  [1312956: play-by-play does not reach the final score yet; 1312962: play-by-play not published yet; season lines not read for 2 player(s): tried again next time]",
@@ -72,7 +87,8 @@
   "2026-10-13 13:39  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Johor 120-17 Kelantan  [2938223: the source's box score replaces the one from the live feed; season lines not read for 9 player(s): tried again next time]",
   "2026-10-13 13:48  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
   "2026-10-13 15:24  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Perak 95-62 Pahang  [2938182: final 95-62 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]",
-  "2026-10-13 17:25  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 42-114 Negeri Sembilan  [2938184: final 42-114 read from the live feed (the schedule page does not show it as final yet); 2938184: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 42 (Selangor))]"
+  "2026-10-13 17:25  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 42-114 Negeri Sembilan  [2938184: final 42-114 read from the live feed (the schedule page does not show it as final yet); 2938184: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 42 (Selangor))]",
+  "2026-10-13 17:35  FAILED 50247 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -90,12 +106,6 @@
    "kind": "pbp",
    "next": 1791923199.7237096,
    "since": 1791575455.130416
-  },
-  "2938184": {
-   "cid": "50247",
-   "kind": "box",
-   "next": 1791884015.7184699,
-   "since": 1791883415.7184699
   }
  },
  "rechecked": {
