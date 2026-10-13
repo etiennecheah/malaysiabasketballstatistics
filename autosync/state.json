@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791921969.1826346,
-  "fp": "d6f397868ab1b6013156"
+  "at": 1791922227.2034624,
+  "fp": "b7a1e5dfb9da49fd7d33"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -20,7 +20,7 @@
   "48654": "2026-10-14",
   "49965": "2026-10-14",
   "50247": "2026-10-14",
-  "50248": "2026-10-13"
+  "50248": "2026-10-14"
  },
  "fail": {},
  "full": {
@@ -29,11 +29,10 @@
   "48654": 1791664896.8790655,
   "49965": 1791665306.1994884,
   "50247": 1791921608.8328958,
-  "50248": 1791568255.422654
+  "50248": 1791921995.088056
  },
  "lines_retry": {},
  "log": [
-  "2026-10-10 15:48  sync: 24th MABA CUP 2018 \u2014 play-by-play of Ansara v Perak",
   "2026-10-10 15:51  sync: 54th MABA 17 & Under NJBC for Girls \u2014 fixtures, standings or season lines updated",
   "2026-10-10 15:53  FAILED 21375 (4): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
   "2026-10-10 15:55  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Men \u2014 play-by-play of Negeri Sembilan v MABA Selection",
@@ -72,7 +71,8 @@
   "2026-10-13 19:31  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Sarawak 43-104 Negeri Sembilan  [2938224: final 43-104 read from the live feed (the schedule page does not show it as final yet); season lines not read for 23 player(s): tried again next time]",
   "2026-10-13 20:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-13 21:50  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Johor 87-78 PDRM  [2938190: final 87-78 read from the live feed (the schedule page does not show it as final yet)]",
-  "2026-10-14 04:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated"
+  "2026-10-14 04:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
+  "2026-10-14 04:10  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
