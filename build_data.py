@@ -67,6 +67,95 @@ CHAMP_OVERRIDE = {'39599': 'Negeri Sembilan'}
 # Cup is published as "61st MABA/MATRIX National Basketball Championship For Men/Women"
 SERIES_OVERRIDE = {'25502': 'Agong Cup', '25503': 'Agong Cup', '23322': 'Agong Cup', '23328': 'Agong Cup'}
 
+RECENT_STAND_DAYS = 21
+
+
+def recent_comp(games, is_open):
+    """Still being played, or its last game was within RECENT_STAND_DAYS: the source's
+    standings page may not have caught up with the results yet."""
+    if is_open or any(g['st'] == 'SCHEDULED' for g in games):
+        return True
+    last = max((g['date'] or '' for g in games if g['st'] == 'COMPLETE'), default='')
+    try:
+        d = datetime.date.fromisoformat(last[:10])
+    except ValueError:
+        return False
+    return (datetime.date.today() - d).days <= RECENT_STAND_DAYS
+
+
+def group_games(games, members):
+    """The finished games a group table counts: both teams in the group, and no more
+    meetings of a pair than the fewest any pair of the group is scheduled to play, so a
+    final or placing game between two group teams stays out of the group table."""
+    fixtures = collections.Counter()
+    for g in games:
+        if g['st'] != 'NOT_PLAYED' and g['h'] in members and g['a'] in members:
+            fixtures[frozenset((g['h'], g['a']))] += 1
+    cap = min(fixtures.values()) if fixtures else 0
+    seen, out = collections.Counter(), []
+    for g in sorted(games, key=lambda g: (g['date'] or '', clock_minutes(g['time']), g['mid'])):
+        if g['st'] != 'COMPLETE' or g['hs'] is None or g['as'] is None:
+            continue
+        if g['h'] not in members or g['a'] not in members:
+            continue
+        k = frozenset((g['h'], g['a']))
+        if seen[k] >= cap:
+            continue
+        seen[k] += 1
+        out.append(g)
+    return out
+
+
+def fiba_table(members, inner, codes, code_of, gi):
+    """A group table from its results. 2 points a win, 1 a loss, 0 a forfeit loss.
+    Teams level on points are separated by the games between them (points, then points
+    difference, then points scored in those games), then by difference and points scored
+    in all group games (FIBA Official Basketball Rules, D.1.3)."""
+    rec = {t: {'w': 0, 'l': 0, 'pf': 0, 'pa': 0, 'pts': 0} for t in members}
+    for g in inner:
+        for t, f, x in ((g['h'], g['hs'], g['as']), (g['a'], g['as'], g['hs'])):
+            r = rec[t]
+            r['pf'] += f; r['pa'] += x
+            if f > x:
+                r['w'] += 1; r['pts'] += 2
+            else:
+                r['l'] += 1; r['pts'] += 0 if g.get('ff') else 1
+
+    def h2h(ts):
+        sub = {t: [0, 0, 0] for t in ts}          # points, difference, scored
+        for g in inner:
+            if g['h'] in sub and g['a'] in sub:
+                for t, f, x in ((g['h'], g['hs'], g['as']), (g['a'], g['as'], g['hs'])):
+                    sub[t][0] += 2 if f > x else (0 if g.get('ff') else 1)
+                    sub[t][1] += f - x
+                    sub[t][2] += f
+        return sub
+
+    def order(ts):
+        if len(ts) < 2:
+            return list(ts)
+        sub = h2h(ts)
+        key = lambda t: (-sub[t][0], -sub[t][1], -sub[t][2],
+                         -(rec[t]['pf'] - rec[t]['pa']), -rec[t]['pf'], t)
+        return sorted(ts, key=key)
+
+    by_pts = collections.defaultdict(list)
+    for t, r in rec.items():
+        by_pts[(r['pts'], r['w'] + r['l'] > 0)].append(t)
+    ranked = []
+    for k in sorted(by_pts, key=lambda k: (-k[0], not k[1])):
+        ts = by_pts[k]
+        ranked += order(ts) if k[1] else sorted(ts)
+    out = []
+    for i, t in enumerate(ranked):
+        r = rec[t]
+        gp = r['w'] + r['l']
+        out.append({'pos': i + 1, 'team': t, 'code': codes.get(t) or code_of.get(t, ''), 'gp': gp,
+                    'w': r['w'], 'l': r['l'], 'pf': r['pf'], 'pa': r['pa'], 'gd': r['pf'] - r['pa'],
+                    'pct': round(100.0 * r['w'] / gp, 1) if gp else 0, 'pts': r['pts'], 'g': gi})
+    return out
+
+
 def champion(games, stand, groups, name=''):
     """Who won a finished competition, and how that was decided.
 
@@ -641,6 +730,15 @@ def main():
     for tid, nm in team_reg.items():
         name_to_tid.setdefault(nm, tid)
 
+    # each team's short code as the standings tables print it, for a team a table leaves out
+    code_of = {}
+    for c in bb['comps']:
+        kn = [team_reg[t] for t in c['teams'] if t in team_reg]
+        for _t, _h, rows in (c['stand'] or []):
+            for r in rows:
+                nm, code = split_team_cell(r[2], kn)
+                if code:
+                    code_of[nm] = code
     comps_out = []
     box_line_log = []
     box_only = []
@@ -706,38 +804,34 @@ def main():
                 stand.append({'pos': num(r[0]), 'team': nm, 'code': code, 'gp': num(r[3]),
                               'w': num(r[4]), 'l': num(r[5]), 'pf': num(r[6]), 'pa': num(r[7]),
                               'gd': num(r[8]), 'pct': num(r[9]), 'pts': num(r[10]), 'g': gi})
-        # Where scores were filled from box scores, the source's group tables are the
-        # ones that stopped updating (2024 Agong Cup men: Negeri Sembilan shown 0-0 after
-        # four group wins). Rebuild a group from its own games when the published table
-        # counts fewer games than its members played against each other: W, L, PF, PA,
-        # 2 points a win and 1 a loss as the source awards them, ordered by points then
-        # difference. Only competitions with box-filled scores are touched.
-        stand_fix = []
-        if any(g.get('sb') for g in games):
+        # Rebuild a group table from our own results when the published one is behind them:
+        #   * where scores were filled from box scores, the source's tables stopped updating
+        #     (2024 Agong Cup men: Negeri Sembilan shown 0-0 after four group wins);
+        #   * in a competition being played (or just ended), the source's standings page is
+        #     updated well after a game ends, while the sync reads the result straight from the
+        #     live feed (2026 Agong Cup: the table still showed round one after three rounds,
+        #     and the women's table had left Johor out).
+        # A group is rebuilt when its table counts fewer games than its members have finished
+        # against each other, or (a single table) leaves a team out. Points as the source
+        # awards them: 2 a win, 1 a loss, 0 a forfeit loss; ties broken the FIBA way. Once the
+        # published table catches up it is used again.
+        stand_fix, fix_why = [], ''
+        live = recent_comp(games, c['id'] in open_comps)
+        if any(g.get('sb') for g in games) or live:
             for gi, title in enumerate(groups):
                 rows = [r for r in stand if r['g'] == gi]
                 members = {r['team'] for r in rows}
-                inner = [g for g in games if g['st'] == 'COMPLETE' and g['hs'] is not None
-                         and g['h'] in members and g['a'] in members]
-                if sum((r['gp'] or 0) for r in rows) / 2.0 >= len(inner):
+                if len(groups) == 1 and live:
+                    members |= {g[k] for g in games if g['st'] != 'NOT_PLAYED' for k in ('h', 'a') if g[k]}
+                inner = group_games(games, members)
+                if sum((r['gp'] or 0) for r in rows) / 2.0 >= len(inner) and members <= {r['team'] for r in rows}:
                     continue
-                for r in rows:
-                    t = r['team']; w = l = pf = pa = 0
-                    for g in inner:
-                        if t not in (g['h'], g['a']):
-                            continue
-                        f, x = (g['hs'], g['as']) if g['h'] == t else (g['as'], g['hs'])
-                        pf += f; pa += x
-                        if f > x: w += 1
-                        else: l += 1
-                    r.update(gp=w + l, w=w, l=l, pf=pf, pa=pa, gd=pf - pa,
-                             pct=round(100.0 * w / (w + l), 1) if w + l else 0, pts=2 * w + l)
-                rows.sort(key=lambda r: (-r['pts'], -r['gd']))
-                for i, r in enumerate(rows):
-                    r['pos'] = i + 1
+                rows = fiba_table(members, inner, {r['team']: r['code'] for r in rows} or {}, code_of, gi)
                 stand = [r for r in stand if r['g'] != gi] + rows
                 stand_fix.append(title)
             stand.sort(key=lambda r: (r['g'], r['pos'] or 99))
+            if stand_fix:
+                fix_why = 'sb' if any(g.get('sb') for g in games) else 'lag'
         champ, champ_how = champion(games, stand, groups, c['name'])
         # an override the computed rule now agrees with keeps the rule's reason ('final')
         if c['id'] in CHAMP_OVERRIDE and champ != CHAMP_OVERRIDE[c['id']]:
@@ -810,7 +904,7 @@ def main():
             'id': cid, 'name': c['name'], 'label': label, 'year': year, 'gender': gender, 'level': lvl,
             'series': series,
             'teams': c['teams'], 'stand': stand, 'groups': groups,
-            'champ': champ, 'champHow': champ_how, **({'standFix': stand_fix} if stand_fix else {}),
+            'champ': champ, 'champHow': champ_how, **({'standFix': stand_fix, 'standWhy': fix_why} if stand_fix else {}),
             # hand-built competitions (manual_comps.json) can carry the final placings the
             # organisers announced and a note on how their group tables were made
             **({'final': c['final']} if c.get('final') else {}),
