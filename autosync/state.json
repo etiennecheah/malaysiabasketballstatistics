@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791891103.103452,
-  "fp": "5cc8dd6b763fe05983e2"
+  "at": 1791893171.3026729,
+  "fp": "1b9647390a165c8bd32e"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -22,14 +22,7 @@
   "50247": "2026-10-13",
   "50248": "2026-10-13"
  },
- "fail": {
-  "50247": {
-   "last": 1791888280.0089934,
-   "msg": "games we hold as final are no longer final on the source: 2938182",
-   "n": 4,
-   "next": 1791893080.0089934
-  }
- },
+ "fail": {},
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
@@ -38,47 +31,8 @@
   "50247": 1791835200.640428,
   "50248": 1791568255.422654
  },
- "lines_retry": {
-  "50247": {
-   "n": 1,
-   "next": 1791884626.7816932,
-   "pids": [
-    "2252605",
-    "2568866"
-   ]
-  },
-  "50248": {
-   "n": 1,
-   "next": 1791891579.3493652,
-   "pids": [
-    "1287260",
-    "1845666",
-    "1974969",
-    "1975092",
-    "1975126",
-    "2026981",
-    "2252572",
-    "2252599",
-    "2381188",
-    "2381193",
-    "2688537",
-    "2688539",
-    "2688540",
-    "27500",
-    "27580",
-    "2786685",
-    "2786791",
-    "2831995",
-    "2831996",
-    "2831997",
-    "2831998",
-    "2831999",
-    "861905"
-   ]
-  }
- },
+ "lines_retry": {},
  "log": [
-  "2026-10-10 15:41  sync: 55th MABA 17 & Under NJBC for Boys \u2014 Selangor 98-44 Terengganu  [season lines not read for 1 player(s): tried again next time]",
   "2026-10-10 15:44  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Wanita (Women) \u2014 play-by-play of Pahang v Selangor",
   "2026-10-10 15:46  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Women \u2014 fixtures, standings or season lines updated",
   "2026-10-10 15:48  sync: 24th MABA CUP 2018 \u2014 play-by-play of Ansara v Perak",
@@ -117,7 +71,8 @@
   "2026-10-13 17:44  FAILED 50247 (2): games we hold as final are no longer final on the source: 2938182",
   "2026-10-13 18:04  FAILED 50247 (3): games we hold as final are no longer final on the source: 2938182",
   "2026-10-13 18:44  FAILED 50247 (4): games we hold as final are no longer final on the source: 2938182",
-  "2026-10-13 19:31  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Sarawak 43-104 Negeri Sembilan  [2938224: final 43-104 read from the live feed (the schedule page does not show it as final yet); season lines not read for 23 player(s): tried again next time]"
+  "2026-10-13 19:31  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Sarawak 43-104 Negeri Sembilan  [2938224: final 43-104 read from the live feed (the schedule page does not show it as final yet); season lines not read for 23 player(s): tried again next time]",
+  "2026-10-13 20:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
