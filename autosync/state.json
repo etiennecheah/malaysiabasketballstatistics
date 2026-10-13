@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791869994.1051075,
-  "fp": "111e88beb82c75e1a2d5"
+  "at": 1791870517.7517996,
+  "fp": "0b210192c2f2d71df9ec"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -31,25 +31,8 @@
   "50247": 1791835200.640428,
   "50248": 1791568255.422654
  },
- "lines_retry": {
-  "50248": {
-   "n": 1,
-   "next": 1791870397.1697216,
-   "pids": [
-    "2084355",
-    "2568869",
-    "2615636",
-    "2783542",
-    "2831986",
-    "2831987",
-    "2831988",
-    "2831992",
-    "2831994"
-   ]
-  }
- },
+ "lines_retry": {},
  "log": [
-  "2026-10-10 15:06  FAILED 23322 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/23322/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 15:06  FAILED 23328 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/23328/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 15:09  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Lelaki (Men) \u2014 Perak 95-91 Wilayah Persekutuan; play-by-play of Melaka v Negeri Sembilan  [season lines not read for 5 player(s): tried again next time]",
   "2026-10-10 15:12  FAILED 21375 (3): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
@@ -88,7 +71,8 @@
   "2026-10-13 04:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-13 04:04  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
   "2026-10-13 13:28  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Johor 120-17 Kelantan  [2938223: final 120-17 read from the live feed (the schedule page does not show it as final yet); 2938223: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 120 (Johor))]",
-  "2026-10-13 13:39  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Johor 120-17 Kelantan  [2938223: the source's box score replaces the one from the live feed; season lines not read for 9 player(s): tried again next time]"
+  "2026-10-13 13:39  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Johor 120-17 Kelantan  [2938223: the source's box score replaces the one from the live feed; season lines not read for 9 player(s): tried again next time]",
+  "2026-10-13 13:48  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
