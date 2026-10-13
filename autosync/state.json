@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791869315.5200315,
-  "fp": "cf7367dc9b9bc484bd2b"
+  "at": 1791869994.1051075,
+  "fp": "111e88beb82c75e1a2d5"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -31,9 +31,24 @@
   "50247": 1791835200.640428,
   "50248": 1791568255.422654
  },
- "lines_retry": {},
+ "lines_retry": {
+  "50248": {
+   "n": 1,
+   "next": 1791870397.1697216,
+   "pids": [
+    "2084355",
+    "2568869",
+    "2615636",
+    "2783542",
+    "2831986",
+    "2831987",
+    "2831988",
+    "2831992",
+    "2831994"
+   ]
+  }
+ },
  "log": [
-  "2026-10-10 15:05  sync: 24th MABA CUP 2018 \u2014 Pahang 93-46 Ansara; Terengganu 91-57 Putrajaya; Perak 61-42 ATM; Negeri Sembilan 64-45 Sarawak; Titans 73-53 Go Strong; Ansara 47-90 Terengganu; Putrajaya 55-72 Perak; Pulau Pinang 74-47 Titans; ATM 49-70 Pahang; Ansara 65-49 Putrajaya; Terengganu 86-68 Perak; Pulau Pinang 51-129 Negeri Sembilan; Sarawak 75-53 Go Strong; Pahang 75-66 Terengganu; Putrajaya 44-83 ATM; Negeri Sembilan 110-45 Go Strong; Sarawak 65-36 Titans; Pahang 103-42 Putrajaya; Ansara 53-65 Perak; Terengganu 59-67 ATM; Pulau Pinang 84-65 Sarawak; Titans 40-110 Negeri Sembilan; Perak 56-97 Pahang; ATM 104-63 Ansara; Go Strong 58-68 Pulau Pinang; Go Strong 67-58 Ansara; Titans 31-101 ATM; Negeri Sembilan 67-44 Terengganu; Pahang 55-49 Pulau Pinang; Ansara 84-75 Putrajaya; Sarawak 60-52 Perak; Terengganu 71-61 Pulau Pinang; Negeri Sembilan 72-70 Pahang  [1065250: play-by-play page failed (500): tried again later; season lines not read for 1 player(s): tried again next time]",
   "2026-10-10 15:06  FAILED 23322 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/23322/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 15:06  FAILED 23328 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/23328/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-10 15:09  sync: 2018 Kejohanan Bola Keranjang Sukma Perak XIX - Lelaki (Men) \u2014 Perak 95-91 Wilayah Persekutuan; play-by-play of Melaka v Negeri Sembilan  [season lines not read for 5 player(s): tried again next time]",
@@ -72,7 +87,8 @@
   "2026-10-12 21:59  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-13 04:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-13 04:04  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
-  "2026-10-13 13:28  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Johor 120-17 Kelantan  [2938223: final 120-17 read from the live feed (the schedule page does not show it as final yet); 2938223: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 120 (Johor))]"
+  "2026-10-13 13:28  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Johor 120-17 Kelantan  [2938223: final 120-17 read from the live feed (the schedule page does not show it as final yet); 2938223: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 120 (Johor))]",
+  "2026-10-13 13:39  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Johor 120-17 Kelantan  [2938223: the source's box score replaces the one from the live feed; season lines not read for 9 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -90,12 +106,6 @@
    "kind": "pbp",
    "next": 1791923199.7237096,
    "since": 1791575455.130416
-  },
-  "2938223": {
-   "cid": "50248",
-   "kind": "box",
-   "next": 1791869792.073079,
-   "since": 1791869192.073079
   }
  },
  "rechecked": {
