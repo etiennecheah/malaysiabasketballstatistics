@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791960622.686746,
-  "fp": "a22dac387873d24d1241"
+  "at": 1791961332.174568,
+  "fp": "255e9edb22342588f379"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -31,17 +31,8 @@
   "50247": 1791921608.8328958,
   "50248": 1791921995.088056
  },
- "lines_retry": {
-  "50247": {
-   "n": 1,
-   "next": 1791957091.8116841,
-   "pids": [
-    "2318312"
-   ]
-  }
- },
+ "lines_retry": {},
  "log": [
-  "2026-10-10 20:40  sync: 54th MABA 17 & Under NJBC for Boys \u2014 WP Kuala Lumpur 75-46 Kedah; Kedah 33-97 Perak; Perak 54-63 WP Kuala Lumpur; Selangor 64-60 Penang; Penang 81-60 Terengganu; Terengganu 44-95 Selangor; Negeri Sembilan 81-53 Sabah; Sabah 80-93 Pahang; Pahang 47-56 Negeri Sembilan; Sarawak 72-61 Malacca; Johore 81-70 Kelantan; Malacca 68-70 Johore; Kelantan 48-70 Sarawak; Malacca 74-53 Kelantan; Johore 64-89 Sarawak; WP Kuala Lumpur 56-65 Penang; Perak 56-66 Selangor; Penang 63-57 Perak; Selangor 57-61 WP Kuala Lumpur; Negeri Sembilan 68-58 Sarawak; Pahang 46-72 Johore; Sarawak 92-71 Pahang; Johore 42-80 Negeri Sembilan; Kedah 78-79 Sabah; Terengganu 63-64 Malacca; Kedah 70-62 Terengganu; Terengganu 49-60 Kelantan; Sabah 75-84 Malacca; Perak 72-68 Pahang; Selangor 81-48 Johore; Negeri Sembilan 61-43 WP Kuala Lumpur; Penang 62-68 Sarawak; Johore 66-76 WP Kuala Lumpur; Selangor 37-58 Negeri Sembilan  [886163: Negeri Sembilan players' points add to 67, scoreboard says 68 (the source's totals row agrees with the scoreboard: kept as published); season lines not read for 4 player(s): tried again next time]",
   "2026-10-10 20:42  sync: 54th MABA 17 & Under NJBC for Boys \u2014 fixtures, standings or season lines updated",
   "2026-10-11 04:48  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [26 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-11 04:52  FAILED 50247 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/schedule: HTTP Error 500: Internal Server Error",
@@ -80,7 +71,8 @@
   "2026-10-14 11:32  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 ATM 45-94 Negeri Sembilan  [2938189: final 45-94 read from the live feed (the schedule page does not show it as final yet); season lines not read for 1 player(s): tried again next time]",
   "2026-10-14 11:41  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-14 13:32  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 59-118 Johor  [2938169: final 59-118 read from the live feed (the schedule page does not show it as final yet); 2938169: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 59 (Pahang))]",
-  "2026-10-14 13:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 59-118 Johor  [2938169: the source's box score replaces the one from the live feed; season lines not read for 1 player(s): tried again next time]"
+  "2026-10-14 13:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 59-118 Johor  [2938169: the source's box score replaces the one from the live feed; season lines not read for 1 player(s): tried again next time]",
+  "2026-10-14 15:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Sarawak 66-97 Johor"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
