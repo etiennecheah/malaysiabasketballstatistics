@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791964507.5933437,
-  "fp": "8d184cfbd254f8b88db9"
+  "at": 1791965393.4511485,
+  "fp": "5dda2fface8364ee916b"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -22,15 +22,7 @@
   "50247": "2026-10-14",
   "50248": "2026-10-14"
  },
- "fail": {
-  "build": {
-   "fp": "a5e1cf1e640934c7484a",
-   "last": 1791965005.9868145,
-   "msg": "/usr/bin/python3 build_site.py\nhonours: 49 linked to a competition now in the database\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_site.py\", line 293, in <module>\n    main()\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_site.py\", line 225, in main\n    payload['streams'] = load_streams(payload)\n                         ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_site.py\", line 112, in load_streams\n    gam",
-   "n": 2,
-   "next": 1791966205.9868145
-  }
- },
+ "fail": {},
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
