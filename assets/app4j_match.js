@@ -23,8 +23,10 @@ function ensurePbp(cid) {
   PBP_ST[cid] = 'loading';
   const s = document.createElement('script');
   s.src = 'pbp/' + cid + '.js';
-  s.onload = () => { PBP_ST[cid] = PBP_DATA[cid] ? 'done' : 'error'; if (location.hash.indexOf('/pbp/') >= 0) softRoute(); };
-  s.onerror = () => { PBP_ST[cid] = 'error'; if (location.hash.indexOf('/pbp/') >= 0) softRoute(); };
+  // the Watch page repaints only its panels, so its video keeps playing
+  const done = () => { if (location.hash.indexOf('/pbp/') >= 0) softRoute(); else if (location.hash.indexOf('#/watch/') === 0 && typeof watchRefresh === 'function') watchRefresh(); };
+  s.onload = () => { PBP_ST[cid] = PBP_DATA[cid] ? 'done' : 'error'; done(); };
+  s.onerror = () => { PBP_ST[cid] = 'error'; done(); };
   document.head.appendChild(s);
 }
 function perLabel(p) {
@@ -58,7 +60,7 @@ function matchHead(cid, mid, tab) {
     <div class="card mmatch">
       <div class="matchup-head">
         <div class="mside">${crest(g.h, 48)}<div><div class="m-name">${esc(g.h)}</div><div class="m-rec">${esc(fmtDate(g.date))}</div></div></div>
-        <div class="m-mid"><div class="m-score">${fmt0(g.hs)} – ${fmt0(g.as)}</div><div class="m-status">${g.st === 'COMPLETE' ? (g.ff ? 'Forfeit · awarded 20–0' : g.hs == null ? 'Final · score not published' : g.sb ? 'Final · score from the box score' : 'Final') : g.st === 'NOT_PLAYED' ? 'Not played' : esc(g.st)}</div>${phaseLabel(c, mid) ? `<div class="m-round"><span class="po-tag">${esc(phaseLabel(c, mid))}</span></div>` : ''}</div>
+        <div class="m-mid"><div class="m-score">${fmt0(g.hs)} – ${fmt0(g.as)}</div><div class="m-status">${g.st === 'COMPLETE' ? (g.ff ? 'Forfeit · awarded 20–0' : g.hs == null ? 'Final · score not published' : g.sb ? 'Final · score from the box score' : 'Final') : g.st === 'NOT_PLAYED' ? 'Not played' : esc(g.st)}</div>${phaseLabel(c, mid) ? `<div class="m-round"><span class="po-tag">${esc(phaseLabel(c, mid))}</span></div>` : ''}${typeof watchLink === 'function' ? watchLink(mid, g.st === 'COMPLETE' ? 'Watch the game with stats' : 'Watch with live stats') : ''}</div>
         <div class="mside right">${crest(g.a, 48)}<div><div class="m-name">${esc(g.a)}</div><div class="m-rec">${esc(g.venue || '')}</div></div></div>
       </div>
       ${perTable}

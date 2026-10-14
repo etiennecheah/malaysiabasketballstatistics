@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Assemble site.html from assets/style.css, data/site_data.json and assets/app*.js."""
-import json, os, io
+import re, json, os, io
 
 R = os.path.dirname(os.path.abspath(__file__))
 A = os.path.join(R, 'assets')
@@ -9,7 +9,7 @@ D = os.path.join(R, 'data')
 PARTS = ['app1_core.js', 'app2_nav.js', 'app3_comp.js', 'app3b_family.js', 'app4_players.js',
          'app4b_profile.js', 'app4c_impact.js', 'app4d_radar.js', 'app4e_compare.js',
          'app4f_bpm.js', 'app4g_formulas.js', 'app4h_videos.js', 'app4i_games.js',
-         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app5_rest.js']
+         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app5_rest.js']
 
 NEWS_TYPES = ('signing', 'transfer', 'departure', 'injury', 'return', 'retirement', 'national', 'other')
 
@@ -97,6 +97,32 @@ def load_news(payload):
     print('news: %d items, %d tied to a profile%s' % (len(out), len(out) - len(loose),
                                                       (' | not found: ' + '; '.join(loose)) if loose else ''))
     return [o for _, _, o in out]
+
+
+YT_ID = re.compile(r'(?:youtu\.be/|youtube\.com/(?:live/|embed/|shorts/|watch\?(?:.*&)?v=))([A-Za-z0-9_-]{11})')
+
+
+def load_streams(payload):
+    """data/streams.json: {"games": {match id: YouTube link or video id}}. The Watch page
+    (#/watch/<mid>) plays the video beside the game's statistics. A link that names no
+    video, or a match id that is not in the database, stops the build with the reason."""
+    p = os.path.join(D, 'streams.json')
+    if not os.path.exists(p):
+        return {}
+    games = json.load(open(p)).get('games', {})
+    known = {g['mid'] for c in payload['comps'] for g in c['games']}
+    out = {}
+    for mid, link in games.items():
+        link = str(link).strip()
+        m = YT_ID.search(link)
+        vid = m.group(1) if m else (link if re.fullmatch(r'[A-Za-z0-9_-]{11}', link) else None)
+        if not vid:
+            raise SystemExit('streams.json: %s: "%s" is not a YouTube link' % (mid, link))
+        if str(mid) not in known:
+            raise SystemExit('streams.json: %s is not a match id in the database' % mid)
+        out[str(mid)] = vid
+    print('streams: %d game(s) with a video' % len(out))
+    return out
 
 
 def main():
@@ -195,6 +221,8 @@ def main():
     vp = os.path.join(D, 'videos.json')
     if os.path.exists(vp):
         payload['videos'] = json.load(open(vp))
+    # the Watch page: which YouTube video shows which game (data/streams.json, hand-kept)
+    payload['streams'] = load_streams(payload)
     # the FIBA wordmark doubles as the competition mark for FIBA events
     if payload.get('logos', {}).get('fiba'):
         payload.setdefault('complogos', {})['fiba'] = payload['logos']['fiba']

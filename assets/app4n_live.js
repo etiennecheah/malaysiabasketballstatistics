@@ -52,7 +52,7 @@ function liveCandidates() {
   return out.sort((a, b) => liveStart(a) - liveStart(b));
 }
 
-function liveFast() { return /^#\/(home|live\/)/.test(location.hash) || location.hash === '' || location.hash === '#/'; }
+function liveFast() { return /^#\/(home|live\/|watch\/)/.test(location.hash) || location.hash === '' || location.hash === '#/'; }
 
 async function liveTick() {
   clearTimeout(LIVE.timer);
@@ -101,6 +101,8 @@ function liveRefresh() {
     const box2 = page.querySelector('.lv-plays');
     if (box2 && top) box2.scrollTop = top;
   }
+  // the Watch page repaints its stats panels (never its video)
+  if (typeof watchRefresh === 'function') watchRefresh();
   // the fixture lists: the Games page and a competition's schedule
   if (typeof gamesLiveRefresh === 'function') gamesLiveRefresh();
   if (typeof scheduleLiveRefresh === 'function') scheduleLiveRefresh();
@@ -260,6 +262,7 @@ function liveCard(x) {
           <td class="lv-pts">${y.p.pts}</td><td>${y.p.reb}</td><td>${y.p.ast}</td></tr>`).join('')}
       </tbody></table>
       <a class="lv-follow" href="#/live/${g.mid}">${fin ? 'Box score and plays' : 'Follow the game'}</a>
+      ${typeof watchLink === 'function' ? watchLink(g.mid, fin ? 'Watch the replay with stats' : 'Watch with live stats', 'lv-follow lv-watch') : ''}
     </div>
   </article>`;
 }
@@ -304,7 +307,7 @@ function liveGameInner(mid) {
   let prev = null;
   return `<div class="lv-crumb"><a href="#/games">Games</a> › <a href="#/c/${g.cid}">${esc(liveCompName(g.cid))}</a> › ${esc(h.name)} vs ${esc(a.name)}</div>
   <section class="lv-stage">
-    <div class="lv-stage-top">${fin ? '<span class="lv-tag lv-tag-fin">FINAL</span>' : '<span class="lv-tag"><span class="lv-dot"></span>LIVE</span>'}<span>${esc(liveCompName(g.cid))}</span></div>
+    <div class="lv-stage-top">${fin ? '<span class="lv-tag lv-tag-fin">FINAL</span>' : '<span class="lv-tag"><span class="lv-dot"></span>LIVE</span>'}<span>${esc(liveCompName(g.cid))}</span>${typeof watchLink === 'function' ? watchLink(g.mid, 'Watch with live stats', 'm-watch lv-watch-top') : ''}</div>
     <div class="lv-board">
       <div class="lv-side lv-side-h">${crest(h.name, 44)}<div><div class="lv-bname">${esc(h.name)}</div>${fin ? '' : `<div class="lv-bfoul">${h.fouls} team fouls${pen(h)}</div>`}</div></div>
       <div class="lv-bmid"><div class="lv-bscore">${h.score}<span>–</span>${a.score}</div><div class="lv-bclock">${esc(liveClock(d))}</div></div>

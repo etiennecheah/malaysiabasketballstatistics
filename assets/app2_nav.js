@@ -109,6 +109,11 @@ function route() {
     state = 'home'; body = renderHome();
   } else if (parts[0] === 'live' && parts[1]) {
     state = 'live'; body = renderLiveGame(parts[1]);
+  } else if (parts[0] === 'watch' && parts[1]) {
+    // the Watch page fills the screen: the video and the game's numbers, no site bar or footer
+    app.innerHTML = renderWatch(parts[1]);
+    window.scrollTo(0, 0);
+    return;
   } else if (parts[0] === 'me') {
     // My page, and a verified player's edit page; both private to the signed-in person
     state = 'me'; body = parts[1] === 'edit' ? renderMeEdit() : renderMe();
