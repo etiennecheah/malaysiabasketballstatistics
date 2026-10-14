@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791970147.8284514,
-  "fp": "1d347c921ed63d5d7975"
+  "at": 1792008192.7744994,
+  "fp": "c4c1b3143846b5eb671e"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -17,17 +17,17 @@
   "25503": "2026-10-10",
   "26279": "2026-10-10",
   "35136": "2026-10-10",
-  "48654": "2026-10-14",
-  "49965": "2026-10-14",
+  "48654": "2026-10-15",
+  "49965": "2026-10-15",
   "50247": "2026-10-14",
-  "50248": "2026-10-14"
+  "50248": "2026-10-15"
  },
  "fail": {
   "50247": {
-   "last": 1791974072.9648025,
+   "last": 1792000165.8613985,
    "msg": "games we hold as final are no longer final on the source: 2938180",
-   "n": 1,
-   "next": 1791974672.9648025
+   "n": 5,
+   "next": 1792009765.8613985
   }
  },
  "full": {
@@ -36,7 +36,7 @@
   "48654": 1791664896.8790655,
   "49965": 1791665306.1994884,
   "50247": 1791921608.8328958,
-  "50248": 1791921995.088056
+  "50248": 1792008021.4637306
  },
  "lines_retry": {
   "50247": {
@@ -51,11 +51,6 @@
   }
  },
  "log": [
-  "2026-10-11 21:59  FAILED 50247 (3): 2938172: only 2 players listed for Johor",
-  "2026-10-11 22:39  FAILED 50247 (4): 2938172: only 2 players listed for Johor",
-  "2026-10-11 23:59  FAILED 50247 (5): 2938172: only 2 players listed for Johor",
-  "2026-10-12 02:33  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 ATM 61-112 Perak; play-by-play of Johor v Selangor; play-by-play of Negeri Sembilan v PDRM  [2938172: box score not complete yet (only 2 players listed for Johor): tried again later; 2938174: box score not complete yet (only 1 players listed for Negeri Sembilan): tried again later]",
-  "2026-10-12 04:04  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [2 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-12 04:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated  [rosters published for 4 of 5 teams]",
   "2026-10-12 15:38  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Johor 115-51 Selangor; Negeri Sembilan 95-61 PDRM",
   "2026-10-12 17:23  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 ATM 66-89 Johor  [2938175: final 66-89 read from the live feed (the schedule page does not show it as final yet); 2938175: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 66 (ATM))]",
@@ -90,7 +85,12 @@
   "2026-10-14 16:03  FAILED build (2): /usr/bin/python3 build_site.py",
   "2026-10-14 17:17  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Perak 130-54 Selangor  [2938171: final 130-54 read from the live feed (the schedule page does not show it as final yet); 2938171: box score taken from the live feed (the box score page failed)]",
   "2026-10-14 17:29  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Perak 130-54 Selangor  [2938171: the source's box score replaces the one from the live feed; season lines not read for 4 player(s): tried again next time]",
-  "2026-10-14 18:34  FAILED 50247 (1): games we hold as final are no longer final on the source: 2938180"
+  "2026-10-14 18:34  FAILED 50247 (1): games we hold as final are no longer final on the source: 2938180",
+  "2026-10-14 23:28  FAILED 50247 (2): games we hold as final are no longer final on the source: 2938180",
+  "2026-10-14 23:49  FAILED 50247 (3): games we hold as final are no longer final on the source: 2938180",
+  "2026-10-15 00:29  FAILED 50247 (4): games we hold as final are no longer final on the source: 2938180",
+  "2026-10-15 01:49  FAILED 50247 (5): games we hold as final are no longer final on the source: 2938180",
+  "2026-10-15 04:03  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
