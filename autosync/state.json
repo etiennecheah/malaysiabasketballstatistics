@@ -24,11 +24,11 @@
  },
  "fail": {
   "build": {
-   "fp": "a539cdf39e6fbdb4c8d5",
-   "last": 1791964784.5449982,
+   "fp": "a5e1cf1e640934c7484a",
+   "last": 1791965005.9868145,
    "msg": "/usr/bin/python3 build_site.py\nhonours: 49 linked to a competition now in the database\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_site.py\", line 293, in <module>\n    main()\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_site.py\", line 225, in main\n    payload['streams'] = load_streams(payload)\n                         ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_site.py\", line 112, in load_streams\n    gam",
-   "n": 1,
-   "next": 1791965384.5449982
+   "n": 2,
+   "next": 1791966205.9868145
   }
  },
  "full": {
@@ -49,7 +49,6 @@
   }
  },
  "log": [
-  "2026-10-11 08:14  FAILED 50247 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/standings: HTTP Error 500: Internal Server Error",
   "2026-10-11 13:47  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-11 21:29  FAILED 50247 (1): 2938172: only 2 players listed for Johor",
   "2026-10-11 21:39  FAILED 50247 (2): 2938172: only 2 players listed for Johor",
@@ -88,7 +87,8 @@
   "2026-10-14 15:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Sarawak 66-97 Johor",
   "2026-10-14 15:28  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Selangor 98-41 Kelantan  [2938226: final 98-41 read from the live feed (the schedule page does not show it as final yet); 2938226: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 98 (Selangor))]",
   "2026-10-14 15:38  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Selangor 98-41 Kelantan  [2938226: the source's box score replaces the one from the live feed; season lines not read for 1 player(s): tried again next time]",
-  "2026-10-14 15:59  FAILED build (1): /usr/bin/python3 build_site.py"
+  "2026-10-14 15:59  FAILED build (1): /usr/bin/python3 build_site.py",
+  "2026-10-14 16:03  FAILED build (2): /usr/bin/python3 build_site.py"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
