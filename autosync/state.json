@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791922227.2034624,
-  "fp": "b7a1e5dfb9da49fd7d33"
+  "at": 1791948725.0891464,
+  "fp": "e0ec46e8f803d0299cba"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -31,9 +31,16 @@
   "50247": 1791921608.8328958,
   "50248": 1791921995.088056
  },
- "lines_retry": {},
+ "lines_retry": {
+  "50247": {
+   "n": 1,
+   "next": 1791949181.2780201,
+   "pids": [
+    "2831957"
+   ]
+  }
+ },
  "log": [
-  "2026-10-10 15:51  sync: 54th MABA 17 & Under NJBC for Girls \u2014 fixtures, standings or season lines updated",
   "2026-10-10 15:53  FAILED 21375 (4): 886163: Negeri Sembilan players' points add to 67, scoreboard says 68",
   "2026-10-10 15:55  sync: 60th MABA/MATRIX National Basketball Championship 2018 for Men \u2014 play-by-play of Negeri Sembilan v MABA Selection",
   "2026-10-10 16:00  sync: 61st MABA/MATRIX National Basketball Championship for Women \u2014 NS Matrix 62-15 PUTRAJAYA; Segamat 67-47 Stallions  [1 player page(s) not published by the source now: the lines we hold are kept; season lines not read for 2 player(s): tried again next time]",
@@ -72,7 +79,8 @@
   "2026-10-13 20:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-13 21:50  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Johor 87-78 PDRM  [2938190: final 87-78 read from the live feed (the schedule page does not show it as final yet)]",
   "2026-10-14 04:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
-  "2026-10-14 04:10  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated"
+  "2026-10-14 04:10  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
+  "2026-10-14 11:32  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 ATM 45-94 Negeri Sembilan  [2938189: final 45-94 read from the live feed (the schedule page does not show it as final yet); season lines not read for 1 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
