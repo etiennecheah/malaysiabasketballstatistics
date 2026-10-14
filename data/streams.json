@@ -2,6 +2,6 @@
   "how": "The Watch page (#/watch/<match id>) plays a game's YouTube video beside its live statistics. To add a game: copy a line in \"games\", put the game's match id on the left (the number at the end of its box-score or live-page address) and the YouTube link on the right, then commit. Live links (youtube.com/live/...), normal links (youtube.com/watch?v=...) and youtu.be links all work.",
   "games": {
     "2938190": "https://www.youtube.com/live/iBKv5ujZHBY"
-    "2938171": "https://www.youtube.com/live/VVSbbGgqg-U?si=sI255Gj3VV48Qnkm"
+    "2938171": "https://www.youtube.com/live/VVSbbGgqg-U?si=BLfvGSFgtLYNUIQN"
   }
 }
