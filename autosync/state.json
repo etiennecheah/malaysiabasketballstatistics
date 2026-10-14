@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1791962886.1916618,
-  "fp": "36272f7643cfe08835c3"
+  "at": 1791963485.0907083,
+  "fp": "f9b13dca3910bd4b5246"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -31,9 +31,16 @@
   "50247": 1791921608.8328958,
   "50248": 1791921995.088056
  },
- "lines_retry": {},
+ "lines_retry": {
+  "50248": {
+   "n": 1,
+   "next": 1791963992.3508298,
+   "pids": [
+    "2615634"
+   ]
+  }
+ },
  "log": [
-  "2026-10-11 04:48  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [26 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-11 04:52  FAILED 50247 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-11 08:14  FAILED 50247 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/50247/standings: HTTP Error 500: Internal Server Error",
   "2026-10-11 13:47  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
@@ -72,7 +79,8 @@
   "2026-10-14 13:32  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 59-118 Johor  [2938169: final 59-118 read from the live feed (the schedule page does not show it as final yet); 2938169: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 59 (Pahang))]",
   "2026-10-14 13:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 59-118 Johor  [2938169: the source's box score replaces the one from the live feed; season lines not read for 1 player(s): tried again next time]",
   "2026-10-14 15:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Sarawak 66-97 Johor",
-  "2026-10-14 15:28  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Selangor 98-41 Kelantan  [2938226: final 98-41 read from the live feed (the schedule page does not show it as final yet); 2938226: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 98 (Selangor))]"
+  "2026-10-14 15:28  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Selangor 98-41 Kelantan  [2938226: final 98-41 read from the live feed (the schedule page does not show it as final yet); 2938226: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 98 (Selangor))]",
+  "2026-10-14 15:38  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Selangor 98-41 Kelantan  [2938226: the source's box score replaces the one from the live feed; season lines not read for 1 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -90,12 +98,6 @@
    "kind": "pbp",
    "next": 1792009626.1653945,
    "since": 1791575455.130416
-  },
-  "2938226": {
-   "cid": "50248",
-   "kind": "box",
-   "next": 1791963368.1247795,
-   "since": 1791962768.1247795
   }
  },
  "rechecked": {
