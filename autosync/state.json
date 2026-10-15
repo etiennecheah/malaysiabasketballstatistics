@@ -25,10 +25,10 @@
  },
  "fail": {
   "38575": {
-   "last": 1792063124.9966028,
+   "last": 1792063758.2904801,
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 7\nrecovered: 20 box scores, 11 roster names\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 966, in <module>\n    main()\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 693, in main\n    rep = merges.apply(bb, persons, raw_boxes, pidmap, mnames)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/merges.p",
    "n": 1,
-   "next": 1792063724.9966028
+   "next": 1792064358.2904801
   }
  },
  "full": {
@@ -41,15 +41,14 @@
  },
  "lines_retry": {
   "38575": {
-   "n": 1,
-   "next": 1792063724.9966028,
+   "n": 2,
+   "next": 1792064958.2904801,
    "pids": [
-    "2252259"
+    "2252555"
    ]
   }
  },
  "log": [
-  "2026-10-13 19:31  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Sarawak 43-104 Negeri Sembilan  [2938224: final 43-104 read from the live feed (the schedule page does not show it as final yet); season lines not read for 23 player(s): tried again next time]",
   "2026-10-13 20:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-13 21:50  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Johor 87-78 PDRM  [2938190: final 87-78 read from the live feed (the schedule page does not show it as final yet)]",
   "2026-10-14 04:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
@@ -88,7 +87,8 @@
   "2026-10-15 15:41  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 66-78 Pahang  [2938173: the source's box score replaces the one from the live feed]",
   "2026-10-15 17:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 92-84 ATM  [2938176: final 92-84 read from the live feed (the schedule page does not show it as final yet); 2938176: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 92 (PDRM))]",
   "2026-10-15 17:53  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 92-84 ATM  [2938176: the source's box score replaces the one from the live feed]",
-  "2026-10-15 19:29  FAILED 38575 (1): /usr/bin/python3 build_data.py"
+  "2026-10-15 19:29  FAILED 38575 (1): /usr/bin/python3 build_data.py",
+  "2026-10-15 19:35  FAILED 38575 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -106,18 +106,6 @@
    "kind": "pbp",
    "next": 1792096042.201904,
    "since": 1791575455.130416
-  },
-  "2446777": {
-   "cid": "38575",
-   "kind": "box",
-   "next": 1792063724.9966028,
-   "since": 1792063124.9966028
-  },
-  "2446781": {
-   "cid": "38575",
-   "kind": "box",
-   "next": 1792063724.9966028,
-   "since": 1792063124.9966028
   }
  },
  "rechecked": {
