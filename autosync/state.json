@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792072239.7939296,
-  "fp": "eb0fe24d229f427b223c"
+  "at": 1792072340.4135077,
+  "fp": "892668362d15b4ef1279"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -41,7 +41,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-14 11:32  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 ATM 45-94 Negeri Sembilan  [2938189: final 45-94 read from the live feed (the schedule page does not show it as final yet); season lines not read for 1 player(s): tried again next time]",
   "2026-10-14 11:41  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-14 13:32  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 59-118 Johor  [2938169: final 59-118 read from the live feed (the schedule page does not show it as final yet); 2938169: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 59 (Pahang))]",
   "2026-10-14 13:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 59-118 Johor  [2938169: the source's box score replaces the one from the live feed; season lines not read for 1 player(s): tried again next time]",
@@ -80,7 +79,8 @@
   "2026-10-15 19:36  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 88-54 Selangor  [season lines not read for 3 player(s): tried again next time]",
   "2026-10-15 19:59  FAILED 38575 (1): /usr/bin/python3 build_data.py",
   "2026-10-15 20:10  FAILED 38575 (1): /usr/bin/python3 build_data.py",
-  "2026-10-15 20:47  FAILED 38575 (1): /usr/bin/python3 build_data.py"
+  "2026-10-15 20:47  FAILED 38575 (1): /usr/bin/python3 build_data.py",
+  "2026-10-15 21:52  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 87-70 Perak  [2938177: final 87-70 read from the live feed (the schedule page does not show it as final yet); 2938177: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 87 (Negeri Sembilan))]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -98,6 +98,12 @@
    "kind": "pbp",
    "next": 1792096042.201904,
    "since": 1791575455.130416
+  },
+  "2938177": {
+   "cid": "50247",
+   "kind": "box",
+   "next": 1792072864.4159563,
+   "since": 1792072264.4159563
   }
  },
  "rechecked": {
