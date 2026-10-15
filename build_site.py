@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Assemble site.html from assets/style.css, data/site_data.json and assets/app*.js."""
-import re, json, os, io
+"""Build the published site into public/: the app, its data and a page per player, competition, team and box score (prerender.js)."""
+import re, json, os, io, sys, shutil, base64, hashlib, subprocess, urllib.parse
 
 R = os.path.dirname(os.path.abspath(__file__))
 A = os.path.join(R, 'assets')
 D = os.path.join(R, 'data')
 
-PARTS = ['app1_core.js', 'app2_nav.js', 'app3_comp.js', 'app3b_family.js', 'app4_players.js',
+PARTS = ['app0_router.js', 'app1_core.js', 'app2_nav.js', 'app3_comp.js', 'app3b_family.js', 'app4_players.js',
          'app4b_profile.js', 'app4c_impact.js', 'app4d_radar.js', 'app4e_compare.js',
          'app4f_bpm.js', 'app4g_formulas.js', 'app4h_videos.js', 'app4i_games.js',
-         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app5_rest.js']
+         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app5_rest.js']
 
 NEWS_TYPES = ('signing', 'transfer', 'departure', 'injury', 'return', 'retirement', 'national', 'other')
 
@@ -262,31 +262,135 @@ def main():
         av = {pid: av.get(pid) or made[pid] for pid in photos}        # the portraits' order
     payload['avatars'] = av
     print('avatars: %d for %d portraits' % (len(av), len(photos)))
-    data = json.dumps(payload, separators=(',', ':'))
+    write_site(payload, css)
+
+
+# ---- the published site ---------------------------------------------------------------
+# public/ holds everything GitHub Pages serves: one HTML file per page (prerender.js), the
+# app's script and stylesheet, the data in two script files and the images as files. The
+# data, script and stylesheet names carry a hash of their content, so a browser can keep
+# them and a new build is never mixed with an old one.
+CONFIG = os.path.join(D, 'site_config.json')
+MORE_KEYS = ('bpm', 'bpmMeta', 'adv', 'onoff', 'onoffMeta', 'pbpPer')   # loaded after the first page is drawn
+IMG_KEYS = ('logos', 'photos', 'avatars', 'complogos', 'flags')
+MIME_EXT = {'image/webp': 'webp', 'image/png': 'png', 'image/jpeg': 'jpg', 'image/svg+xml': 'svg', 'image/gif': 'gif'}
+
+
+def site_config():
+    cfg = json.load(open(CONFIG))
+    url = cfg['url'].rstrip('/') + '/'
+    return dict(cfg, url=url, base=urllib.parse.urlparse(url).path or '/')
+
+
+def put(out, rel, content):
+    full = os.path.join(out, rel)
+    os.makedirs(os.path.dirname(full), exist_ok=True)
+    with open(full, 'wb') as f:
+        f.write(content if isinstance(content, bytes) else content.encode('utf-8'))
+    return len(content)
+
+
+def hashed(out, base, stem, ext, content):
+    h = hashlib.sha1(content.encode('utf-8')).hexdigest()[:10]
+    rel = 'assets/%s.%s.%s' % (stem, h, ext)
+    put(out, rel, content)
+    return base + rel
+
+
+def externalize_images(payload, out, base):
+    """data: URIs in the payload become files under img/, named by their content."""
+    n, size = 0, 0
+    for key in IMG_KEYS:
+        m = payload.get(key) or {}
+        for k, uri in list(m.items()):
+            if not isinstance(uri, str) or not uri.startswith('data:'):
+                continue
+            head, body = uri.split(',', 1)
+            mime = head[5:].split(';')[0]
+            raw = base64.b64decode(body) if ';base64' in head else urllib.parse.unquote_to_bytes(body)
+            name = 'img/%s.%s' % (hashlib.sha1(raw).hexdigest()[:12], MIME_EXT.get(mime, 'bin'))
+            if not os.path.exists(os.path.join(out, name)):
+                size += put(out, name, raw)
+                n += 1
+            m[k] = base + name
+    return n, size
+
+
+def write_site(payload, css):
+    cfg = site_config()
+    url, base = cfg['url'], cfg['base']
+    out = os.path.join(R, 'public')
+    shutil.rmtree(out, ignore_errors=True)
+    os.makedirs(out)
+    n_img, img_bytes = externalize_images(payload, out, base)
+    more = {k: payload.pop(k) for k in MORE_KEYS if k in payload}
+    more_url = hashed(out, base, 'db-more', 'js', 'HS.more(' + json.dumps(more, separators=(',', ':')) + ');')
+    payload['more'] = more_url
+    db = 'var DB=' + json.dumps(payload, separators=(',', ':')) + ';'
+    db_url = hashed(out, base, 'db', 'js', db)
     js = '\n\n'.join(open(os.path.join(A, p)).read() for p in PARTS)
+    js_url = hashed(out, base, 'app', 'js', js)
+    css_url = hashed(out, base, 'style', 'css', css)
+    for f in ('og.png', 'favicon.png'):
+        if os.path.exists(os.path.join(A, f)):
+            shutil.copy(os.path.join(A, f), os.path.join(out, f))
+    verify = ('<meta name="google-site-verification" content="%s">\n' % html_esc(cfg['google_verification'])) if cfg.get('google_verification') else ''
+    shell = SHELL.format(base=base, site=url, css=css_url, db=db_url, js=js_url, verify=verify)
+    tmp = os.path.join(D, 'shell.tmp')
+    open(tmp, 'w').write(shell)
+    sh = subprocess.run(['node', os.path.join(R, 'prerender.js'), out, tmp, url,
+                         os.path.join(out, db_url[len(base):]), os.path.join(out, js_url[len(base):])],
+                        capture_output=True, text=True)
+    os.remove(tmp)
+    sys.stdout.write(sh.stdout)
+    if sh.returncode:
+        raise SystemExit('prerender failed:\n' + sh.stderr[-3000:])
+    if sh.stderr.strip():
+        print(sh.stderr.strip()[-2000:])
+    first = len(db) + len(js) + len(css)
+    print('site: %s  data %.2f MB (+%.2f MB after the first page), app %d kB, css %d kB, %d images (%.2f MB)'
+          % (url, len(db) / 1048576, os.path.getsize(os.path.join(out, more_url[len(base):])) / 1048576,
+             len(js) / 1024, len(css) / 1024, n_img, img_bytes / 1048576))
 
-    html = io.StringIO()
-    w = html.write
-    w('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n')
-    w('<meta name="viewport" content="width=device-width, initial-scale=1">\n')
-    w('<title>HoopStatsMY — Malaysia Basketball Database</title>\n')
-    w('<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800'
-      '&family=Archivo+Narrow:wght@400;500;600;700&display=swap" rel="stylesheet">\n')
-    w('<style>\n' + css + '\n</style>\n')
-    # theme is stamped before the first paint so a dark reader never sees a white flash
-    w('<script>try{var t=localStorage.getItem("hsmy-theme");'
-      'if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>\n')
-    w('</head>\n<body>\n<div id="app"></div>\n')
-    w('<script id="db" type="application/json">' + data.replace('</', '<\\/') + '</script>\n')
-    w('<script>\nconst DB = JSON.parse(document.getElementById("db").textContent);\n')
-    w(js)
-    w('\n</script>\n</body>\n</html>\n')
 
-    out = os.path.join(R, 'site.html')
-    with open(out, 'w') as f:
-        f.write(html.getvalue())
-    print('site.html %.2f MB  (css %dkB, data %.2fMB, js %dkB)'
-          % (os.path.getsize(out) / 1024 / 1024, len(css) / 1024, len(data) / 1024 / 1024, len(js) / 1024))
+def html_esc(s):
+    return str(s).replace('&', '&amp;').replace('"', '&quot;').replace('<', '&lt;').replace('>', '&gt;')
+
+
+# {{…}} are filled per page by prerender.js; {…} here, once per build
+SHELL = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{{{TITLE}}}}</title>
+<meta name="description" content="{{{{DESC}}}}">
+{{{{ROBOTS}}}}<link rel="canonical" href="{{{{URL}}}}">
+<meta property="og:site_name" content="HoopStatsMY">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{{{OGTITLE}}}}">
+<meta property="og:description" content="{{{{DESC}}}}">
+<meta property="og:url" content="{{{{URL}}}}">
+<meta property="og:image" content="{site}og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="hs-base" content="{base}">
+{verify}<link rel="icon" type="image/png" href="{base}favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Archivo+Narrow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{css}">
+<script>try{{var t=localStorage.getItem("hsmy-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}}catch(e){{}}</script>
+<script defer src="{db}"></script>
+<script defer src="{js}"></script>
+{{{{LD}}}}
+</head>
+<body>
+<div id="app">{{{{APP}}}}</div>
+</body>
+</html>
+"""
 
 
 if __name__ == '__main__':

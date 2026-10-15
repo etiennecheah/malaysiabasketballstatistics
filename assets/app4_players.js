@@ -115,7 +115,7 @@ function compPlayersGrid(cid) {
       </tr></thead>
       <tbody>${rows.length ? rows.map((p, i) => {
         const nm = personName(p.pid);
-        return `<tr class="clickable" onclick="location.hash='#/p/${p.pid}'">
+        return `<tr class="clickable" onclick="HS.go('#/p/${p.pid}')">
           <td class="left cp-rk">${i + 1}</td>
           <td class="left"><div class="player-cell">${avatar(p.pid, nm)}
             <div><div class="p-name">${esc(nm)}</div><div class="p-team">${p.team ? teamMark(p.team) + esc(p.team) : '<span style="color:var(--text-faint);">no team published</span>'}</div></div></div></td>
@@ -362,7 +362,7 @@ function globTable() {
         <th class="left">Player</th>
         ${cols.map(([k, l], i) => `<th data-gsort="${k}" ${i === cols.length - 1 ? 'style="padding-right:20px;"' : ''}${gloss(l)}>${l}${arrow(st, k)}</th>`).join('')}
       </tr></thead>
-      <tbody>${view.map(r => `<tr class="clickable" onclick="location.hash='#/p/${r.pid}'" style="cursor:pointer;">
+      <tbody>${view.map(r => `<tr class="clickable" onclick="HS.go('#/p/${r.pid}')" style="cursor:pointer;">
           <td class="left"><div class="player-cell">${avatar(r.pid, r.name)}
             <div><div class="p-name">${esc(r.name)}</div><div class="p-team">${r.lastTeam ? teamMark(r.lastTeam) + esc(r.lastTeam) : '<span style="color:var(--text-faint);">—</span>'}${r.lastYear ? ' · ' + r.lastYear : ''}</div></div></div></td>
           ${cols.map(([k, l, f], i) => {

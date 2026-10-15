@@ -2,7 +2,7 @@
 const SITE = 'HOOPSTATS MY';
 
 function navShell(links, sub) {
-  const statsPage = /^#\/stats/.test(location.hash) ? (/^#\/stats\/clutch/.test(location.hash) ? 'clutch' : 'lineups') : '';
+  const statsPage = /^#\/stats/.test(HS.hash()) ? (/^#\/stats\/clutch/.test(HS.hash()) ? 'clutch' : 'lineups') : '';
   return `
   <div class="nav">
     <div class="nav-left">
@@ -91,7 +91,7 @@ function renderFooter() {
 
 /* ---------------------------- router ---------------------------- */
 function route() {
-  const hash = location.hash.replace(/^#/, '') || '/';
+  const hash = HS.hash().replace(/^#/, '') || '/';
   const parts = hash.split('/').filter(Boolean).map(decodeURIComponent);
   const app = document.getElementById('app');
   CREST_CID = parts[0] === 'c' ? parts[1] : null;   // an edition's own crests (EDITION_LOGO)
@@ -101,7 +101,7 @@ function route() {
   // the id that lost; send it to the survivor rather than showing "player not found".
   if (parts[0] === 'p' && PALIAS[parts[1]]) {
     parts[1] = PALIAS[parts[1]];
-    location.replace('#/' + parts.map(encodeURIComponent).join('/'));
+    HS.go('#/' + parts.map(encodeURIComponent).join('/'), true);
     return;
   }
 
@@ -176,6 +176,7 @@ function route() {
   window.scrollTo(0, 0);
   wireSearch();
   if (typeof afterRender === 'function') afterRender();
+  if (typeof hsApplyMeta === 'function') hsApplyMeta(HS.hash());
 }
 
 function renderNotFound(id) {
@@ -197,10 +198,10 @@ function wireSearch() {
     const q = el.value.trim().toLowerCase();
     if (!q) return;
     const pid = Object.keys(PERSONS).find(k => PERSONS[k].toLowerCase().includes(q));
-    if (pid) { location.hash = '#/p/' + pid; return; }
+    if (pid) { HS.go('#/p/' + pid); return; }
     const comp = COMPS.find(c => (c.label||c.name).toLowerCase().includes(q));
-    if (comp) { location.hash = '#/c/' + comp.id; return; }
+    if (comp) { HS.go('#/c/' + comp.id); return; }
     const tid = Object.keys(TEAMS).find(k => TEAMS[k].toLowerCase().includes(q));
-    if (tid && TEAM_COMPS[tid]) { location.hash = '#/c/' + TEAM_COMPS[tid][0] + '/team/' + tid; return; }
+    if (tid && TEAM_COMPS[tid]) { HS.go('#/c/' + TEAM_COMPS[tid][0] + '/team/' + tid); return; }
   });
 }

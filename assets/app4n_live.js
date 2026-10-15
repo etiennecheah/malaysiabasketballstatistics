@@ -52,7 +52,7 @@ function liveCandidates() {
   return out.sort((a, b) => liveStart(a) - liveStart(b));
 }
 
-function liveFast() { return /^#\/(home|live\/|watch\/)/.test(location.hash) || location.hash === '' || location.hash === '#/'; }
+function liveFast() { return /^#\/(home|live\/|watch\/)/.test(HS.hash()) || HS.hash() === '' || HS.hash() === '#/'; }
 
 async function liveTick() {
   clearTimeout(LIVE.timer);

@@ -22,9 +22,9 @@ function ensurePbp(cid) {
   if (PBP_ST[cid]) return;
   PBP_ST[cid] = 'loading';
   const s = document.createElement('script');
-  s.src = 'pbp/' + cid + '.js';
+  s.src = HS.BASE + 'pbp/' + cid + '.js';
   // the Watch page repaints only its panels, so its video keeps playing
-  const done = () => { if (location.hash.indexOf('/pbp/') >= 0) softRoute(); else if (location.hash.indexOf('#/watch/') === 0 && typeof watchRefresh === 'function') watchRefresh(); };
+  const done = () => { if (HS.hash().indexOf('/pbp/') >= 0) softRoute(); else if (HS.hash().indexOf('#/watch/') === 0 && typeof watchRefresh === 'function') watchRefresh(); };
   s.onload = () => { PBP_ST[cid] = PBP_DATA[cid] ? 'done' : 'error'; done(); };
   s.onerror = () => { PBP_ST[cid] = 'error'; done(); };
   document.head.appendChild(s);

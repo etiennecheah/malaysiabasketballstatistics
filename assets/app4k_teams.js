@@ -364,7 +364,7 @@ function renderTeamGlobal(slug) {
     return `<tr class="yr"><td class="left" colspan="${t.hasTeam2 ? 6 : 5}">${y}<small>${L.length} competition${L.length > 1 ? 's' : ''}</small></td></tr>` + L.map(x => {
       const c = COMP_BY_ID[x.cid];
       const alias = names.length > 1 && x.as !== t.name ? ` · listed as “${esc(x.as)}”` : '';
-      return `<tr class="clickable" onclick="location.hash='#/c/${x.cid}/team/${x.tid}'" style="cursor:pointer;">
+      return `<tr class="clickable" onclick="HS.go('#/c/${x.cid}/team/${x.tid}')" style="cursor:pointer;">
         <td class="left comp-cell tp-cn"><div class="player-cell">${compCrest(c, 26)}<div><div class="p-name">${esc(c.label || c.name)}</div><div class="p-team">${esc(x.series)}${alias}</div></div></div></td>
         <td class="left"><span class="dtag" style="--dc:${DIV_COL[x.sex]}"><i></i>${x.sex}${x.age ? ` <em>${x.age}</em>` : ''}</span></td>
         ${t.hasTeam2 ? `<td>${x.squad ? `<span class="sqp sqp-${x.squad}">${squadLabel(t, x.squad)}</span>` : '<span class="sqp-0">—</span>'}</td>` : ''}

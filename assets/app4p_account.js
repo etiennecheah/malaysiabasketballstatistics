@@ -68,7 +68,7 @@ function accToast(t) {
   el.textContent = t; el.classList.add('on');
   ACC.toastT = setTimeout(() => el.classList.remove('on'), 4200);
 }
-const accOnPage = re => re.test(location.hash);
+const accOnPage = re => re.test(HS.hash());
 function accRedraw() { if (document.getElementById('app') && typeof softRoute === 'function') softRoute(); }
 
 /* ---- the backend -------------------------------------------------------- */
@@ -861,7 +861,7 @@ document.addEventListener('click', async e => {
     catch (x) { if (ACC.modal === m) { m.busy = false; m.err = accErr(x); accDrawModal(); } }
   }
   else if (act === 'switch') { ACC.want = m && m.pid ? { claim: m.pid } : ACC.want; await B().signOut().catch(() => {}); accModal('signin', m && m.pid ? { pid: m.pid } : {}); }
-  else if (act === 'signout') { accModal(null); ACC.want = null; await B().signOut().catch(x => accToast(accErr(x))); if (accOnPage(/^#\/(me|admin)\b/)) location.hash = '#/'; }
+  else if (act === 'signout') { accModal(null); ACC.want = null; await B().signOut().catch(x => accToast(accErr(x))); if (accOnPage(/^#\/(me|admin)\b/)) HS.go('#/'); }
   else if (act === 'welcome-go') {
     const name = String(m.name || '').trim().slice(0, 40);
     if (!name) { m.err = 'Type a display name.'; accDrawModal(); return; }
@@ -869,7 +869,7 @@ document.addEventListener('click', async e => {
     const me = { displayName: name, role: m.role === 'player' ? 'player' : 'fan', email: ACC.user.email, createdAt: Date.now(), favPlayers: [], favTeams: [], compares: [] };
     if (await accDo(() => B().set('users', ACC.user.uid, me))) {
       ACC.me = me; const had = ACC.want; accAfterSignIn(); accRedraw();
-      if (!had) { if (me.role === 'player') { location.hash = '#/players'; accToast('Open your profile, then press “Claim this profile”.'); } else location.hash = '#/me'; }
+      if (!had) { if (me.role === 'player') { HS.go('#/players'); accToast('Open your profile, then press “Claim this profile”.'); } else HS.go('#/me'); }
     }
   }
   else if (act === 'name') accModal('name', { name: ACC.me.displayName });
@@ -905,14 +905,14 @@ document.addEventListener('click', async e => {
     }
     else if (m.ask === 'unlink') {
       if (await accDo(async () => { await B().del('profiles', pid); await B().del('edits', uid).catch(() => {}); await B().del('claims', uid); }, 'You are unlinked from the profile.')) {
-        ACC.claim = null; ACC.edit = null; ACC.form = null; ACC.pub[pid] = null; if (ACC.verified) delete ACC.verified[pid]; PV.data = null; accModal(null); location.hash = '#/me'; accRedraw(); }
+        ACC.claim = null; ACC.edit = null; ACC.form = null; ACC.pub[pid] = null; if (ACC.verified) delete ACC.verified[pid]; PV.data = null; accModal(null); HS.go('#/me'); accRedraw(); }
     }
     else if (m.ask === 'account') {
       if (await accDo(async () => {
         if (c && c.status === 'approved') await B().del('profiles', pid).catch(() => {});
         await B().del('edits', uid).catch(() => {}); await B().del('claims', uid).catch(() => {}); await B().del('users', uid);
         await B().removeUser().catch(() => B().signOut());
-      }, 'Your account is deleted.')) { accModal(null); location.hash = '#/'; }
+      }, 'Your account is deleted.')) { accModal(null); HS.go('#/'); }
     }
   }
   else if (act === 'fav') accFav(b.dataset.kind, b.dataset.id);

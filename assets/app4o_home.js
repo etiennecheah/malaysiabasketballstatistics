@@ -430,7 +430,7 @@ document.addEventListener('keydown', e => {
     HM.sel = (HM.sel + (e.key === 'ArrowDown' ? 1 : -1) + HM.list.length) % HM.list.length;
     hmDrawSug(HM.list, HM.sel);
   } else if (e.key === 'Enter') {
-    location.hash = HM.list[Math.max(HM.sel, 0)].href;
+    HS.go(HM.list[Math.max(HM.sel, 0)].href);
   } else if (e.key === 'Escape') { HM.list = []; hmDrawSug([], -1); }
 });
 document.addEventListener('focusout', e => {

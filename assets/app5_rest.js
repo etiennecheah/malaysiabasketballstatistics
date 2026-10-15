@@ -86,7 +86,7 @@ function boxTable(title, teamName, lines) {
     <div class="table-scroll sticky-first"><table>
       <thead><tr><th class="left nosort">Player</th>${BOX_COLS.map(([k, l], i) => `<th class="nosort" ${i === BOX_COLS.length - 1 ? 'style="padding-right:20px;"' : ''}${gloss(l)}>${l}</th>`).join('')}</tr></thead>
       <tbody>
-        ${lines.map(l => `<tr class="clickable" ${l.pid ? `onclick="location.hash='#/p/${l.pid}'" style="cursor:pointer;"` : ''}>
+        ${lines.map(l => `<tr class="clickable" ${l.pid ? `onclick="HS.go('#/p/${l.pid}')" style="cursor:pointer;"` : ''}>
           <td class="left"><div class="player-cell">${has(l.num) && l.num !== '' ? `<span class="num-pill">#${esc(l.num)}</span>` : ''}<span class="p-name">${esc(l.name || (l.pid ? personName(l.pid) : '—'))}</span>${l.starter ? '<span style="color:var(--accent);font-weight:700;font-size:10px;">★</span>' : ''}</div></td>
           ${BOX_COLS.map(([k], i) => `<td class="${k === 'pts' ? 'lead' : ''} ${k === 'pm' && has(l.pm) ? (l.pm > 0 ? 'pm-pos' : (l.pm < 0 ? 'pm-neg' : '')) : ''}" ${i === BOX_COLS.length - 1 ? 'style="padding-right:20px;"' : ''}>${boxCell(l, k)}</td>`).join('')}
         </tr>`).join('')}
@@ -231,18 +231,18 @@ document.addEventListener('click', e => {
   const cm = e.target.closest('[data-cmpmode]');
   if (cm) { COMPARE.mode = cm.dataset.cmpmode; softRoute(); return; }
   const csw = e.target.closest('[data-cmpswap]');
-  if (csw) { location.hash = '#/compare/' + COMPARE.b + '/' + COMPARE.a; return; }
+  if (csw) { HS.go('#/compare/' + COMPARE.b + '/' + COMPARE.a); return; }
   const cx = e.target.closest('[data-cmpclear]');
   if (cx) {
     const keep = cx.dataset.cmpclear === 'a' ? COMPARE.b : COMPARE.a;
-    location.hash = cx.dataset.cmpclear === 'a' ? '#/compare//' + keep : '#/compare/' + keep;
+    HS.go(cx.dataset.cmpclear === 'a' ? '#/compare//' + keep : '#/compare/' + keep);
     return;
   }
   const cr = e.target.closest('[data-cmppick]');
   if (cr) {
     const [sd, pid] = cr.dataset.cmppick.split('|');
     const a = sd === 'a' ? pid : COMPARE.a, b = sd === 'a' ? COMPARE.b : pid;
-    location.hash = '#/compare/' + (a || '') + (b ? '/' + b : '');
+    HS.go('#/compare/' + (a || '') + (b ? '/' + b : ''));
     return;
   }
 
@@ -264,14 +264,14 @@ document.addEventListener('click', e => {
     const k = cs.dataset.csort;
     SORT.comp.dir = (SORT.comp.key === k && SORT.comp.dir === 'desc') ? 'asc' : 'desc';
     SORT.comp.key = k;
-    const cid = (location.hash.match(/#\/c\/([^\/]+)/) || [])[1];
+    const cid = (HS.hash().match(/#\/c\/([^\/]+)/) || [])[1];
     if (cid) cpRedraw(cid);
     return;
   }
   const cv = e.target.closest('[data-cpview]');
   if (cv) {
     CPV.view = cv.dataset.cpview; SORT.comp = { key: cpView().sort, dir: 'desc' };
-    const cid = (location.hash.match(/#\/c\/([^\/]+)/) || [])[1];
+    const cid = (HS.hash().match(/#\/c\/([^\/]+)/) || [])[1];
     const el = document.getElementById('players-body');
     if (el && cid) el.innerHTML = compPlayersTable(cid);
     return;
@@ -335,7 +335,7 @@ let qTimer = null;
 document.addEventListener('input', e => {
   if (e.target.id === 'cp-q') {
     CPV.q = e.target.value;
-    const cid = (location.hash.match(/#\/c\/([^\/]+)/) || [])[1];
+    const cid = (HS.hash().match(/#\/c\/([^\/]+)/) || [])[1];
     if (cid) cpRedraw(cid);
     return;
   }
@@ -391,8 +391,7 @@ document.addEventListener('input', e => {
 /* post-render work: the Stats pages wire their filters and the Stats menu once the page is in place */
 function afterRender() { if (typeof statsAfterRender === 'function') statsAfterRender(); }
 
-window.addEventListener('hashchange', route);
-route();
+HS.start();
 
 /* ---- chart tooltip -----------------------------------------------------
    One shared element, positioned on hover. Charts carry their text in a

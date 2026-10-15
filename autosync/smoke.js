@@ -1,25 +1,71 @@
 // Open the freshly built site in a real browser before it is published.
-//   node smoke.js <path to index.html> [<cid>:<mid> ...]
-// Fails (exit 1) on any script error, if Home or Games do not render, or if a newly
+//   node smoke.js <site directory (public/ or _site/)> [<cid>:<mid> ...]
+// The directory is served the way GitHub Pages serves it (pages at their own paths under
+// the base, 404.html for the rest). Fails (exit 1) on any script error, if Home or Games do
+// not render, if a page written for search engines is missing or wrong, or if a newly
 // synced game does not show as final with its box score.
 let pw;
 try { pw = require('playwright-core'); } catch (e) { pw = require('playwright'); }
-const path = require('path');
+const path = require('path'), fs = require('fs'), http = require('http');
+
+function serve(root, base) {
+  const types = { '.html': 'text/html; charset=utf-8', '.js': 'application/javascript', '.css': 'text/css', '.png': 'image/png',
+    '.webp': 'image/webp', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.json': 'application/json', '.xml': 'application/xml', '.txt': 'text/plain' };
+  const srv = http.createServer((q, r) => {
+    const u = decodeURIComponent(q.url.split('?')[0]);
+    const send = (f, code) => { r.writeHead(code, { 'content-type': types[path.extname(f)] || 'application/octet-stream' }); fs.createReadStream(f).pipe(r); };
+    if (u.indexOf(base) !== 0) { r.writeHead(404); r.end(); return; }
+    let f = path.join(root, u.slice(base.length));
+    if (!path.resolve(f).startsWith(path.resolve(root))) { r.writeHead(403); r.end(); return; }
+    if (fs.existsSync(f) && fs.statSync(f).isDirectory()) {
+      if (!u.endsWith('/')) { r.writeHead(301, { location: u + '/' }); r.end(); return; }
+      f = path.join(f, 'index.html');
+    }
+    if (fs.existsSync(f)) send(f, 200); else send(path.join(root, '404.html'), 404);
+  });
+  return new Promise(ok => srv.listen(0, '127.0.0.1', () => ok(srv)));
+}
 
 (async () => {
-  const file = path.resolve(process.argv[2]);
+  let root = path.resolve(process.argv[2]);
+  if (/\.html$/.test(root)) root = path.dirname(root);
   const games = process.argv.slice(3).map(x => x.split(':'));
+  const errors = [];
+  const indexHtml = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const base = (indexHtml.match(/<meta name="hs-base" content="([^"]*)"/) || [])[1] || '/';
+  // the files written for search engines and link previews
+  for (const f of ['404.html', 'sitemap.xml', 'robots.txt', 'og.png']) if (!fs.existsSync(path.join(root, f))) errors.push(f + ' is missing');
+  const sm = fs.existsSync(path.join(root, 'sitemap.xml')) ? (fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8').match(/<loc>/g) || []).length : 0;
+  if (sm < 1000) errors.push('the sitemap lists only ' + sm + ' pages');
+  if (!/<link rel="canonical"/.test(indexHtml) || !/og:image/.test(indexHtml)) errors.push('Home has no canonical link or preview image');
+  const srv = await serve(root, base);
+  const origin = 'http://127.0.0.1:' + srv.address().port;
   const exe = process.env.CHROME_PATH || process.env.CHROME_BIN;
   const launch = exe ? { executablePath: exe } : { channel: 'chrome' };
   const browser = await pw.chromium.launch(launch);
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
-  const errors = [];
-  page.on('pageerror', e => errors.push('script error on ' + (page.url().split('#')[1] || '/') + ': ' + e.message));
-  // the page alone, as built: fonts, sign-in and the live relay are left out of the check
-  await page.route('**/*', r => (r.request().url().startsWith('file:') ? r.continue() : r.abort()));
-  const go = async h => { await page.evaluate(x => { location.hash = x; }, h); await page.waitForTimeout(250); };
+  page.on('pageerror', e => errors.push('script error on ' + page.url().replace(origin, '') + ': ' + e.message));
+  // the site alone, as built: fonts, sign-in and the live relay are left out of the check
+  await page.route('**/*', r => (r.request().url().startsWith(origin) ? r.continue() : r.abort()));
+  const go = async h => { await page.evaluate(x => HS.go('#' + x), h); await page.waitForTimeout(250); };
+  const ready = () => page.waitForFunction(() => typeof HS !== 'undefined' && typeof COMPS !== 'undefined', null, { timeout: 30000 });
 
-  await page.goto('file://' + file + '#/', { waitUntil: 'load' });
+  // a player's page opened at its own address: the file names the player, and the app draws the same page
+  const pids = fs.existsSync(path.join(root, 'p')) ? fs.readdirSync(path.join(root, 'p')) : [];
+  if (pids.length < 1000) errors.push('only ' + pids.length + ' player pages were written');
+  else {
+    const pid = pids[Math.floor(pids.length / 2)];
+    const file = fs.readFileSync(path.join(root, 'p', pid, 'index.html'), 'utf8');
+    await page.goto(origin + base + 'p/' + pid + '/', { waitUntil: 'load' });
+    await ready();
+    await page.waitForTimeout(300);
+    const pv = await page.evaluate(id => ({ name: personName(id), title: document.title, at: HS.hash() }), pid);
+    if (!file.includes('<title>' + pv.name.replace(/&/g, '&amp;').replace(/</g, '&lt;')) ) errors.push('page file for player ' + pid + ' does not carry the player\'s name in its title');
+    if (pv.at !== '#/p/' + pid || !pv.title.startsWith(pv.name)) errors.push('player ' + pid + ' at its own address: the app shows ' + pv.at + ' / ' + pv.title);
+  }
+
+  await page.goto(origin + base, { waitUntil: 'load' });
+  await ready();
   await page.waitForTimeout(800);
   const home = await page.evaluate(() => ({
     title: (document.querySelector('.hm-title') || {}).textContent || '',
@@ -74,6 +120,7 @@ const path = require('path');
     await go('/c/' + cid + '/schedule');
   }
   await browser.close();
+  srv.close();
   console.log('page check: Home ' + home.tiles + ' result tiles, ' + home.comps + ' competitions, Games ' + cards + ' cards, Players ' + pcards + ' cards, ' + games.length + ' new game(s)');
   if (errors.length) { console.log('PAGE CHECK FAILED\n  ' + errors.join('\n  ')); process.exit(1); }
 })().catch(e => { console.log('PAGE CHECK FAILED\n  ' + e.message); process.exit(1); });

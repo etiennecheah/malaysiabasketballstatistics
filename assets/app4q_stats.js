@@ -27,7 +27,7 @@ const STATS = (function () {
     if (LOAD[k]) return LOAD[k];
     LOAD[k] = 'loading';
     const s = document.createElement('script');
-    s.src = 'stats/' + kind + '/' + cid + '.js';
+    s.src = HS.BASE + 'stats/' + kind + '/' + cid + '.js';
     s.onload = () => { LOAD[k] = DATA[kind][cid] ? 'done' : 'error'; redraw(); };
     s.onerror = () => { LOAD[k] = 'error'; redraw(); };
     document.head.appendChild(s);

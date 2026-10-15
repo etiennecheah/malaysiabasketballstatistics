@@ -596,7 +596,7 @@ function playerLog(pid, career) {
         <tbody>${x.lines.map(y => {
           const l = y.l, g = y.g;
           const own = l.team === g.h ? g.hs : g.as, opp = l.team === g.h ? g.as : g.hs;
-          return `<tr class="clickable" onclick="location.hash='#/c/${x.c.id}/box/${g.mid}'" style="cursor:pointer;">
+          return `<tr class="clickable" onclick="HS.go('#/c/${x.c.id}/box/${g.mid}')" style="cursor:pointer;">
             <td class="left">${fmtDateShort(g.date)} <span style="color:var(--text-faint);">${g.date ? g.date.slice(0, 4) : ''}</span></td>
             <td class="left">${esc(l.team === g.h ? g.a : g.h)} <span class="${own > opp ? 'win-txt' : 'loss-txt'}">${own > opp ? 'W' : 'L'} ${fmt0(own)}–${fmt0(opp)}</span>${phaseLabel(x.c, g.mid) ? ` <span class="po-tag">${esc(phaseLabel(x.c, g.mid))}</span>` : ''}</td>
             <td>${esc(l.min || '—')}</td><td class="lead">${fmt0(l.pts)}</td>

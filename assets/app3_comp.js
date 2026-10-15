@@ -238,7 +238,7 @@ function gameRow(cid, g) {
   if (lv && lv.d) {
     const fin = lv.state === 'final', hs = lv.d.teams[0].score, as = lv.d.teams[1].score;
     const cls = (mine, theirs) => fin ? (mine > theirs ? 'win' : 'loss') : (mine > theirs ? 'win' : '');
-    return `<div class="row clickable row-live" data-gmid="${esc(g.mid)}" onclick="location.hash='#/live/${g.mid}'">
+    return `<div class="row clickable row-live" data-gmid="${esc(g.mid)}" onclick="HS.go('#/live/${g.mid}')">
     <div class="r-date"><div class="d1">${fmtDateShort(g.date)}</div><div>${g.date ? g.date.slice(0, 4) : ''}</div></div>
     <div class="team ${cls(hs, as)}">${crest(g.h)}<span class="name">${esc(g.h)}</span><span class="score">${fmt0(hs)}</span></div>
     <div class="team ${cls(as, hs)}">${crest(g.a)}<span class="name">${esc(g.a)}</span><span class="score">${fmt0(as)}</span></div>
@@ -249,7 +249,7 @@ function gameRow(cid, g) {
   const complete = g.st === 'COMPLETE';
   const hw = complete && g.hs > g.as, aw = complete && g.as > g.hs;
   const clickable = complete && g.box;
-  return `<div class="row ${clickable ? 'clickable' : ''}" data-gmid="${esc(g.mid)}" ${clickable ? `onclick="location.hash='#/c/${cid}/box/${g.mid}'"` : ''}>
+  return `<div class="row ${clickable ? 'clickable' : ''}" data-gmid="${esc(g.mid)}" ${clickable ? `onclick="HS.go('#/c/${cid}/box/${g.mid}')"` : ''}>
     <div class="r-date"><div class="d1">${fmtDateShort(g.date)}</div><div>${g.date ? g.date.slice(0, 4) : ''}</div></div>
     <div class="team ${complete ? (hw ? 'win' : 'loss') : ''}">${crest(g.h)}<span class="name">${esc(g.h)}</span><span class="score">${complete ? fmt0(g.hs) : ''}</span></div>
     <div class="team ${complete ? (aw ? 'win' : 'loss') : ''}">${crest(g.a)}<span class="name">${esc(g.a)}</span><span class="score">${complete ? fmt0(g.as) : ''}</span></div>
@@ -442,7 +442,7 @@ function renderTeams(cid) {
     <div class="team-grid">
       ${rows.map(r => {
         const roster = (c.roster[r.tid] || []).length;
-        return `<div class="team-card" onclick="location.hash='#/c/${cid}/team/${r.tid}'">
+        return `<div class="team-card" onclick="HS.go('#/c/${cid}/team/${r.tid}')">
           <div class="team-card-head">${crest(r.name, 44)}
             <div><div class="team-card-name">${esc(r.name)}</div>
               <div class="team-card-rank">${r.s ? ordinal(r.s.pos) + ' · ' + r.s.w + '–' + r.s.l : 'No standings row'}</div></div>
@@ -507,7 +507,7 @@ function teamRoster(cid, pids, roster, statByPid, tid) {
       ${anyStats ? `<th class="nosort"${gloss('G')}>G</th><th class="nosort"${gloss('PTS')}>PTS</th><th class="nosort"${gloss('PPG')}>PPG</th><th class="nosort"${gloss('RPG')}>RPG</th><th class="nosort" style="padding-right:20px;"${gloss('APG')}>APG</th>` : '<th class="nosort" style="padding-right:20px;"></th>'}</tr></thead>
       <tbody>${rows.map(r => {
         const p = r.p, b = r.b;
-        return `<tr class="clickable" onclick="location.hash='#/p/${r.pid}'" style="cursor:pointer;">
+        return `<tr class="clickable" onclick="HS.go('#/p/${r.pid}')" style="cursor:pointer;">
           <td class="left"><div class="player-cell"><div class="avatar">${initials(personName(r.pid))}</div><div class="p-name">${esc(personName(r.pid))}</div></div></td>
           <td>${has(b.num) ? esc(b.num) : '—'}</td><td>${esc(b.pos || '—')}</td>
           <td>${has(b.ht) ? b.ht + ' cm' : '—'}</td><td>${has(b.wt) ? b.wt + ' kg' : '—'}</td>
@@ -528,7 +528,7 @@ function teamResults(cid, name, games) {
     ${done.length ? done.map(g => {
       const home = g.h === name, own = home ? g.hs : g.as, opp = home ? g.as : g.hs;
       const win = own > opp;
-      return `<div class="row ${g.box ? 'clickable' : ''}" ${g.box ? `onclick="location.hash='#/c/${cid}/box/${g.mid}'"` : ''}>
+      return `<div class="row ${g.box ? 'clickable' : ''}" ${g.box ? `onclick="HS.go('#/c/${cid}/box/${g.mid}')"` : ''}>
         <div class="r-date"><div class="d1">${fmtDateShort(g.date)}</div><div>${g.date ? g.date.slice(0, 4) : ''}</div></div>
         <div class="team">${crest(home ? g.a : g.h)}<span class="name">${home ? '' : '@ '}${esc(home ? g.a : g.h)}</span></div>
         <div class="team"><span class="name ${win ? 'win-txt' : 'loss-txt'}">${win ? 'W' : 'L'} ${fmt0(own)}–${fmt0(opp)}</span></div>

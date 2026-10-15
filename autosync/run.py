@@ -22,7 +22,7 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, ROOT)
 from store import Store, Gate, tipoff, done, MYT   # noqa: E402
 
-SITE = 'https://etiennecheah.github.io/malaysiabasketballstatistics/'
+SITE = json.load(open(os.path.join(ROOT, 'data', 'site_config.json')))['url'].rstrip('/') + '/'
 STATE = os.path.join(HERE, 'state.json')
 OUT = os.path.join(ROOT, '_site')
 BUILD = ['build_data.py', 'build_lineups.py', 'build_bpm.py', 'build_pbp.py', 'build_stats.py', 'build_site.py']
@@ -203,7 +203,7 @@ def pip_deps():
 def fingerprint():
     """What the site is built from: every tracked file under assets/ and data/ plus the build scripts."""
     sh('git', 'add', '-A', 'data', 'assets')
-    ls = sh('git', 'ls-files', '-s', '--', 'assets', 'data', '*.py')
+    ls = sh('git', 'ls-files', '-s', '--', 'assets', 'data', '*.py', 'prerender.js')
     return hashlib.sha256(ls.encode()).hexdigest()[:20]
 
 
@@ -223,14 +223,16 @@ def build(fp, why):
     for s in BUILD:
         sh(sys.executable, s, timeout=1200)
     shutil.rmtree(OUT, ignore_errors=True)
-    os.makedirs(OUT)
-    shutil.copy(os.path.join(ROOT, 'site.html'), os.path.join(OUT, 'index.html'))
+    # public/ (build_site.py): a page per player, competition, team and box score, the app and its data
+    shutil.copytree(os.path.join(ROOT, 'public'), OUT)
     shutil.copytree(os.path.join(ROOT, 'pbp'), os.path.join(OUT, 'pbp'))
     shutil.copytree(os.path.join(ROOT, 'stats'), os.path.join(OUT, 'stats'))      # Lineups and Clutch, one file per competition
     json.dump({'inputs': fp, 'built': datetime.datetime.now(MYT).strftime('%Y-%m-%d %H:%M MYT'), 'why': why,
                'commit': sh('git', 'rev-parse', 'HEAD', check=False)},
               open(os.path.join(OUT, 'build.json'), 'w'))
-    log('built in %ds: index.html %.1f MB' % (time.time() - t, os.path.getsize(os.path.join(OUT, 'index.html')) / 1e6))
+    n = sum(len(f) for _, _, f in os.walk(OUT))
+    size = sum(os.path.getsize(os.path.join(d, x)) for d, _, f in os.walk(OUT) for x in f)
+    log('built in %ds: %d files, %.0f MB' % (time.time() - t, n, size / 1e6))
 
 
 def smoke(games=()):
@@ -243,7 +245,7 @@ def smoke(games=()):
             os.makedirs(mods, exist_ok=True)
             sh('npm', 'install', '--no-save', '--no-audit', '--no-fund', '--prefix', mods, 'playwright-core', timeout=300)
         env['NODE_PATH'] = os.path.join(mods, 'node_modules')
-    r = subprocess.run(['node', os.path.join(HERE, 'smoke.js'), os.path.join(OUT, 'index.html')] + list(games),
+    r = subprocess.run(['node', os.path.join(HERE, 'smoke.js'), OUT] + list(games),
                        cwd=ROOT, env=env, capture_output=True, text=True, timeout=300)
     log(r.stdout.strip())
     if r.returncode:
