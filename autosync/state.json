@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792050114.8596418,
-  "fp": "7007fe2c7e7f54f9b769"
+  "at": 1792057424.2169876,
+  "fp": "5cb66642c3319eecfd66"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -33,7 +33,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-13 17:44  FAILED 50247 (2): games we hold as final are no longer final on the source: 2938182",
   "2026-10-13 18:04  FAILED 50247 (3): games we hold as final are no longer final on the source: 2938182",
   "2026-10-13 18:44  FAILED 50247 (4): games we hold as final are no longer final on the source: 2938182",
   "2026-10-13 19:31  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Sarawak 43-104 Negeri Sembilan  [2938224: final 43-104 read from the live feed (the schedule page does not show it as final yet); season lines not read for 23 player(s): tried again next time]",
@@ -72,7 +71,8 @@
   "2026-10-15 15:27  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Kelantan 46-84 Sarawak  [2938227: final 46-84 read from the live feed (the schedule page does not show it as final yet); 2938227: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 46 (Kelantan))]",
   "2026-10-15 15:30  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 15:38  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Kelantan 46-84 Sarawak  [2938227: the source's box score replaces the one from the live feed]",
-  "2026-10-15 15:41  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 66-78 Pahang  [2938173: the source's box score replaces the one from the live feed]"
+  "2026-10-15 15:41  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 66-78 Pahang  [2938173: the source's box score replaces the one from the live feed]",
+  "2026-10-15 17:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 92-84 ATM  [2938176: final 92-84 read from the live feed (the schedule page does not show it as final yet); 2938176: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 92 (PDRM))]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -90,6 +90,12 @@
    "kind": "pbp",
    "next": 1792096042.201904,
    "since": 1791575455.130416
+  },
+  "2938176": {
+   "cid": "50247",
+   "kind": "box",
+   "next": 1792057914.195634,
+   "since": 1792057314.195634
   }
  },
  "rechecked": {
