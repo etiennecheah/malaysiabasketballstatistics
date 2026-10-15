@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792094964.4223206,
-  "fp": "bad037492722c863c360"
+  "at": 1792095327.7265196,
+  "fp": "48d1aa566a0df757b5bd"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -21,7 +21,7 @@
   "48654": "2026-10-16",
   "49965": "2026-10-16",
   "50247": "2026-10-16",
-  "50248": "2026-10-15"
+  "50248": "2026-10-16"
  },
  "fail": {
   "38575": {
@@ -38,11 +38,10 @@
   "48654": 1791664896.8790655,
   "49965": 1791665306.1994884,
   "50247": 1792094429.5951896,
-  "50248": 1792008021.4637306
+  "50248": 1792094989.5285058
  },
  "lines_retry": {},
  "log": [
-  "2026-10-14 15:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Sarawak 66-97 Johor",
   "2026-10-14 15:28  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Selangor 98-41 Kelantan  [2938226: final 98-41 read from the live feed (the schedule page does not show it as final yet); 2938226: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 98 (Selangor))]",
   "2026-10-14 15:38  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Selangor 98-41 Kelantan  [2938226: the source's box score replaces the one from the live feed; season lines not read for 1 player(s): tried again next time]",
   "2026-10-14 15:59  FAILED build (1): /usr/bin/python3 build_site.py",
@@ -81,7 +80,8 @@
   "2026-10-15 21:52  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 87-70 Perak  [2938177: final 87-70 read from the live feed (the schedule page does not show it as final yet); 2938177: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 87 (Negeri Sembilan))]",
   "2026-10-15 22:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 87-70 Perak  [2938177: the source's box score replaces the one from the live feed]",
   "2026-10-16 00:09  FAILED 38575 (1): /usr/bin/python3 build_data.py",
-  "2026-10-16 04:09  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 shot charts of 13 games  [rosters published for 6 of 7 teams; 2 player page(s) not published by the source now: the lines we hold are kept]"
+  "2026-10-16 04:09  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 shot charts of 13 games  [rosters published for 6 of 7 teams; 2 player page(s) not published by the source now: the lines we hold are kept]",
+  "2026-10-16 04:15  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 shot charts of 6 games"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
