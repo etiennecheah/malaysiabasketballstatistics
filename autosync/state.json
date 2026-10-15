@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792064211.4184258,
-  "fp": "106b1d5b48f05c9b37ec"
+  "at": 1792072239.7939296,
+  "fp": "eb0fe24d229f427b223c"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -28,7 +28,7 @@
    "last": 1792068020.0303416,
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 7\nrecovered: 20 box scores, 11 roster names\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 966, in <module>\n    main()\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 693, in main\n    rep = merges.apply(bb, persons, raw_boxes, pidmap, mnames)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/merges.p",
    "n": 1,
-   "next": 1792068620.0303416
+   "next": 0
   }
  },
  "full": {
