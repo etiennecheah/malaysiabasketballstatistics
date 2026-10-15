@@ -94,6 +94,7 @@ function route() {
   const hash = location.hash.replace(/^#/, '') || '/';
   const parts = hash.split('/').filter(Boolean).map(decodeURIComponent);
   const app = document.getElementById('app');
+  CREST_CID = parts[0] === 'c' ? parts[1] : null;   // an edition's own crests (EDITION_LOGO)
   let state = 'hub', cid = null, tab = '', body = '';
 
   // A profile link minted before two duplicate records were merged still points at

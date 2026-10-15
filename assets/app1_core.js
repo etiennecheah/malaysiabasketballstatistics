@@ -429,13 +429,24 @@ const TEAM_LOGO_ALIAS = {
   // (KLH) says it is the KL club
   'hornbills': 'kl-hornbills',
   'orca-basketball-team': 'orca',
+  // the 2018 Agong Cup's second Negeri Sembilan Matrix side wears the Matrix club crest
+  // the user supplied for it, not the Deers' antlers
+  'ns-matrix-2': 'matrix-basketball-club',
 };
+/* A crest that belongs to one edition only: on that competition's pages the team wears
+   it, everywhere else its usual crest or flag. In the 2018 Agong Cup Pahang (PABA) and
+   Labuan entered under their state associations' crests (user-supplied, 2026-10-15; the
+   user keeps the Labuan crest to that edition, its other teams wear the state flag). */
+const EDITION_LOGO = { '23322': { pahang: 'pahang-paba-2018', labuan: 'labuan-2018' } };
+let CREST_CID = null;   // the competition whose pages are on screen (set by route())
 // the MABA mark doubles as a crest for the selection sides above; it is the same
 // artwork the competitions use, not a second copy in the payload
 if (COMPLOGOS.maba && !LOGOS.maba) LOGOS.maba = COMPLOGOS.maba;
 // the key of the crest a name resolves to, through the alias table and squad letters
 function teamLogoKey(name) {
   const k = teamSlug(name);
+  const ed = CREST_CID && EDITION_LOGO[CREST_CID] && EDITION_LOGO[CREST_CID][k];
+  if (ed && LOGOS[ed]) return ed;
   // a squad letter or number ("The Twelve Barbary Lions A") shares the club's crest
   const base = k.replace(/-(?:a|b|1|2)$/, '');
   return [k, TEAM_LOGO_ALIAS[k], base, TEAM_LOGO_ALIAS[base]].find(x => x && LOGOS[x]) || null;
@@ -446,6 +457,7 @@ const TEAM_LOGO_DARK = { 'singapore-adroit': 1, 'est-jersey-x-rising-star': 1 };
 // and the reverse: crests drawn in black or navy ink get a white plate, so the dark
 // theme doesn't swallow them. Neither is ever repainted.
 const TEAM_LOGO_LIGHT = { 'xiamen-university': 1, 'mkyc-dragons': 1, 'ucsi-rising-star': 1, 'australia-wah-chin-kings': 1,
+  'knight-fury': 1, 'matrix-basketball-club': 1, stk: 1, 'lutong-silver-wolves-basketball-club': 1,
   maba: 1 };   // its net is drawn in black
 function crestPlate(name) {
   const k = teamLogoKey(name);

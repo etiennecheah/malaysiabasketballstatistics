@@ -1511,11 +1511,53 @@
    "note": "2026-10-12 duplicate check: Lee Thing, Shafica Khoay, Kedah"
   },
   {
-   "canonical": "1292643",
+   "canonical": "2371568",
    "aliases": [
-    "1287208"
+    "1292643",
+    "1287208",
+    "2252250",
+    "2501957"
    ],
-   "note": "2026-10-12 duplicate check: Sue Sen, Hensler Kwan (2018-19)"
+   "note": "2026-10-15: Hensler Kwan - 'Xue Sen' (2022-26), 'Sue Sen' (2018-19), 'Xue Wen' (Bina Harta Pro Cup 2024) all dob 3/10/98; 'Hensler Kwan' (Heat Challenge Cup 2025) by his rare first name. Folds the 2026-10-12 group (canonical 1292643)"
+  },
+  {
+   "canonical": "2252252",
+   "aliases": [
+    "2370343",
+    "2252278"
+   ],
+   "note": "2026-10-15: Macoumba Mouhamed / Dia Macoumba - dob 10/19/96 on both dated records; 2252278 is a second, undated registration on the same Parkcity Heat roster (shirt 7) in the Bina Harta Pro Cup 2024, so that season line is rebuilt from the box scores",
+   "rebuild": true
+  },
+  {
+   "canonical": "2799736",
+   "aliases": [
+    "2105634",
+    "2295688",
+    "2252604"
+   ],
+   "note": "2026-10-15: Quah Nian Yi, Nick - 'Nian Yin, Nick' (D-League 2023 U23), 'Nian Yi' (D-League 2024 U23), undated record in the Bina Harta Pro Cup 2024 (MBC Kirin); dob 12/3/01"
+  },
+  {
+   "canonical": "2289661",
+   "aliases": [
+    "2252258"
+   ],
+   "note": "2026-10-15: Kelvin Kho - Johor Sukma Team (Bina Harta Pro Cup, May 2024, dob 6/21/03) and Johor at SUKMA 2024"
+  },
+  {
+   "canonical": "1424960",
+   "aliases": [
+    "2252257"
+   ],
+   "note": "2026-10-15: Kelvin Tay - Johor Sukma Team (Bina Harta Pro Cup, May 2024, dob 3/23/04) and the Johor D-League U20 sides of 2023-24"
+  },
+  {
+   "canonical": "2568800",
+   "aliases": [
+    "2252565"
+   ],
+   "note": "2026-10-15: Dexter Looi - the undated MBC Kirin record in the Bina Harta Pro Cup 2024 is Looi Chee Fung, Dexter (dob 10/5/03), on the user's word"
   }
  ]
 }
