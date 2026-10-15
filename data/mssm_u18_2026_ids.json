@@ -1,5 +1,5 @@
 {
- "_note": "CBL (cbl-app.org) player ids for MSSM Penang U18 2026, keyed '<L|P><first 6 of the CBL user id>' -> this site's person id. Matched only where the name and the state team (and birth year where known) agree; a CBL player not listed here gets a new id 'cbl-<id6>'. Two players have two CBL accounts each: Labuan boys 'elvan yew jun yu' (fa78fb) / 'Elvan Yew Jun' (fbfb70), and Pulau Pinang girls 'Wong PG' (2ab68d) / 'Wong Pee Gaik' (450045).",
+ "_note": "CBL (cbl-app.org) player ids for MSSM Penang U18 2026, keyed '<L|P><first 6 of the CBL user id>' -> this site's person id. Matched only where the name and the state team (and birth year where known) agree; a CBL player not listed here gets a new id 'cbl-<id6>'. Two players have two CBL accounts each: Labuan boys 'elvan yew jun yu' (fa78fb) / 'Elvan Yew Jun' (fbfb70), and Pulau Pinang girls 'Wong PG' (2ab68d) / 'Wong Pee Gaik' (450045). Five more confirmed by the owner on 15 Oct 2026: Chong Henjo, How Yen Hsia Lauren, Stella Choo Qian Bing, Max Isaac Wong Yi Zhe, Lee Zheng Ye.",
  "same": {
   "Lfbfb70": "Lfa78fb"
  },
@@ -62,6 +62,7 @@
   "L6d47d3": "2455063",
   "L6ef4ff": "2386494",
   "L71018c": "2607647",
+  "L75558f": "2371374",
   "L75e5b9": "2615302",
   "L7610c4": "2249340",
   "L775e17": "2433799",
@@ -80,6 +81,7 @@
   "L9214a4": "2455711",
   "L93b7c5": "2455062",
   "L95c37c": "2386397",
+  "L98092b": "2386359",
   "L998c05": "2096776",
   "L9acc29": "2615345",
   "L9ba412": "2615380",
@@ -97,6 +99,7 @@
   "Lb9d9cf": "2455715",
   "Lba9f6c": "2386374",
   "Lbaa1a6": "2433839",
+  "Lbae218": "2615310",
   "Lbae880": "2615269",
   "Lbebf0a": "1900642",
   "Lbfa782": "2615308",
@@ -150,6 +153,7 @@
   "P1ea2c8": "2615730",
   "P1ed93b": "2303420",
   "P1fd0bb": "2386523",
+  "P1fe7c8": "2386645",
   "P2002d4": "2096640",
   "P2167c1": "2253546",
   "P234878": "1900356",
@@ -188,6 +192,7 @@
   "P6830e8": "2786693",
   "P6ecdd4": "1900388",
   "P705b2a": "2769171",
+  "P70fdc1": "2386601",
   "P72836a": "2096642",
   "P750dbd": "2615742",
   "P757833": "2386496",
