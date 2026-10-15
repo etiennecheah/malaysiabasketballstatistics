@@ -340,6 +340,8 @@ def comp_meta(name, games, cid_hint=None):
         series = 'Invitational'
     elif 'nxt' in low:
         series = 'NXT Championship'
+    elif 'mssm' in low:                                     # Majlis Sukan Sekolah Malaysia (schools sports council)
+        series = 'MSSM'
     elif 'sekolah' in low or 'school' in low:
         series = 'Schools Championship'
     elif 'selangor basketball league' in low or ' sbl ' in low:

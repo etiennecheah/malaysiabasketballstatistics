@@ -22,6 +22,7 @@ const CF_LIST = [
   ['u15', 'National U15 — MILO Lum Mun Chak Cup', 'National U15', 'youth'],
   ['nxt', 'NXT Championship', 'NXT', 'youth'],
   ['schools', 'Schools Championship', 'Schools', 'youth'],
+  ['mssm', 'MSSM — Majlis Sukan Sekolah Malaysia', 'MSSM', 'youth'],
   ['fiba', 'FIBA national-team events', 'FIBA', 'national'],
   ['dbc', 'Dream Ball Championship', 'DBC', 'other'],
   ['inv', 'Invitational & other tournaments', 'Invitational', 'other'],
@@ -35,6 +36,7 @@ function compFamily(c) {
   if (c.series === 'MABA/MATRIX 17 & Below') return 'u17';
   if (c.series === 'MILO Lum Mun Chak Cup') return 'u15';
   if (c.series === 'Schools Championship') return 'schools';
+  if (c.series === 'MSSM') return 'mssm';
   return compCat(c);
 }
 const isQualifier = c => /qualif/i.test(c.name || '');

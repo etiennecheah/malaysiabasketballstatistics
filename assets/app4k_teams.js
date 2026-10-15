@@ -10,7 +10,7 @@ function teamName(tid) { const t = TEAMS[tid]; return typeof t === 'string' ? t 
 
 // [key, section label, short chip label, dot colour]
 const TEAM_CATS = [
-  ['national', 'National Championships — U15 & U17', 'National U15/U17', '#c98a3b'],
+  ['national', 'National Championships — U15, U17 & MSSM U18', 'National youth', '#c98a3b'],
   ['agong', 'Agong Cup', 'Agong Cup', '#d4a63a'],
   ['matrixcup', 'MABA/MATRIX Cup', 'MATRIX Cup', '#b8793a'],
   ['sukma', 'SUKMA — Sukan Malaysia', 'SUKMA', '#d97b53'],
@@ -34,7 +34,7 @@ TEAM_CATS.forEach(([k, label, short, dot]) => { CAT_META[k] = { label, short, do
    it was filed under the invitationals before. */
 function compCat(c) {
   const s = c.series, nm = c.name || '';
-  if (s === 'MABA/MATRIX 17 & Below' || s === 'MILO Lum Mun Chak Cup') return 'national';
+  if (s === 'MABA/MATRIX 17 & Below' || s === 'MILO Lum Mun Chak Cup' || s === 'MSSM') return 'national';   // state sides
   if (s === 'Agong Cup') return 'agong';
   if (s === 'MABA/MATRIX Cup') return 'matrixcup';
   if (s === 'Sukan Malaysia') return 'sukma';
