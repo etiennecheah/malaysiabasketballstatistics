@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1792044520.0313437,
+  "at": 1792045087.0628316,
   "fp": "5987e760735705578658"
  },
  "daily": {
@@ -33,7 +33,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-12 19:33  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 75-119 Negeri Sembilan  [2938178: final 75-119 read from the live feed (the schedule page does not show it as final yet); season lines not read for 11 player(s): tried again next time]",
   "2026-10-12 21:31  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 113-69 Selangor  [2938180: final 113-69 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]",
   "2026-10-12 21:59  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-13 04:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
@@ -72,7 +71,8 @@
   "2026-10-15 04:33  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 7 teams]",
   "2026-10-15 13:48  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 66-78 Pahang  [2938173: final 66-78 read from the live feed (the schedule page does not show it as final yet); 2938173: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 66 (Selangor))]",
   "2026-10-15 13:58  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
-  "2026-10-15 14:08  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang"
+  "2026-10-15 14:08  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
+  "2026-10-15 14:18  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -94,7 +94,7 @@
   "2938173": {
    "cid": "50247",
    "kind": "box",
-   "next": 1792044996.5469553,
+   "next": 1792045602.7860644,
    "since": 1792043193.8875823
   }
  },
