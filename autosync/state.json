@@ -25,10 +25,10 @@
  },
  "fail": {
   "38575": {
-   "last": 1792064977.1659994,
+   "last": 1792065610.1051009,
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 7\nrecovered: 20 box scores, 11 roster names\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 966, in <module>\n    main()\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 693, in main\n    rep = merges.apply(bb, persons, raw_boxes, pidmap, mnames)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/merges.p",
    "n": 1,
-   "next": 1792065577.1659994
+   "next": 1792066210.1051009
   }
  },
  "full": {
@@ -41,20 +41,59 @@
  },
  "lines_retry": {
   "38575": {
-   "n": 3,
-   "next": 1792066777.1659994,
+   "n": 4,
+   "next": 1792068010.1051009,
    "pids": [
-    "271763",
-    "27510",
-    "27512",
-    "2786651",
-    "2786787",
-    "556382"
+    "107060",
+    "107079",
+    "1091411",
+    "1151920",
+    "1286739",
+    "1287254",
+    "1288341",
+    "143547",
+    "1885900",
+    "1957810",
+    "1958899",
+    "1979123",
+    "2022119",
+    "2084326",
+    "2105719",
+    "2105731",
+    "2105736",
+    "2125913",
+    "2125927",
+    "2252252",
+    "2252258",
+    "2252277",
+    "2252278",
+    "2252281",
+    "2252555",
+    "2252565",
+    "2252588",
+    "2252595",
+    "2252604",
+    "2252613",
+    "2252617",
+    "2252636",
+    "2252637",
+    "2252653",
+    "2302709",
+    "2302713",
+    "2318312",
+    "2370362",
+    "2370363",
+    "2371565",
+    "2371571",
+    "2444939",
+    "2568823",
+    "2568842",
+    "2568884",
+    "271763"
    ]
   }
  },
  "log": [
-  "2026-10-14 04:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-14 04:10  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
   "2026-10-14 11:32  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 ATM 45-94 Negeri Sembilan  [2938189: final 45-94 read from the live feed (the schedule page does not show it as final yet); season lines not read for 1 player(s): tried again next time]",
   "2026-10-14 11:41  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
@@ -93,7 +132,8 @@
   "2026-10-15 19:29  FAILED 38575 (1): /usr/bin/python3 build_data.py",
   "2026-10-15 19:35  FAILED 38575 (1): /usr/bin/python3 build_data.py",
   "2026-10-15 19:36  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 88-54 Selangor  [season lines not read for 3 player(s): tried again next time]",
-  "2026-10-15 19:59  FAILED 38575 (1): /usr/bin/python3 build_data.py"
+  "2026-10-15 19:59  FAILED 38575 (1): /usr/bin/python3 build_data.py",
+  "2026-10-15 20:10  FAILED 38575 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -111,18 +151,6 @@
    "kind": "pbp",
    "next": 1792096042.201904,
    "since": 1791575455.130416
-  },
-  "2446779": {
-   "cid": "38575",
-   "kind": "box",
-   "next": 1792065577.1659994,
-   "since": 1792064977.1659994
-  },
-  "2446785": {
-   "cid": "38575",
-   "kind": "box",
-   "next": 1792065577.1659994,
-   "since": 1792064977.1659994
   }
  },
  "rechecked": {
