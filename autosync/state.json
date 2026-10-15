@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792063096.5552003,
-  "fp": "0f612df2e5c8d5f0339a"
+  "at": 1792064211.4184258,
+  "fp": "106b1d5b48f05c9b37ec"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -46,10 +46,18 @@
    "pids": [
     "2252555"
    ]
+  },
+  "50248": {
+   "n": 1,
+   "next": 1792064727.5003579,
+   "pids": [
+    "1091869",
+    "1973906",
+    "2252625"
+   ]
   }
  },
  "log": [
-  "2026-10-13 20:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-13 21:50  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Johor 87-78 PDRM  [2938190: final 87-78 read from the live feed (the schedule page does not show it as final yet)]",
   "2026-10-14 04:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-14 04:10  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
@@ -88,7 +96,8 @@
   "2026-10-15 17:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 92-84 ATM  [2938176: final 92-84 read from the live feed (the schedule page does not show it as final yet); 2938176: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 92 (PDRM))]",
   "2026-10-15 17:53  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 92-84 ATM  [2938176: the source's box score replaces the one from the live feed]",
   "2026-10-15 19:29  FAILED 38575 (1): /usr/bin/python3 build_data.py",
-  "2026-10-15 19:35  FAILED 38575 (1): /usr/bin/python3 build_data.py"
+  "2026-10-15 19:35  FAILED 38575 (1): /usr/bin/python3 build_data.py",
+  "2026-10-15 19:36  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 88-54 Selangor  [season lines not read for 3 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
