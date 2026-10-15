@@ -529,14 +529,16 @@ function renderPlayer(pid, tab) {
   const name = PERSONS[pid];
   if (!name) return `<div class="page"><div class="card"><div class="note" style="border-top:none;">Player not found.</div></div></div>`;
   tab = PV_OLD_TAB[tab] || tab;
-  if (!PV_TABS.some(x => x[0] === tab)) tab = 'overview';
+  // the Shot map tab, for players with shots in a competition whose charts the sync reads
+  const tabs = typeof smHas === 'function' && smHas(pid) ? PV_TABS.concat([['shots', 'Shot map']]) : PV_TABS;
+  if (!tabs.some(x => x[0] === tab)) tab = 'overview';
   const d = pvData(pid);
   const t = d.tiers.find(x => x.key === heroTierFor(pid, d.tiers)) || null;
-  const body = tab === 'stats' ? pvStats(pid, d, t) : tab === 'log' ? pvLog(pid, d) : tab === 'adv' ? pvAdv(pid, d, t) : tab === 'splits' ? pvSplits(pid, d) : pvOverview(pid, d);
+  const body = tab === 'shots' ? smTab(pid) : tab === 'stats' ? pvStats(pid, d, t) : tab === 'log' ? pvLog(pid, d) : tab === 'adv' ? pvAdv(pid, d, t) : tab === 'splits' ? pvSplits(pid, d) : pvOverview(pid, d);
   return `<div class="pv">
     ${pvHero(pid, d, t)}
     <div class="page pv-page">
-      <nav class="pv-tabs" role="tablist" aria-label="Player sections">${PV_TABS.map(([k, l]) => `<a href="#/p/${pid}/${k}" class="${tab === k ? 'on' : ''}" role="tab" aria-selected="${tab === k}">${l}${k === 'log' && d.log.length ? `<span class="n">${d.log.length}</span>` : ''}</a>`).join('')}</nav>
+      <nav class="pv-tabs" role="tablist" aria-label="Player sections">${tabs.map(([k, l]) => `<a href="#/p/${pid}/${k}" class="${tab === k ? 'on' : ''}" role="tab" aria-selected="${tab === k}">${l}${k === 'log' && d.log.length ? `<span class="n">${d.log.length}</span>` : ''}</a>`).join('')}</nav>
       ${body}
     </div>
   </div>`;

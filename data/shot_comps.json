@@ -1,0 +1,4 @@
+{
+ "_note": "Competitions whose shot charts the sync reads (data/shots/<match id>.json, one file per game) for the Shot map tab on player profiles. Add a competition id here to start reading its charts; games already played are read a few per sync.",
+ "comps": ["50247", "50248"]
+}

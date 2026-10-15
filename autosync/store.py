@@ -22,6 +22,9 @@ class Store:
         npp = os.path.join(d, 'not_played.json')
         self.not_played = json.load(open(npp)) if os.path.exists(npp) else {}
         self.pbp_new = {}
+        self.shots_new = {}
+        scp = os.path.join(d, 'shot_comps.json')
+        self.shot_comps = set(json.load(open(scp)).get('comps', [])) if os.path.exists(scp) else set()
         self.queued = self._queue(d)
 
     def _queue(self, d):
@@ -55,6 +58,9 @@ class Store:
     def has_pbp(self, mid):
         return mid in self.pbp_new or os.path.exists(os.path.join(self.d, 'pbp_raw', mid + '.json'))
 
+    def has_shots(self, mid):
+        return mid in self.shots_new or os.path.exists(os.path.join(self.d, 'shots', mid + '.json'))
+
     def save(self):
         for name, obj in (('backbone.json', self.bb), ('persons.json', self.persons), ('boxscores.json', self.boxes)):
             tmp = os.path.join(self.d, name + '.tmp')
@@ -64,6 +70,11 @@ class Store:
         for mid, ev in self.pbp_new.items():
             with open(os.path.join(self.d, 'pbp_raw', mid + '.json'), 'w') as f:
                 json.dump(ev, f, ensure_ascii=False, separators=(',', ':'))
+        if self.shots_new:
+            os.makedirs(os.path.join(self.d, 'shots'), exist_ok=True)
+        for mid, sh in self.shots_new.items():
+            with open(os.path.join(self.d, 'shots', mid + '.json'), 'w') as f:
+                json.dump(sh, f, ensure_ascii=False, separators=(',', ':'))
 
 
 # ---- fixture times ------------------------------------------------------------------

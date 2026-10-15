@@ -9,6 +9,7 @@ by reading the same elements the earlier browser-side sync read (scrape_comp.js)
   leaders(html)       leaders page       -> [{cat, rows: [{pid, name, v}]}]
   pstats(html)        player statistics  -> (heads, rows)
   standings pages     every phase x pool -> {phases, tables: [{phase, pool, poolName, heads, rows}]}
+  shots(html)         shot chart page    -> [[period, pid, team id, top %, left %, 0/1 three, shot type, 0/1 made]]
 
 The fetcher identifies itself, waits between requests and never runs more than a
 few at once: the source is someone else's server.
@@ -161,6 +162,26 @@ def pbp(html):
                 s.extract()
             act = re.sub(r'^\s*,\s*', '', c.get_text()).strip()
         out.append([str(per), tm, clk, sc, num, name, act])
+    return out
+
+
+# ---- shot chart -----------------------------------------------------------------
+def shots(html):
+    """Every field-goal attempt on the shot chart page. Each is a span on a picture of the whole
+    court: style "top: T%; left: L%" places it (left runs along the court, top across), the class
+    carries the period, player, team and made/missed, the title the shot: "9, Name, 3pt jumpshot 0".
+    Turnovers and fouls are drawn there too; only titles naming 2pt or 3pt are kept."""
+    out = []
+    for e in soup(html).select('#shotchart span.sc_img'):
+        cl = ' '.join(e.get('class') or [])
+        m = re.search(r',\s*(2pt|3pt)\s+(\S+)', e.get('title') or '')
+        st = e.get('style') or ''
+        top, left = re.search(r'top:\s*(-?[\d.]+)%', st), re.search(r'left:\s*(-?[\d.]+)%', st)
+        if not m or not top or not left:
+            continue
+        g = lambda rx: (re.search(rx, cl) or [None, ''])[1]
+        out.append([int(g(r'sc_per_(\d+)') or 0), g(r'sc_pn(\d+)'), g(r'sc_tn(\d+)'), float(top.group(1)), float(left.group(1)),
+                    1 if m.group(1) == '3pt' else 0, m.group(2), 1 if re.search(r'_made\b', cl) else 0])
     return out
 
 

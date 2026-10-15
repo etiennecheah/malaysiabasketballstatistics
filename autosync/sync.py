@@ -33,6 +33,7 @@ CI = dict(num=0, name=1, min=2, pts=3, fgm=4, fga=5, twopm=7, twopa=8, tpm=10, t
           ftm=13, fta=14, oreb=16, dreb=17, ast=18, pf=19, tov=20, stl=21, blk=22, pm=23, eff=24)
 
 
+SHOTS_PER_RUN = 25  # shot chart pages read in one sync of a competition, at most
 SUM_SLACK = 3      # points the source's own player rows may miss by when its totals row agrees with the scoreboard
 
 
@@ -255,7 +256,7 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
     """
     c = st.comp(cid)
     B = source.BASE + cid + '/'
-    res = dict(changed=False, new_games=[], box_missing=[], pbp_missing=[], pbp_found=[], lines_failed=[], notes=[])
+    res = dict(changed=False, new_games=[], box_missing=[], pbp_missing=[], pbp_found=[], shots_found=[], lines_failed=[], notes=[])
     note = lambda s: (res['notes'].append(s), log('   ' + s))
 
     now = time.time() if now is None else now
@@ -332,7 +333,14 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
         out.append(k + [o[8] if o else 0])
     fx_changed = [g[0] for g in out if (ours.get(g[0]) or [None])[:8] != g[:8]]
 
-    if not need_box and not need_pbp and not fx_changed and not force and lines != 'all' and not extra_pids:
+    # shot charts, for the competitions listed in data/shot_comps.json: every finished game whose
+    # chart is not stored yet (the first runs catch up on the games played before, a few at a time)
+    need_shots = []
+    if cid in st.shot_comps:
+        need_shots = [m for m, g in theirs.items() if done(g) and m not in st.not_played and not st.has_shots(m)
+                      and (m in need_box or m in st.boxes)][:SHOTS_PER_RUN]
+
+    if not need_box and not need_pbp and not need_shots and not fx_changed and not force and lines != 'all' and not extra_pids:
         return res
 
     # ---- box scores and play-by-play of the games that need them
@@ -439,6 +447,19 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
         else:
             res['pbp_missing'].append(m)
             note('%s: play-by-play %s' % (m, 'not published yet' if not ev else 'does not reach the final score yet'))
+    for m in need_shots:
+        if m not in st.boxes:                        # its box score did not come in this time: its chart waits too
+            continue
+        try:
+            rows = source.shots(fetch(B + 'match/' + m + '/shotchart'))
+        except source.SourceError as e:
+            note('%s: shot chart page failed (%s): tried again later' % (m, getattr(e, 'status', '') or 'error'))
+            continue
+        # an empty chart may still be filled in after the game; two days on, it is taken as it is
+        if not rows and now - (tipoff(theirs[m][2]) or now) < 2 * 86400:
+            continue
+        st.shots_new[m] = {'cid': cid, 's': rows}
+        res['shots_found'].append(m)
     for g in out:
         if g[1] == 'COMPLETE' and g[0] in st.boxes:
             g[8] = 1
@@ -547,7 +568,7 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
             c['players'] = sorted(set(c['players']) | written)
 
     after = json.dumps([c['games'], c['stand'], c['lead'], c['players'], c['teams'], c['roster']], sort_keys=True)
-    res['changed'] = bool(before != after or res['new_games'] or res['pbp_found'] or lines_changed)
+    res['changed'] = bool(before != after or res['new_games'] or res['pbp_found'] or res['shots_found'] or lines_changed)
     res['fx_changed'] = fx_changed
     res['lines_changed'] = lines_changed
     return res

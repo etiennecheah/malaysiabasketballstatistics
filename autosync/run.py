@@ -25,7 +25,7 @@ from store import Store, Gate, tipoff, done, MYT   # noqa: E402
 SITE = json.load(open(os.path.join(ROOT, 'data', 'site_config.json')))['url'].rstrip('/') + '/'
 STATE = os.path.join(HERE, 'state.json')
 OUT = os.path.join(ROOT, '_site')
-BUILD = ['build_data.py', 'build_lineups.py', 'build_bpm.py', 'build_pbp.py', 'build_stats.py', 'build_site.py']
+BUILD = ['build_data.py', 'build_lineups.py', 'build_bpm.py', 'build_pbp.py', 'build_stats.py', 'build_shots.py', 'build_site.py']
 
 HOLD_BEFORE = 14 * 3600      # a run that starts this close to tip-off stays on. GitHub starts the scheduled
                              # runs only every few hours, so during a tournament a run is kept alive across
@@ -416,6 +416,8 @@ def main():
             for m in res['pbp_found']:
                 if m not in res['new_games']:
                     what.append('play-by-play of %s v %s' % (games[m][4], games[m][6]))
+            if res.get('shots_found'):
+                what.append('shot charts of %d game%s' % (len(res['shots_found']), '' if len(res['shots_found']) == 1 else 's'))
             if not what:
                 what.append('fixtures, standings or season lines updated')
             msg = 'sync: %s — %s' % (c['name'], '; '.join(what))
@@ -431,12 +433,13 @@ def main():
             except Exception as e:
                 sh('git', 'reset', '-q', check=False)                    # unstage
                 sh('git', 'checkout', '--', 'data', check=False)         # the three data files as committed
-                for m in res['pbp_found']:                               # and the play-by-play files just written
-                    if not sh('git', 'ls-files', '--', 'data/pbp_raw/%s.json' % m, check=False):
-                        try:
-                            os.remove(os.path.join(ROOT, 'data', 'pbp_raw', m + '.json'))
-                        except OSError:
-                            pass
+                for folder, mids in (('pbp_raw', res['pbp_found']), ('shots', res.get('shots_found', []))):
+                    for m in mids:                                       # and the play-by-play and shot files just written
+                        if not sh('git', 'ls-files', '--', 'data/%s/%s.json' % (folder, m), check=False):
+                            try:
+                                os.remove(os.path.join(ROOT, 'data', folder, m + '.json'))
+                            except OSError:
+                                pass
                 failed = fail_note(state, cid, e, now) or failed
                 print(str(e), file=sys.stderr)
                 save_state(state)

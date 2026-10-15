@@ -102,6 +102,18 @@ function serve(root, base) {
     if (!rows) errors.push('Stats page ' + route + ' did not fill its table');
   }
 
+  // the Shot map tab, where any competition has shot charts: it loads its file and draws the court
+  const shotPid = await page.evaluate(() => { const i = DB.shotIdx || {}; for (const c in i) { const p = Object.keys(i[c]).sort((a, b) => i[c][b] - i[c][a])[0]; if (p) return p; } return null; });
+  if (shotPid) {
+    await go('/p/' + shotPid + '/shots');
+    let ok = false;
+    for (let i = 0; i < 40 && !ok; i++) {
+      ok = await page.evaluate(() => !!document.getElementById('sm-cv') && document.querySelectorAll('.sm-zrow').length > 0);
+      if (!ok) await page.waitForTimeout(150);
+    }
+    if (!ok) errors.push('Shot map tab for player ' + shotPid + ' did not draw');
+  }
+
   for (const [cid, mid] of games) {
     await go('/c/' + cid + '/box/' + mid);
     const r = await page.evaluate(([cid, mid]) => {
