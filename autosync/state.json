@@ -46,16 +46,7 @@
   "50247": 1792094429.5951896,
   "50248": 1792094989.5285058
  },
- "lines_retry": {
-  "50247": {
-   "n": 1,
-   "next": 1792158848.6197665,
-   "pids": [
-    "2302003",
-    "2831961"
-   ]
-  }
- },
+ "lines_retry": {},
  "log": [
   "2026-10-15 15:20  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 15:27  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Kelantan 46-84 Sarawak  [2938227: final 46-84 read from the live feed (the schedule page does not show it as final yet); 2938227: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 46 (Kelantan))]",
