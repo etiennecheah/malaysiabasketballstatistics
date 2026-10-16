@@ -90,10 +90,23 @@ function renderFooter() {
 }
 
 /* ---------------------------- router ---------------------------- */
+/* Moving between the tabs of one player's profile keeps the reader where they are: the tab bar
+   is sticky, so a reader below it lands with the bar still in place and the new tab's content
+   starting just under it; a reader above it stays exactly where they were. Any other move
+   (a new page, another player) starts at the top. */
+let ROUTE_PID = null;
+function pvKeepScroll(y) {
+  const pg = document.querySelector('.pv-page'), nav = document.querySelector('.pv-tabs');
+  if (!pg || !nav) return window.scrollTo(0, 0);
+  const natural = pg.getBoundingClientRect().top + window.scrollY, stick = parseFloat(getComputedStyle(nav).top) || 0;
+  window.scrollTo(0, Math.min(y, Math.max(0, natural - stick)));
+}
 function route() {
   const hash = HS.hash().replace(/^#/, '') || '/';
   const parts = hash.split('/').filter(Boolean).map(decodeURIComponent);
   const app = document.getElementById('app');
+  const samePlayer = parts[0] === 'p' && !!parts[1] && ROUTE_PID === parts[1], keepY = window.scrollY;
+  ROUTE_PID = parts[0] === 'p' ? parts[1] : null;
   CREST_CID = parts[0] === 'c' ? parts[1] : null;   // an edition's own crests (EDITION_LOGO)
   let state = 'hub', cid = null, tab = '', body = '';
 
@@ -173,7 +186,7 @@ function route() {
   }
 
   app.innerHTML = renderNav(state, cid, tab) + body + renderFooter();
-  window.scrollTo(0, 0);
+  if (samePlayer) pvKeepScroll(keepY); else window.scrollTo(0, 0);
   wireSearch();
   if (typeof afterRender === 'function') afterRender();
   if (typeof hsApplyMeta === 'function') hsApplyMeta(HS.hash());

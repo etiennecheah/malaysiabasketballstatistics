@@ -389,7 +389,7 @@ document.addEventListener('input', e => {
 });
 
 /* post-render work: the Stats pages wire their filters and the Stats menu once the page is in place */
-function afterRender() { if (typeof statsAfterRender === 'function') statsAfterRender(); if (typeof shotsAfterRender === 'function') shotsAfterRender(); }
+function afterRender() { if (typeof statsAfterRender === 'function') statsAfterRender(); if (typeof shotsAfterRender === 'function') shotsAfterRender(); if (typeof reportAfterRender === 'function') reportAfterRender(); }
 
 HS.start();
 

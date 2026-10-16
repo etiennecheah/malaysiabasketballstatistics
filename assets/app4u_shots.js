@@ -24,7 +24,7 @@ function smLoad(url, key, st, data) {
   st[key] = 'loading';
   const s = document.createElement('script');
   s.src = HS.BASE + url;
-  const done = ok => { st[key] = ok && data[key] ? 'done' : 'error'; if (/\/shots$/.test(HS.hash())) softRoute(); };
+  const done = ok => { st[key] = ok && data[key] ? 'done' : 'error'; if (/\/(shots|report)$/.test(HS.hash())) softRoute(); };   // the Report tab reads these files too
   s.onload = () => done(true); s.onerror = () => done(false);
   document.head.appendChild(s);
 }

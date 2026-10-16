@@ -534,11 +534,13 @@ function renderPlayer(pid, tab) {
   if (!name) return `<div class="page"><div class="card"><div class="note" style="border-top:none;">Player not found.</div></div></div>`;
   tab = PV_OLD_TAB[tab] || tab;
   // the Shot map tab, for players with shots in a competition whose charts the sync reads
-  const tabs = typeof smHas === 'function' && smHas(pid) ? PV_TABS.concat([['shots', 'Shot map']]) : PV_TABS;
+  let tabs = typeof smHas === 'function' && smHas(pid) ? PV_TABS.concat([['shots', 'Shot map']]) : PV_TABS;
+  // the Report tab, for every player with a line that has minutes
+  if (typeof rpHas === 'function' && rpHas(pid)) tabs = tabs.concat([['report', 'Report']]);
   if (!tabs.some(x => x[0] === tab)) tab = 'overview';
   const d = pvData(pid);
   const t = d.tiers.find(x => x.key === heroTierFor(pid, d.tiers)) || null;
-  const body = tab === 'shots' ? smTab(pid) : tab === 'stats' ? pvStats(pid, d, t) : tab === 'log' ? pvLog(pid, d) : tab === 'adv' ? pvAdv(pid, d, t) : tab === 'splits' ? pvSplits(pid, d) : pvOverview(pid, d);
+  const body = tab === 'report' ? rpTab(pid) : tab === 'shots' ? smTab(pid) : tab === 'stats' ? pvStats(pid, d, t) : tab === 'log' ? pvLog(pid, d) : tab === 'adv' ? pvAdv(pid, d, t) : tab === 'splits' ? pvSplits(pid, d) : pvOverview(pid, d);
   return `<div class="pv">
     ${pvHero(pid, d, t)}
     <div class="page pv-page">
