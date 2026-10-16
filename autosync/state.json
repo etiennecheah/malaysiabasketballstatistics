@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792155531.512961,
-  "fp": "a021776f2351bee9ad43"
+  "at": 1792155887.7938662,
+  "fp": "c3578e4e6b4ee522acf6"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -42,7 +42,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-15 14:49  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 14:59  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 15:09  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 15:20  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
@@ -81,7 +80,8 @@
   "2026-10-16 19:00  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 78-50 Johor; shot charts of 1 game  [2938230: the source's box score replaces the one from the live feed]",
   "2026-10-16 20:05  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Johor 89-85 Perak; shot charts of 1 game  [2938181: final 89-85 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]",
   "2026-10-16 20:18  FAILED shots (2): page check failed",
-  "2026-10-16 20:58  sync: shot charts of 236 games in 9 competitions  [1312985: shot chart page failed (500): tried again later; 1312946: shot chart draws 183 attempts, the box score has 184 FGA; 1312956: shot chart draws 167 attempts, the box score has 153 FGA; 885574: shot chart page failed (500): tried again later; 885546: shot chart draws 155 attempts, the box score has 156 FGA; 885548: shot chart draws 147 attempts, the box score has 148 FGA; 885549: shot chart draws 156 attempts, the box score has 157 FGA; 886170: shot chart draws 173 attempts, the box score has 174 FGA; 886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept; 886174: shot chart draws 67 attempts, the box score has 130 FGA: not kept; 944404: shot chart draws 135 attempts, the box score has 136 FGA]"
+  "2026-10-16 20:58  sync: shot charts of 236 games in 9 competitions  [1312985: shot chart page failed (500): tried again later; 1312946: shot chart draws 183 attempts, the box score has 184 FGA; 1312956: shot chart draws 167 attempts, the box score has 153 FGA; 885574: shot chart page failed (500): tried again later; 885546: shot chart draws 155 attempts, the box score has 156 FGA; 885548: shot chart draws 147 attempts, the box score has 148 FGA; 885549: shot chart draws 156 attempts, the box score has 157 FGA; 886170: shot chart draws 173 attempts, the box score has 174 FGA; 886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept; 886174: shot chart draws 67 attempts, the box score has 130 FGA: not kept; 944404: shot chart draws 135 attempts, the box score has 136 FGA]",
+  "2026-10-16 21:04  sync: shot charts of 76 games in 4 competitions  [1069336: shot chart draws 166 attempts, the box score has 167 FGA; 1069349: shot chart page failed (500): tried again later; 1069395: shot chart draws 147 attempts, the box score has 148 FGA; 1069355: shot chart page failed (500): tried again later]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -115,6 +115,10 @@
   "21374": 1792154560.3850763,
   "21375": 1792154560.3850763,
   "22128": 1792154560.3850763,
+  "22289": 1792155557.840366,
+  "23277": 1792155557.840366,
+  "23322": 1792155557.840366,
+  "23328": 1792155557.840366,
   "25340": 1792154560.3850763,
   "25341": 1792154560.3850763,
   "25502": 1792154560.3850763,
