@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792141534.194446,
-  "fp": "6a4e69bab7688dafad99"
+  "at": 1792143574.9043548,
+  "fp": "e13abff0b0575e2e5de6"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -42,7 +42,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-14 18:34  FAILED 50247 (1): games we hold as final are no longer final on the source: 2938180",
   "2026-10-14 23:28  FAILED 50247 (2): games we hold as final are no longer final on the source: 2938180",
   "2026-10-14 23:49  FAILED 50247 (3): games we hold as final are no longer final on the source: 2938180",
   "2026-10-15 00:29  FAILED 50247 (4): games we hold as final are no longer final on the source: 2938180",
@@ -81,7 +80,8 @@
   "2026-10-16 15:42  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 74-73 ATM  [2938179: final 74-73 read from the live feed (the schedule page does not show it as final yet); 2938179: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 74 (Selangor))]",
   "2026-10-16 15:53  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v ATM; shot charts of 1 game",
   "2026-10-16 16:05  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 74-73 ATM  [2938179: the source's box score replaces the one from the live feed]",
-  "2026-10-16 17:05  sync: shot charts of 239 games in 6 competitions  [2838272: shot chart draws 174 attempts, the box score has 175 FGA; 2856605: shot chart draws 173 attempts, the box score has 174 FGA; 2856594: shot chart draws 163 attempts, the box score has 164 FGA; 2306717: shot chart draws 189 attempts, the box score has 190 FGA; 2870984: shot chart page failed (500): tried again later]"
+  "2026-10-16 17:05  sync: shot charts of 239 games in 6 competitions  [2838272: shot chart draws 174 attempts, the box score has 175 FGA; 2856605: shot chart draws 173 attempts, the box score has 174 FGA; 2856594: shot chart draws 163 attempts, the box score has 164 FGA; 2306717: shot chart draws 189 attempts, the box score has 190 FGA; 2870984: shot chart page failed (500): tried again later]",
+  "2026-10-16 17:39  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 78-50 Johor  [2938230: final 78-50 read from the live feed (the schedule page does not show it as final yet); 2938230: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 78 (Negeri Sembilan))]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -99,6 +99,12 @@
    "kind": "pbp",
    "next": 1792182466.2889595,
    "since": 1791575455.130416
+  },
+  "2938230": {
+   "cid": "50248",
+   "kind": "box",
+   "next": 1792144022.9860797,
+   "since": 1792143422.9860797
   }
  },
  "rechecked": {
