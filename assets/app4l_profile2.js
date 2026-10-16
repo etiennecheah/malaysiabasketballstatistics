@@ -267,13 +267,15 @@ function pvPath(d) {
     if (isQ(r)) return r.short + ' qualifier';
     return sib.filter(x => !isQ(x)).length > 1 ? (ownName(r.c) || r.short) : r.short;
   };
-  const lines = (champ, awards, placing) => {
+  const lines = (champ, awards, placing, stat) => {
     const gold = [champ ? '★ Champion' : ''].concat(awards.filter(a => /MVP/.test(a)).map(a => '★ ' + a)).filter(Boolean);
-    return (gold.length ? `<div class="st">${gold.join('<br>')}</div>` : '') + (placing ? `<div class="pl">◆ ${esc(placing)}</div>` : '') + awards.filter(a => !/MVP/.test(a)).map(a => pvMedalCls(a) ? `<div class="md ${pvMedalCls(a)}">● ${esc(a)}</div>` : `<div class="aw">${esc(a)}</div>`).join('');
+    return (gold.length ? `<div class="st">${gold.join('<br>')}</div>` : '') + (placing ? `<div class="pl">◆ ${esc(placing)}</div>` : '') + awards.filter(a => !/MVP/.test(a)).map(a => pvMedalCls(a) ? `<div class="md ${pvMedalCls(a)}">● ${esc(a)}</div>` : `<div class="aw">${esc(a)}</div>`).join('')
+      // a hand-kept line for an event outside the database (e.g. "24.4 points per game · 5 games")
+      + (stat ? `<div class="pl pv-hstat">${esc(stat)}</div>` : '');
   };
   const item = x => {
     if (x.m) return `<div class="it abroad">${crest(x.m.team, 18)}<span>${esc(x.m.team)}</span></div><div class="aw lg">↗ ${esc(x.m.league)} · signed</div>`;
-    if (x.h) return `<div class="it ${x.h.champ ? 'win' : ''}" ${x.h.team ? `title="${esc(pvCase(x.h.team))}"` : ''}>${pvMark(x.h, 18)}<span>${x.h.cid ? `<a href="#/c/${x.h.cid}">${esc(x.h.short)}</a>` : esc(x.h.short)}</span></div>${x.h.pathOnly && x.h.team ? `<div class="tm">${esc(pvCase(x.h.team))}</div>` : ''}${lines(x.h.champ, x.h.awards, x.h.placing)}`;
+    if (x.h) return `<div class="it ${x.h.champ ? 'win' : ''}" ${x.h.team ? `title="${esc(pvCase(x.h.team))}"` : ''}>${pvMark(x.h, 18)}<span>${x.h.cid ? `<a href="#/c/${x.h.cid}">${esc(x.h.short)}</a>` : esc(x.h.short)}</span></div>${x.h.pathOnly && x.h.team ? `<div class="tm">${esc(pvCase(x.h.team))}</div>` : ''}${lines(x.h.champ, x.h.awards, x.h.placing, x.h.stat)}`;
     // a path-only honour of the same event (a runner-up finish typed in before the event was
     // imported) belongs on this entry, not beside it as a second one
     const r = x.r, h = pvHonOf(d, r), ph = d.pathHon.find(p => p.cid === r.c.id), win = d.isTitle(r) || (h && h.champ);
