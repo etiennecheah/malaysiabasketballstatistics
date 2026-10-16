@@ -31,10 +31,10 @@
    "next": 0
   },
   "shots": {
-   "last": 1792147831.0700762,
+   "last": 1792152368.6749573,
    "msg": "page check failed\npage check: Home 6 result tiles, 101 competitions, Games 5 cards, Players 24 cards, 0 new game(s)\nPAGE CHECK FAILED\n  Shot map tab for player 0 did not draw\n",
-   "n": 1,
-   "next": 1792148431.0700762
+   "n": 2,
+   "next": 1792153568.6749573
   }
  },
  "full": {
@@ -57,7 +57,6 @@
   }
  },
  "log": [
-  "2026-10-15 14:28  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 14:39  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 14:49  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 14:59  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
@@ -96,7 +95,8 @@
   "2026-10-16 18:50  sync: shot charts of 240 games in 13 competitions  [2860431: shot chart draws 133 attempts, the box score has 134 FGA]",
   "2026-10-16 18:57  FAILED shots (1): page check failed",
   "2026-10-16 19:00  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 78-50 Johor; shot charts of 1 game  [2938230: the source's box score replaces the one from the live feed]",
-  "2026-10-16 20:05  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Johor 89-85 Perak; shot charts of 1 game  [2938181: final 89-85 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]"
+  "2026-10-16 20:05  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Johor 89-85 Perak; shot charts of 1 game  [2938181: final 89-85 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]",
+  "2026-10-16 20:18  FAILED shots (2): page check failed"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -126,21 +126,21 @@
   "2938174": "50247"
  },
  "shots_at": {
-  "17827": 1792147831.0700762,
+  "17827": 1792152368.6749573,
   "26561": 1792147425.7033217,
   "34194": 1792146613.8550475,
   "34198": 1792146613.8550475,
-  "34525": 1792147831.0700762,
+  "34525": 1792152368.6749573,
   "34659": 1792147425.7033217,
-  "34660": 1792147831.0700762,
+  "34660": 1792152368.6749573,
   "35104": 1792145848.872564,
-  "35135": 1792147831.0700762,
-  "35136": 1792147831.0700762,
+  "35135": 1792152368.6749573,
+  "35136": 1792152368.6749573,
   "35296": 1792144911.6393926,
   "35297": 1792144911.6393926,
   "35879": 1792146613.8550475,
   "35880": 1792147019.264793,
-  "36542": 1792147831.0700762,
+  "36542": 1792152368.6749573,
   "36657": 1792147425.7033217,
   "36796": 1792140479.4340196,
   "36797": 1792140479.4340196,
@@ -151,7 +151,7 @@
   "37621": 1792145848.872564,
   "37683": 1792144338.9522195,
   "37684": 1792144338.9522195,
-  "37771": 1792147831.0700762,
+  "37771": 1792152368.6749573,
   "38334": 1792147019.264793,
   "38335": 1792147019.264793,
   "38532": 1792144338.9522195,
@@ -178,8 +178,8 @@
   "41592": 1792147019.264793,
   "41593": 1792147019.264793,
   "42425": 1792145848.872564,
-  "47362": 1792147831.0700762,
-  "47363": 1792147831.0700762,
+  "47362": 1792152368.6749573,
+  "47363": 1792152368.6749573,
   "47556": 1792147019.264793,
   "47557": 1792147019.264793,
   "47558": 1792143598.5937526,
@@ -199,7 +199,7 @@
   "49645": 1792147425.7033217,
   "49646": 1792147425.7033217,
   "49683": 1792147425.7033217,
-  "49965": 1792147831.0700762,
+  "49965": 1792152368.6749573,
   "50248": 1792147831.0700762
  }
 }
