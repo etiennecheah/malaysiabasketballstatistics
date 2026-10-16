@@ -103,7 +103,7 @@ function serve(root, base) {
   }
 
   // the Shot map tab, where any competition has shot charts: it loads its file and draws the court
-  const shotPid = await page.evaluate(() => String(DB.shotIdx || '').split(',').filter(Boolean)[0] || null);
+  const shotPid = await page.evaluate(() => String(DB.shotIdx || '').split(',').filter(p => p && PERSONS[p])[0] || null);
   if (shotPid) {
     await go('/p/' + shotPid + '/shots');
     let ok = false;

@@ -59,6 +59,7 @@ def zone(x, y, three):
 def main():
     site = json.load(open(os.path.join(D, 'site_data.json')))
     alias = site.get('palias', {})
+    persons = site.get('persons', {})
     comps = {c['id']: c for c in site['comps']}
     by = {}
     for f in sorted(glob.glob(os.path.join(D, 'shots', '*.json'))):
@@ -79,9 +80,9 @@ def main():
                 a = Z.setdefault(z, [0, 0]); a[0] += 1; a[1] += made
                 k = '%d,%d' % (math.floor((x + 7.5) / 0.5), math.floor((y + RIM) / 0.5))
                 a = grid.setdefault(k, [0, 0]); a[0] += 1; a[1] += made
-                if not pid:
-                    continue
                 pid = alias.get(pid, pid)
+                if pid not in persons:       # the chart's "player 0" (team shots) or a name the site does not list
+                    continue
                 pl = players.setdefault(pid, {'T': [], 'M': [], 'E': {}})
                 if typ not in pl['T']:
                     pl['T'].append(typ)

@@ -131,7 +131,11 @@ def plan(st, state, now):
             # a competition added with its teams and rosters but no fixtures yet: the first
             # pass reads everything the source has (fixtures, every box score and play-by-play,
             # standings, leaders, season lines), whatever the date and however old the event
-            if state['daily'].get(cid) != today.strftime('%Y-%m-%d'):
+            # a failed first import is tried again when its back-off ends (or right after a bundle
+            # is unpacked, which sets that to now), not only the next day: the daily mark is set
+            # before the build, so a build that failed would otherwise wait until tomorrow
+            f = state['fail'].get(cid)
+            if state['daily'].get(cid) != today.strftime('%Y-%m-%d') or (f and f.get('next', 0) <= now):
                 P['daily'].append(cid)
             continue
         last = max([t for t in (tipoff(g[2]) for g in c['games'] if g[1] == 'COMPLETE') if t] or [0])
