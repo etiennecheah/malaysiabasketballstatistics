@@ -3626,6 +3626,49 @@
   .sm-method summary{ cursor:pointer; font-weight:600; font-size:14px; }
   .sm-method p{ font-size:12.5px; color:var(--text-faint); margin:8px 0 0; }
   @media (max-width:560px){ .sm-tiles b{ font-size:20px; } .sm-badge{ display:none; } .sm-explain{ padding:14px; } .sm-side{ grid-template-columns:1fr; } }
+  /* the 3D terrain (app4w_shot3d.js): one WebGL canvas moved into each render, camera buttons over it,
+     and the replay bar under the stage */
+  .sm-left:has(.sm3-replay){ position:static; }
+  .sm-3d{ position:relative; aspect-ratio:16/10.5; min-height:320px; outline:none; color:#eef2f8; }
+  .sm-3d:focus-visible{ box-shadow:inset 0 0 0 3px var(--accent); }
+  .sm-3d .sm3-cv{ position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; cursor:grab; }
+  .sm-3d .sm3-cv.grabbing{ cursor:grabbing; }
+  .sm-3d-wait{ display:grid; place-items:center; color:#9aa6bd; font-size:13px; }
+  .sm3-ctl{ position:absolute; right:12px; top:12px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; z-index:2; }
+  .sm3-row{ display:flex; gap:3px; background:rgba(10,15,26,.72); border:1px solid rgba(120,140,180,.25); border-radius:10px; padding:4px; }
+  .sm3-row button{ all:unset; cursor:pointer; font-size:12px; font-weight:600; color:#9aa6bd; padding:5px 9px; border-radius:7px; white-space:nowrap; }
+  .sm3-row button:hover{ color:#eef2f8; background:rgba(255,255,255,.06); }
+  .sm3-row button[aria-pressed="true"]{ color:#eef2f8; background:rgba(255,255,255,.13); }
+  .sm3-row button:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+  .sm3-h{ display:flex; align-items:center; gap:8px; font-size:12px; color:#9aa6bd; background:rgba(10,15,26,.72); border:1px solid rgba(120,140,180,.25); border-radius:10px; padding:6px 10px; }
+  .sm3-h input{ width:92px; accent-color:#ff2e58; }
+  .sm3-help{ position:absolute; left:12px; bottom:12px; font-size:12px; color:#9aa6bd; background:rgba(10,15,26,.6); border-radius:8px; padding:5px 9px; pointer-events:none; }
+  .sm3-replay{ display:flex; align-items:center; gap:12px 14px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:12px 14px; flex-wrap:wrap; }
+  .sm3-play{ all:unset; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; background:var(--text); color:var(--surface); font-weight:700; font-size:13.5px; border-radius:999px; padding:9px 16px; min-width:86px; white-space:nowrap; }
+  .sm3-play svg{ width:12px; height:12px; fill:currentColor; flex:none; }
+  .sm3-play:focus-visible, .sm3-speed button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .sm3-mid{ flex:1 1 300px; min-width:0; display:flex; flex-direction:column; gap:5px; }
+  .sm3-line{ display:flex; justify-content:space-between; align-items:baseline; gap:4px 12px; flex-wrap:wrap; font-size:12.5px; color:var(--text-muted); }
+  .sm3-line b{ color:var(--text); font-weight:600; }
+  .sm3-line .num{ font-variant-numeric:tabular-nums; }
+  .sm3-mid input[type=range]{ width:100%; margin:2px 0 0; accent-color:var(--text); }
+  .sm3-strip{ display:flex; gap:2px; margin:0 8px; height:18px; }
+  .sm3-strip span{ min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; font-size:10.5px; line-height:18px; padding:0 5px; color:var(--text-muted); background:var(--surface-alt); border-radius:4px; }
+  .sm3-strip span.on{ color:var(--text); font-weight:600; box-shadow:inset 0 -2px 0 var(--text); }
+  .sm3-last{ display:flex; align-items:center; gap:7px; min-height:19px; font-size:12.5px; color:var(--text-muted); }
+  .sm3-last b{ color:var(--text); font-weight:600; }
+  .sm3-last i{ width:10px; height:10px; border-radius:50%; flex:none; position:relative; }
+  .sm3-last i.m{ background:#ff3d64; }
+  .sm3-last i.x::before, .sm3-last i.x::after{ content:""; position:absolute; left:4px; top:-1px; width:2.5px; height:12px; background:#4b86c8; border-radius:1px; transform:rotate(45deg); }
+  .sm3-last i.x::after{ transform:rotate(-45deg); }
+  .sm3-speed{ display:flex; align-items:center; gap:2px; border:1px solid var(--border); border-radius:10px; padding:3px; }
+  .sm3-speed span{ font-size:11.5px; color:var(--text-faint); padding:0 6px 0 4px; }
+  .sm3-speed button{ all:unset; cursor:pointer; font-size:12.5px; font-weight:600; color:var(--text-muted); padding:4px 8px; border-radius:7px; font-variant-numeric:tabular-nums; }
+  .sm3-speed button[aria-pressed="true"]{ background:var(--text); color:var(--surface); }
+  @media (max-width:900px){ .sm-3d{ aspect-ratio:4/3; } }
+  .sm-pick{ max-width:100%; min-width:0; }
+  .sm-pick select{ min-width:0; flex:1 1 auto; text-overflow:ellipsis; }
+  @media (max-width:560px){ .sm-3d{ aspect-ratio:4/5; min-height:380px; } .sm3-help, .sm3-h{ display:none; } .sm3-row button{ padding:5px 7px; } }
 
 /* ===========================================================================
    Report tab (app4v_report.js). Levels are an ordinal violet ramp (youth ->

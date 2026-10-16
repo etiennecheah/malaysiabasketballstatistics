@@ -108,7 +108,7 @@ function serve(root, base) {
     await go('/p/' + shotPid + '/shots');
     let ok = false;
     for (let i = 0; i < 80 && !ok; i++) {           // a career map loads his file and every event's averages
-      ok = await page.evaluate(() => !!document.getElementById('sm-cv') && document.querySelectorAll('.sm-zrow').length > 0);
+      ok = await page.evaluate(() => !!(document.getElementById('sm-cv') || document.querySelector('#sm-3d canvas')) && document.querySelectorAll('.sm-zrow').length > 0);
       if (!ok) await page.waitForTimeout(150);
     }
     if (!ok) errors.push('Shot map tab for player ' + shotPid + ' did not draw');

@@ -9,7 +9,7 @@ D = os.path.join(R, 'data')
 PARTS = ['app0_router.js', 'app1_core.js', 'app2_nav.js', 'app3_comp.js', 'app3b_family.js', 'app4_players.js',
          'app4b_profile.js', 'app4c_impact.js', 'app4d_radar.js', 'app4e_compare.js',
          'app4f_bpm.js', 'app4g_formulas.js', 'app4h_videos.js', 'app4i_games.js',
-         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app4u_shots.js', 'app4v_report.js', 'app5_rest.js']
+         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app4u_shots.js', 'app4w_shot3d.js', 'app4v_report.js', 'app5_rest.js']
 
 NEWS_TYPES = ('signing', 'transfer', 'departure', 'injury', 'return', 'retirement', 'national', 'other')
 
@@ -338,6 +338,11 @@ def write_site(payload, css):
     for f in ('og.png', 'favicon.png'):
         if os.path.exists(os.path.join(A, f)):
             shutil.copy(os.path.join(A, f), os.path.join(out, f))
+    # three.js for the 3D shot map, fetched by app4w_shot3d.js only when that view first opens
+    # (the version is in the name, so it is cached for good)
+    vendor = os.path.join(A, 'vendor')
+    if os.path.isdir(vendor):
+        shutil.copytree(vendor, os.path.join(out, 'vendor'))
     verify = ('<meta name="google-site-verification" content="%s">\n' % html_esc(cfg['google_verification'])) if cfg.get('google_verification') else ''
     shell = SHELL.format(base=base, site=url, css=css_url, db=db_url, js=js_url, verify=verify)
     tmp = os.path.join(D, 'shell.tmp')

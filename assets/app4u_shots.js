@@ -108,15 +108,18 @@ function smSummary(list) {
 function smGames(pid, cid) {
   const d = SHP_DATA[pid]; if (!d || !d.E[cid]) return [];
   const mids = [...new Set(d.E[cid].map(s => d.M[s[5]]))];
-  return mids.map(mid => {
-    const g = GAME_BY_MID[mid]; if (!g) return {mid, label: mid, date: ''};
-    const b = typeof getBox === 'function' ? getBox(mid) : null;
-    const row = b && b.p.find(r => r.pid === pid);
-    const home = row ? row.team === g.h : true;
-    const opp = home ? g.a : g.h, my = home ? g.hs : g.as, their = home ? g.as : g.hs;
-    const res = my !== '' && my != null ? (+my > +their ? 'W ' : +my < +their ? 'L ' : '') + my + '–' + their : '';
-    return {mid, date: g.date || '', label: (g.date ? fmtDateShort(g.date) : '') + ' v ' + (typeof teamDisplay === 'function' ? teamDisplay(opp) : opp) + (res ? ' · ' + res : '')};
-  }).sort((p, q) => p.date.localeCompare(q.date));
+  return mids.map(mid => smGameInfo(pid, mid)).sort((p, q) => p.date.localeCompare(q.date));
+}
+// one game from his side: the date, the opponent and his team's result
+function smGameInfo(pid, mid) {
+  const g = GAME_BY_MID[mid]; if (!g) return {mid, label: mid, long: mid, date: ''};
+  const b = typeof getBox === 'function' ? getBox(mid) : null;
+  const row = b && b.p.find(r => r.pid === pid);
+  const home = row ? row.team === g.h : true;
+  const opp = home ? g.a : g.h, my = home ? g.hs : g.as, their = home ? g.as : g.hs;
+  const res = my !== '' && my != null ? (+my > +their ? 'W ' : +my < +their ? 'L ' : '') + my + '–' + their : '';
+  const vs = ' v ' + (typeof teamDisplay === 'function' ? teamDisplay(opp) : opp) + (res ? ' · ' + res : '');
+  return {mid, date: g.date || '', label: (g.date ? fmtDateShort(g.date) : '') + vs, long: (g.date ? fmtDate(g.date) : '') + vs};
 }
 
 /* -------------------------------------------------------------- tab */
@@ -148,6 +151,8 @@ function smTab(pid) {
   const games = SM.ev !== 'all' ? smGames(pid, SM.ev) : [];
   if (SM.game !== 'all' && !games.some(g => g.mid === SM.game)) SM.game = 'all';
   const list = smShots(), sm = smSummary(list), mix = SM.mix = smMixLZ(list, cids);
+  if (SM.view === 'terrain' && typeof sm3dEnsure === 'function') sm3dEnsure();
+  const three = SM.view === 'terrain' && typeof sm3dStage === 'function' ? sm3dStage() : '';
   if (!SM.zone || !sm.byZ[SM.zone]) SM.zone = Object.entries(sm.byZ).sort((p, q) => q[1][0] - p[1][0])[0]?.[0] || 'PT';
   const fg = sm.a ? sm.m / sm.a : 0, LZ = mix.LZ;
   const nGames = new Set(list.map(s => s.mid)).size;
@@ -155,21 +160,22 @@ function smTab(pid) {
   const avgName = cids.length > 1 ? 'the same events' : 'this event';
   const views = [['terrain', '3D terrain'], ['zones', 'Zones'], ['shots', 'Every shot']];
   const note = {
-    terrain: `Colour: his shooting compared with the average from the same spot in ${avgName}. Height: how often he shoots there.`,
+    terrain: `Colour: his shooting compared with the average from the same spot in ${avgName}. Height: how often he shoots there.${three && sm3dReady() ? ' Drag to turn the court; Play throws every shot, oldest first.' : ''}`,
     zones: `His FG% in each zone, coloured against the average for that zone in ${avgName}. Grey zones: no attempts.`,
-    shots: 'Every attempt where it was taken. Filled circle: made. Cross: missed.'}[SM.view];
+    shots: 'Every attempt where it was taken, with the hoop at its real height. Filled circle: made. Cross: missed.'}[SM.view];
   const rows = Object.entries(sm.byZ).sort((p, q) => q[1][0] - p[1][0] || q[1][1] - p[1][1]);
   const body = `${scopeBar}
   <div class="sm">
     <div class="sm-left">
       <div class="sm-views" role="group" aria-label="Chart style">${views.map(([k, l]) => `<button data-smv="${k}" aria-pressed="${SM.view === k}">${l}</button>`).join('')}</div>
       <div class="sm-stage">
-        <canvas id="sm-cv" width="1440" height="880" role="img" aria-label="Shot map"></canvas>
-        <canvas id="sm-ov" class="sm-ov" width="1440" height="880" aria-hidden="true"></canvas>
+        ${three || `<canvas id="sm-cv" width="1440" height="880" role="img" aria-label="Shot map"></canvas>
+        <canvas id="sm-ov" class="sm-ov" width="1440" height="880" aria-hidden="true"></canvas>`}
         <div class="sm-badge"><span>${esc(SM.game === 'all' ? where : (games.find(g => g.mid === SM.game) || {}).label || '')}${SM.game === 'all' ? ` · ${cids.length > 1 ? cids.length + ' events, ' : ''}${nGames} game${nGames === 1 ? '' : 's'}` : ''}</span><b>${sm.m}/${sm.a} FG</b></div>
         <div class="sm-tip" id="sm-tip" hidden></div>
         ${games.length > 1 ? `<div class="sm-chips" role="group" aria-label="Games"><button data-smg="all" aria-pressed="${SM.game === 'all'}">All games</button>${games.map(g => `<button data-smg="${g.mid}" aria-pressed="${SM.game === g.mid}">${esc(g.label)}</button>`).join('')}</div>` : ''}
       </div>
+      ${three ? sm3dBar() : ''}
       ${SM.view !== 'shots' ? `<div class="sm-legend" aria-label="Colour scale">Below average <i style="background:#1f8fff"></i><i style="background:#4b86c8"></i><i style="background:#6c7486"></i><i style="background:#c2507a"></i><i style="background:#ff2e58"></i> Above average</div>` : ''}
       <div class="sm-note">${note}</div>
       <div class="sm-tiles">
@@ -196,6 +202,7 @@ function smTab(pid) {
         <p><b>The average.</b> Each shot is compared with the event it was taken in: ${cids.map(c => `${esc(smShort(c))} (${SH_DATA[c].n.toLocaleString('en')} shots in ${SH_DATA[c].g} game${SH_DATA[c].g === 1 ? '' : 's'})`).join(', ')}. A career map that mixes a U20 league with the Agong Cup therefore never holds a U20 shot to a senior average, or the other way round.</p>
         <p><b>Zones.</b> Two or three points is the source's own label. Corner 3 = within about 3.1 m of the baseline; top of the arc = between the lane lines extended. Left and right are from the shooter's view, facing the basket.</p>
         <p><b>Terrain.</b> His makes are smoothed over about 1.6 m and pulled toward the average where he has few shots. Expected FG% = what an average shooter in the same events would make from his spots.</p>
+        <p><b>Replay.</b> Games play in date order and, within a game, by quarter, then in the order of the game's shot chart. The map and the numbers beside it count only the shots that have landed so far.</p>
       </details>
     </aside>
   </div>`;
@@ -430,11 +437,32 @@ function smDrawShots(g, list) {
     else { g.strokeStyle = '#7fc0ff'; g.lineWidth = 4.5; g.beginPath(); g.moveTo(px - r * .75, py - r * .75); g.lineTo(px + r * .75, py + r * .75); g.moveTo(px + r * .75, py - r * .75); g.lineTo(px - r * .75, py + r * .75); g.stroke(); }
   }
   g.globalAlpha = 1;
+  smDrawHoop(g);
   g.font = '600 26px Archivo, system-ui, sans-serif';
   g.fillStyle = '#ff3d64'; g.beginPath(); g.arc(46, SM_H - 44, 12, 0, Math.PI * 2); g.fill();
   g.fillStyle = '#c9d3e6'; g.fillText('Made', 68, SM_H - 35);
   g.strokeStyle = '#7fc0ff'; g.lineWidth = 4.5; g.beginPath(); g.moveTo(160, SM_H - 53); g.lineTo(178, SM_H - 35); g.moveTo(178, SM_H - 53); g.lineTo(160, SM_H - 35); g.stroke();
   g.fillText('Missed', 190, SM_H - 35);
+}
+/* the basket over the Every-shot map, at its real height: rim 3.05 m above the floor, 1.575 m in from
+   the baseline; the board 1.8 x 1.05 m, 1.2 m in; the post behind the baseline. Drawn over the shots,
+   see-through, so a shot under the rim still shows. */
+function smDrawHoop(g) {
+  const P = smProj, line = (pts, w, c) => { g.beginPath(); pts.forEach(([a, b], k) => k ? g.lineTo(a, b) : g.moveTo(a, b)); g.lineWidth = w; g.strokeStyle = c; g.stroke(); };
+  const circ = (r, z, n = 36) => { const o = []; for (let k = 0; k <= n; k++) { const a = k / n * Math.PI * 2; o.push(P(r * Math.cos(a), SM_RIM + r * Math.sin(a), z)); } return o; };
+  g.lineJoin = 'round'; g.lineCap = 'round';
+  const sh = circ(0.3, 0); g.beginPath(); sh.forEach(([a, b], k) => k ? g.lineTo(a, b) : g.moveTo(a, b)); g.fillStyle = 'rgba(0,0,0,.28)'; g.fill();   // its shadow on the floor
+  line([P(0, -0.9, 0), P(0, -0.9, 3.45)], 9, 'rgba(201,211,230,.55)');                           // post
+  line([P(0, -0.9, 3.45), P(0, 1.2, 3.45)], 6, 'rgba(201,211,230,.55)');                         // arm
+  const bd = [P(-0.9, 1.2, 2.9), P(0.9, 1.2, 2.9), P(0.9, 1.2, 3.95), P(-0.9, 1.2, 3.95)];       // board
+  g.beginPath(); bd.forEach(([a, b], k) => k ? g.lineTo(a, b) : g.moveTo(a, b)); g.closePath(); g.fillStyle = 'rgba(207,224,255,.12)'; g.fill();
+  g.lineWidth = 3; g.strokeStyle = 'rgba(230,236,247,.9)'; g.stroke();
+  line([P(-0.295, 1.2, 3.05), P(-0.295, 1.2, 3.5), P(0.295, 1.2, 3.5), P(0.295, 1.2, 3.05), P(-0.295, 1.2, 3.05)], 2.5, 'rgba(230,236,247,.9)');
+  line([P(0, 1.2, 3.05), P(0, SM_RIM - 0.225, 3.05)], 4, '#f08a3c');                              // bracket
+  const top = circ(0.225, 3.05, 16), low = circ(0.14, 2.65, 16);                                  // net
+  for (let k = 0; k < 16; k++) { line([top[k], low[(k + 1) % 16]], 1.6, 'rgba(255,255,255,.5)'); line([top[k], low[(k + 15) % 16]], 1.6, 'rgba(255,255,255,.5)'); }
+  line(low, 1.6, 'rgba(255,255,255,.5)');
+  line(circ(0.225, 3.05), 7, 'rgba(8,12,20,.6)'); line(circ(0.225, 3.05), 4.5, '#f08a3c');         // rim
 }
 function smDrawZones(g, list) {
   const LZ = SM.mix.LZ, sm = smSummary(list), step = 0.1;
@@ -472,8 +500,10 @@ function smSetZone(z) {
   SM.zone = z; smDraw();
   document.querySelectorAll('.sm-zrow').forEach(r => r.classList.toggle('on', r.dataset.smz === z));
   const el = document.getElementById('sm-zone');
-  if (el && SM.mix) el.innerHTML = smZonePanel(smShots());
+  if (el && SM.mix) el.innerHTML = smZonePanel(smLive());
 }
+// the shots the numbers show: mid-replay, only those that have landed
+const smLive = () => (typeof sm3dLive === 'function' && sm3dLive()) || smShots();
 /* Where the pointer is: a marker on its own canvas over the map, so moving it never redraws the
    terrain. On the terrain it sits on the surface itself: a ring of 1 m (the "within 1 m of here"
    count in the hover box) draped over the peaks, a puck at the point, and a dashed stem down to its
@@ -516,7 +546,12 @@ function smPointer(ev) {
   const [x, d] = SM.view === 'zones' ? smUnflat(sx, sy) : SM.view === 'terrain' ? smUnprojSurface(sx, sy) : smUnproj(sx, sy);
   if (x < -7.5 || x > 7.5 || d < 0 || d > 11.5) { tip.hidden = true; smMarker(null); return; }
   smMarker([x, d]);
-  const z = smZoneAt(x, d), list = smShots();
+  smHover(ev, x, d, smShots());
+}
+// the hover box for a floor point (the 2D maps and the 3D terrain)
+function smHover(ev, x, d, list) {
+  const tip = document.getElementById('sm-tip'); if (!tip) return;
+  const z = smZoneAt(x, d);
   smSetZone(z);
   const zs = list.filter(s => s.z === z), a = zs.length, m = zs.reduce((t, s) => t + s.made, 0);
   const near = list.filter(s => Math.hypot(s.x - x, s.y + SM_RIM - d) <= 1.0), nm = near.reduce((t, s) => t + s.made, 0);
@@ -528,13 +563,16 @@ function smPointer(ev) {
     ${a ? `<div class="sm-tr"><span>Versus average</span><b class="${df > 0.02 ? 'pos' : df < -0.02 ? 'neg' : 'flat'}">${smDiff(df)}</b></div>` : ''}
     <div class="sm-tr"><span>Within 1 m of here</span><b>${near.length ? nm + '/' + near.length : 'none'}</b></div>`;
   tip.hidden = false;
-  const st = cv.parentElement.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+  const st = tip.parentElement.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+  const map = document.getElementById('sm-cv') || document.getElementById('sm-3d'), mh = map ? map.offsetHeight : st.height;
   let left = ev.clientX - st.left + 16, top = ev.clientY - st.top + 16;
   if (left + tw > st.width - 8) left = ev.clientX - st.left - tw - 16;
-  if (top + th > cv.offsetHeight - 4) top = ev.clientY - st.top - th - 16;
+  if (top + th > mh - 4) top = ev.clientY - st.top - th - 16;
   tip.style.left = Math.max(8, left) + 'px'; tip.style.top = Math.max(8, top) + 'px';
 }
 function shotsAfterRender() {
+  if (document.getElementById('sm-3d') && typeof sm3dMount === 'function') { sm3dMount(); return; }
+  if (typeof SM3 !== 'undefined' && SM3.play.on) sm3dStop();
   const cv = document.getElementById('sm-cv'); if (!cv) return;
   smDraw();
   cv.addEventListener('pointermove', smPointer);
