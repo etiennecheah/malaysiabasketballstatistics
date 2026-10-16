@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792144883.781906,
-  "fp": "83d763849a366db0aa67"
+  "at": 1792145820.7918353,
+  "fp": "5480f4364e9b43d7477c"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -42,7 +42,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-15 00:29  FAILED 50247 (4): games we hold as final are no longer final on the source: 2938180",
   "2026-10-15 01:49  FAILED 50247 (5): games we hold as final are no longer final on the source: 2938180",
   "2026-10-15 04:03  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
   "2026-10-15 04:33  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 7 teams]",
@@ -81,7 +80,8 @@
   "2026-10-16 17:05  sync: shot charts of 239 games in 6 competitions  [2838272: shot chart draws 174 attempts, the box score has 175 FGA; 2856605: shot chart draws 173 attempts, the box score has 174 FGA; 2856594: shot chart draws 163 attempts, the box score has 164 FGA; 2306717: shot chart draws 189 attempts, the box score has 190 FGA; 2870984: shot chart page failed (500): tried again later]",
   "2026-10-16 17:39  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 78-50 Johor  [2938230: final 78-50 read from the live feed (the schedule page does not show it as final yet); 2938230: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 78 (Negeri Sembilan))]",
   "2026-10-16 17:51  sync: shot charts of 236 games in 7 competitions  [2608629: shot chart page failed (500): tried again later; 2608630: shot chart page failed (500): tried again later; 2608615: shot chart page failed (500): tried again later; 2608632: shot chart draws 151 attempts, the box score has 152 FGA; 2608633: shot chart draws 166 attempts, the box score has 167 FGA; 2608621: shot chart page failed (500): tried again later; 2608686: shot chart draws 179 attempts, the box score has 180 FGA; 2608692: shot chart draws 153 attempts, the box score has 154 FGA; 2787755: shot chart draws 160 attempts, the box score has 161 FGA; 2792226: shot chart draws 163 attempts, the box score has 164 FGA; 2792212: shot chart draws 166 attempts, the box score has 167 FGA; 2792213: shot chart draws 167 attempts, the box score has 168 FGA \u2026]",
-  "2026-10-16 18:01  sync: shot charts of 240 games in 7 competitions  [2392815: shot chart draws 172 attempts, the box score has 173 FGA; 2392736: shot chart draws 141 attempts, the box score has 142 FGA; 2392721: shot chart draws 140 attempts, the box score has 141 FGA; 2447546: shot chart draws 145 attempts, the box score has 146 FGA; 2447527: shot chart draws 135 attempts, the box score has 136 FGA; 2444618: shot chart draws 160 attempts, the box score has 161 FGA]"
+  "2026-10-16 18:01  sync: shot charts of 240 games in 7 competitions  [2392815: shot chart draws 172 attempts, the box score has 173 FGA; 2392736: shot chart draws 141 attempts, the box score has 142 FGA; 2392721: shot chart draws 140 attempts, the box score has 141 FGA; 2447546: shot chart draws 145 attempts, the box score has 146 FGA; 2447527: shot chart draws 135 attempts, the box score has 136 FGA; 2444618: shot chart draws 160 attempts, the box score has 161 FGA]",
+  "2026-10-16 18:17  sync: shot charts of 240 games in 8 competitions  [2664076: shot chart draws 147 attempts, the box score has 148 FGA; 2664055: shot chart draws 157 attempts, the box score has 158 FGA; 2850551: shot chart draws 172 attempts, the box score has 173 FGA; 2850634: shot chart draws 168 attempts, the box score has 169 FGA]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -117,6 +117,8 @@
   "2938174": "50247"
  },
  "shots_at": {
+  "35296": 1792144911.6393926,
+  "35297": 1792144911.6393926,
   "36796": 1792140479.4340196,
   "36797": 1792140479.4340196,
   "37683": 1792144338.9522195,
@@ -129,10 +131,15 @@
   "40376": 1792143598.5937526,
   "40377": 1792143598.5937526,
   "41160": 1792140479.4340196,
+  "41337": 1792144911.6393926,
+  "41338": 1792144911.6393926,
   "47558": 1792143598.5937526,
   "47559": 1792144338.9522195,
   "47850": 1792143598.5937526,
+  "48653": 1792144911.6393926,
   "48654": 1792140479.4340196,
+  "48931": 1792144911.6393926,
+  "48932": 1792144911.6393926,
   "49468": 1792143598.5937526
  }
 }
