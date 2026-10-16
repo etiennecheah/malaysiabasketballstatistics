@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792154526.665795,
-  "fp": "d97d428d9463afc9ba78"
+  "at": 1792155531.512961,
+  "fp": "a021776f2351bee9ad43"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -29,12 +29,6 @@
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 10\nrecovered: 20 box scores, 11 roster names\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 968, in <module>\n    main()\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 695, in main\n    rep = merges.apply(bb, persons, raw_boxes, pidmap, mnames)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/merges.",
    "n": 1,
    "next": 0
-  },
-  "shots": {
-   "last": 1792152368.6749573,
-   "msg": "page check failed\npage check: Home 6 result tiles, 101 competitions, Games 5 cards, Players 24 cards, 0 new game(s)\nPAGE CHECK FAILED\n  Shot map tab for player 0 did not draw\n",
-   "n": 2,
-   "next": 0
   }
  },
  "full": {
@@ -46,18 +40,8 @@
   "50247": 1792094429.5951896,
   "50248": 1792094989.5285058
  },
- "lines_retry": {
-  "50247": {
-   "n": 1,
-   "next": 1792152775.1924431,
-   "pids": [
-    "2830455",
-    "2831954"
-   ]
-  }
- },
+ "lines_retry": {},
  "log": [
-  "2026-10-15 14:39  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 14:49  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 14:59  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 15:09  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
@@ -96,7 +80,8 @@
   "2026-10-16 18:57  FAILED shots (1): page check failed",
   "2026-10-16 19:00  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 78-50 Johor; shot charts of 1 game  [2938230: the source's box score replaces the one from the live feed]",
   "2026-10-16 20:05  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Johor 89-85 Perak; shot charts of 1 game  [2938181: final 89-85 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]",
-  "2026-10-16 20:18  FAILED shots (2): page check failed"
+  "2026-10-16 20:18  FAILED shots (2): page check failed",
+  "2026-10-16 20:58  sync: shot charts of 236 games in 9 competitions  [1312985: shot chart page failed (500): tried again later; 1312946: shot chart draws 183 attempts, the box score has 184 FGA; 1312956: shot chart draws 167 attempts, the box score has 153 FGA; 885574: shot chart page failed (500): tried again later; 885546: shot chart draws 155 attempts, the box score has 156 FGA; 885548: shot chart draws 147 attempts, the box score has 148 FGA; 885549: shot chart draws 156 attempts, the box score has 157 FGA; 886170: shot chart draws 173 attempts, the box score has 174 FGA; 886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept; 886174: shot chart draws 67 attempts, the box score has 130 FGA: not kept; 944404: shot chart draws 135 attempts, the box score has 136 FGA]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -127,6 +112,14 @@
  },
  "shots_at": {
   "17827": 1792152368.6749573,
+  "21374": 1792154560.3850763,
+  "21375": 1792154560.3850763,
+  "22128": 1792154560.3850763,
+  "25340": 1792154560.3850763,
+  "25341": 1792154560.3850763,
+  "25502": 1792154560.3850763,
+  "25503": 1792154560.3850763,
+  "26279": 1792154560.3850763,
   "26561": 1792147425.7033217,
   "34194": 1792146613.8550475,
   "34198": 1792146613.8550475,
