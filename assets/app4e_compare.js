@@ -322,6 +322,9 @@ function cmpRadar(ra, rb, o) {
 /* ---- pieces ----------------------------------------------------------- */
 function cmpFace(pid, big) {
   const n = personName(pid);
+  // the square head crop cut at build time (avatars.py) where there is one; the full cut-out, cropped in CSS, otherwise
+  const av = (DB.avatars || {})[pid];
+  if (av) return `<img class="sq" src="${av}" alt="${esc(n)}">`;
   return PHOTOS[pid] ? `<img src="${PHOTOS[pid]}" alt="${esc(n)}">` : esc(initials(n));
 }
 function cmpBio(pid) {
@@ -522,6 +525,7 @@ function renderCompare() {
                   { pctl: true, rawA: r => ra.read.m[r.k] && ra.read.m[r.k].v, rawB: r => rb.read.m[r.k] && rb.read.m[r.k].v })}</div>
         <div class="note">Each number is that player's percentile inside his own competition — ${esc(nameA)} against ${esc(fa.label)}, ${esc(nameB)} against ${esc(fb.label)} — with the raw per-game figure it came from in grey underneath. TOV is inverted (↓): a higher percentile means fewer turnovers. These are two separate standings placed next to each other, not one comparison.</div>
       </div>
+      ${typeof cmpShotCard === 'function' ? cmpShotCard(A, B, null, '') : ''}
       ${h2hCard}</div>`;
   }
 
@@ -582,6 +586,7 @@ function renderCompare() {
       <div class="note">The most each of them has put up in one game in this field, with the opponent and year underneath. From the published box scores.</div>
     </div>` : ''}
     </div>
+    ${typeof cmpShotCard === 'function' ? cmpShotCard(A, B, cids, label) : ''}
 
     <div class="card cmp-card">
       <div class="card-head tp-head"><span>Tale of the tape<span class="head-sub">${esc(label)} · ${tp.rows} measures · ${perLabel}</span></span>

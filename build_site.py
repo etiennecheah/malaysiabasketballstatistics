@@ -9,7 +9,7 @@ D = os.path.join(R, 'data')
 PARTS = ['app0_router.js', 'app1_core.js', 'app2_nav.js', 'app3_comp.js', 'app3b_family.js', 'app4_players.js',
          'app4b_profile.js', 'app4c_impact.js', 'app4d_radar.js', 'app4e_compare.js',
          'app4f_bpm.js', 'app4g_formulas.js', 'app4h_videos.js', 'app4i_games.js',
-         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app4u_shots.js', 'app4w_shot3d.js', 'app4v_report.js', 'app5_rest.js']
+         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app4u_shots.js', 'app4w_shot3d.js', 'app4x_cmpshots.js', 'app4v_report.js', 'app5_rest.js']
 
 NEWS_TYPES = ('signing', 'transfer', 'departure', 'injury', 'return', 'retirement', 'national', 'other')
 

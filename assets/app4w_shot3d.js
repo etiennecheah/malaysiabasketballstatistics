@@ -40,8 +40,9 @@ function sm3dEnsure() {
   SM3.st = 'loading';
   const s = document.createElement('script');
   s.src = HS.BASE + 'vendor/three.r128.min.js'; s.async = true;
-  const again = () => { if (/\/shots$/.test(HS.hash()) && SM.view === 'terrain') softRoute(); };
-  s.onload = () => { try { sm3dInit(); SM3.st = 'ready'; } catch (e) { SM3.st = 'error'; } again(); };
+  // the Shot map tab and the Compare page both draw with it; each makes its own renderer when it first needs one
+  const again = () => { const h = HS.hash(); if ((/\/shots$/.test(h) && SM.view === 'terrain') || /\/compare\//.test(h)) softRoute(); };
+  s.onload = () => { SM3.st = window.THREE ? 'ready' : 'error'; again(); };
   s.onerror = () => { SM3.st = 'error'; again(); };
   document.head.appendChild(s);
 }
@@ -54,7 +55,7 @@ function sm3dStage() {
   return `<div class="sm-3d" id="sm-3d" tabindex="0" aria-label="3D shot map. Drag to rotate, scroll to zoom; with the map selected the arrow keys rotate and + and − zoom.">
     <div class="sm3-ctl">
       <div class="sm3-row" role="group" aria-label="Camera">${vb('broadcast', 'Broadcast')}${vb('baseline', 'Baseline')}${vb('side', 'Sideline')}${vb('top', 'Top')}</div>
-      <div class="sm3-row"><button data-sm3="spin" aria-pressed="${SM3.spin}">Auto-rotate</button><button data-sm3="hoop" aria-pressed="${!SM3.R || SM3.hoop.visible}">Hoop</button></div>
+      <div class="sm3-row"><button data-sm3="spin" aria-pressed="${SM3.spin}">Auto-rotate</button><button data-sm3="hoop" aria-pressed="${!SM3.hoop || SM3.hoop.visible}">Hoop</button></div>
       <label class="sm3-h">Height <input type="range" id="sm3-hgt" min="0.4" max="2.4" step="0.1" value="${SM3.hs}"></label>
     </div>
     <div class="sm3-help">Drag to rotate · Scroll or pinch to zoom · Right-drag or two fingers to pan · Double-click to recentre</div>
@@ -454,7 +455,8 @@ function sm3dStrip() {
 
 /* ------------------------------------------------------------ into the tab */
 function sm3dMount() {
-  const host = document.getElementById('sm-3d'); if (!host || !SM3.R) return;
+  const host = document.getElementById('sm-3d'); if (!host) return;
+  if (!SM3.R) { try { sm3dInit(); } catch (e) { SM3.st = 'error'; softRoute(); return; } }
   host.insertBefore(SM3.R.domElement, host.firstChild);
   if (SM3.ro) SM3.ro.disconnect();
   if (typeof ResizeObserver === 'function') { SM3.ro = new ResizeObserver(sm3dResize); SM3.ro.observe(host); }

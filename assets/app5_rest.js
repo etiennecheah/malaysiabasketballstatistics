@@ -389,7 +389,7 @@ document.addEventListener('input', e => {
 });
 
 /* post-render work: the Stats pages wire their filters and the Stats menu once the page is in place */
-function afterRender() { if (typeof statsAfterRender === 'function') statsAfterRender(); if (typeof shotsAfterRender === 'function') shotsAfterRender(); if (typeof reportAfterRender === 'function') reportAfterRender(); }
+function afterRender() { if (typeof statsAfterRender === 'function') statsAfterRender(); if (typeof shotsAfterRender === 'function') shotsAfterRender(); if (typeof reportAfterRender === 'function') reportAfterRender(); if (typeof cmpShotsAfterRender === 'function') cmpShotsAfterRender(); }
 
 HS.start();
 
@@ -455,7 +455,7 @@ document.addEventListener('input', e => {
   hits.sort((x, y) => (CAREER[y] || []).length - (CAREER[x] || []).length);
   box.innerHTML = hits.slice(0, 8).map(pid =>
     `<button class="cmp-res" data-cmppick="${side}|${pid}">
-       <span class="cmp-res-face">${PHOTOS[pid] ? `<img src="${PHOTOS[pid]}" alt="">` : esc(initials(PERSONS[pid]))}</span>
+       <span class="cmp-res-face">${(DB.avatars || {})[pid] ? `<img class="sq" src="${DB.avatars[pid]}" alt="">` : PHOTOS[pid] ? `<img src="${PHOTOS[pid]}" alt="">` : esc(initials(PERSONS[pid]))}</span>
        <span>${esc(PERSONS[pid])}</span>
        <em>${(CAREER[pid] || []).filter(r => hasStats(r.p)).length} comps</em>
      </button>`).join('') || '<div class="cmp-res-none">No player matches that.</div>';
