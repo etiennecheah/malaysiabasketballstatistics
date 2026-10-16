@@ -101,32 +101,52 @@ function smTab(pid) {
   const rows = Object.entries(sm.byZ).sort((p, q) => q[1][0] - p[1][0] || q[1][1] - p[1][1]);
   const body = `${pick}
   <div class="sm">
-    <div class="sm-views" role="group" aria-label="Chart style">${views.map(([k, l]) => `<button data-smv="${k}" aria-pressed="${SM.view === k}">${l}</button>`).join('')}</div>
-    <div class="sm-note">${note}</div>
-    ${SM.view !== 'shots' ? `<div class="sm-legend" aria-label="Colour scale">Below average <i style="background:#1f8fff"></i><i style="background:#4b86c8"></i><i style="background:#6c7486"></i><i style="background:#c2507a"></i><i style="background:#ff2e58"></i> Above average</div>` : ''}
-    <div class="sm-stage">
-      <canvas id="sm-cv" width="1440" height="880" role="img" aria-label="Shot map"></canvas>
-      <div class="sm-badge"><span>${SM.game === 'all' ? games.length + ' game' + (games.length === 1 ? '' : 's') : esc((games.find(g => g.mid === SM.game) || {}).label || '')}</span><b>${sm.m}/${sm.a} FG</b></div>
-      <div class="sm-tip" id="sm-tip" hidden></div>
-      ${games.length > 1 ? `<div class="sm-chips" role="group" aria-label="Games"><button data-smg="all" aria-pressed="${SM.game === 'all'}">All games</button>${games.map(g => `<button data-smg="${g.mid}" aria-pressed="${SM.game === g.mid}">${esc(g.label)}</button>`).join('')}</div>` : ''}
+    <div class="sm-left">
+      <div class="sm-views" role="group" aria-label="Chart style">${views.map(([k, l]) => `<button data-smv="${k}" aria-pressed="${SM.view === k}">${l}</button>`).join('')}</div>
+      <div class="sm-stage">
+        <canvas id="sm-cv" width="1440" height="880" role="img" aria-label="Shot map"></canvas>
+        <div class="sm-badge"><span>${SM.game === 'all' ? games.length + ' game' + (games.length === 1 ? '' : 's') : esc((games.find(g => g.mid === SM.game) || {}).label || '')}</span><b>${sm.m}/${sm.a} FG</b></div>
+        <div class="sm-tip" id="sm-tip" hidden></div>
+        ${games.length > 1 ? `<div class="sm-chips" role="group" aria-label="Games"><button data-smg="all" aria-pressed="${SM.game === 'all'}">All games</button>${games.map(g => `<button data-smg="${g.mid}" aria-pressed="${SM.game === g.mid}">${esc(g.label)}</button>`).join('')}</div>` : ''}
+      </div>
+      ${SM.view !== 'shots' ? `<div class="sm-legend" aria-label="Colour scale">Below average <i style="background:#1f8fff"></i><i style="background:#4b86c8"></i><i style="background:#6c7486"></i><i style="background:#c2507a"></i><i style="background:#ff2e58"></i> Above average</div>` : ''}
+      <div class="sm-note">${note}</div>
+      <div class="sm-tiles">
+        <div><small>FG%</small><b>${sm.a ? smPct(fg) : '–'}</b></div>
+        <div><small>Expected at his spots</small><b>${sm.a ? smPct(sm.exp) : '–'}</b></div>
+        <div><small>Versus average</small><b class="${smCls(fg - sm.exp)}">${sm.a ? smDiff(fg - sm.exp) : '–'}</b></div>
+      </div>
     </div>
-    <div class="sm-tiles">
-      <div><small>FG%</small><b>${sm.a ? smPct(fg) : '–'}</b></div>
-      <div><small>Expected at his spots</small><b>${sm.a ? smPct(sm.exp) : '–'}</b></div>
-      <div><small>Versus average</small><b class="${smCls(fg - sm.exp)}">${sm.a ? smDiff(fg - sm.exp) : '–'}</b></div>
-    </div>
-    <div class="sm-zones">
-      <div class="sm-zones-h"><h3>Zones</h3><span>most attempts first · hover a row to light it up on the court</span></div>
-      ${rows.map(([z, [a, m]]) => { const p = m / a, df = p - (d.LZ[z] || 0);
-        return `<div class="sm-zrow${SM.zone === z ? ' on' : ''}" data-smz="${z}" tabindex="0">
-          <span class="nm">${SM_ZONES[z]}</span><span class="pc">${smPct(p)}</span>
-          <span class="sb">${m}/${a} · ${(a / sm.a * 100).toFixed(0)}% of his shots · average ${smPct(d.LZ[z] || 0)}</span><span class="df ${smCls(df)}">${smDiff(df)}</span>
-          <span class="bar" aria-hidden="true"><i style="width:${(a / sm.a * 100).toFixed(1)}%"></i></span></div>`; }).join('')}
-    </div>
-    ${smNotes(list, d)}
-    <p class="sm-method">Shot positions from the organiser's shot chart for each game (1% steps, about 28 cm along the court and 15 cm across); the average is every shot in this competition (${d.n.toLocaleString('en')} in ${d.g} games). Two or three points is the source's own label. Corner 3 = within about 3.1 m of the baseline; top of the arc = between the lane lines extended. Left and right are from the shooter's view, facing the basket. The terrain smooths his makes over about 1.6 m and pulls them toward the competition average where he has few shots.</p>
+    <aside class="sm-explain" aria-label="What the map shows">
+      <div class="sm-zone" id="sm-zone" aria-live="polite">${smZonePanel(list, d)}</div>
+      ${smNotes(list, d)}
+      <div class="sm-zones">
+        <div class="sm-zones-h"><h3>Zones</h3><span>most attempts first</span></div>
+        ${rows.map(([z, [a, m]]) => { const p = m / a, df = p - (d.LZ[z] || 0);
+          return `<div class="sm-zrow${SM.zone === z ? ' on' : ''}" data-smz="${z}" tabindex="0">
+            <span class="nm">${SM_ZONES[z]}</span><span class="pc">${smPct(p)}</span>
+            <span class="sb">${m}/${a} · ${(a / sm.a * 100).toFixed(0)}% of his shots · average ${smPct(d.LZ[z] || 0)}</span><span class="df ${smCls(df)}">${smDiff(df)}</span>
+            <span class="bar" aria-hidden="true"><i style="width:${(a / sm.a * 100).toFixed(1)}%"></i></span></div>`; }).join('')}
+      </div>
+      <details class="sm-method">
+        <summary>How to read this map</summary>
+        <p><b>Source.</b> Shot positions from the organiser's shot chart for each game, in 1% steps (about 28 cm along the court, 15 cm across). The average is every shot in this competition: ${d.n.toLocaleString('en')} in ${d.g} game${d.g === 1 ? '' : 's'}.</p>
+        <p><b>Zones.</b> Two or three points is the source's own label. Corner 3 = within about 3.1 m of the baseline; top of the arc = between the lane lines extended. Left and right are from the shooter's view, facing the basket.</p>
+        <p><b>Terrain.</b> His makes are smoothed over about 1.6 m and pulled toward the competition average where he has few shots. Expected FG% = what an average shooter in this competition would make from his zones.</p>
+      </details>
+    </aside>
   </div>`;
   return pvSec('Shot map', esc(c.label || c.name) + ' · ' + sm.a + ' field-goal attempts', '', body);
+}
+
+/* the selected zone, at the top of the explanation box; redrawn on hover without a re-render */
+function smZonePanel(list, d) {
+  const z = SM.zone, zs = list.filter(s => s.z === z), a = zs.length, m = zs.reduce((t, s) => t + s.made, 0), avg = d.LZ[z] || 0;
+  const df = a ? m / a - avg : 0;
+  return `<div class="k">Selected zone · hover the court or a row below</div><div class="n">${SM_ZONES[z] || ''}</div>
+    <div class="g"><div><small>FGM/FGA</small><span>${a ? m + '/' + a : 'no shots'}</span></div>
+    <div><small>FG%</small><span>${a ? smPct(m / a) : '–'}</span></div>
+    <div><small>Versus average</small><span class="${a ? smCls(df) : ''}">${a ? smDiff(df) : '–'}</span><em>average ${smPct(avg)}</em></div></div>`;
 }
 
 /* automatic notes: the zones that stand out, the two sides, the overall line */
@@ -153,8 +173,10 @@ function smNotes(list, d) {
   N.push(['', 'Overall', `${sm.m}/${sm.a} (${smPct(fg)}) where an average shooter in this competition taking the same shots would make ${smPct(sm.exp)}` +
     (Math.abs((fg - sm.exp) * sm.a) >= 1 ? `: about ${Math.abs(Math.round((fg - sm.exp) * sm.a))} ${fg > sm.exp ? 'more' : 'fewer'} makes than expected` : '') +
     (all3[0] ? `. From three: ${all3[1]}/${all3[0]} (${smPct(all3[1] / all3[0])}) against ${smPct(lgOf('C3L', 'C3R', 'W3L', 'W3R', 'T3'))}.` : '.')]);
+  const L = list.filter(s => s.x < -0.75), R = list.filter(s => s.x > 0.75), mk = a => a.reduce((t, s) => t + s.made, 0);
+  const sides = L.length && R.length ? `<div class="sm-side"><div><small>Left side of the floor</small><b>${mk(L)}/${L.length} · ${smPct(mk(L) / L.length)}</b></div><div><small>Right side of the floor</small><b>${mk(R)}/${R.length} · ${smPct(mk(R) / R.length)}</b></div></div>` : '';
   return `<div class="sm-notes"><h3>What stands out</h3>${sm.a < 40 ? `<p class="sm-small">${sm.a} shots: a zone with only a few attempts can swing a long way on one make, so read the small ones as a lean.</p>` : ''}
-    ${N.map(([c, h, p]) => `<div class="sm-n ${c === 'u' ? 'u' : c === 'd' ? 'd' : ''}"><h4>${h}</h4><p>${p}</p></div>`).join('')}</div>`;
+    ${sides}${N.map(([c, h, p]) => `<div class="sm-n ${c === 'u' ? 'u' : c === 'd' ? 'd' : ''}"><h4>${h}</h4><p>${p}</p></div>`).join('')}</div>`;
 }
 
 /* ------------------------------------------------------- the drawing */
@@ -367,6 +389,8 @@ function smSetZone(z) {
   if (z === SM.zone) return;
   SM.zone = z; smDraw();
   document.querySelectorAll('.sm-zrow').forEach(r => r.classList.toggle('on', r.dataset.smz === z));
+  const el = document.getElementById('sm-zone');
+  if (el && SH_DATA[SM.cid]) el.innerHTML = smZonePanel(smShots(), SH_DATA[SM.cid]);
 }
 function smPointer(ev) {
   const cv = document.getElementById('sm-cv'), tip = document.getElementById('sm-tip'); if (!cv || !tip) return;
@@ -380,11 +404,11 @@ function smPointer(ev) {
   const near = list.filter(s => Math.hypot(s.x - x, s.y + SM_RIM - d) <= 1.0), nm = near.reduce((t, s) => t + s.made, 0);
   const avg = dat.LZ[z] || 0, df = a ? m / a - avg : null;
   tip.innerHTML = `<div class="t1">${SM_ZONES[z]}</div><div class="t0">about ${Math.hypot(x, d - SM_RIM).toFixed(1)} m from the rim</div>
-    <div class="row"><span>FGM/FGA</span><b>${a ? m + '/' + a : 'no shots'}</b></div>
-    <div class="row"><span>FG%</span><b>${a ? smPct(m / a) : '–'}</b></div>
-    <div class="row"><span>Competition average</span><b>${smPct(avg)}</b></div>
-    ${a ? `<div class="row"><span>Versus average</span><b class="${df > 0.02 ? 'pos' : df < -0.02 ? 'neg' : 'flat'}">${smDiff(df)}</b></div>` : ''}
-    <div class="row"><span>Within 1 m of here</span><b>${near.length ? nm + '/' + near.length : 'none'}</b></div>`;
+    <div class="sm-tr"><span>FGM/FGA</span><b>${a ? m + '/' + a : 'no shots'}</b></div>
+    <div class="sm-tr"><span>FG%</span><b>${a ? smPct(m / a) : '–'}</b></div>
+    <div class="sm-tr"><span>Competition average</span><b>${smPct(avg)}</b></div>
+    ${a ? `<div class="sm-tr"><span>Versus average</span><b class="${df > 0.02 ? 'pos' : df < -0.02 ? 'neg' : 'flat'}">${smDiff(df)}</b></div>` : ''}
+    <div class="sm-tr"><span>Within 1 m of here</span><b>${near.length ? nm + '/' + near.length : 'none'}</b></div>`;
   tip.hidden = false;
   const st = cv.parentElement.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
   let left = ev.clientX - st.left + 16, top = ev.clientY - st.top + 16;
