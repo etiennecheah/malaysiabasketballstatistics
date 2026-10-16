@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792140448.7319555,
-  "fp": "6167548af25688477152"
+  "at": 1792141534.194446,
+  "fp": "6a4e69bab7688dafad99"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -42,7 +42,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-14 17:29  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Perak 130-54 Selangor  [2938171: the source's box score replaces the one from the live feed; season lines not read for 4 player(s): tried again next time]",
   "2026-10-14 18:34  FAILED 50247 (1): games we hold as final are no longer final on the source: 2938180",
   "2026-10-14 23:28  FAILED 50247 (2): games we hold as final are no longer final on the source: 2938180",
   "2026-10-14 23:49  FAILED 50247 (3): games we hold as final are no longer final on the source: 2938180",
@@ -81,7 +80,8 @@
   "2026-10-16 13:47  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Selangor 58-48 Sarawak; shot charts of 1 game  [2938229: the source's box score replaces the one from the live feed]",
   "2026-10-16 15:42  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 74-73 ATM  [2938179: final 74-73 read from the live feed (the schedule page does not show it as final yet); 2938179: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 74 (Selangor))]",
   "2026-10-16 15:53  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v ATM; shot charts of 1 game",
-  "2026-10-16 16:05  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 74-73 ATM  [2938179: the source's box score replaces the one from the live feed]"
+  "2026-10-16 16:05  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 74-73 ATM  [2938179: the source's box score replaces the one from the live feed]",
+  "2026-10-16 17:05  sync: shot charts of 239 games in 6 competitions  [2838272: shot chart draws 174 attempts, the box score has 175 FGA; 2856605: shot chart draws 173 attempts, the box score has 174 FGA; 2856594: shot chart draws 163 attempts, the box score has 164 FGA; 2306717: shot chart draws 189 attempts, the box score has 190 FGA; 2870984: shot chart page failed (500): tried again later]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -110,5 +110,11 @@
   "2938172": "50247",
   "2938174": "50247"
  },
- "shots_at": {}
+ "shots_at": {
+  "36796": 1792140479.4340196,
+  "36797": 1792140479.4340196,
+  "39249": 1792140479.4340196,
+  "41160": 1792140479.4340196,
+  "48654": 1792140479.4340196
+ }
 }
