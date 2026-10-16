@@ -275,7 +275,9 @@ function pvPath(d) {
   };
   const item = x => {
     if (x.m) return `<div class="it abroad">${crest(x.m.team, 18)}<span>${esc(x.m.team)}</span></div><div class="aw lg">↗ ${esc(x.m.league)} · signed</div>`;
-    if (x.h) return `<div class="it ${x.h.champ ? 'win' : ''}" ${x.h.team ? `title="${esc(pvCase(x.h.team))}"` : ''}>${pvMark(x.h, 18)}<span>${x.h.cid ? `<a href="#/c/${x.h.cid}">${esc(x.h.short)}</a>` : esc(x.h.short)}</span></div>${x.h.pathOnly && x.h.team ? `<div class="tm">${esc(pvCase(x.h.team))}</div>` : ''}${lines(x.h.champ, x.h.awards, x.h.placing, x.h.stat)}`;
+    // on the career path a medal event shows whom it was won for (Malaysia's flag); the medal itself is the line below
+    const mk = x.h && x.h.medal && x.h.team && (teamLogo(x.h.team) || flagOf(x.h.team)) ? Object.assign({}, x.h, {medal: null}) : x.h;
+    if (x.h) return `<div class="it ${x.h.champ ? 'win' : ''}" ${x.h.team ? `title="${esc(pvCase(x.h.team))}"` : ''}>${pvMark(mk, 18)}<span>${x.h.cid ? `<a href="#/c/${x.h.cid}">${esc(x.h.short)}</a>` : esc(x.h.short)}</span></div>${x.h.pathOnly && x.h.team ? `<div class="tm">${esc(pvCase(x.h.team))}</div>` : ''}${lines(x.h.champ, x.h.awards, x.h.placing, x.h.stat)}`;
     // a path-only honour of the same event (a runner-up finish typed in before the event was
     // imported) belongs on this entry, not beside it as a second one
     const r = x.r, h = pvHonOf(d, r), ph = d.pathHon.find(p => p.cid === r.c.id), win = d.isTitle(r) || (h && h.champ);
