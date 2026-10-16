@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792166179.4303126,
-  "fp": "26ac7e3ea3672e861097"
+  "at": 1792167633.529646,
+  "fp": "36d1fbaf7be999009fc8"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -23,14 +23,7 @@
   "50247": "2026-10-16",
   "50248": "2026-10-16"
  },
- "fail": {
-  "shots": {
-   "last": 1792163362.0359595,
-   "msg": "page check failed\npage check: Home 6 result tiles, 101 competitions, Games 5 cards, Players 24 cards, 0 new game(s)\nPAGE CHECK FAILED\n  Shot map tab for player 0 did not draw\n",
-   "n": 1,
-   "next": 0
-  }
- },
+ "fail": {},
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
@@ -42,7 +35,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-15 15:38  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Kelantan 46-84 Sarawak  [2938227: the source's box score replaces the one from the live feed]",
   "2026-10-15 15:41  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 66-78 Pahang  [2938173: the source's box score replaces the one from the live feed]",
   "2026-10-15 17:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 92-84 ATM  [2938176: final 92-84 read from the live feed (the schedule page does not show it as final yet); 2938176: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 92 (PDRM))]",
   "2026-10-15 17:53  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 92-84 ATM  [2938176: the source's box score replaces the one from the live feed]",
@@ -81,7 +73,8 @@
   "2026-10-16 21:57  FAILED shots (1): page check failed",
   "2026-10-16 22:06  sync: shot charts of 2 games in 2 competitions",
   "2026-10-16 23:28  FAILED shots (1): page check failed",
-  "2026-10-16 23:56  sync: Bina Harta Pro Basketball Cup 2024 \u2014 Parkcity Heat Basketball Club 57-82 Knight Fury; RNC-MI Basketball Club 69-100 Speed Hunter; MBC Kirin 71-58 Lutong Silver Wolves Basketball Club; Selangor Rising Star 84-59 Johor Sukma Team; Speed Hunter 70-72 Johor Sukma Team; Lutong Silver Wolves Basketball Club 81-61 Parkcity Heat Basketball Club; RNC-MI Basketball Club 60-92 Selangor Rising Star; MBC Kirin 70-82 Knight Fury; Speed Hunter 55-109 Selangor Rising Star; Johor Sukma Team 83-69 RNC-MI Basketball Club; Parkcity Heat Basketball Club 53-75 MBC Kirin; Knight Fury 85-80 Lutong Silver Wolves Basketball Club; Knight Fury 72-75 Johor Sukma Team; Selangor Rising Star 66-72 MBC Kirin; Knight Fury 67-80 Selangor Rising Star; Johor Sukma Team 47-79 MBC Kirin; shot charts of 16 games  [2446772: shot chart draws 155 attempts, the box score has 152 FGA]"
+  "2026-10-16 23:56  sync: Bina Harta Pro Basketball Cup 2024 \u2014 Parkcity Heat Basketball Club 57-82 Knight Fury; RNC-MI Basketball Club 69-100 Speed Hunter; MBC Kirin 71-58 Lutong Silver Wolves Basketball Club; Selangor Rising Star 84-59 Johor Sukma Team; Speed Hunter 70-72 Johor Sukma Team; Lutong Silver Wolves Basketball Club 81-61 Parkcity Heat Basketball Club; RNC-MI Basketball Club 60-92 Selangor Rising Star; MBC Kirin 70-82 Knight Fury; Speed Hunter 55-109 Selangor Rising Star; Johor Sukma Team 83-69 RNC-MI Basketball Club; Parkcity Heat Basketball Club 53-75 MBC Kirin; Knight Fury 85-80 Lutong Silver Wolves Basketball Club; Knight Fury 72-75 Johor Sukma Team; Selangor Rising Star 66-72 MBC Kirin; Knight Fury 67-80 Selangor Rising Star; Johor Sukma Team 47-79 MBC Kirin; shot charts of 16 games  [2446772: shot chart draws 155 attempts, the box score has 152 FGA]",
+  "2026-10-17 00:20  sync: shot charts of 233 games in 12 competitions  [2396103: shot chart draws 122 attempts, the box score has 123 FGA; 2220351: shot chart draws 167 attempts, the box score has 168 FGA; 2220393: shot chart draws 134 attempts, the box score has 136 FGA; 2220423: shot chart draws 179 attempts, the box score has 180 FGA; 2220429: shot chart draws 151 attempts, the box score has 153 FGA; 2135673: shot chart draws 139 attempts, the box score has 138 FGA; 2220399: shot chart draws 181 attempts, the box score has 182 FGA; 2220400: shot chart draws 135 attempts, the box score has 136 FGA; 2220433: shot chart draws 175 attempts, the box score has 176 FGA; 2220425: shot chart draws 152 attempts, the box score has 153 FGA; 886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept; 886174: shot chart draws 67 attempts, the box score has 130 FGA: not kept]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -111,15 +104,15 @@
   "2938174": "50247"
  },
  "shots_at": {
-  "17827": 1792163362.0359595,
-  "21374": 1792163362.0359595,
-  "21375": 1792163362.0359595,
+  "17827": 1792166973.37678,
+  "21374": 1792166973.37678,
+  "21375": 1792166973.37678,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
   "23322": 1792159431.6606693,
   "23328": 1792159431.6606693,
-  "25340": 1792163362.0359595,
+  "25340": 1792166973.37678,
   "25341": 1792154560.3850763,
   "25502": 1792154560.3850763,
   "25503": 1792154560.3850763,
@@ -127,17 +120,17 @@
   "26561": 1792147425.7033217,
   "34194": 1792146613.8550475,
   "34198": 1792146613.8550475,
-  "34525": 1792163362.0359595,
+  "34525": 1792166973.37678,
   "34659": 1792147425.7033217,
-  "34660": 1792163362.0359595,
+  "34660": 1792166973.37678,
   "35104": 1792145848.872564,
-  "35135": 1792163362.0359595,
-  "35136": 1792163362.0359595,
+  "35135": 1792166973.37678,
+  "35136": 1792166973.37678,
   "35296": 1792144911.6393926,
   "35297": 1792144911.6393926,
   "35879": 1792146613.8550475,
   "35880": 1792147019.264793,
-  "36542": 1792163362.0359595,
+  "36542": 1792166973.37678,
   "36657": 1792147425.7033217,
   "36796": 1792140479.4340196,
   "36797": 1792140479.4340196,
@@ -148,7 +141,7 @@
   "37621": 1792145848.872564,
   "37683": 1792144338.9522195,
   "37684": 1792144338.9522195,
-  "37771": 1792163362.0359595,
+  "37771": 1792166973.37678,
   "38334": 1792147019.264793,
   "38335": 1792147019.264793,
   "38532": 1792144338.9522195,
@@ -175,8 +168,8 @@
   "41592": 1792147019.264793,
   "41593": 1792147019.264793,
   "42425": 1792145848.872564,
-  "47362": 1792163362.0359595,
-  "47363": 1792163362.0359595,
+  "47362": 1792166973.37678,
+  "47363": 1792166973.37678,
   "47556": 1792147019.264793,
   "47557": 1792147019.264793,
   "47558": 1792143598.5937526,
@@ -196,7 +189,7 @@
   "49645": 1792147425.7033217,
   "49646": 1792147425.7033217,
   "49683": 1792147425.7033217,
-  "49965": 1792163362.0359595,
+  "49965": 1792166973.37678,
   "50248": 1792147831.0700762
  }
 }
