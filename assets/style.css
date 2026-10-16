@@ -3751,3 +3751,49 @@
     .rp-ht{ font-size:12px; } .rp-ht th{ font-size:11px; } .rp-ht td{ font-size:13px; height:30px; } .rp-ht td:first-child{ font-size:12.5px; }
     .rp-hrow button{ padding:5px 4px; } .rp-ht th .rp-key{ display:none; } }
   @media (prefers-reduced-motion:reduce){ .rp-tip{ transition:none; } }
+  /* development report: his own changes. Better and worse use the site's positive and negative
+     inks with an arrow, so the direction never rests on colour alone */
+  :root{ --rp-up:var(--positive); --rp-down:var(--negative); }
+  .rp-d{ display:inline-block; font-size:11.5px; font-weight:700; margin-left:6px; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .rp-d.up{ color:var(--positive-ink); } .rp-d.down{ color:var(--negative); } .rp-d.flat{ color:var(--text-faint); font-weight:600; }
+  .rp-pair{ border-top:1px solid var(--border); padding-top:12px; margin-top:12px; }
+  .rp-pair:first-of-type{ border-top:0; padding-top:0; margin-top:0; }
+  .rp-pair-h{ display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 8px; margin-bottom:10px; font-size:15px; }
+  .rp-pair-h i{ font-style:normal; color:var(--text-faint); }
+  .rp-pair-h span{ flex-basis:100%; font-size:12.5px; color:var(--text-faint); }
+  .rp-tns{ display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:8px; }
+  .rp-tn{ border:1px solid var(--border); border-radius:10px; padding:9px 10px; min-width:0; }
+  .rp-tn small{ display:block; font-size:11.5px; color:var(--text-faint); font-weight:600; }
+  .rp-tn .v{ display:block; font-family:var(--display); font-size:15px; color:var(--text-muted); font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .rp-tn .v i{ font-style:normal; color:var(--text-faint); margin:0 4px; }
+  .rp-tn .v b{ color:var(--text); font-size:19px; }
+  .rp-tn .rp-d{ margin-left:0; }
+  .rp-pc.up{ background:color-mix(in srgb, var(--positive) 16%, var(--surface)); color:var(--positive-ink); font-size:16px; }
+  .rp-pc.down{ background:color-mix(in srgb, var(--negative) 14%, var(--surface)); color:var(--negative); font-size:16px; }
+  .rp-sub{ display:block; margin-top:4px; font-size:12px; color:var(--text-faint); }
+  .rp-trends{ position:relative; display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:14px 18px; margin-top:8px; }
+  .rp-trend{ min-width:0; }
+  .rp-trend-h{ display:flex; justify-content:space-between; align-items:baseline; gap:8px; font-size:13px; }
+  .rp-trend-h span{ color:var(--text-muted); font-variant-numeric:tabular-nums; }
+  .rp-trend-h span b{ color:var(--text); }
+  .rp-rep{ margin-top:14px; }
+  .rp-rep h3{ font-size:15px; margin:0 0 2px; }
+  .rp-rep .rp-ev{ margin-top:4px; }
+  .rp-rep .rp-ev table{ min-width:760px; }
+  .rp-ev .dim, .rp .dim{ color:var(--text-faint); }
+  .rp-bests{ display:grid; grid-template-columns:repeat(auto-fill, minmax(170px, 1fr)); gap:8px; }
+  .rp-best{ border:1px solid var(--border); border-radius:10px; padding:10px 12px; min-width:0; }
+  .rp-best small{ display:block; font-size:11.5px; color:var(--text-faint); font-weight:600; }
+  .rp-best b{ display:block; font-family:var(--display); font-size:20px; font-variant-numeric:tabular-nums; }
+  .rp-best span{ display:block; font-size:12px; color:var(--text-muted); }
+  /* the one note about other players: set apart like a helper's aside */
+  .rp-aside{ display:grid; grid-template-columns:28px 1fr; gap:12px; background:var(--surface-alt); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
+  .rp-aside-i{ width:26px; height:26px; border-radius:50%; background:var(--accent-soft); color:var(--accent); font-weight:700; font-family:var(--display); display:grid; place-items:center; font-size:14px; }
+  .rp-aside > div{ min-width:0; }
+  .rp-aside p{ margin:2px 0 0; color:var(--text-muted); font-size:13.5px; max-width:80ch; }
+  .rp-aside p b{ color:var(--text); }
+  .rp-aside-more{ margin-top:10px; }
+  .rp-aside-more summary{ cursor:pointer; font-weight:600; font-size:13.5px; }
+  .rp-aside-more .rp-lvl{ margin-top:8px; }
+  @media (max-width:860px){ .rp-tns{ grid-template-columns:repeat(2, minmax(0, 1fr)); } .rp-trends{ grid-template-columns:repeat(2, minmax(0, 1fr)); } }
+  @media (max-width:520px){ .rp-trends{ grid-template-columns:1fr; } }
