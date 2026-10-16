@@ -29,6 +29,12 @@
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 10\nrecovered: 20 box scores, 11 roster names\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 968, in <module>\n    main()\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 695, in main\n    rep = merges.apply(bb, persons, raw_boxes, pidmap, mnames)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/merges.",
    "n": 1,
    "next": 0
+  },
+  "shots": {
+   "last": 1792163362.0359595,
+   "msg": "page check failed\npage check: Home 6 result tiles, 101 competitions, Games 5 cards, Players 24 cards, 0 new game(s)\nPAGE CHECK FAILED\n  Shot map tab for player 0 did not draw\n",
+   "n": 1,
+   "next": 1792163962.0359595
   }
  },
  "full": {
@@ -42,7 +48,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-15 15:27  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Kelantan 46-84 Sarawak  [2938227: final 46-84 read from the live feed (the schedule page does not show it as final yet); 2938227: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 46 (Kelantan))]",
   "2026-10-15 15:30  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 15:38  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Kelantan 46-84 Sarawak  [2938227: the source's box score replaces the one from the live feed]",
   "2026-10-15 15:41  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 66-78 Pahang  [2938173: the source's box score replaces the one from the live feed]",
@@ -81,7 +86,8 @@
   "2026-10-16 21:04  sync: shot charts of 76 games in 4 competitions  [1069336: shot chart draws 166 attempts, the box score has 167 FGA; 1069349: shot chart page failed (500): tried again later; 1069395: shot chart draws 147 attempts, the box score has 148 FGA; 1069355: shot chart page failed (500): tried again later]",
   "2026-10-16 21:46  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 100-68 Pahang; shot charts of 1 game  [2938183: final 100-68 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]",
   "2026-10-16 21:57  FAILED shots (1): page check failed",
-  "2026-10-16 22:06  sync: shot charts of 2 games in 2 competitions"
+  "2026-10-16 22:06  sync: shot charts of 2 games in 2 competitions",
+  "2026-10-16 23:28  FAILED shots (1): page check failed"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -111,15 +117,15 @@
   "2938174": "50247"
  },
  "shots_at": {
-  "17827": 1792158430.6419477,
-  "21374": 1792158430.6419477,
-  "21375": 1792158430.6419477,
+  "17827": 1792163362.0359595,
+  "21374": 1792163362.0359595,
+  "21375": 1792163362.0359595,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
   "23322": 1792159431.6606693,
   "23328": 1792159431.6606693,
-  "25340": 1792158430.6419477,
+  "25340": 1792163362.0359595,
   "25341": 1792154560.3850763,
   "25502": 1792154560.3850763,
   "25503": 1792154560.3850763,
@@ -127,17 +133,17 @@
   "26561": 1792147425.7033217,
   "34194": 1792146613.8550475,
   "34198": 1792146613.8550475,
-  "34525": 1792158430.6419477,
+  "34525": 1792163362.0359595,
   "34659": 1792147425.7033217,
-  "34660": 1792158430.6419477,
+  "34660": 1792163362.0359595,
   "35104": 1792145848.872564,
-  "35135": 1792158430.6419477,
-  "35136": 1792158430.6419477,
+  "35135": 1792163362.0359595,
+  "35136": 1792163362.0359595,
   "35296": 1792144911.6393926,
   "35297": 1792144911.6393926,
   "35879": 1792146613.8550475,
   "35880": 1792147019.264793,
-  "36542": 1792158430.6419477,
+  "36542": 1792163362.0359595,
   "36657": 1792147425.7033217,
   "36796": 1792140479.4340196,
   "36797": 1792140479.4340196,
@@ -148,7 +154,7 @@
   "37621": 1792145848.872564,
   "37683": 1792144338.9522195,
   "37684": 1792144338.9522195,
-  "37771": 1792158430.6419477,
+  "37771": 1792163362.0359595,
   "38334": 1792147019.264793,
   "38335": 1792147019.264793,
   "38532": 1792144338.9522195,
@@ -175,8 +181,8 @@
   "41592": 1792147019.264793,
   "41593": 1792147019.264793,
   "42425": 1792145848.872564,
-  "47362": 1792158430.6419477,
-  "47363": 1792158430.6419477,
+  "47362": 1792163362.0359595,
+  "47363": 1792163362.0359595,
   "47556": 1792147019.264793,
   "47557": 1792147019.264793,
   "47558": 1792143598.5937526,
@@ -196,7 +202,7 @@
   "49645": 1792147425.7033217,
   "49646": 1792147425.7033217,
   "49683": 1792147425.7033217,
-  "49965": 1792158430.6419477,
+  "49965": 1792163362.0359595,
   "50248": 1792147831.0700762
  }
 }
