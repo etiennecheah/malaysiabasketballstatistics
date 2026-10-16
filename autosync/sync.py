@@ -33,7 +33,7 @@ CI = dict(num=0, name=1, min=2, pts=3, fgm=4, fga=5, twopm=7, twopa=8, tpm=10, t
           ftm=13, fta=14, oreb=16, dreb=17, ast=18, pf=19, tov=20, stl=21, blk=22, pm=23, eff=24)
 
 
-SHOTS_PER_RUN = 25  # shot chart pages read in one sync of a competition, at most
+SHOTS_PER_RUN = 60  # shot chart pages read in one sync of a competition, at most
 SUM_SLACK = 3      # points the source's own player rows may miss by when its totals row agrees with the scoreboard
 
 
@@ -243,6 +243,72 @@ def ls_pid_finder(st, c):
         g = glob.get(k, set())
         return next(iter(g)) if len(g) == 1 else ''
     return find
+
+
+SHOTS_BATCH = 240   # shot chart pages one catch-up pass reads across all the competitions waiting, at most
+SHOT_WORKERS = 3    # chart pages fetched at once in a catch-up pass
+
+
+def shots_only(st, cid, limit=SHOTS_BATCH, fetch=None, log=print, now=None):
+    """The shot charts of games already stored, for a competition put on data/shot_comps.json after
+    its games were played (the catch-up pass in run.py). Reads the chart pages and nothing else:
+    no schedule page, no fixtures, box scores, standings or lines, so the curated data of an old
+    competition cannot move. Each chart is checked against the stored box score: the attempts it
+    draws for each team should be the box score's FGA. A chart that is plainly another game, or
+    half drawn, is not kept (noted, and read again on a later pass); a small gap is kept and noted."""
+    now = now or time.time()
+    fetch = fetch or source.get
+    res = dict(changed=False, new_games=[], box_missing=[], pbp_missing=[], pbp_found=[], shots_found=[],
+               lines_failed=[], notes=[], shots_bad=[])
+
+    def note(msg):
+        res['notes'].append(msg)
+        log(msg)
+
+    c = st.comp(cid)
+    games = {g[0]: g for g in c['games']}
+    todo = [m for m, g in games.items() if g[1] == 'COMPLETE' and m in st.boxes and m not in st.not_played
+            and not st.has_shots(m)][:max(0, limit)]
+    B = source.BASE + cid + '/'
+
+    def one(m):
+        try:
+            return m, source.shots(fetch(B + 'match/' + m + '/shotchart')), None
+        except source.SourceError as e:
+            return m, None, e
+
+    with cf.ThreadPoolExecutor(max_workers=SHOT_WORKERS) as ex:
+        got = list(ex.map(one, todo))
+    for m, rows, e in got:
+        if e is not None:
+            if getattr(e, 'status', None) == 404:        # the source has no chart page for this game: final
+                st.shots_new[m] = {'cid': cid, 's': []}
+                res['shots_found'].append(m)
+                note('%s: no shot chart page (404): stored as empty' % m)
+            else:
+                note('%s: shot chart page failed (%s): tried again later' % (m, getattr(e, 'status', '') or 'error'))
+            continue
+        if not rows and now - (tipoff(games[m][2]) or 0) < 2 * 86400:
+            continue                                        # a chart may still be drawn in the first days
+        if rows:
+            fga = {}
+            for p in st.boxes[m].get('p', []):
+                try:
+                    fga[p['team']] = fga.get(p['team'], 0) + int(p.get('fga') or 0)
+                except (TypeError, ValueError):
+                    pass
+            box_fga, drawn = sum(fga.values()), len(rows)
+            if box_fga and abs(drawn - box_fga) > max(6, 0.25 * box_fga):
+                res['shots_bad'].append(m)
+                note('%s: shot chart draws %d attempts, the box score has %d FGA: not kept' % (m, drawn, box_fga))
+                continue
+            if box_fga and drawn != box_fga:
+                note('%s: shot chart draws %d attempts, the box score has %d FGA' % (m, drawn, box_fga))
+        st.shots_new[m] = {'cid': cid, 's': rows}
+        res['shots_found'].append(m)
+    res['read'] = len(todo)
+    res['changed'] = bool(res['shots_found'])
+    return res
 
 
 def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), extra_pids=(), fetch=source.get, log=print, now=None):
@@ -455,9 +521,14 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
         except source.SourceError as e:
             note('%s: shot chart page failed (%s): tried again later' % (m, getattr(e, 'status', '') or 'error'))
             continue
-        # an empty chart may still be filled in after the game; two days on, it is taken as it is
-        if not rows and now - (tipoff(theirs[m][2]) or now) < 2 * 86400:
+        # an empty or half-drawn chart may still be filled in after the game (its attempts should be
+        # the box score's FGA); two days on, it is taken as it is
+        young = now - (tipoff(theirs[m][2]) or now) < 2 * 86400
+        box_fga = sum(int(p.get('fga') or 0) for p in st.boxes[m].get('p', []) if str(p.get('fga') or '0').isdigit())
+        if young and (not rows or (box_fga and abs(len(rows) - box_fga) > max(6, 0.25 * box_fga))):
             continue
+        if rows and box_fga and len(rows) != box_fga:
+            note('%s: shot chart draws %d attempts, the box score has %d FGA' % (m, len(rows), box_fga))
         st.shots_new[m] = {'cid': cid, 's': rows}
         res['shots_found'].append(m)
     for g in out:

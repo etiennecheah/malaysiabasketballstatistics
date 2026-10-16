@@ -38,6 +38,7 @@ OVERDUE_FOR = 48 * 3600
 POLL_EVERY = 90
 OVERDUE_EVERY = 25 * 60
 RECENT = 3 * 86400           # a competition stays in the daily pass this long after its last game
+SHOTS_EVERY = 3600          # a finished competition still missing shot charts is visited this often
 DAILY_HOUR = 4               # the daily pass runs after 04:00 Malaysia time
 BUDGET = int(os.environ.get('WATCH_SECONDS', 5 * 3600 + 600))
 T0 = time.time()
@@ -66,7 +67,7 @@ def output(**kw):
 # ---- state -------------------------------------------------------------------------
 def load_state():
     s = json.load(open(STATE)) if os.path.exists(STATE) else {}
-    for k in ('pending', 'daily', 'fail', 'lines_retry', 'overdue_at', 'full'):
+    for k in ('pending', 'daily', 'fail', 'lines_retry', 'overdue_at', 'full', 'shots_at'):
         s.setdefault(k, {})
     s.setdefault('log', [])
     return s
@@ -108,13 +109,17 @@ def open_fixtures(st, c):
 def plan(st, state, now):
     """Which competitions need looking at now, and whether this run should stay on."""
     today = datetime.datetime.fromtimestamp(now, MYT)
-    P = dict(due=[], overdue=[], daily=[], peek=[], hold=False, next=None)
+    P = dict(due=[], overdue=[], daily=[], peek=[], shots=[], hold=False, next=None)
     more = open_comps()
     for c in st.bb['comps']:
         cid = c['id']
         opens = open_fixtures(st, c)
         if cid in more and not opens:
             P['peek'].append(cid)
+        if cid in st.shot_comps and shots_missing(st, c):
+            # a competition added to data/shot_comps.json after its games were played: the catch-up
+            # pass in main() reads its charts a batch at a time (sync.SHOTS_BATCH), until none is missing
+            P['shots'].append(cid)
         tips = [t for t in (tipoff(g[2]) for g in opens) if t]
         if any(t + POLL_FROM <= now <= t + POLL_UNTIL for t in tips):
             P['due'].append(cid)
@@ -143,6 +148,11 @@ def plan(st, state, now):
                 open_fixtures(st, c) for c in st.bb['comps'] if c['id'] == key)):
             P['hold'] = True
     return P
+
+
+def shots_missing(st, c):
+    return any(g[1] == 'COMPLETE' and g[0] in st.boxes and g[0] not in st.not_played and not st.has_shots(g[0])
+               for g in c['games'])
 
 
 def pending_due(state, cid, now):
@@ -365,12 +375,17 @@ def main():
                 peeked[cid] = slot
         for cid in P['daily']:
             todo = [t for t in todo if t[0] != cid] + [(cid, 'daily')]
+        for cid in P['shots']:
+            if not any(t[0] == cid for t in todo) and now - state['shots_at'].get(cid, 0) >= SHOTS_EVERY:
+                todo.append((cid, 'shots'))
         for cid in {p['cid'] for p in state['pending'].values() if now >= p['next']} | \
                 {k for k, v in state['lines_retry'].items() if now >= v['next']}:
             if not any(t[0] == cid for t in todo) and now - last_poll.get(cid, 0) >= 600:
                 todo.append((cid, 'retry'))
 
         for cid, kind in todo:
+            if kind == 'shots':                      # the catch-up pass below takes these, all in one build
+                continue
             f = state['fail'].get(cid)
             if f and now < f.get('next', 0):
                 continue
@@ -453,6 +468,66 @@ def main():
             commit(msg, ['data', 'autosync/state.json'])
             output(deploy='true', again='true', built=fp2, fail='true' if failed else 'false')
             return
+
+        # ---- shot chart catch-up: competitions put on data/shot_comps.json after their games were
+        # played. Only when nothing else changed this time round. One pass reads up to
+        # sync.SHOTS_BATCH chart pages across all the competitions waiting (sync.shots_only: the
+        # charts only, each checked against its box score), then one build and one commit; the
+        # fresh run that follows takes the next batch.
+        waiting = [cid for cid, kind in todo if kind == 'shots']
+        if waiting and not P['due'] and now >= state['fail'].get('shots', {}).get('next', 0):   # never while a game is being followed
+            pip_deps()
+            import sync
+            left, found, notes = sync.SHOTS_BATCH, [], []
+            for cid in waiting:
+                if left <= 0:
+                    break
+                try:
+                    r = sync.shots_only(st, cid, limit=left, now=now, log=log)
+                except Exception as e:               # one competition's trouble must not stop the others
+                    log('shots %s: %s' % (cid, e))
+                    continue
+                if r['read'] < left:                 # it got every page it wanted: what is left failed, so it waits an hour
+                    state['shots_at'][cid] = now     # (one cut short by the batch limit goes on in the next run)
+                    dirty = True
+                left -= r['read']
+                found += [(cid, m) for m in r['shots_found']]
+                notes += r['notes']
+            if found:
+                ncomp = len({c for c, _ in found})
+                msg = 'sync: shot charts of %d game%s in %d competition%s' % (
+                    len(found), '' if len(found) == 1 else 's', ncomp, '' if ncomp == 1 else 's')
+                if remote_head() not in (None, head):
+                    log('the repository moved on while syncing: a fresh run starts over on the new version')
+                    output(deploy='false', again='true', fail='true' if failed else 'false')
+                    return
+                try:
+                    st.save()
+                    fp2 = fingerprint()
+                    build(fp2, msg)
+                    smoke()
+                except Exception as e:
+                    sh('git', 'reset', '-q', check=False)
+                    sh('git', 'checkout', '--', 'data', check=False)
+                    for _, m in found:                       # the chart files just written
+                        if not sh('git', 'ls-files', '--', 'data/shots/%s.json' % m, check=False):
+                            try:
+                                os.remove(os.path.join(ROOT, 'data', 'shots', m + '.json'))
+                            except OSError:
+                                pass
+                    failed = fail_note(state, 'shots', e, now) or failed
+                    print(str(e), file=sys.stderr)
+                    save_state(state)
+                    commit('sync state', ['autosync/state.json'])
+                    output(deploy='false', again='true', fail='true' if failed else 'false')
+                    return
+                state['fail'].pop('shots', None)
+                state['built'] = {'fp': fp2, 'at': time.time()}
+                event(state, msg + ('' if not notes else '  [' + '; '.join(notes[:12]) + (' …' if len(notes) > 12 else '') + ']'))
+                save_state(state)
+                commit(msg, ['data', 'autosync/state.json'])
+                output(deploy='true', again='true', built=fp2, fail='true' if failed else 'false')
+                return
 
         if dirty:
             save_state(state)

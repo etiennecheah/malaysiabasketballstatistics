@@ -3560,6 +3560,23 @@
   @media (max-width:900px){ .sm{ grid-template-columns:1fr; } .sm-left{ position:static; } }
   .sm-pick{ display:inline-flex; align-items:center; gap:8px; margin-bottom:12px; font-size:13px; color:var(--text-muted); }
   .sm-pick select{ font:inherit; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:6px 8px; max-width:100%; }
+  /* what the map covers: career or one season, then optionally one event of it */
+  .sm-scope{ display:flex; align-items:center; gap:12px 16px; flex-wrap:wrap; margin-bottom:14px; }
+  .sm-scope .sm-pick{ margin:0; }
+  .sm-seg{ display:inline-flex; gap:2px; background:var(--surface-alt); border:1px solid var(--border); border-radius:10px; padding:3px; }
+  .sm-seg button{ all:unset; cursor:pointer; font-size:13px; font-weight:600; color:var(--text-muted); padding:6px 12px; border-radius:7px; display:inline-flex; align-items:baseline; gap:6px; white-space:nowrap; }
+  .sm-seg button small{ font-size:11.5px; font-weight:500; color:var(--text-faint); font-variant-numeric:tabular-nums; }
+  .sm-seg button[aria-pressed="true"]{ background:var(--surface); color:var(--text); box-shadow:var(--shadow); }
+  .sm-seg button:focus-visible, .sm-evrow:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .sm-evs{ display:flex; flex-direction:column; }
+  .sm-evrow{ all:unset; cursor:pointer; display:grid; grid-template-columns:1fr auto; gap:2px 12px; padding:10px 4px; border-bottom:1px solid var(--hair); }
+  .sm-evrow:hover{ background:var(--surface-alt); }
+  .sm-evrow .nm{ font-weight:600; }
+  .sm-evrow .sb{ font-size:12.5px; color:var(--text-faint); font-variant-numeric:tabular-nums; }
+  .sm-evrow .pc{ text-align:right; font-weight:700; font-variant-numeric:tabular-nums; }
+  .sm-evrow .df{ text-align:right; font-size:12.5px; font-weight:600; font-variant-numeric:tabular-nums; }
+  .sm-evrow .bar{ grid-column:1/-1; height:4px; border-radius:2px; background:var(--hair); overflow:hidden; }
+  .sm-evrow .bar i{ display:block; height:100%; background:var(--text-faint); border-radius:2px; }
   .sm-views{ display:flex; gap:4px; flex-wrap:wrap; background:var(--surface-alt); border:1px solid var(--border); border-radius:12px; padding:4px; }
   .sm-views button{ all:unset; cursor:pointer; flex:1 1 auto; text-align:center; font-size:13px; font-weight:600; color:var(--text-muted); padding:7px 10px; border-radius:9px; white-space:nowrap; }
   .sm-views button[aria-pressed="true"]{ background:var(--surface); color:var(--text); box-shadow:var(--shadow); }
@@ -3569,6 +3586,7 @@
   .sm-legend i{ width:22px; height:12px; border-radius:3px; display:inline-block; }
   .sm-stage{ position:relative; background:radial-gradient(120% 90% at 50% 0%, oklch(20% 0.025 262), var(--void)); border-radius:14px; overflow:hidden; }
   .sm-stage canvas{ display:block; width:100%; height:auto; touch-action:none; }
+  .sm-stage canvas.sm-ov{ position:absolute; left:0; top:0; pointer-events:none; }
   .sm-badge{ position:absolute; left:12px; top:12px; background:rgba(10,15,26,.72); border:1px solid rgba(120,140,180,.25); border-radius:10px; padding:6px 10px; font-size:12px; color:#9aa6bd; pointer-events:none; max-width:60%; }
   .sm-badge b{ display:block; color:#eef2f8; font-family:var(--display); font-size:16px; font-variant-numeric:tabular-nums; }
   .sm-tip{ position:absolute; z-index:3; pointer-events:none; min-width:190px; max-width:240px; background:rgba(9,14,24,.95); border:1px solid rgba(120,140,180,.3); border-radius:10px; padding:9px 11px; color:#eef2f8; font-size:12.5px; line-height:1.35; box-shadow:0 8px 24px rgba(0,0,0,.45); }

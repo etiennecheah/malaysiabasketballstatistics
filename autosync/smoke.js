@@ -103,11 +103,11 @@ function serve(root, base) {
   }
 
   // the Shot map tab, where any competition has shot charts: it loads its file and draws the court
-  const shotPid = await page.evaluate(() => { const i = DB.shotIdx || {}; for (const c in i) { const p = Object.keys(i[c]).sort((a, b) => i[c][b] - i[c][a])[0]; if (p) return p; } return null; });
+  const shotPid = await page.evaluate(() => String(DB.shotIdx || '').split(',').filter(Boolean)[0] || null);
   if (shotPid) {
     await go('/p/' + shotPid + '/shots');
     let ok = false;
-    for (let i = 0; i < 40 && !ok; i++) {
+    for (let i = 0; i < 80 && !ok; i++) {           // a career map loads his file and every event's averages
       ok = await page.evaluate(() => !!document.getElementById('sm-cv') && document.querySelectorAll('.sm-zrow').length > 0);
       if (!ok) await page.waitForTimeout(150);
     }

@@ -1,33 +1,49 @@
 /* =========================================================================
-   Shot map — a player profile tab (#/p/<pid>/shots) for the competitions
-   whose shot charts the sync reads (data/shot_comps.json). Three views of
-   the same shots: a 3D terrain (height = how often he shoots from a spot,
-   colour = his FG% there against the competition's FG% from the same spot),
-   zones (his FG% per zone against the competition's) and every shot.
-   The shots load per competition from stats/sh/<cid>.js (build_shots.py);
-   DB.shotIdx says beforehand who has any.
+   Shot map — a player profile tab (#/p/<pid>/shots). Three views of the
+   same shots: a 3D terrain (height = how often he shoots from a spot,
+   colour = his FG% there against the average from the same spot), zones
+   (his FG% per zone against the average) and every shot.
+   Scope: his whole career, one season, one event of that season, one game.
+   The average is always the event's own: every shot he took is set against
+   the shots of the event it was taken in, so a career map that mixes a U20
+   league with the Agong Cup compares each shot with its own field.
+   Data (build_shots.py): stats/sh/<cid>.js holds an event's averages
+   (zones and a 0.5 m grid); stats/shp/<pid>.js holds one player's shots in
+   every event. DB.shotIdx (the ids of every player with a shot, comma-joined) says
+   beforehand who gets the tab; the rest comes with his file.
    ========================================================================= */
-const SH_DATA = {}, SH_ST = {};
+const SH_DATA = {}, SH_ST = {}, SHP_DATA = {}, SHP_ST = {};
 function SHOTS_PUT(cid, d) {
   SH_DATA[cid] = d;
   d.LG = d.G ? d.G.split(';').map(t => t.split(',').map(Number)).map(([i, j, a, m]) => ({x: i * 0.5 - 7.5 + 0.25, d: j * 0.5 + 0.25, a, m})) : [];
   d.LZ = {}; Object.entries(d.Z).forEach(([k, [a, m]]) => { d.LZ[k] = a ? m / a : 0; });
 }
-function ensureShots(cid) {
-  if (SH_ST[cid]) return;
-  SH_ST[cid] = 'loading';
+function SHOTP_PUT(pid, d) { SHP_DATA[pid] = d; }
+function smLoad(url, key, st, data) {
+  if (st[key]) return;
+  st[key] = 'loading';
   const s = document.createElement('script');
-  s.src = HS.BASE + 'stats/sh/' + cid + '.js';
-  const done = ok => { SH_ST[cid] = ok && SH_DATA[cid] ? 'done' : 'error'; if (/\/shots$/.test(HS.hash())) softRoute(); };
+  s.src = HS.BASE + url;
+  const done = ok => { st[key] = ok && data[key] ? 'done' : 'error'; if (/\/shots$/.test(HS.hash())) softRoute(); };
   s.onload = () => done(true); s.onerror = () => done(false);
   document.head.appendChild(s);
 }
+const ensureShots = cid => smLoad('stats/sh/' + cid + '.js', cid, SH_ST, SH_DATA);
+const ensurePlayerShots = pid => smLoad('stats/shp/' + pid + '.js', pid, SHP_ST, SHP_DATA);
+// the events he has shots in, newest first (from his file, once it is loaded)
 function smComps(pid) {
-  const idx = DB.shotIdx || {};
-  return Object.keys(idx).filter(cid => idx[cid][pid] && COMP_BY_ID[cid])
-    .sort((a, b) => (COMP_BY_ID[b].end || '').localeCompare(COMP_BY_ID[a].end || ''));
+  const d = SHP_DATA[pid]; if (!d) return [];
+  return Object.keys(d.E).filter(cid => d.E[cid].length && COMP_BY_ID[cid])
+    .sort((a, b) => (COMP_BY_ID[b].start || COMP_BY_ID[b].end || '').localeCompare(COMP_BY_ID[a].start || COMP_BY_ID[a].end || ''));
 }
-function smHas(pid) { return smComps(pid).length > 0; }
+let SM_WHO = null;
+function smHas(pid) { return (SM_WHO || (SM_WHO = new Set(String(DB.shotIdx || '').split(',')))).has(pid); }
+const smCount = (pid, cid) => ((SHP_DATA[pid] || {E: {}}).E[cid] || []).length;
+const smYear = cid => String(COMP_BY_ID[cid].year || (COMP_BY_ID[cid].start || '').slice(0, 4));
+// a short name for an event ("Agong Cup 2026"); the full name when two of his events would share it
+const smShortRaw = cid => { const c = COMP_BY_ID[cid]; return typeof tierLabel === 'function' ? tierLabel(c) + ' ' + smYear(cid) : (c.label || c.name); };
+const smShort = cid => { const s = smShortRaw(cid), c = COMP_BY_ID[cid];
+  return SM.pid && smComps(SM.pid).some(k => k !== cid && smShortRaw(k) === s) ? (c.label || c.name) : s; };
 
 /* ------------------------------------------------------------ geometry */
 const SM_RIM = 1.575;
@@ -45,26 +61,53 @@ function smZoneAt(x, d) {                 // a floor point: beyond the line coun
 }
 
 /* ------------------------------------------------------------- state */
-const SM = {pid: null, cid: null, view: 'terrain', game: 'all', zone: null, surf: null, surfKey: '', Zv: null, lg: {}};
+// scope: 'career' or a season ('2026'); ev: 'all' or one event of the scope; game: 'all' or one game of that event
+const SM = {pid: null, scope: 'career', ev: 'all', game: 'all', view: 'terrain', zone: null, surf: null, surfKey: '', Zv: null, lg: {}, mix: null};
 try { const v = localStorage.getItem('hs-shotmap-view'); if (v === 'terrain' || v === 'zones' || v === 'shots') SM.view = v; } catch (e) {}
+function smScopeComps(pid) {
+  const all = smComps(pid);
+  const inScope = SM.scope === 'career' ? all : all.filter(cid => smYear(cid) === SM.scope);
+  return SM.ev === 'all' ? inScope : inScope.filter(cid => cid === SM.ev);
+}
+function smAllShots(pid) {
+  const d = SHP_DATA[pid]; if (!d) return [];
+  const out = [];
+  Object.entries(d.E).forEach(([cid, rows]) => rows.forEach(s => out.push({x: s[0], y: s[1], made: s[2], three: s[3], type: d.T[s[4]], mid: d.M[s[5]], per: s[6], cid, z: smZoneOf(s[0], s[1], s[3])})));
+  return out;
+}
 function smShots() {
-  const d = SH_DATA[SM.cid]; if (!d) return [];
-  const all = (d.P[SM.pid] || []).map(s => ({x: s[0], y: s[1], made: s[2], three: s[3], type: d.T[s[4]], mid: d.M[s[5]], per: s[6], z: smZoneOf(s[0], s[1], s[3])}));
+  const keep = new Set(smScopeComps(SM.pid));
+  const all = smAllShots(SM.pid).filter(s => keep.has(s.cid));
   return SM.game === 'all' ? all : all.filter(s => s.mid === SM.game);
 }
 const smPct = p => (p * 100).toFixed(1) + '%';
 const smDiff = d => (d >= 0 ? '+' : '−') + Math.abs(d * 100).toFixed(1) + ' pts';
 const smCls = d => d > 0.02 ? 'sm-up' : d < -0.02 ? 'sm-down' : 'sm-even';
-function smSummary(list, LZ) {
+const smAvgOf = s => (SH_DATA[s.cid] ? SH_DATA[s.cid].LZ[s.z] : 0) || 0;
+/* The average for a zone in the current scope: what an average player would make taking his shots
+   there, each from its own event. A zone he has no shots in gets the events' averages, weighted by
+   how many of his shots each event holds. */
+function smMixLZ(list, cids) {
+  const byEv = {}; list.forEach(s => { byEv[s.cid] = (byEv[s.cid] || 0) + 1; });
+  const w = cids.map(c => [c, byEv[c] || (list.length ? 0 : 1)]).filter(([c, n]) => n && SH_DATA[c]);
+  const tot = w.reduce((t, [, n]) => t + n, 0) || 1;
+  const LZ = {};
+  Object.keys(SM_ZONES).forEach(z => {
+    const zs = list.filter(s => s.z === z);
+    LZ[z] = zs.length ? zs.reduce((t, s) => t + smAvgOf(s), 0) / zs.length : w.reduce((t, [c, n]) => t + (SH_DATA[c].LZ[z] || 0) * n, 0) / tot;
+  });
+  return {LZ, w, tot};
+}
+function smSummary(list) {
   const byZ = {};
   list.forEach(s => { const z = byZ[s.z] = byZ[s.z] || [0, 0]; z[0]++; z[1] += s.made; });
   const a = list.length, m = list.reduce((t, s) => t + s.made, 0);
-  return {byZ, a, m, exp: a ? list.reduce((t, s) => t + (LZ[s.z] || 0), 0) / a : 0};
+  return {byZ, a, m, exp: a ? list.reduce((t, s) => t + smAvgOf(s), 0) / a : 0};
 }
-// the games he has shots in, with his team's result
+// the games of one event he has shots in, with his team's result
 function smGames(pid, cid) {
-  const d = SH_DATA[cid]; if (!d) return [];
-  const mids = [...new Set((d.P[pid] || []).map(s => d.M[s[5]]))];
+  const d = SHP_DATA[pid]; if (!d || !d.E[cid]) return [];
+  const mids = [...new Set(d.E[cid].map(s => d.M[s[5]]))];
   return mids.map(mid => {
     const g = GAME_BY_MID[mid]; if (!g) return {mid, label: mid, date: ''};
     const b = typeof getBox === 'function' ? getBox(mid) : null;
@@ -78,34 +121,52 @@ function smGames(pid, cid) {
 
 /* -------------------------------------------------------------- tab */
 function smTab(pid) {
-  const comps = smComps(pid);
-  if (SM.pid !== pid) { SM.pid = pid; SM.cid = null; SM.game = 'all'; SM.zone = null; SM.surfKey = ''; }
-  if (!SM.cid || comps.indexOf(SM.cid) < 0) SM.cid = comps[0];
-  const cid = SM.cid, c = COMP_BY_ID[cid], d = SH_DATA[cid];
-  const pick = comps.length > 1 ? `<label class="sm-pick"><span>Competition</span><select data-smc="1">${comps.map(k => `<option value="${k}"${k === cid ? ' selected' : ''}>${esc(COMP_BY_ID[k].label || COMP_BY_ID[k].name)}</option>`).join('')}</select></label>` : '';
-  if (!d) {
-    ensureShots(cid);
-    const msg = SH_ST[cid] === 'error' ? 'The shot chart could not be loaded. Refresh the page to try again.' : 'Loading the shot chart…';
-    return pvSec('Shot map', esc(c.label || c.name), '', `${pick}<div class="card pv-card"><div class="empty-row"><span class="empty-dot"></span>${msg}</div></div>`);
+  if (!SHP_DATA[pid]) {
+    ensurePlayerShots(pid);
+    return pvSec('Shot map', '', '', `<div class="card pv-card"><div class="empty-row"><span class="empty-dot"></span>${SHP_ST[pid] === 'error' ? 'The shot chart could not be loaded. Refresh the page to try again.' : 'Loading the shot chart…'}</div></div>`);
   }
-  const games = smGames(pid, cid);
+  const comps = smComps(pid);
+  if (SM.pid !== pid) { SM.pid = pid; SM.scope = 'career'; SM.ev = 'all'; SM.game = 'all'; SM.zone = null; SM.surfKey = ''; }
+  const years = [...new Set(comps.map(smYear))].sort().reverse();
+  if (SM.scope !== 'career' && years.indexOf(SM.scope) < 0) SM.scope = 'career';
+  const scopeAll = SM.scope === 'career' ? comps : comps.filter(c => smYear(c) === SM.scope);
+  if (SM.ev !== 'all' && scopeAll.indexOf(SM.ev) < 0) SM.ev = 'all';
+  const cids = smScopeComps(pid);
+  // everything this view needs: his shots and the averages of each event in it
+  const missing = cids.filter(c => !SH_DATA[c]).length;
+  const nOf = list => list.reduce((t, c) => t + smCount(pid, c), 0);
+  const scopeBtns = [['career', 'Career', nOf(comps)]].concat(years.map(y => [y, y, nOf(comps.filter(c => smYear(c) === y))]));
+  const scopeBar = `<div class="sm-scope">
+    <div class="sm-seg" role="group" aria-label="Shots from">${scopeBtns.map(([k, l, n]) => `<button data-sms="${k}" aria-pressed="${SM.scope === k}">${l}<small>${n}</small></button>`).join('')}</div>
+    ${scopeAll.length > 1 ? `<label class="sm-pick"><span>Event</span><select data-sme="1"><option value="all"${SM.ev === 'all' ? ' selected' : ''}>All ${scopeAll.length} events${SM.scope === 'career' ? '' : ' of ' + SM.scope}</option>${scopeAll.map(k => `<option value="${k}"${k === SM.ev ? ' selected' : ''}>${esc(smShort(k))} · ${smCount(pid, k)} shots</option>`).join('')}</select></label>` : ''}
+  </div>`;
+  if (missing) {
+    cids.forEach(ensureShots);
+    const err = cids.some(c => SH_ST[c] === 'error');
+    return pvSec('Shot map', '', '', `${scopeBar}<div class="card pv-card"><div class="empty-row"><span class="empty-dot"></span>${err ? 'The shot chart could not be loaded. Refresh the page to try again.' : 'Loading the shot chart…'}</div></div>`);
+  }
+  const games = SM.ev !== 'all' ? smGames(pid, SM.ev) : [];
   if (SM.game !== 'all' && !games.some(g => g.mid === SM.game)) SM.game = 'all';
-  const list = smShots(), sm = smSummary(list, d.LZ);
+  const list = smShots(), sm = smSummary(list), mix = SM.mix = smMixLZ(list, cids);
   if (!SM.zone || !sm.byZ[SM.zone]) SM.zone = Object.entries(sm.byZ).sort((p, q) => q[1][0] - p[1][0])[0]?.[0] || 'PT';
-  const fg = sm.a ? sm.m / sm.a : 0;
+  const fg = sm.a ? sm.m / sm.a : 0, LZ = mix.LZ;
+  const nGames = new Set(list.map(s => s.mid)).size;
+  const where = SM.ev !== 'all' ? smShort(SM.ev) : SM.scope === 'career' ? 'Career' : 'Season ' + SM.scope;
+  const avgName = cids.length > 1 ? 'the same events' : 'this event';
   const views = [['terrain', '3D terrain'], ['zones', 'Zones'], ['shots', 'Every shot']];
   const note = {
-    terrain: 'Colour: his shooting compared with every shot in this competition from the same spot. Height: how often he shoots there.',
-    zones: 'His FG% in each zone, coloured against the competition average for that zone. Grey zones: no attempts.',
+    terrain: `Colour: his shooting compared with the average from the same spot in ${avgName}. Height: how often he shoots there.`,
+    zones: `His FG% in each zone, coloured against the average for that zone in ${avgName}. Grey zones: no attempts.`,
     shots: 'Every attempt where it was taken. Filled circle: made. Cross: missed.'}[SM.view];
   const rows = Object.entries(sm.byZ).sort((p, q) => q[1][0] - p[1][0] || q[1][1] - p[1][1]);
-  const body = `${pick}
+  const body = `${scopeBar}
   <div class="sm">
     <div class="sm-left">
       <div class="sm-views" role="group" aria-label="Chart style">${views.map(([k, l]) => `<button data-smv="${k}" aria-pressed="${SM.view === k}">${l}</button>`).join('')}</div>
       <div class="sm-stage">
         <canvas id="sm-cv" width="1440" height="880" role="img" aria-label="Shot map"></canvas>
-        <div class="sm-badge"><span>${SM.game === 'all' ? games.length + ' game' + (games.length === 1 ? '' : 's') : esc((games.find(g => g.mid === SM.game) || {}).label || '')}</span><b>${sm.m}/${sm.a} FG</b></div>
+        <canvas id="sm-ov" class="sm-ov" width="1440" height="880" aria-hidden="true"></canvas>
+        <div class="sm-badge"><span>${esc(SM.game === 'all' ? where : (games.find(g => g.mid === SM.game) || {}).label || '')}${SM.game === 'all' ? ` · ${cids.length > 1 ? cids.length + ' events, ' : ''}${nGames} game${nGames === 1 ? '' : 's'}` : ''}</span><b>${sm.m}/${sm.a} FG</b></div>
         <div class="sm-tip" id="sm-tip" hidden></div>
         ${games.length > 1 ? `<div class="sm-chips" role="group" aria-label="Games"><button data-smg="all" aria-pressed="${SM.game === 'all'}">All games</button>${games.map(g => `<button data-smg="${g.mid}" aria-pressed="${SM.game === g.mid}">${esc(g.label)}</button>`).join('')}</div>` : ''}
       </div>
@@ -118,30 +179,33 @@ function smTab(pid) {
       </div>
     </div>
     <aside class="sm-explain" aria-label="What the map shows">
-      <div class="sm-zone" id="sm-zone" aria-live="polite">${smZonePanel(list, d)}</div>
-      ${smNotes(list, d)}
+      <div class="sm-zone" id="sm-zone" aria-live="polite">${smZonePanel(list)}</div>
+      ${smNotes(list)}
+      ${cids.length > 1 ? smEvents(pid, cids) : ''}
       <div class="sm-zones">
         <div class="sm-zones-h"><h3>Zones</h3><span>most attempts first</span></div>
-        ${rows.map(([z, [a, m]]) => { const p = m / a, df = p - (d.LZ[z] || 0);
+        ${rows.map(([z, [a, m]]) => { const p = m / a, df = p - (LZ[z] || 0);
           return `<div class="sm-zrow${SM.zone === z ? ' on' : ''}" data-smz="${z}" tabindex="0">
             <span class="nm">${SM_ZONES[z]}</span><span class="pc">${smPct(p)}</span>
-            <span class="sb">${m}/${a} · ${(a / sm.a * 100).toFixed(0)}% of his shots · average ${smPct(d.LZ[z] || 0)}</span><span class="df ${smCls(df)}">${smDiff(df)}</span>
+            <span class="sb">${m}/${a} · ${(a / sm.a * 100).toFixed(0)}% of his shots · average ${smPct(LZ[z] || 0)}</span><span class="df ${smCls(df)}">${smDiff(df)}</span>
             <span class="bar" aria-hidden="true"><i style="width:${(a / sm.a * 100).toFixed(1)}%"></i></span></div>`; }).join('')}
       </div>
       <details class="sm-method">
         <summary>How to read this map</summary>
-        <p><b>Source.</b> Shot positions from the organiser's shot chart for each game, in 1% steps (about 28 cm along the court, 15 cm across). The average is every shot in this competition: ${d.n.toLocaleString('en')} in ${d.g} game${d.g === 1 ? '' : 's'}.</p>
+        <p><b>Source.</b> Shot positions from the organiser's shot chart for each game, in 1% steps (about 28 cm along the court, 15 cm across). Shot charts start with the 2026 competitions; the NXT Championship, MSSM and FIBA events have none.</p>
+        <p><b>The average.</b> Each shot is compared with the event it was taken in: ${cids.map(c => `${esc(smShort(c))} (${SH_DATA[c].n.toLocaleString('en')} shots in ${SH_DATA[c].g} game${SH_DATA[c].g === 1 ? '' : 's'})`).join(', ')}. A career map that mixes a U20 league with the Agong Cup therefore never holds a U20 shot to a senior average, or the other way round.</p>
         <p><b>Zones.</b> Two or three points is the source's own label. Corner 3 = within about 3.1 m of the baseline; top of the arc = between the lane lines extended. Left and right are from the shooter's view, facing the basket.</p>
-        <p><b>Terrain.</b> His makes are smoothed over about 1.6 m and pulled toward the competition average where he has few shots. Expected FG% = what an average shooter in this competition would make from his zones.</p>
+        <p><b>Terrain.</b> His makes are smoothed over about 1.6 m and pulled toward the average where he has few shots. Expected FG% = what an average shooter in the same events would make from his spots.</p>
       </details>
     </aside>
   </div>`;
-  return pvSec('Shot map', esc(c.label || c.name) + ' · ' + sm.a + ' field-goal attempts', '', body);
+  const sub = `${esc(where)} · ${sm.a} field-goal attempt${sm.a === 1 ? '' : 's'}`;
+  return pvSec('Shot map', sub, '', body);
 }
 
 /* the selected zone, at the top of the explanation box; redrawn on hover without a re-render */
-function smZonePanel(list, d) {
-  const z = SM.zone, zs = list.filter(s => s.z === z), a = zs.length, m = zs.reduce((t, s) => t + s.made, 0), avg = d.LZ[z] || 0;
+function smZonePanel(list) {
+  const z = SM.zone, zs = list.filter(s => s.z === z), a = zs.length, m = zs.reduce((t, s) => t + s.made, 0), avg = (SM.mix && SM.mix.LZ[z]) || 0;
   const df = a ? m / a - avg : 0;
   return `<div class="k">Selected zone · hover the court or a row below</div><div class="n">${SM_ZONES[z] || ''}</div>
     <div class="g"><div><small>FGM/FGA</small><span>${a ? m + '/' + a : 'no shots'}</span></div>
@@ -149,28 +213,42 @@ function smZonePanel(list, d) {
     <div><small>Versus average</small><span class="${a ? smCls(df) : ''}">${a ? smDiff(df) : '–'}</span><em>average ${smPct(avg)}</em></div></div>`;
 }
 
+/* one row per event in a career or season map; each against its own event's average */
+function smEvents(pid, cids) {
+  const all = smShots();
+  const rows = cids.map(cid => { const l = all.filter(s => s.cid === cid), s = smSummary(l); return {cid, ...s, games: new Set(l.map(x => x.mid)).size}; }).filter(r => r.a);
+  const max = Math.max(...rows.map(r => r.a));
+  return `<div class="sm-evs"><div class="sm-zones-h"><h3>By event</h3><span>each against its own event</span></div>
+    ${rows.map(r => { const p = r.m / r.a, df = p - r.exp, three = all.filter(s => s.cid === r.cid && s.three), t3m = three.reduce((t, s) => t + s.made, 0);
+      return `<button class="sm-evrow" data-sme-go="${r.cid}">
+        <span class="nm">${esc(smShort(r.cid))}</span><span class="pc">${smPct(p)}</span>
+        <span class="sb">${r.m}/${r.a} FG · ${t3m}/${three.length} 3P · ${r.games} game${r.games === 1 ? '' : 's'}</span><span class="df ${smCls(df)}">${smDiff(df)}</span>
+        <span class="bar" aria-hidden="true"><i style="width:${(r.a / max * 100).toFixed(1)}%"></i></span></button>`; }).join('')}</div>`;
+}
+
 /* automatic notes: the zones that stand out, the two sides, the overall line */
-function smNotes(list, d) {
-  const LZ = d.LZ, sm = smSummary(list, LZ), Z = sm.byZ;
+function smNotes(list) {
+  const LZ = SM.mix.LZ, sm = smSummary(list), Z = sm.byZ;
   if (sm.a < 8) return '';
-  const lgOf = (...ks) => { let a = 0, m = 0; ks.forEach(k => { if (d.Z[k]) { a += d.Z[k][0]; m += d.Z[k][1]; } }); return a ? m / a : 0; };
+  // the average for a group of zones: his shots there, each against its own event (the scope's mix where he has none)
+  const lgOf = (...ks) => { const zs = list.filter(s => ks.includes(s.z)); return zs.length ? zs.reduce((t, s) => t + smAvgOf(s), 0) / zs.length : ks.reduce((t, k) => t + LZ[k], 0) / ks.length; };
   const sum = (...ks) => ks.reduce((t, k) => [t[0] + (Z[k] || [0, 0])[0], t[1] + (Z[k] || [0, 0])[1]], [0, 0]);
   const N = [];
   const ranked = Object.entries(Z).filter(([, [a]]) => a >= 4).map(([z, [a, m]]) => ({z, a, m, df: m / a - LZ[z]})).sort((p, q) => q.df - p.df);
   const best = ranked[0], worst = ranked[ranked.length - 1];
-  if (best && best.df > 0.05) N.push(['u', `Best zone: ${SM_ZONES[best.z].toLowerCase()}`, `${best.m}/${best.a} (${smPct(best.m / best.a)}) against ${smPct(LZ[best.z])} for the competition.`]);
+  if (best && best.df > 0.05) N.push(['u', `Best zone: ${SM_ZONES[best.z].toLowerCase()}`, `${best.m}/${best.a} (${smPct(best.m / best.a)}) against an average of ${smPct(LZ[best.z])}.`]);
   if (worst && worst !== best && worst.df < -0.05) N.push(['d', `Coldest zone: ${SM_ZONES[worst.z].toLowerCase()}`, `${worst.m}/${worst.a} (${smPct(worst.m / worst.a)}) against ${smPct(LZ[worst.z])}.`]);
   const L3 = sum('C3L', 'W3L'), R3 = sum('C3R', 'W3R');
   if (L3[0] >= 3 && R3[0] >= 3) {
     const l = L3[1] / L3[0], r = R3[1] / R3[0];
-    if (Math.abs(l - r) >= 0.1) N.push([l > r ? 'u' : 'd', `Threes: better from the ${l > r ? 'left' : 'right'}`, `${L3[1]}/${L3[0]} (${smPct(l)}) on the left, ${R3[1]}/${R3[0]} (${smPct(r)}) on the right; the competition shoots ${smPct(lgOf('C3L', 'W3L'))} and ${smPct(lgOf('C3R', 'W3R'))}.`]);
+    if (Math.abs(l - r) >= 0.1) N.push([l > r ? 'u' : 'd', `Threes: better from the ${l > r ? 'left' : 'right'}`, `${L3[1]}/${L3[0]} (${smPct(l)}) on the left, ${R3[1]}/${R3[0]} (${smPct(r)}) on the right; the average is ${smPct(lgOf('C3L', 'W3L'))} and ${smPct(lgOf('C3R', 'W3R'))}.`]);
   }
   const pt = Z.PT || [0, 0];
   if (pt[0] >= 4) N.push([pt[1] / pt[0] - LZ.PT > 0 ? 'u' : 'd', 'In the paint', `${pt[1]}/${pt[0]} (${smPct(pt[1] / pt[0])}) against ${smPct(LZ.PT)}; ${Math.round(pt[0] / sm.a * 100)}% of his shots come from there.`]);
   const mid = sum('ML', 'MC', 'MR'), all3 = sum('C3L', 'C3R', 'W3L', 'W3R', 'T3');
   if (mid[0] >= 3) N.push(['', 'Mid-range', `${mid[1]}/${mid[0]} (${smPct(mid[1] / mid[0])}) against ${smPct(lgOf('ML', 'MC', 'MR'))}.`]);
   const fg = sm.m / sm.a;
-  N.push(['', 'Overall', `${sm.m}/${sm.a} (${smPct(fg)}) where an average shooter in this competition taking the same shots would make ${smPct(sm.exp)}` +
+  N.push(['', 'Overall', `${sm.m}/${sm.a} (${smPct(fg)}) where an average shooter taking the same shots in the same events would make ${smPct(sm.exp)}` +
     (Math.abs((fg - sm.exp) * sm.a) >= 1 ? `: about ${Math.abs(Math.round((fg - sm.exp) * sm.a))} ${fg > sm.exp ? 'more' : 'fewer'} makes than expected` : '') +
     (all3[0] ? `. From three: ${all3[1]}/${all3[0]} (${smPct(all3[1] / all3[0])}) against ${smPct(lgOf('C3L', 'C3R', 'W3L', 'W3R', 'T3'))}.` : '.')]);
   const L = list.filter(s => s.x < -0.75), R = list.filter(s => s.x > 0.75), mk = a => a.reduce((t, s) => t + s.made, 0);
@@ -253,17 +331,21 @@ function smLeagueSurf(cid) {
   for (let j = 0; j < SM_ND; j++) for (let i = 0; i < SM_NX; i++) {
     const x = -7.5 + (i + 0.5) * SM_STEP, d = (j + 0.5) * SM_STEP;
     let w = 0, m = 0;
-    for (const c of LG) { const k = Math.exp(-((c.x - x) ** 2 + (c.d - d) ** 2) / 2); w += k * c.a; m += k * c.m; }
+    for (const c of LG) { const r2 = (c.x - x) ** 2 + (c.d - d) ** 2; if (r2 > 12) continue; const k = Math.exp(-r2 / 2); w += k * c.a; m += k * c.m; }   // beyond 3.5 m the weight is under 0.3%
     out[j * SM_NX + i] = w > 0.5 ? m / w : 0.42;
   }
   return (SM.lg[cid] = out);
 }
-function smLeagueAt(cid, x, d) {
-  const s = smLeagueSurf(cid), i = Math.max(0, Math.min(SM_NX - 1, Math.floor((x + 7.5) / SM_STEP))), j = Math.max(0, Math.min(SM_ND - 1, Math.floor(d / SM_STEP)));
-  return s[j * SM_NX + i];
+// the average surface for the current scope: each event's own, weighted by how many of his shots it holds
+function smMixSurf() {
+  const w = SM.mix.w, tot = SM.mix.tot;
+  if (w.length === 1) return smLeagueSurf(w[0][0]);
+  const out = new Float32Array(SM_NX * SM_ND);
+  w.forEach(([cid, n]) => { const s = smLeagueSurf(cid); for (let k = 0; k < out.length; k++) out[k] += s[k] * n / tot; });
+  return out;
 }
 function smSurfaces(list) {
-  const lg = smLeagueSurf(SM.cid), dens = new Float32Array(SM_NX * SM_ND), diff = new Float32Array(SM_NX * SM_ND);
+  const lg = smMixSurf(), dens = new Float32Array(SM_NX * SM_ND), diff = new Float32Array(SM_NX * SM_ND);
   let max = 0;
   for (let j = 0; j < SM_ND; j++) for (let i = 0; i < SM_NX; i++) {
     const x = -7.5 + (i + 0.5) * SM_STEP, d = (j + 0.5) * SM_STEP;
@@ -280,7 +362,7 @@ function smSurfaces(list) {
   return {dens, diff, max};
 }
 function smDraw() {
-  const cv = document.getElementById('sm-cv'); if (!cv || !SH_DATA[SM.cid]) return;
+  const cv = document.getElementById('sm-cv'); if (!cv || !SM.mix) return;
   const g = cv.getContext('2d'), list = smShots();
   g.clearRect(0, 0, SM_W, SM_H);
   if (SM.view === 'zones') return smDrawZones(g, list);
@@ -318,7 +400,7 @@ function smLines(g, alpha, lift) {
   }
 }
 function smDrawTerrain(g, list) {
-  const key = SM.cid + '|' + SM.pid + '|' + SM.game;
+  const key = [SM.pid, SM.scope, SM.ev, SM.game].join('|');
   if (SM.surfKey !== key) { SM.surf = smSurfaces(list); SM.surfKey = key; }
   const s = SM.surf, thr = s.max * 0.05;
   smLines(g, 0.28, false);
@@ -355,12 +437,12 @@ function smDrawShots(g, list) {
   g.fillText('Missed', 190, SM_H - 35);
 }
 function smDrawZones(g, list) {
-  const d = SH_DATA[SM.cid], sm = smSummary(list, d.LZ), step = 0.1;
+  const LZ = SM.mix.LZ, sm = smSummary(list), step = 0.1;
   const [fx0, fy0] = smFlat(-7.5, 0), [fx1, fy1] = smFlat(7.5, 11.5);
   g.fillStyle = '#151e2e'; g.fillRect(fx0, fy0, fx1 - fx0, fy1 - fy0);
   for (let dd = 0; dd < 11.5; dd += step) for (let x = -7.5; x < 7.5; x += step) {
     const z = smZoneAt(x + step / 2, dd + step / 2), st = sm.byZ[z], dim = SM.zone && SM.zone !== z;
-    g.fillStyle = st ? smColor(st[1] / st[0] - (d.LZ[z] || 0), dim ? 0.62 : 1) : (dim ? '#1a2333' : '#222d40');
+    g.fillStyle = st ? smColor(st[1] / st[0] - (LZ[z] || 0), dim ? 0.62 : 1) : (dim ? '#1a2333' : '#222d40');
     const [px, py] = smFlat(x, dd); g.fillRect(px, py, step * SM_OS + 0.8, step * SM_OS + 0.8);
   }
   g.strokeStyle = 'rgba(230,236,247,.75)'; g.lineWidth = 2.4; g.lineJoin = 'round';
@@ -390,23 +472,59 @@ function smSetZone(z) {
   SM.zone = z; smDraw();
   document.querySelectorAll('.sm-zrow').forEach(r => r.classList.toggle('on', r.dataset.smz === z));
   const el = document.getElementById('sm-zone');
-  if (el && SH_DATA[SM.cid]) el.innerHTML = smZonePanel(smShots(), SH_DATA[SM.cid]);
+  if (el && SM.mix) el.innerHTML = smZonePanel(smShots());
+}
+/* Where the pointer is: a marker on its own canvas over the map, so moving it never redraws the
+   terrain. On the terrain it sits on the surface itself: a ring of 1 m (the "within 1 m of here"
+   count in the hover box) draped over the peaks, a puck at the point, and a dashed stem down to its
+   shadow on the floor, so the height under the pointer reads at a glance. */
+let SM_MK = null, SM_MK_RAF = 0;
+function smMarker(p) {
+  SM_MK = p;
+  if (!SM_MK_RAF) SM_MK_RAF = requestAnimationFrame(smDrawMarker);
+}
+function smDrawMarker() {
+  SM_MK_RAF = 0;
+  const ov = document.getElementById('sm-ov'); if (!ov) return;
+  const g = ov.getContext('2d');
+  g.clearRect(0, 0, SM_W, SM_H);
+  if (!SM_MK) return;
+  const [x, d] = SM_MK, terrain = SM.view === 'terrain', flat = SM.view === 'zones';
+  const at = (px, pd, lift) => flat ? smFlat(px, pd) : smProj(px, pd, terrain ? smHeightAt(px, pd) + (lift || 0) : 0);
+  const h = terrain ? smHeightAt(x, d) : 0;
+  const ring = []; for (let k = 0; k <= 64; k++) { const a = k / 64 * Math.PI * 2, rx = x + Math.cos(a), rd = d + Math.sin(a); ring.push(at(Math.max(-7.5, Math.min(7.5, rx)), Math.max(0, Math.min(11.5, rd)), 0.03)); }
+  const path = pts => { g.beginPath(); pts.forEach(([a, b], k) => k ? g.lineTo(a, b) : g.moveTo(a, b)); };
+  g.lineJoin = 'round'; g.lineCap = 'round';
+  if (terrain && h > 0.02) {                       // the stem and its shadow on the floor
+    const [fx, fy] = smProj(x, d, 0), [tx, ty] = smProj(x, d, h);
+    g.fillStyle = 'rgba(0,0,0,.45)'; g.beginPath(); g.ellipse(fx, fy, 16, 7, 0, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = 'rgba(255,255,255,.75)'; g.lineWidth = 2.5; g.setLineDash([6, 6]);
+    g.beginPath(); g.moveTo(fx, fy); g.lineTo(tx, ty); g.stroke(); g.setLineDash([]);
+  }
+  path(ring); g.fillStyle = 'rgba(255,255,255,.10)'; g.fill();
+  g.strokeStyle = 'rgba(8,12,20,.85)'; g.lineWidth = 7; g.stroke();
+  g.strokeStyle = '#ffffff'; g.lineWidth = 3; g.stroke();
+  const [cx, cy] = at(x, d, 0.03);
+  g.fillStyle = 'rgba(255,255,255,.22)'; g.beginPath(); g.arc(cx, cy, 22, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#ffffff'; g.strokeStyle = 'rgba(8,12,20,.9)'; g.lineWidth = 4;
+  g.beginPath(); g.arc(cx, cy, 10, 0, Math.PI * 2); g.fill(); g.stroke();
 }
 function smPointer(ev) {
   const cv = document.getElementById('sm-cv'), tip = document.getElementById('sm-tip'); if (!cv || !tip) return;
   const r = cv.getBoundingClientRect();
   const sx = (ev.clientX - r.left) * SM_W / r.width, sy = (ev.clientY - r.top) * SM_H / r.height;
   const [x, d] = SM.view === 'zones' ? smUnflat(sx, sy) : SM.view === 'terrain' ? smUnprojSurface(sx, sy) : smUnproj(sx, sy);
-  if (x < -7.5 || x > 7.5 || d < 0 || d > 11.5) { tip.hidden = true; return; }
-  const z = smZoneAt(x, d), dat = SH_DATA[SM.cid], list = smShots();
+  if (x < -7.5 || x > 7.5 || d < 0 || d > 11.5) { tip.hidden = true; smMarker(null); return; }
+  smMarker([x, d]);
+  const z = smZoneAt(x, d), list = smShots();
   smSetZone(z);
   const zs = list.filter(s => s.z === z), a = zs.length, m = zs.reduce((t, s) => t + s.made, 0);
   const near = list.filter(s => Math.hypot(s.x - x, s.y + SM_RIM - d) <= 1.0), nm = near.reduce((t, s) => t + s.made, 0);
-  const avg = dat.LZ[z] || 0, df = a ? m / a - avg : null;
+  const avg = SM.mix.LZ[z] || 0, df = a ? m / a - avg : null;
   tip.innerHTML = `<div class="t1">${SM_ZONES[z]}</div><div class="t0">about ${Math.hypot(x, d - SM_RIM).toFixed(1)} m from the rim</div>
     <div class="sm-tr"><span>FGM/FGA</span><b>${a ? m + '/' + a : 'no shots'}</b></div>
     <div class="sm-tr"><span>FG%</span><b>${a ? smPct(m / a) : '–'}</b></div>
-    <div class="sm-tr"><span>Competition average</span><b>${smPct(avg)}</b></div>
+    <div class="sm-tr"><span>Average from here</span><b>${smPct(avg)}</b></div>
     ${a ? `<div class="sm-tr"><span>Versus average</span><b class="${df > 0.02 ? 'pos' : df < -0.02 ? 'neg' : 'flat'}">${smDiff(df)}</b></div>` : ''}
     <div class="sm-tr"><span>Within 1 m of here</span><b>${near.length ? nm + '/' + near.length : 'none'}</b></div>`;
   tip.hidden = false;
@@ -421,18 +539,20 @@ function shotsAfterRender() {
   smDraw();
   cv.addEventListener('pointermove', smPointer);
   cv.addEventListener('pointerdown', smPointer);
-  cv.addEventListener('pointerleave', e => { const t = document.getElementById('sm-tip'); if (t && e.pointerType === 'mouse') t.hidden = true; });
+  cv.addEventListener('pointerleave', e => { const t = document.getElementById('sm-tip'); if (t && e.pointerType === 'mouse') { t.hidden = true; smMarker(null); } });
   if (document.fonts && document.fonts.status !== 'loaded') document.fonts.ready.then(smDraw);
 }
 document.addEventListener('click', e => {
-  const b = e.target.closest('[data-smv],[data-smg]'); if (!b) return;
+  const b = e.target.closest('[data-smv],[data-smg],[data-sms],[data-sme-go]'); if (!b) return;
   if (b.dataset.smv) { SM.view = b.dataset.smv; try { localStorage.setItem('hs-shotmap-view', SM.view); } catch (err) {} }
   if (b.dataset.smg) { SM.game = b.dataset.smg; SM.zone = null; }
+  if (b.dataset.sms) { SM.scope = b.dataset.sms; SM.ev = 'all'; SM.game = 'all'; SM.zone = null; }
+  if (b.dataset.smeGo) { SM.ev = b.dataset.smeGo; SM.game = 'all'; SM.zone = null; }
   softRoute();
 });
 document.addEventListener('change', e => {
-  const s = e.target.closest('[data-smc]'); if (!s) return;
-  SM.cid = s.value; SM.game = 'all'; SM.zone = null; softRoute();
+  const s = e.target.closest('[data-sme]'); if (!s) return;
+  SM.ev = s.value; SM.game = 'all'; SM.zone = null; softRoute();
 });
 document.addEventListener('pointerover', e => { const r = e.target.closest && e.target.closest('.sm-zrow'); if (r) smSetZone(r.dataset.smz); });
 document.addEventListener('focusin', e => { const r = e.target.closest && e.target.closest('.sm-zrow'); if (r) smSetZone(r.dataset.smz); });
