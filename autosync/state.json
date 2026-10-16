@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792163329.7936504,
-  "fp": "e98784a26afcc59b7f8d"
+  "at": 1792165712.9489405,
+  "fp": "a61fa3e8a4fe03b89c66"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -34,7 +34,7 @@
    "last": 1792163362.0359595,
    "msg": "page check failed\npage check: Home 6 result tiles, 101 competitions, Games 5 cards, Players 24 cards, 0 new game(s)\nPAGE CHECK FAILED\n  Shot map tab for player 0 did not draw\n",
    "n": 1,
-   "next": 1792163962.0359595
+   "next": 0
   }
  },
  "full": {
