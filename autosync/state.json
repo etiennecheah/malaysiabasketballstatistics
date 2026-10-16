@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792173252.444912,
-  "fp": "c24e8f9cfb5edad87866"
+  "at": 1792181273.0657923,
+  "fp": "60908a19a4755f5f6968"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -18,9 +18,9 @@
   "26279": "2026-10-10",
   "35136": "2026-10-10",
   "38575": "2026-10-16",
-  "48654": "2026-10-16",
-  "49965": "2026-10-16",
-  "50247": "2026-10-16",
+  "48654": "2026-10-17",
+  "49965": "2026-10-17",
+  "50247": "2026-10-17",
   "50248": "2026-10-16"
  },
  "fail": {},
@@ -30,12 +30,11 @@
   "38575": 1792080511.4872327,
   "48654": 1791664896.8790655,
   "49965": 1791665306.1994884,
-  "50247": 1792094429.5951896,
+  "50247": 1792180811.845457,
   "50248": 1792094989.5285058
  },
  "lines_retry": {},
  "log": [
-  "2026-10-15 15:41  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 66-78 Pahang  [2938173: the source's box score replaces the one from the live feed]",
   "2026-10-15 17:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 92-84 ATM  [2938176: final 92-84 read from the live feed (the schedule page does not show it as final yet); 2938176: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 92 (PDRM))]",
   "2026-10-15 17:53  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 92-84 ATM  [2938176: the source's box score replaces the one from the live feed]",
   "2026-10-15 19:29  FAILED 38575 (1): /usr/bin/python3 build_data.py",
@@ -74,26 +73,14 @@
   "2026-10-16 22:06  sync: shot charts of 2 games in 2 competitions",
   "2026-10-16 23:28  FAILED shots (1): page check failed",
   "2026-10-16 23:56  sync: Bina Harta Pro Basketball Cup 2024 \u2014 Parkcity Heat Basketball Club 57-82 Knight Fury; RNC-MI Basketball Club 69-100 Speed Hunter; MBC Kirin 71-58 Lutong Silver Wolves Basketball Club; Selangor Rising Star 84-59 Johor Sukma Team; Speed Hunter 70-72 Johor Sukma Team; Lutong Silver Wolves Basketball Club 81-61 Parkcity Heat Basketball Club; RNC-MI Basketball Club 60-92 Selangor Rising Star; MBC Kirin 70-82 Knight Fury; Speed Hunter 55-109 Selangor Rising Star; Johor Sukma Team 83-69 RNC-MI Basketball Club; Parkcity Heat Basketball Club 53-75 MBC Kirin; Knight Fury 85-80 Lutong Silver Wolves Basketball Club; Knight Fury 72-75 Johor Sukma Team; Selangor Rising Star 66-72 MBC Kirin; Knight Fury 67-80 Selangor Rising Star; Johor Sukma Team 47-79 MBC Kirin; shot charts of 16 games  [2446772: shot chart draws 155 attempts, the box score has 152 FGA]",
-  "2026-10-17 00:20  sync: shot charts of 233 games in 12 competitions  [2396103: shot chart draws 122 attempts, the box score has 123 FGA; 2220351: shot chart draws 167 attempts, the box score has 168 FGA; 2220393: shot chart draws 134 attempts, the box score has 136 FGA; 2220423: shot chart draws 179 attempts, the box score has 180 FGA; 2220429: shot chart draws 151 attempts, the box score has 153 FGA; 2135673: shot chart draws 139 attempts, the box score has 138 FGA; 2220399: shot chart draws 181 attempts, the box score has 182 FGA; 2220400: shot chart draws 135 attempts, the box score has 136 FGA; 2220433: shot chart draws 175 attempts, the box score has 176 FGA; 2220425: shot chart draws 152 attempts, the box score has 153 FGA; 886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept; 886174: shot chart draws 67 attempts, the box score has 130 FGA: not kept]"
+  "2026-10-17 00:20  sync: shot charts of 233 games in 12 competitions  [2396103: shot chart draws 122 attempts, the box score has 123 FGA; 2220351: shot chart draws 167 attempts, the box score has 168 FGA; 2220393: shot chart draws 134 attempts, the box score has 136 FGA; 2220423: shot chart draws 179 attempts, the box score has 180 FGA; 2220429: shot chart draws 151 attempts, the box score has 153 FGA; 2135673: shot chart draws 139 attempts, the box score has 138 FGA; 2220399: shot chart draws 181 attempts, the box score has 182 FGA; 2220400: shot chart draws 135 attempts, the box score has 136 FGA; 2220433: shot chart draws 175 attempts, the box score has 176 FGA; 2220425: shot chart draws 152 attempts, the box score has 153 FGA; 886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept; 886174: shot chart draws 67 attempts, the box score has 130 FGA: not kept]",
+  "2026-10-17 04:07  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [rosters published for 6 of 7 teams; 2 player page(s) not published by the source now: the lines we hold are kept]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
   "50247": 1791743461.92955
  },
- "pending": {
-  "1312956": {
-   "cid": "25341",
-   "kind": "pbp",
-   "next": 1792182466.2889595,
-   "since": 1791575455.130416
-  },
-  "1312962": {
-   "cid": "25341",
-   "kind": "pbp",
-   "next": 1792182466.2889595,
-   "since": 1791575455.130416
-  }
- },
+ "pending": {},
  "rechecked": {
   "1312929": "25340",
   "1312947": "25341",
@@ -106,7 +93,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1792166973.37678,
+  "21375": 1792180494.637092,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
