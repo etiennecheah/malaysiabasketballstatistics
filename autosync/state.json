@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792146993.096577,
-  "fp": "d96f00e2962b52c7b43d"
+  "at": 1792147397.3138773,
+  "fp": "5e45cef2ea606859b908"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -42,7 +42,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-15 04:33  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 7 teams]",
   "2026-10-15 13:48  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 66-78 Pahang  [2938173: final 66-78 read from the live feed (the schedule page does not show it as final yet); 2938173: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 66 (Selangor))]",
   "2026-10-15 13:58  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
   "2026-10-15 14:08  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v Pahang",
@@ -81,7 +80,8 @@
   "2026-10-16 18:01  sync: shot charts of 240 games in 7 competitions  [2392815: shot chart draws 172 attempts, the box score has 173 FGA; 2392736: shot chart draws 141 attempts, the box score has 142 FGA; 2392721: shot chart draws 140 attempts, the box score has 141 FGA; 2447546: shot chart draws 145 attempts, the box score has 146 FGA; 2447527: shot chart draws 135 attempts, the box score has 136 FGA; 2444618: shot chart draws 160 attempts, the box score has 161 FGA]",
   "2026-10-16 18:17  sync: shot charts of 240 games in 8 competitions  [2664076: shot chart draws 147 attempts, the box score has 148 FGA; 2664055: shot chart draws 157 attempts, the box score has 158 FGA; 2850551: shot chart draws 172 attempts, the box score has 173 FGA; 2850634: shot chart draws 168 attempts, the box score has 169 FGA]",
   "2026-10-16 18:29  sync: shot charts of 240 games in 13 competitions  [2209655: shot chart draws 179 attempts, the box score has 180 FGA; 2597505: shot chart draws 157 attempts, the box score has 158 FGA; 2597517: shot chart draws 139 attempts, the box score has 140 FGA]",
-  "2026-10-16 18:36  sync: shot charts of 240 games in 7 competitions  [2585770: shot chart draws 152 attempts, the box score has 154 FGA; 2314780: shot chart draws 139 attempts, the box score has 140 FGA]"
+  "2026-10-16 18:36  sync: shot charts of 240 games in 7 competitions  [2585770: shot chart draws 152 attempts, the box score has 154 FGA; 2314780: shot chart draws 139 attempts, the box score has 140 FGA]",
+  "2026-10-16 18:43  sync: shot charts of 240 games in 12 competitions  [2437900: shot chart draws 157 attempts, the box score has 158 FGA; 2437914: shot chart draws 134 attempts, the box score has 135 FGA; 2516228: shot chart draws 156 attempts, the box score has 157 FGA; 2516146: shot chart draws 164 attempts, the box score has 165 FGA; 2437924: shot chart draws 135 attempts, the box score has 136 FGA; 2673615: shot chart draws 178 attempts, the box score has 179 FGA; 2769369: shot chart draws 191 attempts, the box score has 192 FGA; 2769366: shot chart draws 122 attempts, the box score has 123 FGA; 2769371: shot chart draws 189 attempts, the box score has 190 FGA; 2673650: shot chart draws 148 attempts, the box score has 149 FGA; 2769384: shot chart draws 143 attempts, the box score has 144 FGA]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -123,18 +123,24 @@
   "35296": 1792144911.6393926,
   "35297": 1792144911.6393926,
   "35879": 1792146613.8550475,
+  "35880": 1792147019.264793,
   "36796": 1792140479.4340196,
   "36797": 1792140479.4340196,
   "36889": 1792146613.8550475,
+  "36890": 1792147019.264793,
   "37450": 1792145848.872564,
   "37451": 1792145848.872564,
   "37621": 1792145848.872564,
   "37683": 1792144338.9522195,
   "37684": 1792144338.9522195,
+  "38334": 1792147019.264793,
+  "38335": 1792147019.264793,
   "38532": 1792144338.9522195,
   "38534": 1792144338.9522195,
   "38535": 1792144338.9522195,
   "39249": 1792140479.4340196,
+  "39528": 1792147019.264793,
+  "39529": 1792147019.264793,
   "39599": 1792145848.872564,
   "39600": 1792145848.872564,
   "40077": 1792146613.8550475,
@@ -148,7 +154,11 @@
   "41160": 1792140479.4340196,
   "41337": 1792144911.6393926,
   "41338": 1792144911.6393926,
+  "41592": 1792147019.264793,
+  "41593": 1792147019.264793,
   "42425": 1792145848.872564,
+  "47556": 1792147019.264793,
+  "47557": 1792147019.264793,
   "47558": 1792143598.5937526,
   "47559": 1792144338.9522195,
   "47850": 1792143598.5937526,
@@ -157,6 +167,7 @@
   "48926": 1792145848.872564,
   "48931": 1792144911.6393926,
   "48932": 1792144911.6393926,
+  "49217": 1792147019.264793,
   "49246": 1792145848.872564,
   "49468": 1792143598.5937526
  }
