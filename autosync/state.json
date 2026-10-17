@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792245019.2647119,
-  "fp": "a3a9fd5d1ee0a14a74be"
+  "at": 1792245201.555154,
+  "fp": "58939bb91c10a43d84c4"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -35,7 +35,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-15 22:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 87-70 Perak  [2938177: the source's box score replaces the one from the live feed]",
   "2026-10-16 00:09  FAILED 38575 (1): /usr/bin/python3 build_data.py",
   "2026-10-16 04:09  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 shot charts of 13 games  [rosters published for 6 of 7 teams; 2 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-16 04:15  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 shot charts of 6 games",
@@ -74,7 +73,8 @@
   "2026-10-17 19:45  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 95-62 Johor  [2938191: final 95-62 read from the live feed (the schedule page does not show it as final yet); 2938191: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 95 (Negeri Sembilan))]",
   "2026-10-17 19:47  sync: shot charts of 1 game in 1 competition",
   "2026-10-17 19:55  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 95-62 Johor  [2938191: the source's box score replaces the one from the live feed]",
-  "2026-10-17 21:50  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Perak 94-83 PDRM  [2938192: final 94-83 read from the live feed (the schedule page does not show it as final yet); 2938192: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 94 (Perak))]"
+  "2026-10-17 21:50  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Perak 94-83 PDRM  [2938192: final 94-83 read from the live feed (the schedule page does not show it as final yet); 2938192: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 94 (Perak))]",
+  "2026-10-17 21:53  sync: shot charts of 1 game in 1 competition"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -184,7 +184,7 @@
   "49646": 1792147425.7033217,
   "49683": 1792147425.7033217,
   "49965": 1792166973.37678,
-  "50247": 1792237543.3615587,
+  "50247": 1792245043.66613,
   "50248": 1792147831.0700762
  }
 }
