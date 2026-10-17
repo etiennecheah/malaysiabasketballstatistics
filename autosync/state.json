@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792202324.428915,
-  "fp": "1664c94283ddb842dd65"
+  "at": 1792213983.4389071,
+  "fp": "e9f5287faa011cc88609"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -35,7 +35,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-15 19:29  FAILED 38575 (1): /usr/bin/python3 build_data.py",
   "2026-10-15 19:35  FAILED 38575 (1): /usr/bin/python3 build_data.py",
   "2026-10-15 19:36  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 88-54 Selangor  [season lines not read for 3 player(s): tried again next time]",
   "2026-10-15 19:59  FAILED 38575 (1): /usr/bin/python3 build_data.py",
@@ -74,7 +73,8 @@
   "2026-10-17 00:20  sync: shot charts of 233 games in 12 competitions  [2396103: shot chart draws 122 attempts, the box score has 123 FGA; 2220351: shot chart draws 167 attempts, the box score has 168 FGA; 2220393: shot chart draws 134 attempts, the box score has 136 FGA; 2220423: shot chart draws 179 attempts, the box score has 180 FGA; 2220429: shot chart draws 151 attempts, the box score has 153 FGA; 2135673: shot chart draws 139 attempts, the box score has 138 FGA; 2220399: shot chart draws 181 attempts, the box score has 182 FGA; 2220400: shot chart draws 135 attempts, the box score has 136 FGA; 2220433: shot chart draws 175 attempts, the box score has 176 FGA; 2220425: shot chart draws 152 attempts, the box score has 153 FGA; 886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept; 886174: shot chart draws 67 attempts, the box score has 130 FGA: not kept]",
   "2026-10-17 04:07  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [rosters published for 6 of 7 teams; 2 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-17 04:13  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated  [7 player page(s) not published by the source now: the lines we hold are kept]",
-  "2026-10-17 09:58  sync: shot charts of 1 game in 1 competition  [886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept]"
+  "2026-10-17 09:58  sync: shot charts of 1 game in 1 competition  [886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept]",
+  "2026-10-17 13:13  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Kelantan 58-107 Negeri Sembilan; shot charts of 1 game  [2938231: final 58-107 read from the live feed (the schedule page does not show it as final yet)]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -93,7 +93,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1792202166.6503592,
+  "21375": 1792213000.9201806,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
