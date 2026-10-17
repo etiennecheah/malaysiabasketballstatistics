@@ -60,6 +60,17 @@ function watchFace(pid, name, side, big) {
     : `<span class="${cls} wt-init">${esc(initials(watchShort(name).replace(/\./g, ' ')))}</span>`;
 }
 
+/* Timeouts a team may take in a game: 5 under FIBA rules (2 in the first half, 3 in the second),
+   plus 1 for each overtime. The Selangor Basketball League's U20 plays with 7. */
+const WATCH_TIMEOUTS = { '48654': 7 };
+function watchTimeoutsAllowed(cid, ots) {
+  const c = COMP_BY_ID[cid], nm = c ? (c.label || c.name || '') : '';
+  const base = WATCH_TIMEOUTS[cid] || (/\bSBL\b|Selangor Basketball League/i.test(nm) && /\bU20\b/i.test(nm) ? 7 : 5);
+  return base + (ots || 0);
+}
+/* a timeout charged to a team (a media or official timeout is nobody's) */
+function watchIsTeamTimeout(text) { return /timeout/i.test(text) && !/media|tv|official|commercial/i.test(text); }
+
 /* ---------------------------- one model, two sources ---------------------------- */
 /* { g, status: live|final|pending, label, at, teams: [{name, score, q, pl, tot, fouls}] ×2, plays, playsState } */
 function watchModel(mid) {
@@ -102,8 +113,17 @@ function watchFromLive(g, x) {
         text: p.name ? txt : livePlayCap(txt), score: p.score ? p.score[0] + '–' + p.score[1] : '',
         scoring: !!(p.scoring && p.made && shot(p)) };
     });
+  // team fouls this period come from the scorer; timeouts are counted off the plays (relay v2 sends them all)
+  const ot = /OVERTIME/i.test(d.periodType || '') || d.inOT;
+  const ots = ot ? (d.period > 4 ? d.period - 4 : d.period) : 0;
+  const full = d.v >= 2;
+  teams.forEach((t, i) => {
+    t.tf = d.teams[i].fouls != null ? +d.teams[i].fouls : null;
+    t.toUsed = full ? (d.plays || []).filter(p => p.team === i + 1 && p.type === 'timeout' && watchIsTeamTimeout('timeout ' + (p.sub || ''))).length : null;
+  });
   const status = d.status === 'final' ? 'final' : d.status === 'live' ? 'live' : 'pending';
-  return { g, status, label: status === 'pending' ? liveTip(g) : liveClock(d), at: x.at, teams, plays, playsState: 'ok', live: true };
+  return { g, status, label: status === 'pending' ? liveTip(g) : liveClock(d), at: x.at, teams, plays, playsState: 'ok', live: true,
+    perNow: livePeriod(d), toAllowed: watchTimeoutsAllowed(g.cid, ots) };
 }
 
 function watchFromSaved(g, x) {
@@ -122,7 +142,7 @@ function watchFromSaved(g, x) {
   });
 
   // the play-by-play: the competition's file loads on demand and repaints this page when it lands
-  let plays = [], playsState = 'none';
+  let plays = [], playsState = 'none', perNow = '', toAllowed = null;
   if (typeof hasPbp === 'function' && hasPbp(g.mid)) {
     ensurePbp(g.cid);
     const data = PBP_DATA[g.cid], rec = data && data.G[g.mid];
@@ -135,6 +155,17 @@ function watchFromSaved(g, x) {
         if (l.num != null && l.num !== '') byNum[side + ':' + l.num] = l.pid;
         byName[side + ':' + normName(l.name || personName(l.pid))] = l.pid;
       });
+      // the last period played, its team fouls, and every timeout each team took
+      const maxPer = Math.max(...rec.e.map(e => +e[0] || 0));
+      teams.forEach(t => { t.tf = 0; t.toUsed = 0; });
+      rec.e.forEach(e => {
+        const t = e[1], act = String(data.A[e[4]] || '');
+        if (t !== 1 && t !== 2) return;
+        if (watchIsTeamTimeout(act)) teams[t - 1].toUsed++;
+        else if (+e[0] === maxPer && e[3] >= 0 && /foul/i.test(act) && !/^foul on/i.test(act.trim())) teams[t - 1].tf++;
+      });
+      perNow = perLabel(String(maxPer));
+      toAllowed = watchTimeoutsAllowed(g.cid, maxPer > 4 ? maxPer - 4 : 0);
       let rh = 0, ra = 0;
       const srcName = {};      // the source's own spelling keeps "bin" / "A/L", which the short names need
       rec.e.forEach(e => {
@@ -163,7 +194,7 @@ function watchFromSaved(g, x) {
   const status = fin ? 'final' : 'pending';
   const label = fin ? (g.hs == null ? 'Final · score not published' : 'Final') : g.st === 'NOT_PLAYED' ? 'Not played'
     : (x && x.err ? 'Live feed not answering' : liveTip(g));
-  return { g, status, label, at: 0, teams, plays, playsState, live: false };
+  return { g, status, label, at: 0, teams, plays, playsState, live: false, perNow, toAllowed };
 }
 
 /* the database's action text: "3pt jump shot made" → "3pt jump shot, made"; a shot without "made" was missed */
@@ -286,9 +317,10 @@ function watchTeam(m) {
   const qrow = t => `<div class="wt-qr"><span>${esc(watchCode(t.name))}</span>${Array.from({ length: qn }, (_, i) => `<span class="wt-num">${t.q[i] != null ? t.q[i] : ''}</span>`).join('')}<span class="wt-num wt-qt">${t.score != null ? t.score : ''}</span></div>`;
   const quarters = h.q.length || a.q.length ? `<div class="wt-q" style="--n:${qn + 1}"><div class="wt-qr wt-qh"><span></span>${Array.from({ length: qn }, (_, i) => `<span>${ql(i)}</span>`).join('')}<span>T</span></div>${qrow(h)}${qrow(a)}</div>` : '';
 
+  const extra = quarters + watchFoulsTimeouts(m);
   const H = h.tot, A = a.tot;
   if (!H || !A) {
-    return `<div class="wt-scroll wt-team-in"><h2 class="wt-h2">Team statistics</h2>${sb}${quarters}
+    return `<div class="wt-scroll wt-team-in"><h2 class="wt-h2">Team statistics</h2>${sb}${extra}
       <div class="wt-empty wt-empty-in">${m.status === 'pending' ? 'Team figures fill in once the game starts.' : 'No box score is published for this game.'}</div></div>`;
   }
   const pc = (x, y) => y ? Math.round(1000 * x / y) / 10 : 0;
@@ -309,9 +341,35 @@ function watchTeam(m) {
     return `<div class="wt-st"><div class="wt-st-top"><span class="wt-num${hw ? ' w' : ''}">${esc(dx != null ? dx : x)}</span><span class="l">${esc(l)}</span><span class="wt-num${aw ? ' w' : ''}">${esc(dy != null ? dy : y)}</span></div>
       <div class="wt-bar"><div><i class="h${hw || x === y ? '' : ' lo'}" style="width:${Math.round(x / max * 100)}%"></i></div><div><i class="a${aw || x === y ? '' : ' lo'}" style="width:${Math.round(y / max * 100)}%"></i></div></div></div>`;
   }).join('');
-  return `<div class="wt-scroll wt-team-in"><h2 class="wt-h2">Team statistics</h2>${sb}${quarters}
+  return `<div class="wt-scroll wt-team-in"><h2 class="wt-h2">Team statistics</h2>${sb}${extra}
     <div class="wt-key"><span><i class="h"></i>${esc(h.name)}</span><span>${esc(a.name)}<i class="a"></i></span></div>
     <div class="wt-sts">${bars}</div></div>`;
+}
+
+/* Team fouls in the current quarter (the last one, once the game is over) and timeouts left.
+   From the fifth team foul of a quarter every defensive foul gives free throws: "penalty" shows from four. */
+function watchFoulsTimeouts(m) {
+  if (m.status === 'pending') return '';
+  const [h, a] = m.teams, fin = m.status === 'final';
+  const rows = [];
+  if (h.tf != null && a.tf != null) {
+    const f = (t, side) => {
+      const pen = t.tf >= 4 ? `<span class="wt-pen" title="${fin ? 'In the penalty' : 'In the penalty: every defensive foul gives free throws'}">penalty</span>` : '';
+      return side ? `<span class="wt-tfv">${pen}<b class="wt-num">${t.tf}</b></span>` : `<span class="wt-tfv"><b class="wt-num">${t.tf}</b>${pen}</span>`;
+    };
+    rows.push(`<div class="wt-tfr">${f(h, 0)}<span class="l">Team fouls · ${esc(m.perNow || '')}${fin ? ' (last quarter)' : ''}</span>${f(a, 1)}</div>`);
+  }
+  if (m.toAllowed && h.toUsed != null && a.toUsed != null) {
+    const n = m.toAllowed;
+    const o = (t, side) => {
+      const left = Math.max(0, n - t.toUsed);
+      const pips = Array.from({ length: n }, (_, i) => `<i class="${(side ? i : n - 1 - i) < left ? 'on' : ''}"></i>`).join('');
+      const lab = `<span class="wt-pips" role="img" aria-label="${left} of ${n} timeouts left">${pips}</span>`;
+      return side ? `<span class="wt-tfv"><b class="wt-num">${left}</b>${lab}</span>` : `<span class="wt-tfv">${lab}<b class="wt-num">${left}</b></span>`;
+    };
+    rows.push(`<div class="wt-tfr">${o(h, 0)}<span class="l">Timeouts left · of ${n}</span>${o(a, 1)}</div>`);
+  }
+  return rows.length ? `<div class="wt-tf">${rows.join('')}</div>` : '';
 }
 
 /* Play-by-play: newest first, a divider for each period */
