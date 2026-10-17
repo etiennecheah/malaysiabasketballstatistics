@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792273818.9422994,
-  "fp": "43172adbba425d485bf6"
+  "at": 1792274195.842794,
+  "fp": "0e33a98273388e6c3141"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -20,23 +20,28 @@
   "38575": "2026-10-16",
   "48654": "2026-10-18",
   "49965": "2026-10-17",
-  "50247": "2026-10-17",
+  "50247": "2026-10-18",
   "50248": "2026-10-17"
  },
- "fail": {},
+ "fail": {
+  "49965": {
+   "last": 1792273843.2477233,
+   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 500: Internal Server Error",
+   "n": 1,
+   "next": 1792273903.2477233
+  }
+ },
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
   "38575": 1792080511.4872327,
   "48654": 1792273394.2428384,
   "49965": 1791665306.1994884,
-  "50247": 1792180811.845457,
+  "50247": 1792273843.2477233,
   "50248": 1792181299.8670151
  },
  "lines_retry": {},
  "log": [
-  "2026-10-16 04:15  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 shot charts of 6 games",
-  "2026-10-16 13:37  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Selangor 58-48 Sarawak  [2938229: final 58-48 read from the live feed (the schedule page does not show it as final yet); 2938229: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 58 (Selangor))]",
   "2026-10-16 13:47  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Selangor 58-48 Sarawak; shot charts of 1 game  [2938229: the source's box score replaces the one from the live feed]",
   "2026-10-16 15:42  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 74-73 ATM  [2938179: final 74-73 read from the live feed (the schedule page does not show it as final yet); 2938179: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 74 (Selangor))]",
   "2026-10-16 15:53  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 play-by-play of Selangor v ATM; shot charts of 1 game",
@@ -74,7 +79,9 @@
   "2026-10-17 21:50  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Perak 94-83 PDRM  [2938192: final 94-83 read from the live feed (the schedule page does not show it as final yet); 2938192: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 94 (Perak))]",
   "2026-10-17 21:53  sync: shot charts of 1 game in 1 competition",
   "2026-10-17 22:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Perak 94-83 PDRM  [2938192: the source's box score replaces the one from the live feed]",
-  "2026-10-18 05:50  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [36 player page(s) not published by the source now: the lines we hold are kept]"
+  "2026-10-18 05:50  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [36 player page(s) not published by the source now: the lines we hold are kept]",
+  "2026-10-18 05:51  FAILED 49965 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 500: Internal Server Error",
+  "2026-10-18 05:56  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [17 player page(s) not published by the source now: the lines we hold are kept]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
