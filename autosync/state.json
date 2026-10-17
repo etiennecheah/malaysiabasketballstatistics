@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792237640.2513826,
-  "fp": "3b2de8a68b0c14337172"
+  "at": 1792238147.6830347,
+  "fp": "8b0aabfe52764f66cd1f"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -35,7 +35,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-15 20:47  FAILED 38575 (1): /usr/bin/python3 build_data.py",
   "2026-10-15 21:52  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 87-70 Perak  [2938177: final 87-70 read from the live feed (the schedule page does not show it as final yet); 2938177: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 87 (Negeri Sembilan))]",
   "2026-10-15 22:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 87-70 Perak  [2938177: the source's box score replaces the one from the live feed]",
   "2026-10-16 00:09  FAILED 38575 (1): /usr/bin/python3 build_data.py",
@@ -74,20 +73,14 @@
   "2026-10-17 15:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 75-80 ATM; shot charts of 1 game  [2938188: final 75-80 read from the live feed (the schedule page does not show it as final yet)]",
   "2026-10-17 17:53  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Johor 67-48 Selangor; shot charts of 1 game  [2938222: final 67-48 read from the live feed (the schedule page does not show it as final yet)]",
   "2026-10-17 19:45  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 95-62 Johor  [2938191: final 95-62 read from the live feed (the schedule page does not show it as final yet); 2938191: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 95 (Negeri Sembilan))]",
-  "2026-10-17 19:47  sync: shot charts of 1 game in 1 competition"
+  "2026-10-17 19:47  sync: shot charts of 1 game in 1 competition",
+  "2026-10-17 19:55  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 95-62 Johor  [2938191: the source's box score replaces the one from the live feed]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
   "50247": 1791743461.92955
  },
- "pending": {
-  "2938191": {
-   "cid": "50247",
-   "kind": "box",
-   "next": 1792237953.7921717,
-   "since": 1792237353.7921717
-  }
- },
+ "pending": {},
  "rechecked": {
   "1312929": "25340",
   "1312947": "25341",
