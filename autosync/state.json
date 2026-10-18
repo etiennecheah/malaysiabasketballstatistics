@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792319492.1729674,
-  "fp": "06176ac2e7e203fd2cb8"
+  "at": 1792319672.1814532,
+  "fp": "e2a8b8b0848ca95fb0ae"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -33,18 +33,8 @@
   "50247": 1792273843.2477233,
   "50248": 1792274218.8408365
  },
- "lines_retry": {
-  "50247": {
-   "n": 1,
-   "next": 1792318683.56839,
-   "pids": [
-    "1286738",
-    "2252605"
-   ]
-  }
- },
+ "lines_retry": {},
  "log": [
-  "2026-10-16 18:43  sync: shot charts of 240 games in 12 competitions  [2437900: shot chart draws 157 attempts, the box score has 158 FGA; 2437914: shot chart draws 134 attempts, the box score has 135 FGA; 2516228: shot chart draws 156 attempts, the box score has 157 FGA; 2516146: shot chart draws 164 attempts, the box score has 165 FGA; 2437924: shot chart draws 135 attempts, the box score has 136 FGA; 2673615: shot chart draws 178 attempts, the box score has 179 FGA; 2769369: shot chart draws 191 attempts, the box score has 192 FGA; 2769366: shot chart draws 122 attempts, the box score has 123 FGA; 2769371: shot chart draws 189 attempts, the box score has 190 FGA; 2673650: shot chart draws 148 attempts, the box score has 149 FGA; 2769384: shot chart draws 143 attempts, the box score has 144 FGA]",
   "2026-10-16 18:50  sync: shot charts of 240 games in 13 competitions  [2860431: shot chart draws 133 attempts, the box score has 134 FGA]",
   "2026-10-16 18:57  FAILED shots (1): page check failed",
   "2026-10-16 19:00  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 78-50 Johor; shot charts of 1 game  [2938230: the source's box score replaces the one from the live feed]",
@@ -83,7 +73,8 @@
   "2026-10-18 15:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
   "2026-10-18 18:01  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 88-78 Johor  [2943478: final 88-78 read from the live feed (the schedule page does not show it as final yet); 2943478: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 88 (Negeri Sembilan))]",
   "2026-10-18 18:04  sync: shot charts of 1 game in 1 competition  [886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept]",
-  "2026-10-18 18:11  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 88-78 Johor  [2943478: the source's box score replaces the one from the live feed; season lines not read for 2 player(s): tried again next time]"
+  "2026-10-18 18:11  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 88-78 Johor  [2943478: the source's box score replaces the one from the live feed; season lines not read for 2 player(s): tried again next time]",
+  "2026-10-18 18:34  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
