@@ -25,11 +25,11 @@
  },
  "fail": {
   "build": {
-   "fp": "bf658aa1e02801f9bbae",
-   "last": 1792302647.893864,
-   "msg": "/usr/bin/python3 build_site.py\nhonours: 49 linked to a competition now in the database\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_site.py\", line 406, in <module>\n    main()\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_site.py\", line 225, in main\n    payload['streams'] = load_streams(payload)\n                         ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_site.py\", line 112, in load_streams\n    gam",
-   "n": 2,
-   "next": 1792303847.893864
+   "fp": "fdafcae1d3919e970e82",
+   "last": 1792302778.5457306,
+   "msg": "/usr/bin/python3 build_site.py\nhonours: 49 linked to a competition now in the database\nstreams.json: 2943476 is not a match id in the database\n",
+   "n": 3,
+   "next": 1792305178.5457306
   }
  },
  "full": {
@@ -43,7 +43,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-16 16:05  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Selangor 74-73 ATM  [2938179: the source's box score replaces the one from the live feed]",
   "2026-10-16 17:05  sync: shot charts of 239 games in 6 competitions  [2838272: shot chart draws 174 attempts, the box score has 175 FGA; 2856605: shot chart draws 173 attempts, the box score has 174 FGA; 2856594: shot chart draws 163 attempts, the box score has 164 FGA; 2306717: shot chart draws 189 attempts, the box score has 190 FGA; 2870984: shot chart page failed (500): tried again later]",
   "2026-10-16 17:39  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 78-50 Johor  [2938230: final 78-50 read from the live feed (the schedule page does not show it as final yet); 2938230: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 78 (Negeri Sembilan))]",
   "2026-10-16 17:51  sync: shot charts of 236 games in 7 competitions  [2608629: shot chart page failed (500): tried again later; 2608630: shot chart page failed (500): tried again later; 2608615: shot chart page failed (500): tried again later; 2608632: shot chart draws 151 attempts, the box score has 152 FGA; 2608633: shot chart draws 166 attempts, the box score has 167 FGA; 2608621: shot chart page failed (500): tried again later; 2608686: shot chart draws 179 attempts, the box score has 180 FGA; 2608692: shot chart draws 153 attempts, the box score has 154 FGA; 2787755: shot chart draws 160 attempts, the box score has 161 FGA; 2792226: shot chart draws 163 attempts, the box score has 164 FGA; 2792212: shot chart draws 166 attempts, the box score has 167 FGA; 2792213: shot chart draws 167 attempts, the box score has 168 FGA \u2026]",
@@ -82,7 +81,8 @@
   "2026-10-18 05:56  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [17 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-18 06:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated  [15 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-18 13:49  FAILED build (1): /usr/bin/python3 build_site.py",
-  "2026-10-18 13:50  FAILED build (2): /usr/bin/python3 build_site.py"
+  "2026-10-18 13:50  FAILED build (2): /usr/bin/python3 build_site.py",
+  "2026-10-18 13:52  FAILED build (3): /usr/bin/python3 build_site.py"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
