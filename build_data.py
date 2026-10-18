@@ -611,6 +611,8 @@ def main():
     # competitions still being played although every listed fixture is finished (more games to come)
     opp = os.path.join(D, 'open_comps.json')
     open_comps = {k: v for k, v in (json.load(open(opp)) if os.path.exists(opp) else {}).items() if not k.startswith('_')}
+    # an entry may name the competition's final ({"note": ..., "final": "<match id>"}): once that game
+    # is finished the competition is over by itself, and its winner is the champion
     raw_boxes = {}
     bp = os.path.join(D, 'boxscores.json')
     if os.path.exists(bp):
@@ -818,7 +820,12 @@ def main():
         # awards them: 2 a win, 1 a loss, 0 a forfeit loss; ties broken the FIBA way. Once the
         # published table catches up it is used again.
         stand_fix, fix_why = [], ''
-        live = recent_comp(games, c['id'] in open_comps)
+        oc = open_comps.get(c['id'])
+        oc_final = oc.get('final') if isinstance(oc, dict) else None
+        fin_game = next((g for g in games if oc_final and g['mid'] == oc_final and g['st'] == 'COMPLETE'
+                         and g['hs'] is not None and g['as'] is not None and g['hs'] != g['as']), None)
+        is_open = oc is not None and not fin_game
+        live = recent_comp(games, is_open)
         if any(g.get('sb') for g in games) or live:
             for gi, title in enumerate(groups):
                 rows = [r for r in stand if r['g'] == gi]
@@ -838,7 +845,9 @@ def main():
         # an override the computed rule now agrees with keeps the rule's reason ('final')
         if c['id'] in CHAMP_OVERRIDE and champ != CHAMP_OVERRIDE[c['id']]:
             champ, champ_how = CHAMP_OVERRIDE[c['id']], 'confirmed'
-        if c['id'] in open_comps:            # not over yet: the last game played is not a final
+        if fin_game:                         # the named final is played: its winner is the champion
+            champ, champ_how = (fin_game['h'] if fin_game['hs'] > fin_game['as'] else fin_game['a']), 'final'
+        elif is_open:                        # not over yet: the last game played is not a final
             champ, champ_how = None, None
 
         roster = {}
@@ -911,7 +920,7 @@ def main():
             # organisers announced and a note on how their group tables were made
             **({'final': c['final']} if c.get('final') else {}),
             **({'standNote': c['standNote']} if c.get('standNote') else {}),
-            **({'open': open_comps[c['id']]} if c['id'] in open_comps else {}), 'games': games, 'roster': roster,
+            **({'open': oc['note'] if isinstance(oc, dict) else oc} if is_open else {}), 'games': games, 'roster': roster,
             **({'rosterSrc': roster_src[c['id']]} if c['id'] in roster_src else {}),
             'players': players, 'leaders': leaders,
             'start': dates[0] if dates else None, 'end': dates[-1] if dates else None,

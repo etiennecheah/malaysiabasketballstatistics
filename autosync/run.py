@@ -86,20 +86,27 @@ def event(s, text):
 
 
 # ---- what is due --------------------------------------------------------------------
-def open_comps():
+def open_comps(st=None):
     """Competitions still being played although every listed fixture is finished
     (data/open_comps.json): the organiser has not published the next games yet."""
     p = os.path.join(ROOT, 'data', 'open_comps.json')
-    return {k for k in (json.load(open(p)) if os.path.exists(p) else {}) if not k.startswith('_')}
+    d = json.load(open(p)) if os.path.exists(p) else {}
+    out = {k for k in d if not k.startswith('_')}
+    if st is not None:            # an entry that names its final is over once that game is finished
+        for k in list(out):
+            fin = d[k].get('final') if isinstance(d[k], dict) else None
+            c = next((c for c in st.bb['comps'] if c['id'] == k), None)
+            if fin and c and any(g[0] == fin and g[1] == 'COMPLETE' for g in c['games']):
+                out.discard(k)
+    return out
 
 
 def peek_slot(now):
-    """Such a competition's schedule page is looked at for new fixtures every half hour
-    from 18:00 to midnight Malaysia time and every two hours otherwise. Returns the
-    number of the current slot when it is one to look in, else None."""
-    slot = int(now // 1800)
-    hour = datetime.datetime.fromtimestamp(now, MYT).hour
-    return slot if (hour >= 18 or slot % 4 == 0) else None
+    """Such a competition's schedule page is looked at for new fixtures every half hour, all day:
+    organisers post a final or a play-off game a couple of hours before tip-off (the 2026 Agong Cup
+    finals appeared around noon for 14:00 and 16:00), so a two-hourly look missed the start.
+    Returns the number of the current half-hour slot."""
+    return int(now // 1800)
 
 
 def open_fixtures(st, c):
@@ -110,7 +117,7 @@ def plan(st, state, now):
     """Which competitions need looking at now, and whether this run should stay on."""
     today = datetime.datetime.fromtimestamp(now, MYT)
     P = dict(due=[], overdue=[], daily=[], peek=[], shots=[], hold=False, next=None)
-    more = open_comps()
+    more = open_comps(st)
     for c in st.bb['comps']:
         cid = c['id']
         opens = open_fixtures(st, c)

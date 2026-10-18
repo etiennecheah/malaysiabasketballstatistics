@@ -1,6 +1,12 @@
 {
- "_note": "Competitions that are still being played although every fixture the source lists is finished: more games are coming that the organiser has not published yet. While a competition is listed here the site shows it as in progress with no champion, and the sync keeps looking at its schedule page for new fixtures. Remove the entry when the competition is over.",
+ "_note": "Competitions that are still being played although every fixture the source lists is finished: more games are coming that the organiser has not published yet. While a competition is listed here the site shows it as in progress with no champion, and the sync keeps looking at its schedule page for new fixtures. Remove the entry when the competition is over. An entry may be {\"note\": ..., \"final\": \"<match id>\"}: once that game is finished the competition counts as over by itself and its winner is the champion, so the entry can stay.",
  "48654": "Playoffs under way (best-of-three rounds). The games still to come are not on the source yet.",
- "50247": "Round robin finished on 17 Oct; the play-off / final games are not on the source yet (added 2026-10-17). Remove after the final.",
- "50248": "Round robin finished on 17 Oct; the play-off / final games are not on the source yet (added 2026-10-17). Remove after the final."
+ "50247": {
+  "note": "Round robin finished on 17 Oct; the final is Negeri Sembilan v Johor on 18 Oct, 16:00.",
+  "final": "2943478"
+ },
+ "50248": {
+  "note": "Round robin finished on 17 Oct; the final is Negeri Sembilan v Johor on 18 Oct, 14:00.",
+  "final": "2943476"
+ }
 }
