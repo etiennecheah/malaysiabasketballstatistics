@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792308898.2936423,
-  "fp": "9b65f5af2750127286b0"
+  "at": 1792309434.4466708,
+  "fp": "7ffef90fd1c1f1410708"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -33,17 +33,8 @@
   "50247": 1792273843.2477233,
   "50248": 1792274218.8408365
  },
- "lines_retry": {
-  "50248": {
-   "n": 1,
-   "next": 1792309308.5166242,
-   "pids": [
-    "2381193"
-   ]
-  }
- },
+ "lines_retry": {},
  "log": [
-  "2026-10-16 18:01  sync: shot charts of 240 games in 7 competitions  [2392815: shot chart draws 172 attempts, the box score has 173 FGA; 2392736: shot chart draws 141 attempts, the box score has 142 FGA; 2392721: shot chart draws 140 attempts, the box score has 141 FGA; 2447546: shot chart draws 145 attempts, the box score has 146 FGA; 2447527: shot chart draws 135 attempts, the box score has 136 FGA; 2444618: shot chart draws 160 attempts, the box score has 161 FGA]",
   "2026-10-16 18:17  sync: shot charts of 240 games in 8 competitions  [2664076: shot chart draws 147 attempts, the box score has 148 FGA; 2664055: shot chart draws 157 attempts, the box score has 158 FGA; 2850551: shot chart draws 172 attempts, the box score has 173 FGA; 2850634: shot chart draws 168 attempts, the box score has 169 FGA]",
   "2026-10-16 18:29  sync: shot charts of 240 games in 13 competitions  [2209655: shot chart draws 179 attempts, the box score has 180 FGA; 2597505: shot chart draws 157 attempts, the box score has 158 FGA; 2597517: shot chart draws 139 attempts, the box score has 140 FGA]",
   "2026-10-16 18:36  sync: shot charts of 240 games in 7 competitions  [2585770: shot chart draws 152 attempts, the box score has 154 FGA; 2314780: shot chart draws 139 attempts, the box score has 140 FGA]",
@@ -82,7 +73,8 @@
   "2026-10-18 13:52  FAILED build (3): /usr/bin/python3 build_site.py",
   "2026-10-18 13:59  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-18 14:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
-  "2026-10-18 15:34  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 82-25 Johor; shot charts of 1 game  [2943476: final 82-25 read from the live feed (the schedule page does not show it as final yet); season lines not read for 1 player(s): tried again next time]"
+  "2026-10-18 15:34  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 82-25 Johor; shot charts of 1 game  [2943476: final 82-25 read from the live feed (the schedule page does not show it as final yet); season lines not read for 1 player(s): tried again next time]",
+  "2026-10-18 15:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -101,7 +93,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1792303349.807616,
+  "21375": 1792308923.4939153,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
