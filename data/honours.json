@@ -1,5 +1,5 @@
 {
- "_note": "Player honours kept by hand (the source publishes no awards). Supplied by the user 2026-09-29: Chee Wei Lim's list in chat, then 'Individual Awards part 1' (Word file) imported with awards_import.py, which maps each event heading to a competition via data/awards_events.json and each winner by name inside that competition's roster. cid links an honour to a database competition; honours without cid are from events the database does not cover. champ = the player's team won the competition. Award labels: MVP (MPP counts as MVP, the user's rule), Finals MVP, Top scorer, Top rebounder, Top assist, Top steal, Top block. Agong Cup men titles 2016-2019 for Ting Chun Hong and Wong Yi Hou added from the user's note (both won 2016/17/18/19/22/23/24/25; the database covers 2022 on). National U17 awards for 2017, 2022, 2023 and 2024 added from the user's list on 2026-10-15 (Most Potential Player shown as MVP); the 2023 rosters in the source are incomplete, so most 2023 winners were matched by name across the whole index. 14th ASEAN School Games 2025 (boys): silver medal for Malaysia's 12 players, from the user's list on 2026-10-16 (results: lost 74-76 to the Philippines, beat Singapore 93-70 and Brunei 105-28, semi-final 75-66 over Thailand, final 86-90 OT to the Philippines; Khoo Wei Lin 40, 19, 20, 27 and 16 points, 24.4 a game, shown on his career path through the entry's 'stat' line).",
+ "_note": "Player honours kept by hand (the source publishes no awards). Supplied by the user 2026-09-29: Chee Wei Lim's list in chat, then 'Individual Awards part 1' (Word file) imported with awards_import.py, which maps each event heading to a competition via data/awards_events.json and each winner by name inside that competition's roster. cid links an honour to a database competition; honours without cid are from events the database does not cover. champ = the player's team won the competition. Award labels: MVP (MPP counts as MVP, the user's rule), Finals MVP, Top scorer, Top rebounder, Top assist, Top steal, Top block. Agong Cup men titles 2016-2019 for Ting Chun Hong and Wong Yi Hou added from the user's note (both won 2016/17/18/19/22/23/24/25; the database covers 2022 on). National U17 awards for 2017, 2022, 2023 and 2024 added from the user's list on 2026-10-15 (Most Potential Player shown as MVP); the 2023 rosters in the source are incomplete, so most 2023 winners were matched by name across the whole index. 14th ASEAN School Games 2025 (boys): silver medal for Malaysia's 12 players, from the user's list on 2026-10-16 (results: lost 74-76 to the Philippines, beat Singapore 93-70 and Brunei 105-28, semi-final 75-66 over Thailand, final 86-90 OT to the Philippines; Khoo Wei Lin 40, 19, 20, 27 and 16 points, 24.4 a game, shown on his career path through the entry's 'stat' line). 66th Agong Cup 2026 (50247 men, 50248 women; Negeri Sembilan won both finals, 88-78 and 82-25 over Johor) individual awards from the user's list on 2026-10-18; no women's Top steal was given. 'Sunny Chin Tsun Jin' is the source's 'Shun Tsin, Sunny Chin' (Sarawak, 1975126, the competition's top rebounder); Chin Jin Yen is filed under his merged id 2341474.",
  "620479": [
   {
    "year": 2026,
@@ -1668,6 +1668,15 @@
  ],
  "2341473": [
   {
+   "year": 2026,
+   "cid": "50247",
+   "team": "Johor",
+   "champ": false,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
    "year": 2024,
    "cid": "40226",
    "team": "Johor Southern Tigers",
@@ -1767,6 +1776,15 @@
   }
  ],
  "2371573": [
+  {
+   "year": 2026,
+   "cid": "50247",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Top steal"
+   ]
+  },
   {
    "year": 2024,
    "cid": "39599",
@@ -1879,6 +1897,15 @@
  ],
  "2341474": [
   {
+   "year": 2026,
+   "cid": "50247",
+   "team": "Perak",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  },
+  {
    "year": 2024,
    "cid": "39599",
    "team": "Perak",
@@ -1983,6 +2010,15 @@
  ],
  "27580": [
   {
+   "year": 2026,
+   "cid": "50248",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Top assist"
+   ]
+  },
+  {
    "year": 2024,
    "cid": "39600",
    "team": "Negeri Sembilan",
@@ -2074,6 +2110,15 @@
  ],
  "2252572": [
   {
+   "year": 2026,
+   "cid": "50248",
+   "team": "Sarawak",
+   "champ": false,
+   "awards": [
+    "Top scorer"
+   ]
+  },
+  {
    "year": 2024,
    "cid": "39600",
    "team": "Kuala Lumpur",
@@ -2151,6 +2196,15 @@
   }
  ],
  "1287260": [
+  {
+   "year": 2026,
+   "cid": "50248",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
   {
    "year": 2024,
    "cid": "39600",
@@ -2396,6 +2450,16 @@
  ],
  "2371569": [
   {
+   "year": 2026,
+   "cid": "50247",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "MVP",
+    "Top scorer"
+   ]
+  },
+  {
    "year": 2023,
    "comp": "FIBA Asia Cup Qualifiers 2023",
    "short": "FIBA Asia Cup Qualifiers",
@@ -2553,6 +2617,15 @@
   }
  ],
  "1975126": [
+  {
+   "year": 2026,
+   "cid": "50248",
+   "team": "Sarawak",
+   "champ": false,
+   "awards": [
+    "Top rebounder"
+   ]
+  },
   {
    "year": 2018,
    "comp": "Agong Cup 2018 - Women",
@@ -2923,6 +2996,16 @@
   }
  ],
  "27500": [
+  {
+   "year": 2026,
+   "cid": "50248",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "MVP",
+    "Top block"
+   ]
+  },
   {
    "year": 2023,
    "comp": "FIBA Women's Asia Cup, Division B 2023",
@@ -4258,6 +4341,15 @@
   }
  ],
  "2092917": [
+  {
+   "year": 2026,
+   "cid": "50247",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Finals MVP"
+   ]
+  },
   {
    "year": 2023,
    "comp": "FIBA Asia Cup Qualifiers 2023",
@@ -7217,6 +7309,17 @@
    "champ": false,
    "awards": [
     "Silver medal"
+   ]
+  }
+ ],
+ "2568842": [
+  {
+   "year": 2026,
+   "cid": "50247",
+   "team": "Negeri Sembilan",
+   "champ": true,
+   "awards": [
+    "Top block"
    ]
   }
  ]
