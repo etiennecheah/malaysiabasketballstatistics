@@ -105,13 +105,13 @@ YT_ID = re.compile(r'(?:youtu\.be/|youtube\.com/(?:live/|embed/|shorts/|watch\?(
 def load_streams(payload):
     """data/streams.json: {"games": {match id: YouTube link or video id}}. The Watch page
     (#/watch/<mid>) plays the video beside the game's statistics. A link that names no
-    video, or a match id that is not in the database, stops the build with the reason."""
+    video stops the build with the reason; a match id the database does not hold yet is skipped until it does."""
     p = os.path.join(D, 'streams.json')
     if not os.path.exists(p):
         return {}
     games = json.load(open(p)).get('games', {})
     known = {g['mid'] for c in payload['comps'] for g in c['games']}
-    out = {}
+    out, waiting = {}, []
     for mid, link in games.items():
         link = str(link).strip()
         m = YT_ID.search(link)
@@ -119,9 +119,12 @@ def load_streams(payload):
         if not vid:
             raise SystemExit('streams.json: %s: "%s" is not a YouTube link' % (mid, link))
         if str(mid) not in known:
-            raise SystemExit('streams.json: %s is not a match id in the database' % mid)
+            # a game added ahead of the sync (a final posted an hour before tip-off): kept in the file and
+            # picked up by the first build after the sync reads the fixture; it must not stop the build
+            waiting.append(str(mid))
+            continue
         out[str(mid)] = vid
-    print('streams: %d game(s) with a video' % len(out))
+    print('streams: %d game(s) with a video%s' % (len(out), (' | not in the database yet: ' + ', '.join(waiting)) if waiting else ''))
     return out
 
 
