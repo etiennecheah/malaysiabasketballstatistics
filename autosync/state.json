@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792274765.768404,
-  "fp": "8218407a25e65e418c14"
+  "at": 1792303038.991717,
+  "fp": "d6181ac06afccd8e941c"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -23,15 +23,7 @@
   "50247": "2026-10-18",
   "50248": "2026-10-18"
  },
- "fail": {
-  "build": {
-   "fp": "fdafcae1d3919e970e82",
-   "last": 1792302778.5457306,
-   "msg": "/usr/bin/python3 build_site.py\nhonours: 49 linked to a competition now in the database\nstreams.json: 2943476 is not a match id in the database\n",
-   "n": 3,
-   "next": 1792305178.5457306
-  }
- },
+ "fail": {},
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
