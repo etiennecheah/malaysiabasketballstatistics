@@ -347,7 +347,11 @@ def write_site(payload, css):
     if os.path.isdir(vendor):
         shutil.copytree(vendor, os.path.join(out, 'vendor'))
     verify = ('<meta name="google-site-verification" content="%s">\n' % html_esc(cfg['google_verification'])) if cfg.get('google_verification') else ''
-    shell = SHELL.format(base=base, site=url, css=css_url, db=db_url, js=js_url, verify=verify)
+    # the password screen (site_config.json "gate_sha256": SHA-256 of the password; empty = an open site).
+    # It hides the pages from casual visitors only: GitHub Pages still serves every file to anyone.
+    g = (cfg.get('gate_sha256') or '').strip().lower()
+    gate = (GATE_HEAD.replace('@HASH@', g), GATE_BODY) if g else ('', '')
+    shell = SHELL.format(base=base, site=url, css=css_url, db=db_url, js=js_url, verify=verify, gatehead=gate[0], gatebody=gate[1])
     tmp = os.path.join(D, 'shell.tmp')
     open(tmp, 'w').write(shell)
     sh = subprocess.run(['node', os.path.join(R, 'prerender.js'), out, tmp, url,
@@ -394,14 +398,44 @@ SHELL = """<!doctype html>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Archivo+Narrow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{css}">
 <script>try{{var t=localStorage.getItem("hsmy-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}}catch(e){{}}</script>
-<script defer src="{db}"></script>
+{gatehead}<script defer src="{db}"></script>
 <script defer src="{js}"></script>
 {{{{LD}}}}
 </head>
 <body>
-<div id="app">{{{{APP}}}}</div>
+{gatebody}<div id="app">{{{{APP}}}}</div>
 </body>
 </html>
+"""
+
+
+# The password screen, written into every page. The check runs in <head> before anything is
+# drawn: without the right token in this browser the page is hidden and the screen shown. The
+# password is compared as a SHA-256 hash; a right answer is remembered in localStorage.
+GATE_HEAD = """<script>(function(){var ok=false;try{ok=localStorage.getItem("hs-gate")==="@HASH@";}catch(e){}if(!ok)document.documentElement.className+=" hs-locked";window.HS_GATE="@HASH@";})();</script>
+<style>#hs-gate{display:none}html.hs-locked body>#app{display:none!important}html.hs-locked,html.hs-locked body{overflow:hidden;background:#0b111c}
+html.hs-locked #hs-gate{display:flex;position:fixed;inset:0;z-index:2147483647;align-items:center;justify-content:center;padding:24px 16px;color:#eef2f8;font-family:Archivo,system-ui,sans-serif;
+background:radial-gradient(60% 80% at 0% 0%,rgba(77,147,234,.28),transparent 60%),radial-gradient(60% 80% at 100% 100%,rgba(240,146,76,.22),transparent 60%),#0b111c}
+#hs-gate form{width:100%;max-width:360px;display:flex;flex-direction:column;gap:12px;text-align:center}
+#hs-gate .w{font:800 26px "Archivo Narrow",Archivo,system-ui,sans-serif;letter-spacing:.02em}#hs-gate .w i{display:inline-block;width:10px;height:10px;border-radius:2px;background:#f0924c;margin-right:8px;vertical-align:middle}
+#hs-gate p{margin:0 0 6px;color:#9aa6bd;font-size:14px;line-height:1.5}
+#hs-gate input{font:500 16px Archivo,system-ui,sans-serif;padding:12px 14px;border-radius:10px;border:1px solid rgba(140,160,200,.35);background:rgba(255,255,255,.06);color:#eef2f8;outline:none}
+#hs-gate input:focus{border-color:#4d93ea;box-shadow:0 0 0 3px rgba(77,147,234,.3)}
+#hs-gate button{font:700 15px Archivo,system-ui,sans-serif;padding:12px;border:0;border-radius:10px;background:#eef2f8;color:#0b111c;cursor:pointer}
+#hs-gate button:focus-visible{outline:2px solid #4d93ea;outline-offset:2px}#hs-gate .e{min-height:20px;color:#ff8fa3;font-size:13px}</style>
+"""
+GATE_BODY = """<div id="hs-gate" role="dialog" aria-modal="true" aria-labelledby="hs-gate-t"><form id="hs-gate-f" autocomplete="off">
+<div class="w" id="hs-gate-t"><i aria-hidden="true"></i>HOOPSTATS MY</div>
+<p>This site is private for now. Enter the password to continue.</p>
+<label for="hs-gate-p" style="position:absolute;left:-9999px">Password</label>
+<input id="hs-gate-p" type="password" placeholder="Password" required autofocus>
+<button type="submit">Enter</button><div class="e" id="hs-gate-e" aria-live="polite"></div></form></div>
+<script>(function(){var f=document.getElementById("hs-gate-f");if(!f)return;f.addEventListener("submit",function(ev){ev.preventDefault();
+var v=document.getElementById("hs-gate-p").value,e=document.getElementById("hs-gate-e");
+if(!(window.crypto&&crypto.subtle)){e.textContent="This browser cannot check the password here.";return;}
+crypto.subtle.digest("SHA-256",new TextEncoder().encode(v)).then(function(b){var h=Array.prototype.map.call(new Uint8Array(b),function(x){return("0"+x.toString(16)).slice(-2);}).join("");
+if(h===window.HS_GATE){try{localStorage.setItem("hs-gate",h);}catch(err){}document.documentElement.className=document.documentElement.className.replace(/\\bhs-locked\\b/g,"");}
+else{e.textContent="That password is not right. Try again.";document.getElementById("hs-gate-p").select();}});});})();</script>
 """
 
 

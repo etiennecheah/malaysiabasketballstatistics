@@ -1,5 +1,6 @@
 {
- "_note": "The site's public address. Change url when the site moves to its own domain (for example https://hoopstats.my/); every page's canonical link, preview card and the sitemap follow it. google_verification is the content of Google Search Console's HTML-tag verification, if you use that method.",
+ "_note": "The site's public address. Change url when the site moves to its own domain (for example https://hoopstats.my/); every page's canonical link, preview card and the sitemap follow it. google_verification is the content of Google Search Console's HTML-tag verification, if you use that method. gate_sha256: the SHA-256 of the password every visitor must enter (the password screen); leave it empty to open the site to everyone.",
  "url": "https://etiennecheah.github.io/malaysiabasketballstatistics/",
- "google_verification": ""
+ "google_verification": "",
+ "gate_sha256": "a4316f3a807bded3156a61f4f6c3a4827a8c631781c154244926358fd508bbb9"
 }

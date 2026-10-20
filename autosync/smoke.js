@@ -44,6 +44,10 @@ function serve(root, base) {
   const launch = exe ? { executablePath: exe } : { channel: 'chrome' };
   const browser = await pw.chromium.launch(launch);
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  // past the password screen (data/site_config.json gate_sha256), as a visitor who has entered it
+  let gate = '';
+  try { gate = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'site_config.json'), 'utf8')).gate_sha256 || ''; } catch (e) {}
+  if (gate) await page.addInitScript(h => { try { localStorage.setItem('hs-gate', h); } catch (e) {} }, gate);
   page.on('pageerror', e => errors.push('script error on ' + page.url().replace(origin, '') + ': ' + e.message));
   // the site alone, as built: fonts, sign-in and the live relay are left out of the check
   await page.route('**/*', r => (r.request().url().startsWith(origin) ? r.continue() : r.abort()));
