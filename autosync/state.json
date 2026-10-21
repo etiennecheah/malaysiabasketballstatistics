@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792529620.1463997,
-  "fp": "08ab930c713366c98f19"
+  "at": 1792622816.8806982,
+  "fp": "ec56c85762943bb3f50a"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -18,7 +18,7 @@
   "26279": "2026-10-10",
   "35136": "2026-10-10",
   "38575": "2026-10-16",
-  "48654": "2026-10-21",
+  "48654": "2026-10-22",
   "49965": "2026-10-21",
   "50247": "2026-10-21",
   "50248": "2026-10-21"
@@ -35,7 +35,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-16 20:18  FAILED shots (2): page check failed",
   "2026-10-16 20:58  sync: shot charts of 236 games in 9 competitions  [1312985: shot chart page failed (500): tried again later; 1312946: shot chart draws 183 attempts, the box score has 184 FGA; 1312956: shot chart draws 167 attempts, the box score has 153 FGA; 885574: shot chart page failed (500): tried again later; 885546: shot chart draws 155 attempts, the box score has 156 FGA; 885548: shot chart draws 147 attempts, the box score has 148 FGA; 885549: shot chart draws 156 attempts, the box score has 157 FGA; 886170: shot chart draws 173 attempts, the box score has 174 FGA; 886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept; 886174: shot chart draws 67 attempts, the box score has 130 FGA: not kept; 944404: shot chart draws 135 attempts, the box score has 136 FGA]",
   "2026-10-16 21:04  sync: shot charts of 76 games in 4 competitions  [1069336: shot chart draws 166 attempts, the box score has 167 FGA; 1069349: shot chart page failed (500): tried again later; 1069395: shot chart draws 147 attempts, the box score has 148 FGA; 1069355: shot chart page failed (500): tried again later]",
   "2026-10-16 21:46  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 100-68 Pahang; shot charts of 1 game  [2938183: final 100-68 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]",
@@ -74,7 +73,8 @@
   "2026-10-19 05:58  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [11 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-19 06:03  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated  [12 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-20 20:10  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
-  "2026-10-21 04:53  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [rosters published for 3 of 8 teams]"
+  "2026-10-21 04:53  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [rosters published for 3 of 8 teams]",
+  "2026-10-22 06:46  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [rosters published for 7 of 8 teams]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
