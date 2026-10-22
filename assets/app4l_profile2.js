@@ -1,8 +1,8 @@
 /* =========================================================================
    Player profile, v2 layout (approved from the mockup, 2026-09-29).
 
-   One focal point per screen: a full-width hero with the name, honours and
-   four big numbers for one tier, then five tabs — Overview, Stats, Game log,
+   One focal point per screen: a full-width hero with the name, a row of details and
+   four big numbers for one tier (honours moved to the overview, update-50), then five tabs — Overview, Stats, Game log,
    Advanced, Splits. The rule of the old page still holds everywhere: numbers
    are never averaged across tiers, and every high carries its tier.
 
@@ -115,12 +115,10 @@ const pvHonOf = (d, r) => d.hon.find(h => h.cid === r.c.id);
 // the team's crest when the site has one, else the event's own mark (FilBasket), else the team's colour disc
 const PV_MEDAL = /^(Gold|Silver|Bronze) medal$/;
 const pvMedalCls = a => { const m = String(a).match(PV_MEDAL); return m ? 'medal ' + m[1].toLowerCase() : ''; };
-const pvTagCls = a => pvMedalCls(a) || (/MVP/.test(a) ? 'mvp' : 'aw');
 // a medal honour carries a struck medal; otherwise the team's crest when the site has one,
 // else the event's own mark (FilBasket), else the team's colour disc
 const pvMark = (h, sz) => h.medal ? `<span class="pv-medal ${esc(h.medal)}" style="width:${sz}px;height:${sz}px" aria-hidden="true"></span>`
   : h.team && (teamLogo(h.team) || flagOf(h.team)) ? crest(h.team, sz) : h.mark ? crest(h.mark, sz) : h.team ? crest(h.team, sz) : '';
-const pvCount = (d, a) => d.hon.filter(h => h.awards.includes(a)).length;
 
 /* ---- hero -------------------------------------------------------------- */
 function pvHero(pid, d, t) {
@@ -135,31 +133,22 @@ function pvHero(pid, d, t) {
   const moved = d.current && d.current.toLowerCase() !== String(dbTeam).toLowerCase();
   const b = moved ? Object.assign({}, d.bio, { num: null }) : d.bio;
   const pos = b.pos ? (PV_POS[b.pos] || b.pos) : '';
-  // honours pills: MVP and Finals MVP are counted apart, then titles, then stat awards
-  const pill = (n, label, list, gold, star) => n ? `<span class="pv-title ${gold ? 'mvp' : pvMedalCls(label)}" data-imtip="${esc(label + '\n' + list.map(h => h.short + ' ' + h.year + (h.team ? ' · ' + pvCase(h.team) : '')).join('\n'))}">${star ? '<i>★</i>' : ''}${n > 1 || !star ? n + '× ' : ''}${esc(label)}<em>${star ? (n > 1 ? list.map(h => h.year).sort().join(', ').replace(/^(\d{4}).*(\d{4})$/, (m, a, b) => n > 3 ? a + '–' + b : m) : list[0].year) : (list.length > 1 ? 'latest ' : '') + esc(list[0].short) + ' ' + list[0].year}</em></span>` : '';
-  const by = a => d.hon.filter(h => h.awards.includes(a));
-  const ORDER = ['Gold medal', 'Silver medal', 'Bronze medal', 'DPOY', 'All-Tournament First Team', 'All-Star Team', 'Top scorer', 'Top rebounder', 'Top assist', 'Top steal', 'Top block', 'Most promising tall talent'];
-  const statAwards = [...new Set(d.hon.flatMap(h => h.awards).filter(a => !/MVP/.test(a)))]
-    .sort((a, b) => (ORDER.indexOf(a) + 1 || 99) - (ORDER.indexOf(b) + 1 || 99));
-  const pills = pill(by('MVP').length, 'MVP', by('MVP'), true) + pill(by('Finals MVP').length, 'Finals MVP', by('Finals MVP'), true)
-    + d.titles.map(t => { const L = d.hon.filter(h => h.champ && h.short === t.short); return pill(L.length, t.short + ' champion', L, false, true); }).join('')
-    + statAwards.map(a => pill(by(a).length, a, by(a))).join('');
-  const facts = [['Born', b.dob ? pvDob(b.dob) + (has(b.age) ? ` <span>(${b.age})</span>` : '') : ''], ['Height', has(b.ht) ? b.ht + ' cm' : ''],
-    ['Weight', has(b.wt) ? b.wt + ' kg' : ''], ['Nationality', b.nat ? esc(PV_NAT[b.nat] || b.nat) : ''],
-    ['Career', d.span ? (d.span[0] === d.span[1] ? d.span[0] : d.span[0] + '–' + d.span[1]) : ''],
-    ['Played', d.rows.length ? d.rows.length + ' competition' + (d.rows.length === 1 ? '' : 's') + ' · ' + d.log.length + ' box scores' : ''],
-    ['National caps', (n => n.all ? `${n.all}<span> ${n.senior && n.youth ? `(${n.senior} senior · ${n.youth} youth)` : n.senior ? 'senior' : 'youth'}</span>` : '')(pvCapsCount(pid))]].filter(x => x[1]);
+  // the details, one short row: age, height, weight, nationality, career span, caps
+  const caps = pvCapsCount(pid).all;
+  const facts = [[b.age, 'yrs'], [b.ht, 'cm'], [b.wt, 'kg'], [b.nat ? PV_NAT[b.nat] || b.nat : '', ''],
+    [d.span ? (d.span[0] === d.span[1] ? d.span[0] : d.span[0] + '–' + d.span[1]) : '', ''], [caps || '', caps === 1 ? 'cap' : 'caps']]
+    .filter(x => has(x[0]) && x[0] !== '');
   // a verified badge, the player's links and the claim button come from the accounts layer
   const ax = typeof accProfile === 'function' ? accProfile(pid) : {};
   let stats = '';
   if (t) {
     const m = (t.rd && t.rd.m) || {}, g = t.g;
-    const pct = k => { const x = m[k]; if (!x || x.gp == null) return ''; return `<span class="p ${x.gp >= 75 ? '' : 'mid'}">${x.gp >= 75 ? pvTop(x.gp) : pvOrd(x.gp) + ' percentile'}</span>`; };
+    const pct = k => { const x = m[k]; if (!x || x.gp == null) return ''; return `<span class="p ${x.gp >= 75 ? '' : 'mid'}" data-imtip="${esc(pvOrd(x.gp) + ' percentile in the tier')}">${x.gp >= 75 ? pvTop(x.gp) : pvOrd(x.gp)}</span>`; };
     // points, then the player's two strongest of rebounds / assists / steals / blocks, then FG%
-    const pool = [['reb', 'Rebounds per game', t.reb], ['ast', 'Assists per game', t.ast], ['stl', 'Steals per game', t.stl], ['blk', 'Blocks per game', t.blk]]
+    const pool = [['reb', 'Rebounds', t.reb], ['ast', 'Assists', t.ast], ['stl', 'Steals', t.stl], ['blk', 'Blocks', t.blk]]
       .map(x => x.concat([(m[x[0]] && m[x[0]].gp) || 0])).sort((a, b) => b[3] - a[3]).slice(0, 2)
       .sort((a, b) => ['reb', 'ast', 'stl', 'blk'].indexOf(a[0]) - ['reb', 'ast', 'stl', 'blk'].indexOf(b[0]));
-    const S = [['pts', 'Points per game', pvF1(t.pts / g)]].concat(pool.map(x => [x[0], x[1], pvF1(x[2] / g)])).concat([['fgpct', 'Field goal %', pvPc(t.fgm, t.fga)]]);
+    const S = [['pts', 'Points', pvF1(t.pts / g)]].concat(pool.map(x => [x[0], x[1], pvF1(x[2] / g)])).concat([['fgpct', 'FG%', pvPc(t.fgm, t.fga)]]);
     stats = `<div class="pv-bar"><div class="pv-bar-in">
       <div class="pv-scope"><label for="pv-tier">Numbers for</label>
         <div class="pv-sel">${t.logo ? `<span class="pv-clogo"><img src="${t.logo}" alt=""></span>` : ''}
@@ -177,9 +166,7 @@ function pvHero(pid, d, t) {
       <div class="pv-id">
         <div class="pv-eyebrow">${team ? crest(team, 28) + `<b>${esc(pvCase(team))}</b>` : ''}<span>${[has(b.num) ? '#' + esc(b.num) : '', esc(pos)].filter(Boolean).join(' · ')}</span>${ax.badge || ''}</div>
         <h1 class="pv-name page-title"><span>${esc(first)}</span>${last ? `<span>${esc(last)}</span>` : ''}</h1>
-        ${d.badges.length ? `<div class="pv-badges">${d.badges.map(b => `<span class="pv-badge">${pvBadgeIcon(b)}<span>${esc(b)}</span></span>`).join('')}</div>` : ''}
-        ${pills ? `<div class="pv-titles">${pills}</div>` : ''}
-        ${facts.length ? `<dl class="pv-facts">${facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>` : ''}
+        ${facts.length ? `<div class="pv-dets"${b.dob ? ` data-imtip="${esc('Born ' + pvDob(b.dob))}"` : ''}>${facts.map(([v, u]) => `<span><b>${esc(v)}</b>${u ? ' ' + u : ''}</span>`).join('')}</div>` : ''}
         ${ax.links || ''}${ax.fav ? `<div class="acc-hero-act">${ax.fav}</div>` : ''}
       </div>
       <div class="pv-photo">${PHOTOS[pid] ? `<img src="${PHOTOS[pid]}" alt="${esc(name)}">` : `<div class="pv-initials" title="Photo slot — awaiting a portrait">${initials(nl ? nl.join(' ') : name)}</div>`}</div>
@@ -202,99 +189,117 @@ function pvBadgeIcon(b) {
 const pvSec = (title, sub, right, body, cls) => `<section class="pv-sec ${cls || ''}"><div class="pv-sec-h"><h2>${title}</h2>${sub ? `<span class="sub">${sub}</span>` : ''}${right ? `<span class="r">${right}</span>` : ''}</div>${body}</section>`;
 
 /* ---- overview ---------------------------------------------------------- */
-function pvInsights(d) {
-  const names = { ast: ['assists', 'passer'], pts: ['points', 'scorer'], stl: ['steals', 'defender'], reb: ['rebounds', 'rebounder'] };
-  let best = null;
-  [100, 30].forEach(minPool => { if (best) return; d.tiers.forEach(t => {
-    if (!t.rd || t.g < 5 || t.rd.pool < minPool) return;
-    ['ast', 'pts', 'stl', 'reb'].forEach(k => { const x = t.rd.m[k];
-      if (x && x.rank && (!best || x.rank < best.x.rank || (x.rank === best.x.rank && t.rd.pool > best.t.rd.pool))) best = { t, k, x }; }); }); });
-  const cards = [];
-  if (best && best.x.rank <= 10) {
-    const also = ['ast', 'pts', 'stl', 'reb'].filter(k => k !== best.k && best.t.rd.m[k] && best.t.rd.m[k].rank <= 3);
-    const topIn = d.tiers.filter(t => t.rd && t.rd.m[best.k] && t.rd.m[best.k].rank <= 5).length;
-    const lastYr = best.t.lastYear;
-    cards.push(`<div class="pv-ic lead"><div class="k">Best ranking · ${names[best.k][0]}</div><div class="big">#${best.x.rank}</div>
-      <div class="t">${esc(best.t.label)}${best.t.firstYear === lastYr ? ', ' + lastYr : ''}</div>
-      <div class="s">${pvF1(best.x.v)} ${names[best.k][0]} a game, ${pvOrd(best.x.rank)} of ${best.x.n} players in the tier${also.length ? '. Also ' + also.map(k => pvOrd(best.t.rd.m[k].rank) + ' in ' + names[k][0]).join(' and ') : ''}.${topIn > 1 ? ` Top five in ${names[best.k][0]} in ${topIn} different tiers.` : ''}</div></div>`);
-  }
-  if (d.hon.length) {
-    const nC = d.hon.filter(h => h.champ).length, nM = pvCount(d, 'MVP'), nF = pvCount(d, 'Finals MVP');
-    const tags = h => (h.champ ? '<span class="pv-tag gold">Champion</span>' : '') + h.awards.map(a => `<span class="pv-tag ${pvTagCls(a)}">${esc(a)}</span>`).join('');
-    const pre = d.hon.filter(h => !h.cid);
-    const withAw = d.hon.filter(h => h.awards.length);
-    cards.push(`<div class="pv-ic gold"><div class="k">Honours</div><div class="big">${nC || d.hon.reduce((a, h) => a + h.awards.length, 0)}<span class="u">${nC ? 'title' + (nC === 1 ? '' : 's') : 'award' + (d.hon.reduce((a, h) => a + h.awards.length, 0) === 1 ? '' : 's')}</span></div>
-      ${d.titles.length ? `<div class="pv-tbox">${d.titles.map(t => `<div data-imtip="${esc(t.short + ' champion\n' + t.years.join(', '))}"><b>${t.n}×</b><span>${esc(t.short)}</span><em>${t.years.length > 3 ? t.years[0] + '–' + t.years[t.years.length - 1] : t.years.join(', ')}</em></div>`).join('')}</div>` : ''}
-      ${withAw.length ? `<div class="pv-hon">${withAw.map(h => `<div>${pvMark(h, 20)}<span class="hn">${h.cid ? `<a href="#/c/${h.cid}">${esc(h.short)}</a>` : esc(h.short)} <span class="dim">${h.year}</span></span><span class="ht">${tags(h)}</span></div>`).join('')}</div>` : ''}
-      ${nM || nF || pre.length ? `<div class="s">${[nM ? nM + ' MVP' : '', nF ? nF + ' Finals MVP' : ''].filter(Boolean).join(' and ')}${nM || nF ? '. ' : ''}${pre.length ? `The ${[...new Set(pre.map(h => h.year))].sort().join(', ')} honours are from events the database does not cover.` : ''}</div>` : ''}</div>`);
-  } else {
-    cards.push(`<div class="pv-ic"><div class="k">Competitions</div><div class="big">${d.rows.length}</div>
-      <div class="s">In ${d.tiers.length} tier${d.tiers.length === 1 ? '' : 's'}${d.span ? ', ' + d.span[0] + '–' + d.span[1] : ''}. No titles recorded yet.</div></div>`);
-  }
-  const hp = careerHighs(d.pid).pts;
-  if (hp) {
-    const g = d.log.find(x => x.mid === hp.g.mid);
-    cards.push(`<div class="pv-ic"><div class="k">Career-high points</div><div class="big">${hp.v}</div>
-      <div class="s">${g ? `${g.home ? 'vs' : '@'} ${esc(g.oppName)}, ${pvDay(g.date)}<br><a href="#/c/${g.cid}/box/${g.mid}">${esc(g.c.label || g.c.name)}</a> · ${g.l.ast} assists, ${g.l.eff} efficiency` : ''}</div></div>`);
-  }
-  return `<div class="pv-ins n${cards.length}">${cards.join('')}</div>`;
-}
-function pvPath(d) {
+/* Honours: one row per honour (titles, MVP, Finals MVP, medals, stat awards), each a
+   line of team crest · competition · year, newest first. No row, no section. */
+const PV_HON_ORDER = ['Champion', 'MVP', 'Finals MVP', 'Gold medal', 'Silver medal', 'Bronze medal', 'DPOY',
+  'All-Tournament First Team', 'All-Star Team', 'Top scorer', 'Top rebounder', 'Top assist', 'Top steal', 'Top block', 'Most promising tall talent'];
+function pvHonours(d) {
   const by = {};
-  d.rows.forEach(r => { (by[r.c.year] = by[r.c.year] || []).push({ r }); });
-  // hand-kept honours outside the database, and database ones whose competition has no stat line for the player
-  d.hon.concat(d.pathHon).filter(h => !h.cid || !d.rows.some(r => r.c.id === h.cid)).forEach(h => { (by[h.year] = by[h.year] || []).push({ h }); });
-  d.moves.forEach(m => { (by[m.year] = by[m.year] || []).push({ m }); });
-  const ys = Object.keys(by).sort();
-  // two events of one year can share a short name: a qualifying round and its finals
-  // ("National U15" twice), or two different invitationals. A qualifier is named as one —
-  // by its name, or, when the source never says so, because it has no champion and was over
-  // before the other event began (the 2025 Lum Mun Chak round for the "2" teams). Any other
-  // pair is told apart by the event's own name ("Selangor Invitational", "Li-Ning Invitation").
-  const span = c => { const ds = (c.games || []).map(g => g.date).filter(Boolean).sort(); return [ds[0] || '', ds[ds.length - 1] || '']; };
-  const pairOf = {};
-  d.rows.forEach(r => { const k = r.c.year + '|' + r.short; (pairOf[k] = pairOf[k] || []).push(r); });
-  const isQ = r => {
-    if (/qualif/i.test(r.c.name || '')) return true;
-    const sib = pairOf[r.c.year + '|' + r.short].filter(x => x !== r);
-    return !r.c.champ && sib.length > 0 && sib.every(x => span(r.c)[1] && span(r.c)[1] < span(x.c)[0]);
-  };
-  const ownName = c => String(c.label || c.name || '').replace(/\b(19|20)\d\d\b/g, '').replace(/\b\d+(st|nd|rd|th)\b/gi, '')
-    .replace(/\b(International|Basketball|Championships?|Women'?s?|Men'?s?|Boys|Girls)\b/gi, '').replace(/[-–]\s*$/, '').replace(/\s+/g, ' ').trim();
-  const rowLabel = r => {
-    const sib = pairOf[r.c.year + '|' + r.short];
-    if (sib.length < 2) return r.short;
-    if (isQ(r)) return r.short + ' qualifier';
-    return sib.filter(x => !isQ(x)).length > 1 ? (ownName(r.c) || r.short) : r.short;
-  };
-  const lines = (champ, awards, placing, stat) => {
-    const gold = [champ ? '★ Champion' : ''].concat(awards.filter(a => /MVP/.test(a)).map(a => '★ ' + a)).filter(Boolean);
-    return (gold.length ? `<div class="st">${gold.join('<br>')}</div>` : '') + (placing ? `<div class="pl">◆ ${esc(placing)}</div>` : '') + awards.filter(a => !/MVP/.test(a)).map(a => pvMedalCls(a) ? `<div class="md ${pvMedalCls(a)}">● ${esc(a)}</div>` : `<div class="aw">${esc(a)}</div>`).join('')
-      // a hand-kept line for an event outside the database (e.g. "24.4 points per game · 5 games")
-      + (stat ? `<div class="pl pv-hstat">${esc(stat)}</div>` : '');
-  };
-  const item = x => {
-    if (x.m) return `<div class="it abroad">${crest(x.m.team, 18)}<span>${esc(x.m.team)}</span></div><div class="aw lg">↗ ${esc(x.m.league)} · signed</div>`;
-    // on the career path a medal event shows whom it was won for (Malaysia's flag); the medal itself is the line below
-    const mk = x.h && x.h.medal && x.h.team && (teamLogo(x.h.team) || flagOf(x.h.team)) ? Object.assign({}, x.h, {medal: null}) : x.h;
-    if (x.h) return `<div class="it ${x.h.champ ? 'win' : ''}" ${x.h.team ? `title="${esc(pvCase(x.h.team))}"` : ''}>${pvMark(mk, 18)}<span>${x.h.cid ? `<a href="#/c/${x.h.cid}">${esc(x.h.short)}</a>` : esc(x.h.short)}</span></div>${x.h.pathOnly && x.h.team ? `<div class="tm">${esc(pvCase(x.h.team))}</div>` : ''}${lines(x.h.champ, x.h.awards, x.h.placing, x.h.stat)}`;
-    // a path-only honour of the same event (a runner-up finish typed in before the event was
-    // imported) belongs on this entry, not beside it as a second one
-    const r = x.r, h = pvHonOf(d, r), ph = d.pathHon.find(p => p.cid === r.c.id), win = d.isTitle(r) || (h && h.champ);
-    return `<a class="it ${win ? 'win' : ''}" href="#/c/${r.c.id}" title="${esc(r.c.label || r.c.name)}">${crest(r.p.team, 18)}<span>${esc(rowLabel(r))}</span></a>${lines(win, (h ? h.awards : []).concat(ph ? ph.awards.filter(a => !(h && h.awards.includes(a))) : []), ph && ph.placing)}`;
-  };
-  const rank = x => x.m ? 5 : x.h ? (x.h.champ ? 1 : 0) + x.h.awards.length : (d.isTitle(x.r) ? 1 : 0) + ((pvHonOf(d, x.r) || {}).awards || []).length;
-  return `<div class="pv-path" style="--n:${ys.length}">${ys.map(y => { const pre = by[y].every(x => x.h || x.m) && !by[y].some(x => x.m);
-    return `<div class="yr ${pre ? 'pre' : ''}"><h3>${y}</h3>${pre ? '<div class="pre-l">Honours only · before the database</div>' : ''}
-      ${by[y].sort((a, b) => rank(b) - rank(a)).map(item).join('')}</div>`; }).join('')}</div>`;
+  d.hon.forEach(h => [h.champ ? 'Champion' : null].concat(h.awards).filter(Boolean).forEach(a => (by[a] = by[a] || []).push(h)));
+  const keys = Object.keys(by).sort((a, b) => (PV_HON_ORDER.indexOf(a) + 1 || 99) - (PV_HON_ORDER.indexOf(b) + 1 || 99));
+  const mark = h => h.team ? crest(h.team, 22) : h.mark ? crest(h.mark, 22) : '';
+  const rows = keys.map(k => {
+    const L = by[k].slice().sort((a, b) => b.year - a.year);
+    const name = k === 'Champion' ? (L.length > 1 ? 'Titles' : 'Title') : k;
+    return `<div class="pv-hr ${/Champion|MVP|Gold/.test(k) ? 'gold' : ''}"><div class="pv-hr-h"><b>${L.length}</b><span>${esc(name)}</span></div>
+      <ul>${L.map(h => `<li${h.team ? ` data-imtip="${esc(pvCase(h.team))}"` : ''}>${mark(h)}${h.cid ? `<a href="#/c/${h.cid}">${esc(h.short)}</a>` : `<span class="c">${esc(h.short)}</span>`}<span class="y">${h.year}</span></li>`).join('')}</ul></div>`;
+  });
+  // the hand-kept recognitions (player_extras "badges"): a line of their own, under the honours
+  if (d.badges.length) rows.push(`<div class="pv-hr"><div class="pv-hr-h"><b>${d.badges.length}</b><span>Also</span></div>
+      <ul>${d.badges.map(b => `<li>${pvBadgeIcon(b)}<span class="c">${esc(b)}</span></li>`).join('')}</ul></div>`);
+  return rows.length ? `<div class="card pv-honours">${rows.join('')}</div>` : '';
 }
-function pvHighs(d) {
-  const cats = [['Points', l => l.pts], ['Assists', l => l.ast], ['Rebounds', l => pvReb(l)], ['Steals', l => l.stl], ['Threes', l => l.tpm], ['Efficiency', l => l.eff]];
-  return `<div class="pv-highs">${cats.map(([n, f]) => { let b = null;
-    d.log.forEach(g => { const v = f(g.l); if (has(v) && (!b || v > b.v)) b = { v, g }; });
-    return b ? `<a class="hs" href="#/c/${b.g.cid}/box/${b.g.mid}"><div class="v">${b.v}</div><div class="l">${n}</div><div class="s">${b.g.home ? 'vs' : '@'} ${esc(b.g.oppName)}<br>${pvDay(b.g.date)} · ${esc(pvShortKey(b.g.tk))}</div></a>`
-      : `<div class="hs"><div class="v">—</div><div class="l">${n}</div><div class="s">No box score</div></div>`; }).join('')}</div>`;
+
+/* Career path: the teams he played for, by level and year. One crest per team per level per
+   year (its competitions are in the hover); a line through the highest club level each year.
+   The crests sit on a knockout in the card's colour, so the line passes behind them. */
+const PV_LANES = [['nat', 'Malaysia'], ['sen', 'Senior'], ['dev', 'Development'], ['youth', 'Youth']];
+function pvLane(short, team) {
+  if (/^malaysia\b/i.test(String(team || '')) || /FIBA|SEA Games|SEABA|ASEAN|Asia Cup|Olympic/i.test(short)) return 'nat';
+  const u = String(short).match(/\bU(\d{2})\b/);
+  if (u) return +u[1] <= 18 ? 'youth' : 'dev';
+  if (/MSSM|school|SUKIPT|junior/i.test(short)) return 'youth';
+  if (/D-League|universit|IPT|varsity/i.test(short)) return 'dev';
+  return 'sen';
 }
+function pvPath(d, avail) {
+  const ev = [];
+  d.rows.forEach(r => { const h = pvHonOf(d, r), ph = d.pathHon.find(p => p.cid === r.c.id);
+    ev.push({ year: r.c.year, short: r.short, team: r.p.team, cid: r.c.id, g: r.p.g, pts: r.p.pts, champ: d.isTitle(r) || !!(h && h.champ),
+      awards: (h ? h.awards : []).concat(ph ? ph.awards : []), placing: ph && ph.placing }); });
+  d.hon.concat(d.pathHon).filter(h => !h.cid || !d.rows.some(r => r.c.id === h.cid)).forEach(h =>
+    ev.push({ year: h.year, short: h.short, team: h.team || h.mark || '', cid: h.cid, champ: h.champ, awards: h.awards, placing: h.placing }));
+  d.moves.forEach(m => ev.push({ year: m.year, short: m.league, team: m.team, awards: [], abroad: true }));
+  const E = ev.filter(e => e.year && e.team).map(e => Object.assign(e, { lane: e.abroad ? 'sen' : pvLane(e.short, e.team), key: teamLogoKey(e.team) || flagOf(e.team) || teamSlug(e.team) }));
+  if (!E.length) return '';
+  const lanes = PV_LANES.filter(([k]) => E.some(e => e.lane === k));
+  const y0 = Math.min(...E.map(e => e.year)), y1 = Math.max(...E.map(e => e.year)), YRS = [];
+  for (let y = y0; y <= y1; y++) YRS.push(y);
+  const on = new Set(E.map(e => e.year));
+  // a year without an event is a narrow gap, not a full column
+  // as wide as the card when the career fits; wider (the card scrolls) when it does not
+  const labW = 128, W = Math.max(avail || 1240, labW + YRS.reduce((a, y) => a + (on.has(y) ? 112 : 40), 0) + 28), LH = 76, top = 16, base = top + LH * lanes.length, H = base + 44;
+  const wt = YRS.map(y => on.has(y) ? 1 : 0.36), u = (W - 16 - labW - 12) / wt.reduce((a, b) => a + b, 0), X = {}, WD = {};
+  let acc = labW + 12; YRS.forEach((y, i) => { X[y] = acc + wt[i] * u / 2; WD[y] = wt[i] * u; acc += wt[i] * u; });
+  const LY = k => top + LH * lanes.findIndex(l => l[0] === k) + LH / 2;
+  const s = [];
+  lanes.forEach(([k, l], i) => {
+    if (i) s.push(`<line x1="${labW}" x2="${W - 16}" y1="${top + LH * i}" y2="${top + LH * i}" class="hair"/>`);
+    s.push(`<text x="16" y="${LY(k) + 4}" class="ln">${l.toUpperCase()}</text>`);
+  });
+  s.push(`<line x1="${labW}" x2="${labW}" y1="${top}" y2="${base}" class="ax"/><line x1="${labW}" x2="${W - 16}" y1="${base}" y2="${base}" class="ax"/>`);
+  YRS.forEach(y => {
+    s.push(`<line x1="${X[y]}" x2="${X[y]}" y1="${base}" y2="${base + 6}" class="ax"/>`);
+    if (on.has(y)) s.push(`<line x1="${X[y]}" x2="${X[y]}" y1="${top}" y2="${base}" class="grid"/>`);
+    s.push(on.has(y) ? `<text x="${X[y]}" y="${base + 27}" class="yr">${y}</text>` : `<text x="${X[y]}" y="${base + 24}" class="gap">·</text>`);
+  });
+  // the club line: the highest level he played each year
+  const RANK = { sen: 3, dev: 2, youth: 1 };
+  const tops = YRS.filter(y => on.has(y)).map(y => { const L = E.filter(e => e.year === y && RANK[e.lane]).sort((a, b) => RANK[b.lane] - RANK[a.lane]);
+    return L.length ? [X[y], LY(L[0].lane), y] : null; }).filter(Boolean);
+  const seg = (a, b) => { const mx = (a[0] + b[0]) / 2; return `M${a[0]},${a[1]} C${mx},${a[1]} ${mx},${b[1]} ${b[0]},${b[1]}`; };
+  if (tops.length > 1) {
+    s.push(`<path d="${tops.slice(1).map((t, i) => seg(tops[i], t)).join(' ')}" class="line"/>`);
+    // a break in the career reads as a break
+    tops.slice(1).forEach((t, i) => { if (t[2] - tops[i][2] > 1) s.push(`<path d="${seg(tops[i], t)}" class="brk"/>`); });
+  }
+  // the crests
+  const marks = [];
+  YRS.forEach(y => lanes.forEach(([k]) => {
+    const T = {}; E.filter(e => e.year === y && e.lane === k).forEach(e => (T[e.key] = T[e.key] || []).push(e));
+    const L = Object.values(T).sort((a, b) => b.length - a.length), step = Math.min(50, (WD[y] - 8) / Math.max(1, L.length));
+    L.forEach((g, i) => marks.push({ y, k, g, x: X[y] + (i - (L.length - 1) / 2) * step, cy: LY(k) }));
+  }));
+  marks.filter(m => m.k === 'nat').forEach(m => { const t = tops.find(t => t[2] === m.y); if (t) s.push(`<line x1="${m.x}" x2="${m.x}" y1="${m.cy + 20}" y2="${t[1] - 20}" class="drop"/>`); });
+  marks.forEach(m => {
+    const e0 = m.g[0], logo = teamLogo(e0.team), fl = !logo && flagOf(e0.team), plate = logo ? crestPlate(e0.team) : '';
+    const tip = [pvCase(e0.team) + ' · ' + m.y].concat(m.g.map(e => e.short + (e.g ? ' · ' + e.g + ' games' : '') + (e.champ ? ' · champion' : '')
+      + (e.awards.length ? ' · ' + e.awards.join(', ') : '') + (e.placing ? ' · ' + e.placing : '') + (e.abroad ? ' · signed' : ''))).join('\n');
+    const w = fl ? 36 : 38, h = fl ? 18 : 38;
+    let img;
+    if (logo) img = (plate ? `<rect x="-21" y="-21" width="42" height="42" rx="9" class="${plate.trim() === 'crest-logo-dark' ? 'pl-d' : 'pl-l'}"/>` : '')
+      + `<image href="${logo}" x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid meet"/>`;
+    else if (fl) img = `<image href="${FLAGS[fl]}" x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid slice"/><rect x="${-w / 2 - .5}" y="${-h / 2 - .5}" width="${w + 1}" height="${h + 1}" rx="2" class="fl"/>`;
+    else img = `<rect x="-17" y="-17" width="34" height="34" rx="8" fill="${teamColor(e0.team)}"/><text y="4.5" class="code">${esc(teamCode(e0.team))}</text>`;
+    const cid = (m.g.find(e => e.cid) || {}).cid;
+    const g = `<g class="mk" transform="translate(${m.x},${m.cy})" data-imtip="${esc(tip)}"><rect x="${-w / 2 - 5}" y="${-h / 2 - 5}" width="${w + 10}" height="${h + 10}" rx="9" class="ko"/>${img}</g>`;
+    s.push(cid ? `<a href="#/c/${cid}" aria-label="${esc(e0.short + ' ' + m.y)}">${g}</a>` : g);
+  });
+  return `<div class="card pv-cpath"><div class="pv-cpath-s" data-pid="${d.pid}"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Career path: teams by level and year">${s.join('')}</svg></div></div>`;
+}
+// drawn once at the default width; redrawn to the card's own width once it is on screen
+function pvPathFit() {
+  document.querySelectorAll('.pv-cpath-s').forEach(x => {
+    const w = x.clientWidth - 24, d = PV.data && PV.data.pid === x.dataset.pid ? PV.data : pvData(x.dataset.pid);
+    if (d && w > 0 && Math.abs(w - (+x.dataset.w || 0)) > 4) {
+      const t = document.createElement('div'); t.innerHTML = pvPath(d, w);
+      const svg = t.querySelector('svg'); if (svg) { x.innerHTML = ''; x.appendChild(svg); x.dataset.w = w; }
+    }
+    x.scrollLeft = x.scrollWidth;
+  });
+}
+let PV_FIT_T = null;
+window.addEventListener('resize', () => { clearTimeout(PV_FIT_T); PV_FIT_T = setTimeout(pvPathFit, 150); });
 function pvGames(d) {
   return `<div class="pv-games">${d.log.slice(0, 5).map(g => `<a class="gm" href="#/c/${g.cid}/box/${g.mid}"><span class="res ${g.win ? 'w' : 'l'}">${g.win ? 'W' : 'L'}</span>
     <div class="mid"><div class="o">${crest(g.oppRaw, 20)}<span>${g.home ? 'vs' : '@'} ${esc(g.oppName)}</span><span class="sc">${g.own}–${g.opp}</span></div>
@@ -331,15 +336,14 @@ function pvCaps(pid) {
       <tbody>${block('Senior')}${block('Youth')}</tbody></table></div></div>
      <div class="pv-note">Caps are games played for Malaysia at FIBA events, per game, from each event's FIBA statistics page. Events before about 2007 publish points only; their other columns show a dash. Hover a figure for the total.</div>`);
 }
+// the overview, kept short: honours, the career path, the latest games. The national-team
+// table and the career highs live on the Stats tab and the Game log.
 function pvOverview(pid, d) {
-  const nC = d.hon.filter(h => h.champ).length, nM = pvCount(d, 'MVP'), nF = pvCount(d, 'Finals MVP');
-  const pathSub = [nC ? nC + ' title' + (nC === 1 ? '' : 's') : '', nM ? nM + ' MVP' : '', nF ? nF + ' Finals MVP' : ''].filter(Boolean).join(', ');
+  const hon = pvHonours(d), path = pvPath(d);
   return (typeof accProfile === 'function' ? accProfile(pid).about : '')
-    + pvSec('At a glance', '', '', pvInsights(d))
-    + pvSec('Career path', (pathSub ? pathSub + ' · ' : '') + (d.span ? (d.span[0] === d.span[1] ? d.span[0] : d.span[0] + '–' + d.span[1]) : ''), '', pvPath(d))
-    + pvCaps(pid)
-    + (d.log.length ? pvSec('Career highs', 'single game, from ' + d.log.length + ' box scores', '', pvHighs(d))
-      + pvSec('Latest games', '', `<a href="#/p/${pid}/log">Game log →</a>`, pvGames(d)) : '');
+    + (hon ? pvSec('Honours', '', '', hon) : '')
+    + (path ? pvSec('Career path', '', '', path) : '')
+    + (d.log.length ? pvSec('Latest games', '', `<a href="#/p/${pid}/log">Game log →</a>`, pvGames(d)) : '');
 }
 
 /* ---- stats ------------------------------------------------------------- */

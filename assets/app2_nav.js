@@ -30,15 +30,12 @@ function subnav(label, crumb, links) {
 
 function siteLinks(state) {
   return [['#/', 'Home', state === 'home' || state === 'live'],
-          ['#/news', 'News', state === 'news'],
           ['#/players', 'Players', state === 'global-players' || state === 'player'],
           ['#/competitions', 'Competitions', state === 'hub' || state === 'notfound' || state === 'comp' || state === 'cfam'],
-          ['#/pathway', 'Pathway', state === 'pathway'],
           ['#/teams', 'Teams', state === 'teams-hub' || state === 'team-global'],
           ['#/games', 'Games', state === 'games'],
           ['stats', 'Stats', state === 'stats'],            // a button: it opens the Lineups / Clutch menu
           ['#/compare', 'Compare', state === 'compare'],
-          ['#/videos', 'Videos', state === 'videos'],
           ['#/formulas', 'Formulas', state === 'formulas']]
     .map(([h, t, a]) => h === 'stats' ? (typeof STATS !== 'undefined' ? STATS.navButton(a) : '')
       : `<a href="${h}" class="nav-link ${a ? 'active' : ''}">${esc(t)}</a>`).join('');
@@ -49,30 +46,25 @@ function renderNav(state, cid, tab) {
   // and a team's own page belong here too; left out, they fell through to the
   // competition bar with no competition behind it.
   if (!cid || state === 'hub' || state === 'global-players' || state === 'player' || state === 'compare'
-      || state === 'formulas' || state === 'videos' || state === 'games' || state === 'notfound'
-      || state === 'teams-hub' || state === 'team-global' || state === 'pathway' || state === 'cfam'
-      || state === 'home' || state === 'live' || state === 'me' || state === 'stats' || state === 'news') {
+      || state === 'formulas' || state === 'games' || state === 'notfound'
+      || state === 'teams-hub' || state === 'team-global' || state === 'cfam'
+      || state === 'home' || state === 'live' || state === 'me' || state === 'stats') {
     const links = siteLinks(state);
-    const label = state === 'stats' ? 'Stats' : state === 'news' ? 'News' : state === 'compare' ? 'Compare' : state === 'formulas' ? 'Formulas'
-      : state === 'videos' ? 'Videos' : state === 'games' ? 'Games'
+    const label = state === 'stats' ? 'Stats' : state === 'compare' ? 'Compare' : state === 'formulas' ? 'Formulas'
+      : state === 'games' ? 'Games'
       : (state === 'teams-hub' || state === 'team-global') ? 'Teams'
       : (state === 'global-players' || state === 'player') ? 'Players' : 'Competitions';
     const crumb = state === 'stats'
       ? '<span class="subnav-crumb" id="st-crumb"></span>'
-      : state === 'news'
-      ? '<span class="subnav-crumb">signings, transfers, departures and injuries, newest first</span>'
       : state === 'compare'
       ? '<span class="subnav-crumb">two players, inside a competition they both played</span>'
       : state === 'formulas'
       ? '<span class="subnav-crumb">what every abbreviation means, and where the number comes from</span>'
-      : state === 'videos'
-      ? '<span class="subnav-crumb">highlights and coverage from SidelineHoopsMY</span>'
       : state === 'games'
       ? '<span class="subnav-crumb">every competition\'s fixtures and results, by date</span>'
       : `<span class="subnav-crumb">Malaysia basketball database · ${COMPS.length} competitions</span>`;
     // a player's page opens straight into its own full-width hero
-    // a player's page and the pathway open straight into their own full-width hero
-    return navShell(links, state === 'player' || state === 'pathway' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' ? '' : subnav(label, crumb, []));
+    return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' ? '' : subnav(label, crumb, []));
   }
   // Competition-scoped pages: the site bar, with Competitions lit. The sections of
   // the competition are tabs in the page's own header (compHeader); a team or a
@@ -145,17 +137,11 @@ function route() {
     state = 'team-global'; body = renderTeamGlobal(decodeURIComponent(parts[1]));
   } else if (parts[0] === 'games') {
     state = 'games'; body = renderGames();
-  } else if (parts[0] === 'news') {
-    state = 'news'; body = renderNews();
   } else if (parts[0] === 'stats') {
     // Stats: Lineups and Clutch, chosen from the menu under the Stats tab
     state = 'stats'; tab = parts[1] === 'clutch' ? 'clutch' : 'lineups'; body = renderStats(tab);
-  } else if (parts[0] === 'videos') {
-    state = 'videos'; body = renderVideos();
   } else if (parts[0] === 'cf' && parts[1]) {
     state = 'cfam'; body = renderFamily(parts[1]);
-  } else if (parts[0] === 'pathway') {
-    state = 'pathway'; body = renderPathway();
   } else if (parts[0] === 'formulas') {
     state = 'formulas'; body = renderFormulas();
   } else if (parts[0] === 'compare') {

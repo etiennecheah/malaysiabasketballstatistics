@@ -8,8 +8,8 @@ D = os.path.join(R, 'data')
 
 PARTS = ['app0_router.js', 'app1_core.js', 'app2_nav.js', 'app3_comp.js', 'app3b_family.js', 'app4_players.js',
          'app4b_profile.js', 'app4c_impact.js', 'app4d_radar.js', 'app4e_compare.js',
-         'app4f_bpm.js', 'app4g_formulas.js', 'app4h_videos.js', 'app4i_games.js',
-         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4m_pathway.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app4u_shots.js', 'app4w_shot3d.js', 'app4x_cmpshots.js', 'app4v_report.js', 'app5_rest.js']
+         'app4f_bpm.js', 'app4g_formulas.js', 'app4i_games.js',
+         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app4u_shots.js', 'app4w_shot3d.js', 'app4x_cmpshots.js', 'app4v_report.js', 'app5_rest.js']
 
 NEWS_TYPES = ('signing', 'transfer', 'departure', 'injury', 'return', 'retirement', 'national', 'other')
 
@@ -220,16 +220,13 @@ def main():
                         L.append(r)
                 L.sort(key=lambda c: (-c['y'], c['e']))
         payload['caps'] = caps
-    # SidelineHoopsMY uploads for the Videos grid (snapshot; the player streams the live playlist)
-    vp = os.path.join(D, 'videos.json')
-    if os.path.exists(vp):
-        payload['videos'] = json.load(open(vp))
     # the Watch page: which YouTube video shows which game (data/streams.json, hand-kept)
     payload['streams'] = load_streams(payload)
     # the FIBA wordmark doubles as the competition mark for FIBA events
     if payload.get('logos', {}).get('fiba'):
         payload.setdefault('complogos', {})['fiba'] = payload['logos']['fiba']
-    # the News page: signings, transfers, departures, injuries (data/news.json, hand-kept)
+    # signings and moves (data/news.json, hand-kept): there is no News page any more, but a
+    # signing still sets a player's current team and adds the step to his career path
     payload['news'] = load_news(payload)
     # the Stats pages (Lineups, Clutch): which competitions each offers; the numbers load per competition
     # the Shot map tab: which players have shots in which competition; the shots load per competition

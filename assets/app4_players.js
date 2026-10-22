@@ -238,31 +238,14 @@ function renderGlobalPlayers() {
 }
 
 /* ---- card view -------------------------------------------------------- */
-/* One small card per player: who they are, what their teams won, and a
-   three-figure line that always names the tier it belongs to — a per-game
-   number with no competition attached is exactly what this site refuses to
-   print. */
+/* One card per player, and only who he is: position, name, team, portrait. The numbers
+   live on the profile and in the table view, where they can name the tier they belong to. */
 function playerCard(r) {
   const pid = r.pid;
   const bios = BIO[pid] || {};
-  const bio = {};
-  Object.values(bios).forEach(b => ['pos', 'ht', 'wt'].forEach(k => { if (has(b[k]) && !has(bio[k])) bio[k] = b[k]; }));
+  let pos = '';
+  Object.values(bios).forEach(b => { if (!pos && has(b.pos)) pos = b.pos; });
   const career = (CAREER[pid] || []).filter(x => hasStats(x.p));
-  const yrs = career.map(x => x.c.year).filter(Boolean);
-  const span = yrs.length ? (Math.min.apply(null, yrs) === Math.max.apply(null, yrs)
-    ? String(Math.min.apply(null, yrs)) : Math.min.apply(null, yrs) + '–' + Math.max.apply(null, yrs)) : '—';
-
-  /* The card shows the tier the player has actually played most — a browsing
-     grid full of three-game MBL samples would compare nothing. The profile hero
-     keeps its Major-Basketball-League-first default, where a selector sits next
-     to it; here the tier and its game count are printed under the figures
-     instead. Picking a tier in the filter bar overrides both. */
-  const tiers = playerTiers(pid);
-  const biggest = tiers.slice().sort((a, b) => (b.g || 0) - (a.g || 0))[0];
-  const tk = GFILTER.tier && tiers.some(t => t.key === GFILTER.tier)
-    ? GFILTER.tier : (biggest && biggest.key);
-  const t = tiers.find(x => x.key === tk) || tiers[0];
-  const titles = playerTitles(pid).slice(0, 4);
 
   /* One mark, one name. A club is preferred over a state: a player's club crest
      says more about him than the state he was selected for, and most of these
@@ -271,39 +254,26 @@ function playerCard(r) {
   const recent = career.slice().sort((a, b) => (b.c.year || 0) - (a.c.year || 0))
     .map(x => x.p.team).filter(Boolean);
   const dbLatest = recent.find(n => !stateSlug(n)) || recent[0] || '';
-  // a signing or a departure in the News is newer than any box score: it names the team he is with now
+  // a signing or a departure (data/news.json) is newer than any box score: it names the team he is with now
   const nt = typeof newsTeam === 'function' ? newsTeam(pid) : null;
   const latest = nt ? nt.team : dbLatest;
-  const teamLine = nt && !nt.team ? 'Free agent' : (latest || 'no team published');
+  const teamLine = nt && !nt.team ? 'Free agent' : latest ? (typeof pvCase === 'function' ? pvCase(latest) : latest) : '';
 
-  const stat = (v, l) => `<span class="pcard-stat"><b>${fmt1(v)}</b><span>${l}</span></span>`;
-  /* The portraits are studio cut-outs, so the figure stands on the divider
-     above the evidence zone rather than sitting inside a disc. Where the source
-     has published none — 4,902 of 4,906 players — an oversized monogram takes
-     the same corner instead. */
-  return `<a class="pcard" href="#/p/${pid}">
-    <div class="bloom" style="--team:${teamBloom(latest || dbLatest)}"><i class="b1"></i><i class="b2"></i></div>
-    <div class="grain"></div>
-    <div class="pcard-in">
-      <div class="pcard-body">
-        <div class="pcard-main">
-          <div class="pcard-eyebrow">${esc(bio.pos || '—')} · ${span}</div>
-          <div class="pcard-name">${esc(r.name)}</div>
-          <div class="pcard-marks">${latest ? teamMark(latest) : ''}<span class="pcard-team">${esc(teamLine)}</span></div>
-          <div class="pcard-chips">${nt ? `<span class="pcard-chip pcard-chip-new">${esc(newsTeamChip(pid))}</span>` : ''}${titles.length
-            ? titles.map(x => `<span class="pcard-chip">${esc(tierShort(x.key))}${x.n > 1 ? ' ×' + x.n : ''}</span>`).join('')
-            : `<span class="pcard-chip pcard-chip-none">${r.nComps} competition${r.nComps === 1 ? '' : 's'} · no title</span>`}</div>
-        </div>
-        ${PHOTOS[pid]
-          ? `<div class="pcard-figure"><img src="${PHOTOS[pid]}" alt=""></div>`
-          : `<span class="pcard-face" aria-hidden="true">${esc(initials(r.name))}</span>`}
-      </div>
-      ${t ? `<div class="pcard-ev">
-        <div class="pcard-foot">${esc(tierShort(t.key))} · ${t.g} game${t.g === 1 ? '' : 's'}</div>
-        <div class="pcard-stats">${stat(pg(t.pts, t.g), 'PTS')}${stat(pg(t.reb, t.g), 'REB')}${stat(pg(t.ast, t.g), 'AST')}</div>
-      </div>`
-      : `<div class="pcard-ev"><div class="pcard-foot">No published per-game line</div></div>`}
-    </div>
+  // two name lines, as on the profile: a hand-kept split wins, else the surname is the last word
+  const nl = ((DB.playerExtras || {})[pid] || {}).nameLines;
+  const parts = String(r.name).trim().split(/\s+/);
+  const last = nl ? (nl[1] || '') : parts.length > 1 ? parts.pop() : parts[0], first = nl ? nl[0] : parts.length ? parts.join(' ') : '';
+  // a long surname steps down a size instead of being cut
+  const L = last.length, sz = L <= 11 ? '' : L <= 14 ? ' l1' : L <= 18 ? ' l2' : ' l3';
+  return `<a class="pcard" href="#/p/${pid}" style="--team:${teamBloom(latest || dbLatest)}">
+    <span class="pcard-glow" aria-hidden="true"></span>
+    ${PHOTOS[pid] ? `<img class="pcard-photo" src="${PHOTOS[pid]}" alt="">`
+      : `<span class="pcard-face" aria-hidden="true">${esc(initials(r.name))}</span>`}
+    <span class="pcard-txt">
+      ${pos ? `<span class="pcard-pos">${esc(PV_POS[pos] || pos)}</span>` : ''}
+      <span class="pcard-name">${first && first !== last ? `<span>${esc(first)}</span>` : ''}<b class="${sz.trim()}">${esc(last)}</b></span>
+      ${teamLine ? `<span class="pcard-team">${latest ? teamMark(latest) : ''}<span>${esc(teamLine)}</span></span>` : ''}
+    </span>
   </a>`;
 }
 
@@ -328,8 +298,8 @@ function globCards() {
     : '';
   return `
     <div class="dir-note">${tierName
-      ? `Ordered by total points in <strong>${esc(tierName)}</strong>, and every card's three figures are that player's per-game line in it.${lead}`
-      : `Ordered by career points across every competition. Each card's three figures come from the single tier that player has played most, named under them — never an average across competitions. Pick a tier above to put every card in the same competition.${lead}`}</div>
+      ? `Ordered by total points in <strong>${esc(tierName)}</strong>.${lead}`
+      : `Ordered by career points across every competition.${lead}`}</div>
     <div class="pcard-grid">${view.map(playerCard).join('')}</div>
     ${view.length ? '' : `<div class="card"><div class="empty-row"><span class="empty-dot"></span>No player matches those filters.</div></div>`}
     <div class="dir-more">

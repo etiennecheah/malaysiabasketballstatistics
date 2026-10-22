@@ -174,7 +174,6 @@ function renderHome() {
     <div class="hm-two">${hmNights()}${hmProgress(prog)}</div>
     <div id="hm-spot">${hmSpotlight()}</div>
     <div class="hm-two">${hmHistory()}${hmRecordBoard()}</div>
-    ${hmVideos()}
     ${hmExplore()}
   </div>`;
 }
@@ -365,24 +364,8 @@ function hmRecordBoard() {
     ${hmBoard(top, { leadLabel: 'All-time record', meta: p => esc(liveCompName(p.g.cid)) + ' · ' + p.g.date.slice(0, 4) })}</section>`;
 }
 
-function hmVideos() {
-  const V = (DB.videos && DB.videos.videos) || [];
-  if (!V.length) return '';
-  return `<section class="hm-sec">${hmSecHead('Watch', '#/videos', 'All ' + V.length + ' videos')}
-    <div class="hm-vids">${V.slice(0, 4).map(v => {
-      const [hook, ctx] = vidSplit(v.t);
-      return `<a class="hm-vid" href="#/videos" data-hmvid="${esc(v.id)}">
-        <span class="vid-thumb"><span class="vid-thumb-ph">${esc(hook)}</span>
-          <img src="https://i.ytimg.com/vi/${esc(v.id)}/mqdefault.jpg" alt="" loading="lazy" onerror="this.remove()">
-          <span class="vid-len">${esc(v.len || '')}</span><span class="hm-play" aria-hidden="true"></span></span>
-        <span class="vid-hook">${esc(hook)}</span><span class="vid-ctx">${esc(ctx)}</span></a>`;
-    }).join('')}</div></section>`;
-}
-
 function hmExplore() {
-  const stages = 10;
   const items = [
-    ['#/pathway', 'Pathway', `From the school court to the MBL — ${stages} stages, age by age.`],
     ['#/compare', 'Compare', 'Put any two players side by side, in a competition they both played.'],
     ['#/teams', 'Teams', 'Every club, state and national side — crests, rosters and records.'],
     ['#/formulas', 'Formulas', 'What every abbreviation means and where each number comes from.'],
@@ -439,8 +422,6 @@ document.addEventListener('focusout', e => {
 document.addEventListener('click', e => {
   const sh = e.target.closest && e.target.closest('#hm-shuffle');
   if (sh) { hmPickSpot(); const s = document.getElementById('hm-spot'); if (s) s.innerHTML = hmSpotlight(); return; }
-  const v = e.target.closest && e.target.closest('[data-hmvid]');
-  if (v) window.VID_PENDING = v.dataset.hmvid;
 });
 /* the countdown ticks while Home is open */
 setInterval(() => {
