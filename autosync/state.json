@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792702390.8975477,
-  "fp": "23512998fc0557d73fed"
+  "at": 1792702693.023261,
+  "fp": "caff5b0e5db81121561a"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -18,19 +18,12 @@
   "26279": "2026-10-10",
   "35136": "2026-10-10",
   "38575": "2026-10-16",
-  "48654": "2026-10-22",
+  "48654": "2026-10-23",
   "49965": "2026-10-23",
   "50247": "2026-10-21",
   "50248": "2026-10-21"
  },
- "fail": {
-  "48654": {
-   "last": 1792702157.0460336,
-   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 500: Internal Server Error",
-   "n": 1,
-   "next": 1792702217.0460336
-  }
- },
+ "fail": {},
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
@@ -42,7 +35,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-16 21:46  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 PDRM 100-68 Pahang; shot charts of 1 game  [2938183: final 100-68 read from the live feed (the schedule page does not show it as final yet); season lines not read for 2 player(s): tried again next time]",
   "2026-10-16 21:57  FAILED shots (1): page check failed",
   "2026-10-16 22:06  sync: shot charts of 2 games in 2 competitions",
   "2026-10-16 23:28  FAILED shots (1): page check failed",
@@ -81,7 +73,8 @@
   "2026-10-21 04:53  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [rosters published for 3 of 8 teams]",
   "2026-10-22 06:46  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [rosters published for 7 of 8 teams]",
   "2026-10-23 04:49  FAILED 48654 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 500: Internal Server Error",
-  "2026-10-23 04:53  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 8 teams; the standings page failed: ours kept, read again with the next game; the leaders page failed: ours kept]"
+  "2026-10-23 04:53  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 8 teams; the standings page failed: ours kept, read again with the next game; the leaders page failed: ours kept]",
+  "2026-10-23 04:58  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
