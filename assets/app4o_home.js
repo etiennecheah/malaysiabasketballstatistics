@@ -305,7 +305,7 @@ function hmExplore() {
    Up next (the game being played, else the next tip-off with a countdown, then the
    fixtures after it) and Results (newest first, by competition, more on request).
    The featured card sits in #lv-hero-side, which the live layer repaints by itself. */
-HM.box = { show: 'up', comp: '', nRes: 6 };
+HM.box = { show: 'up', comp: '', nRes: 40 };   // results drawn so far; more are drawn as the list nears its end
 const HM_TBD = n => /^(to be (determined|decided|confirmed)|tbd|tba|tbc)$/i.test(String(n || '').trim());
 const hmTeamName = n => HM_TBD(n) ? 'To be decided' : n;
 const hmMark = (n, sz) => HM_TBD(n) ? `<span class="hmg-tbd" style="width:${sz}px;height:${sz}px"></span>` : crest(n, sz);
@@ -372,31 +372,43 @@ function hmGamesInner() {
       <section class="hmg-res" aria-label="Results">
         <div class="hmg-col-h"><h2>Results</h2>
           <select class="hmg-sel" data-hmcomp aria-label="Competition"><option value="">All competitions</option>${comps.map(c => `<option value="${esc(c.id)}" ${c.id === B.comp ? 'selected' : ''}>${esc(c.label || c.name)}</option>`).join('')}</select></div>
-        ${shownRes.length ? `<div class="hmg-list">${hmByDay(shownRes, g => `<a class="hmg-row" href="${g.box ? `#/c/${g.cid}/box/${g.mid}` : `#/c/${g.cid}`}" title="${esc(liveCompName(g.cid))}">${hmTeams(g, g.hs, g.as)}<span class="hmg-meta"><b>${logo(g.cid)}${g.ff ? 'Forfeit' : 'Final'}</b><span class="${g.box ? 'hmg-box' : ''}">${g.box ? 'Box score →' : 'No box score'}</span></span></a>`)}</div>`
+        ${shownRes.length ? `<div class="hmg-scroll hmg-rs${res.length > 6 ? ' more' : ''}" tabindex="0" aria-label="Results">${hmResList(shownRes, res.length)}</div>`
           : '<div class="hmg-empty">No results yet.</div>'}
-        ${res.length > B.nRes ? `<button class="hmg-more" data-hmmore="res">Show more results</button>` : ''}
       </section>
     </div>`;
 }
-// a repaint keeps the place the reader had scrolled the fixtures to
-const hmBoxPaint = () => {
+// the results, newest first; the list ends with a quiet note once every result is drawn
+function hmResList(shown, total) {
+  const logo = cid => { const c = COMP_BY_ID[cid]; return c ? compCrest(c, 20) : ''; };
+  return `<div class="hmg-list">${hmByDay(shown, g => `<a class="hmg-row" href="${g.box ? `#/c/${g.cid}/box/${g.mid}` : `#/c/${g.cid}`}" title="${esc(liveCompName(g.cid))}">${hmTeams(g, g.hs, g.as)}<span class="hmg-meta"><b>${logo(g.cid)}${g.ff ? 'Forfeit' : 'Final'}</b><span class="${g.box ? 'hmg-box' : ''}">${g.box ? 'Box score →' : 'No box score'}</span></span></a>`)}</div>`
+    + (shown.length >= total ? `<div class="hmg-end">${total.toLocaleString()} result${total === 1 ? '' : 's'} · that is all of them</div>` : '<div class="hmg-end">Loading more…</div>');
+}
+// a repaint keeps the place the reader had scrolled each list to
+const hmBoxPaint = (keepRes = true) => {
   const el = document.getElementById('hm-games'); if (!el) return;
-  const sc = el.querySelector('.hmg-scroll'), top = sc ? sc.scrollTop : 0;
+  const tops = [...el.querySelectorAll('.hmg-scroll')].map(s => [s.classList.contains('hmg-rs'), s.scrollTop]);
   el.innerHTML = hmGamesInner();
-  const sc2 = el.querySelector('.hmg-scroll'); if (sc2) { sc2.scrollTop = top; hmScrollEnd(sc2); }
+  el.querySelectorAll('.hmg-scroll').forEach(s => { const t = tops.find(x => x[0] === s.classList.contains('hmg-rs'));
+    if (t && (keepRes || !t[0])) s.scrollTop = t[1]; hmScrollEnd(s); });
 };
-// the fade at the foot of the fixtures list goes once the last one is in view
+// the fade at the foot of a list goes once its last row is in view
 const hmScrollEnd = el => el.classList.toggle('end', el.scrollTop + el.clientHeight >= el.scrollHeight - 4);
-document.addEventListener('scroll', e => { if (e.target.classList && e.target.classList.contains('hmg-scroll')) hmScrollEnd(e.target); }, true);
+document.addEventListener('scroll', e => {
+  const s = e.target; if (!s.classList || !s.classList.contains('hmg-scroll')) return;
+  hmScrollEnd(s);
+  // near the end of the results: draw the next forty in place
+  if (s.classList.contains('hmg-rs') && s.scrollTop + s.clientHeight >= s.scrollHeight - 300) {
+    const B = HM.box, res = hmCompleted().filter(g => !B.comp || g.cid === B.comp);
+    if (B.nRes < res.length) { B.nRes += 40; const top = s.scrollTop; s.innerHTML = hmResList(res.slice(0, B.nRes), res.length); s.scrollTop = top; }
+  }
+}, true);
 document.addEventListener('click', e => {
   const sh = e.target.closest && e.target.closest('[data-hmshow]');
   if (sh) { HM.box.show = sh.dataset.hmshow; hmBoxPaint(); return; }
-  const mo = e.target.closest && e.target.closest('[data-hmmore]');
-  if (mo) { HM.box.nRes += 8; hmBoxPaint(); }
 });
 document.addEventListener('change', e => {
   if (!e.target.matches || !e.target.matches('[data-hmcomp]')) return;
-  HM.box.comp = e.target.value; HM.box.nRes = 6; hmBoxPaint();
+  HM.box.comp = e.target.value; HM.box.nRes = 40; hmBoxPaint(false);
 });
 
 document.addEventListener('click', e => {
