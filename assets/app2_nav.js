@@ -55,7 +55,7 @@ function renderNav(state, cid, tab) {
     const crumb = state === 'stats'
       ? '<span class="subnav-crumb" id="st-crumb"></span>'
       : state === 'compare'
-      ? '<span class="subnav-crumb">two players, inside a competition they both played</span>'
+      ? '<span class="subnav-crumb">two players, or two teams\' lineups, inside a competition they both played</span>'
       : state === 'formulas'
       ? '<span class="subnav-crumb">what every abbreviation means, and where the number comes from</span>'
       : `<span class="subnav-crumb">Malaysia basketball database · ${COMPS.length} competitions</span>`;
@@ -138,6 +138,9 @@ function route() {
     state = 'cfam'; body = renderFamily(parts[1]);
   } else if (parts[0] === 'formulas') {
     state = 'formulas'; body = renderFormulas();
+  } else if (parts[0] === 'compare' && parts[1] === 'lineups') {
+    // Compare › Lineups: two teams' fives against each other, in one competition
+    state = 'compare'; body = renderCmpLineups(parts[2]);
   } else if (parts[0] === 'compare') {
     state = 'compare';
     COMPARE.a = parts[1] && PERSONS[parts[1]] ? parts[1] : '';

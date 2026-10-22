@@ -91,6 +91,12 @@ function serve(root, base) {
     if (!ok) errors.push('player ' + tabPid + ' tab ' + (t || '/overview') + ' did not render');
   }
 
+  // Compare › Lineups pulls one file per competition from stats/lv/: the tables must fill
+  await go('/compare/lineups');
+  await page.waitForFunction(() => document.querySelectorAll('.cl-row').length || document.querySelector('.cl-msg'), null, { timeout: 15000 }).catch(() => {});
+  const clRows = await page.evaluate(() => document.querySelectorAll('.cl-row').length);
+  if (!clRows) errors.push('Compare › Lineups shows no lineups');
+
   await go('/players');
   const pcards = await page.evaluate(() => document.querySelectorAll('.pcard').length);
   if (!pcards) errors.push('Players page shows no players');

@@ -445,7 +445,7 @@ function renderCompare() {
   const head = `<div class="page-head"><div>
       <h1 class="page-title">Head to head</h1>
       <div class="page-sub">Two players side by side — inside a competition they both played, because a per-game figure only means something next to the field that produced it.</div>
-    </div></div>`;
+    </div>${typeof cmpModes === 'function' ? cmpModes('players') : ''}</div>`;
 
   if (!A || !B) {
     const pairs = cmpSuggestions();
