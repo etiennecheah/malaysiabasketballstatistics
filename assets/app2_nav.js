@@ -13,7 +13,6 @@ function navShell(links, sub) {
       <div class="nav-links">${links}</div>
     </div>
     <div class="nav-right">
-      <input class="search" id="global-search" placeholder="Search players, teams, competitions…" autocomplete="off">
       ${typeof accNav === 'function' ? accNav() : ''}
       <button class="theme-toggle" data-theme-toggle="1" title="Switch between the light and dark theme" aria-label="Switch theme">
         <span class="sun">☀</span><span class="moon">☾</span>
@@ -176,7 +175,6 @@ function route() {
 
   app.innerHTML = renderNav(state, cid, tab) + body + renderFooter();
   if (samePlayer) pvKeepScroll(keepY); else window.scrollTo(0, 0);
-  wireSearch();
   if (typeof afterRender === 'function') afterRender();
   if (typeof hsApplyMeta === 'function') hsApplyMeta(HS.hash());
 }
@@ -191,19 +189,3 @@ function renderNotFound(id) {
   </div>`;
 }
 
-/* ---------------------------- search ---------------------------- */
-function wireSearch() {
-  const el = document.getElementById('global-search');
-  if (!el) return;
-  el.addEventListener('keydown', e => {
-    if (e.key !== 'Enter') return;
-    const q = el.value.trim().toLowerCase();
-    if (!q) return;
-    const pid = Object.keys(PERSONS).find(k => PERSONS[k].toLowerCase().includes(q));
-    if (pid) { HS.go('#/p/' + pid); return; }
-    const comp = COMPS.find(c => (c.label||c.name).toLowerCase().includes(q));
-    if (comp) { HS.go('#/c/' + comp.id); return; }
-    const tid = Object.keys(TEAMS).find(k => TEAMS[k].toLowerCase().includes(q));
-    if (tid && TEAM_COMPS[tid]) { HS.go('#/c/' + TEAM_COMPS[tid][0] + '/team/' + tid); return; }
-  });
-}
