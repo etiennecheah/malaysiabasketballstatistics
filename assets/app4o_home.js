@@ -305,7 +305,7 @@ function hmExplore() {
    Up next (the game being played, else the next tip-off with a countdown, then the
    fixtures after it) and Results (newest first, by competition, more on request).
    The featured card sits in #lv-hero-side, which the live layer repaints by itself. */
-HM.box = { show: 'up', comp: '', nRes: 6, nUp: 3 };
+HM.box = { show: 'up', comp: '', nRes: 6 };
 const HM_TBD = n => /^(to be (determined|decided|confirmed)|tbd|tba|tbc)$/i.test(String(n || '').trim());
 const hmTeamName = n => HM_TBD(n) ? 'To be decided' : n;
 const hmMark = (n, sz) => HM_TBD(n) ? `<span class="hmg-tbd" style="width:${sz}px;height:${sz}px"></span>` : crest(n, sz);
@@ -359,7 +359,7 @@ function hmGamesInner() {
   const later = hmFixtures().filter(g => !feat || g.mid !== feat.mid).filter(g => !(LIVE.games[g.mid] && LIVE.games[g.mid].data));
   const done = hmCompleted(), comps = [...new Set(done.slice(0, 400).map(g => g.cid))].map(id => COMP_BY_ID[id]).filter(Boolean)
     .sort((a, b) => (a.label || a.name).localeCompare(b.label || b.name));
-  const res = done.filter(g => !B.comp || g.cid === B.comp), shownRes = res.slice(0, B.nRes), shownUp = later.slice(0, B.nUp);
+  const res = done.filter(g => !B.comp || g.cid === B.comp), shownRes = res.slice(0, B.nRes);
   const logo = cid => { const c = COMP_BY_ID[cid]; return c ? compCrest(c, 20) : ''; };
   return `<div class="hmg-head"><div class="hm-eyebrow"><span class="hm-eyebrow-dot"></span>HoopStatsMY · Games</div>
       <div class="hmg-tabs" role="group" aria-label="Show"><button data-hmshow="up" aria-pressed="${B.show === 'up'}">Upcoming</button><button data-hmshow="res" aria-pressed="${B.show === 'res'}">Results</button></div></div>
@@ -367,8 +367,7 @@ function hmGamesInner() {
       <section class="hmg-up" aria-label="Upcoming games">
         <div class="hmg-col-h"><h2>Up next</h2><span>${later.length + (feat ? 1 : 0)} fixture${later.length + (feat ? 1 : 0) === 1 ? '' : 's'}</span></div>
         <div id="lv-hero-side">${hmHeroSide()}</div>
-        ${shownUp.length ? `<div class="hmg-list">${hmByDay(shownUp, g => `<a class="hmg-row" href="#/c/${g.cid}/schedule">${hmTeams(g)}<span class="hmg-meta"><b>${esc(g.time || 'Time TBC')}</b>${logo(g.cid)}</span></a>`)}</div>` : ''}
-        ${later.length > B.nUp ? `<button class="hmg-more" data-hmmore="up">Show more fixtures</button>` : ''}
+        ${later.length ? `<div class="hmg-scroll${later.length > 3 ? ' more' : ''}" tabindex="0" aria-label="Later fixtures"><div class="hmg-list">${hmByDay(later, g => `<a class="hmg-row" href="#/c/${g.cid}/schedule">${hmTeams(g)}<span class="hmg-meta"><b>${esc(g.time || 'Time TBC')}</b>${logo(g.cid)}</span></a>`)}</div></div>` : ''}
       </section>
       <section class="hmg-res" aria-label="Results">
         <div class="hmg-col-h"><h2>Results</h2>
@@ -379,12 +378,21 @@ function hmGamesInner() {
       </section>
     </div>`;
 }
-const hmBoxPaint = () => { const el = document.getElementById('hm-games'); if (el) el.innerHTML = hmGamesInner(); };
+// a repaint keeps the place the reader had scrolled the fixtures to
+const hmBoxPaint = () => {
+  const el = document.getElementById('hm-games'); if (!el) return;
+  const sc = el.querySelector('.hmg-scroll'), top = sc ? sc.scrollTop : 0;
+  el.innerHTML = hmGamesInner();
+  const sc2 = el.querySelector('.hmg-scroll'); if (sc2) { sc2.scrollTop = top; hmScrollEnd(sc2); }
+};
+// the fade at the foot of the fixtures list goes once the last one is in view
+const hmScrollEnd = el => el.classList.toggle('end', el.scrollTop + el.clientHeight >= el.scrollHeight - 4);
+document.addEventListener('scroll', e => { if (e.target.classList && e.target.classList.contains('hmg-scroll')) hmScrollEnd(e.target); }, true);
 document.addEventListener('click', e => {
   const sh = e.target.closest && e.target.closest('[data-hmshow]');
   if (sh) { HM.box.show = sh.dataset.hmshow; hmBoxPaint(); return; }
   const mo = e.target.closest && e.target.closest('[data-hmmore]');
-  if (mo) { if (mo.dataset.hmmore === 'res') HM.box.nRes += 8; else HM.box.nUp += 4; hmBoxPaint(); }
+  if (mo) { HM.box.nRes += 8; hmBoxPaint(); }
 });
 document.addEventListener('change', e => {
   if (!e.target.matches || !e.target.matches('[data-hmcomp]')) return;

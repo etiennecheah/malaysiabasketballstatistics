@@ -3582,6 +3582,15 @@ a.hmg-feat:hover{ text-decoration:none; border-color:rgba(255,255,255,.26); }
 .hmg-meta > span{ font-size:11.5px; color:rgba(255,255,255,.5); white-space:nowrap; }
 .hmg-meta > span.hmg-box{ color:oklch(78% 0.13 55); font-weight:600; }
 .hmg-meta .crest-logo{ background:#fff; border-radius:5px; padding:2px; box-sizing:border-box; }
+/* every later fixture, in a scrolling list the height of about four games; the date stays
+   pinned while its games scroll under it, and a fade at the foot says there are more */
+.hmg-scroll{ margin-top:6px; max-height:356px; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.22) transparent;
+  padding-right:6px; border-radius:12px; }
+.hmg-scroll::-webkit-scrollbar{ width:6px; } .hmg-scroll::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.22); border-radius:3px; }
+.hmg-scroll.more:not(.end){ -webkit-mask-image:linear-gradient(180deg, #000 calc(100% - 40px), transparent); mask-image:linear-gradient(180deg, #000 calc(100% - 40px), transparent); }
+.hmg-scroll:focus-visible{ outline:2px solid oklch(78% 0.13 55); outline-offset:2px; }
+.hmg-scroll .hmg-list{ margin-top:0; }
+.hmg-scroll .hmg-day{ position:sticky; top:0; z-index:1; padding:10px 2px 8px; background:linear-gradient(180deg, color-mix(in oklab, var(--void) 80%, transparent) 65%, transparent); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); }
 .hmg-more{ margin-top:12px; width:100%; border:1px dashed rgba(255,255,255,.18); background:none; border-radius:12px; padding:10px; font:600 13px var(--body); color:rgba(255,255,255,.75); cursor:pointer; }
 .hmg-more:hover{ background:rgba(255,255,255,.05); color:#fff; }
 .hmg-empty{ padding:26px 16px; text-align:center; color:rgba(255,255,255,.55); font-size:13.5px; background:rgba(255,255,255,.045); border-radius:14px; }
