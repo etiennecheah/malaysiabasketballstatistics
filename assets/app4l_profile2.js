@@ -115,6 +115,7 @@ const pvHonOf = (d, r) => d.hon.find(h => h.cid === r.c.id);
 // the team's crest when the site has one, else the event's own mark (FilBasket), else the team's colour disc
 const PV_MEDAL = /^(Gold|Silver|Bronze) medal$/;
 const pvMedalCls = a => { const m = String(a).match(PV_MEDAL); return m ? 'medal ' + m[1].toLowerCase() : ''; };
+const pvTagCls = a => pvMedalCls(a) || (/MVP/.test(a) ? 'mvp' : 'aw');
 // a medal honour carries a struck medal; otherwise the team's crest when the site has one,
 // else the event's own mark (FilBasket), else the team's colour disc
 const pvMark = (h, sz) => h.medal ? `<span class="pv-medal ${esc(h.medal)}" style="width:${sz}px;height:${sz}px" aria-hidden="true"></span>`

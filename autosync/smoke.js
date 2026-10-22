@@ -83,6 +83,14 @@ function serve(root, base) {
   if (home.comps < 70) errors.push('only ' + home.comps + ' competitions in the page data');
   if (home.faces !== 0) errors.push(home.faces + ' of ' + home.photos + ' portraits have no face crop for the small avatar discs');
 
+  // every tab of a player profile: a tab that throws would otherwise open to a blank page
+  const tabPid = await page.evaluate(() => Object.keys(DB.photos || {}).find(id => PERSONS[id]) || Object.keys(PERSONS)[0]);
+  for (const t of ['', '/stats', '/log', '/adv', '/splits', '/report']) {
+    await go('/p/' + tabPid + t);
+    const ok = await page.evaluate(() => !!document.querySelector('.pv-hero') && document.body.innerText.length > 500);
+    if (!ok) errors.push('player ' + tabPid + ' tab ' + (t || '/overview') + ' did not render');
+  }
+
   await go('/players');
   const pcards = await page.evaluate(() => document.querySelectorAll('.pcard').length);
   if (!pcards) errors.push('Players page shows no players');
