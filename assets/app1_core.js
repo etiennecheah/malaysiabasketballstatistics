@@ -112,6 +112,22 @@ COMPS.forEach(c => {
     });
   });
 });
+// A player's position: the one his team registered in the latest competition that gives
+// one (by start date). Rosters disagree over a career - a U17 centre is a senior guard - so
+// the newest registration wins everywhere: player card, profile, Compare. The Report tab
+// (build_report.py) uses the same rule.
+const POS_LATEST = {};
+function latestPos(pid) {
+  if (pid in POS_LATEST) return POS_LATEST[pid];
+  let best = null;
+  Object.entries(BIO[pid] || {}).forEach(([cid, b]) => {
+    const p = b && b.pos != null ? String(b.pos).trim() : '';
+    if (!p || p === '-' || p === '—') return;
+    const c = COMP_BY_ID[cid], k = (c && c.start) || String((c && c.year) || '');
+    if (!best || k > best[0]) best = [k, p];
+  });
+  return (POS_LATEST[pid] = best ? best[1] : '');
+}
 const GAME_BY_MID = {};
 COMPS.forEach(c => { c.games.forEach(g => { g.cid = c.id; GAME_BY_MID[g.mid] = g; }); });
 

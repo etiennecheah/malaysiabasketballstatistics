@@ -330,6 +330,7 @@ function cmpFace(pid, big) {
 function cmpBio(pid) {
   const bio = {}, bios = BIO[pid] || {};
   Object.values(bios).forEach(b => ['pos', 'ht', 'wt', 'dob', 'nat'].forEach(k => { if (has(b[k]) && !has(bio[k])) bio[k] = b[k]; }));
+  if (latestPos(pid)) bio.pos = latestPos(pid);   // the latest registered position, as on the card and profile
   const career = (CAREER[pid] || []).filter(r => hasStats(r.p));
   const recent = career.slice().sort((x, y) => (y.c.year || 0) - (x.c.year || 0)).map(r => r.p.team).filter(Boolean);
   bio.team = recent.find(n => !stateSlug(n)) || recent[0] || '';

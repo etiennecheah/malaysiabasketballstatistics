@@ -242,9 +242,7 @@ function renderGlobalPlayers() {
    live on the profile and in the table view, where they can name the tier they belong to. */
 function playerCard(r) {
   const pid = r.pid;
-  const bios = BIO[pid] || {};
-  let pos = '';
-  Object.values(bios).forEach(b => { if (!pos && has(b.pos)) pos = b.pos; });
+  const pos = latestPos(pid);   // the position registered in his latest competition
   const career = (CAREER[pid] || []).filter(x => hasStats(x.p));
 
   /* One mark, one name. A club is preferred over a state: a player's club crest

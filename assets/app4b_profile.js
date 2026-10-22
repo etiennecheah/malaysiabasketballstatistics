@@ -332,7 +332,7 @@ function renderPlayerLegacy(pid, tab) {
   const career = (CAREER[pid] || []).slice().sort((a, b) => (b.c.year || 0) - (a.c.year || 0) || a.c.name.localeCompare(b.c.name));
   const tiers = playerTiers(pid);
   const bios = BIO[pid] || {};
-  const bio = career.map(r => bios[r.c.id]).find(Boolean) || {};
+  const bio = Object.assign({}, career.map(r => bios[r.c.id]).find(Boolean) || {}, latestPos(pid) ? { pos: latestPos(pid) } : {});
   const hk = heroTierFor(pid, tiers);
   const ht = tiers.find(t => t.key === hk) || null;
 

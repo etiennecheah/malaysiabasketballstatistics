@@ -93,7 +93,9 @@ function pvData(pid) {
   const bios = BIO[pid] || {};
   const bio0 = rows.map(r => bios[r.c.id]).find(Boolean) || Object.values(bios)[0] || {};
   // an approved birthday, height or weight replaces the source's
-  const bio = typeof accOverBio === 'function' ? accOverBio(pid, Object.assign({}, bio0)) : bio0;
+  // the position is the one registered in his latest competition that gives one (latestPos)
+  const bio1 = Object.assign({}, bio0, latestPos(pid) ? { pos: latestPos(pid) } : {});
+  const bio = typeof accOverBio === 'function' ? accOverBio(pid, bio1) : bio1;
   const extra = (DB.playerExtras || {})[pid] || {};
   // career steps outside the database: the hand-kept ones, plus a signing abroad reported in the News
   const moves = (extra.moves || []).slice();
