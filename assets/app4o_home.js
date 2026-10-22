@@ -1,8 +1,9 @@
 /* =========================================================================
    Home — the front door.
 
-   Its job is to give a visitor a reason to stay and a next click: what is on
-   (or next, with a countdown), what just happened and who starred in it, one
+   Its job is to give a visitor a reason to stay and a next click: the games box
+   at the top (what is on or next, with a countdown, and the latest results — the
+   site's only list of games since update-51), who starred lately, one
    player worth meeting, a piece of history from this date, and the doors into
    the rest of the site. Every number here comes from the database; nothing is
    invented, and anything that needs the live feed sits in #live-home and
@@ -140,37 +141,15 @@ function hmPickSpot() {
 /* ---------------------------- sections ---------------------------- */
 function renderHome() {
   if (!HM.spot) hmPickSpot();
-  const minY = Math.min.apply(null, COMPS.map(c => c.year).filter(Boolean));
-  const games = COMPS.reduce((a, c) => a + c.nDone, 0);
   const prog = hmInProgress();
   return `<div class="hm">
     <section class="hm-hero">
       <div class="bloom" style="--team:${teamBloom((hmUpcoming()[0] || {}).h || '')}"><i class="b1"></i><i class="b2"></i></div><div class="grain"></div>
-      <div class="hm-hero-in">
-        <div class="hm-hero-copy">
-          <div class="hm-eyebrow"><span class="hm-eyebrow-dot"></span>HoopStatsMY · since ${minY}</div>
-          <h1 class="hm-title">Malaysia's game,<br><span>by the numbers.</span></h1>
-          <p class="hm-lede">Box scores, season lines, titles and live games from Malaysian basketball — the age-group championships to the MBL — in one place.</p>
-          <div class="hm-counts">
-            <a href="#/competitions"><b>${COMPS.length}</b><span>competitions</span></a>
-            <a href="#/players"><b>${Object.keys(PERSONS).length.toLocaleString()}</b><span>players</span></a>
-            <a href="#/games"><b>${games.toLocaleString()}</b><span>games</span></a>
-            <a href="#/games"><b>${Object.keys(BOX_RAW).length.toLocaleString()}</b><span>box scores</span></a>
-          </div>
-          <div class="hm-search">
-            <label class="hm-sr" for="hm-q">Search players, teams and competitions</label>
-            <input id="hm-q" type="search" autocomplete="off" placeholder="Find a player, a team or a competition…">
-            <div class="hm-sug" id="hm-sug" role="listbox" hidden></div>
-          </div>
-          ${prog.length ? `<div class="hm-chips"><span>Being played now</span>${prog.map(x => `<a href="#/c/${x.c.id}">${esc(x.c.label || x.c.name)}</a>`).join('')}</div>` : ''}
-        </div>
-        <div class="hm-hero-side" id="lv-hero-side">${hmHeroSide()}</div>
-      </div>
+      <div class="hm-hero-in hmg" id="hm-games">${hmGamesInner()}</div>
     </section>
 
     <div id="live-home">${liveHomeInner()}</div>
 
-    ${hmResults()}
     <div class="hm-two">${hmNights()}${hmProgress(prog)}</div>
     <div id="hm-spot">${hmSpotlight()}</div>
     <div class="hm-two">${hmHistory()}${hmRecordBoard()}</div>
@@ -178,51 +157,8 @@ function renderHome() {
   </div>`;
 }
 
-/* right side of the hero: the live game, else the next tip-off with a countdown, else the last result */
-function hmHeroSide() {
-  const on = liveList('live')[0] || liveList('final')[0];
-  if (on && on.data) {
-    const d = on.data, [h, a] = d.teams, fin = d.status === 'final';
-    return `<a class="hm-next hm-next-live" href="#/live/${on.g.mid}">
-      <div class="hm-next-k">${fin ? '<span class="lv-tag lv-tag-fin">FINAL</span>' : '<span class="lv-tag"><span class="lv-dot"></span>LIVE</span>'}<span>${esc(liveCompName(on.g.cid))}</span></div>
-      ${[h, a].map(t => `<div class="hm-next-team">${crest(t.name, 34)}<span>${esc(t.name)}</span><b>${t.score}</b></div>`).join('')}
-      <div class="hm-next-foot"><span>${esc(liveClock(d))}</span><span>${fin ? 'Box score' : 'Follow the game'} →</span></div></a>`;
-  }
-  const g = hmUpcoming()[0];
-  if (g) {
-    return `<div class="hm-next">
-      <div class="hm-next-k"><span>Next tip-off</span><span>${esc(liveCompName(g.cid))}</span></div>
-      <div class="hm-next-team">${crest(g.h, 34)}<span>${esc(g.h)}</span></div>
-      <div class="hm-next-vs">vs</div>
-      <div class="hm-next-team">${crest(g.a, 34)}<span>${esc(g.a)}</span></div>
-      <div class="hm-next-foot"><span>${esc(hmDate(g, true))} · ${esc(g.time)}</span><b data-countdown="${liveStart(g)}">${hmCountdown(liveStart(g) - liveNow())}</b></div>
-    </div>`;
-  }
-  const r = hmCompleted()[0];
-  return r ? `<a class="hm-next" href="#/c/${r.cid}/box/${r.mid}"><div class="hm-next-k"><span>Latest result</span><span>${esc(liveCompName(r.cid))}</span></div>
-    <div class="hm-next-team">${crest(r.h, 34)}<span>${esc(r.h)}</span><b>${r.hs}</b></div>
-    <div class="hm-next-team">${crest(r.a, 34)}<span>${esc(r.a)}</span><b>${r.as}</b></div>
-    <div class="hm-next-foot"><span>${esc(hmDate(r))}</span><span>Box score →</span></div></a>` : '';
-}
-
 function hmSecHead(t, link, label) {
   return `<div class="hm-sec-h"><h2>${t}</h2>${link ? `<a href="${link}">${label} →</a>` : ''}</div>`;
-}
-
-function hmResults() {
-  const rows = hmCompleted().slice(0, 6);
-  if (!rows.length) return '';
-  return `<section class="hm-sec">${hmSecHead('Latest results', '#/games', 'All games')}
-    <div class="hm-res">${rows.map(g => {
-      const star = hmStar(g.mid), hw = g.hs > g.as;
-      const href = g.box ? `#/c/${g.cid}/box/${g.mid}` : `#/c/${g.cid}`;
-      return `<a class="hm-tile" href="${href}">
-        <div class="hm-tile-k"><span>${esc(liveCompName(g.cid))}</span><span>${esc(hmDate(g))}</span></div>
-        <div class="hm-tile-team${hw ? ' hm-win' : ''}">${crest(g.h, 26)}<span>${esc(g.h)}</span><b>${g.hs}</b></div>
-        <div class="hm-tile-team${hw ? '' : ' hm-win'}">${crest(g.a, 26)}<span>${esc(g.a)}</span><b>${g.as}</b></div>
-        ${star ? `<div class="hm-tile-star">${avatar(star[BX('pid')])}<span><span class="hm-star-n">${esc(hmRowName(star))}</span><span class="hm-star-l">${hmLine(star)}</span></span></div>` : ''}
-      </a>`;
-    }).join('')}</div></section>`;
 }
 
 /* ---------- a performance: the pieces every leaderboard on Home shares ---------- */
@@ -291,17 +227,7 @@ function hmProgress(prog) {
         <div class="hm-comp-meta"><span>${x.done} of ${x.total} games played</span>${x.top ? `<span>Top: <b>${esc(x.top.team)}</b> ${x.top.w}–${x.top.l}</span>` : ''}</div>
         ${x.next ? `<div class="hm-comp-next">Next · ${esc(hmDate(x.next, true))}, ${esc(x.next.time)} · ${esc(x.next.h)} vs ${esc(x.next.a)}</div>` : ''}
       </a>`;
-    }).join('')}</div>${hmComing()}</section>`;
-}
-
-/* the next few fixtures after the one the hero is counting down to */
-function hmComing() {
-  const rows = hmUpcoming().filter(g => !LIVE.games[g.mid]).slice(1, 5);
-  if (!rows.length) return '';
-  return `<div class="hm-coming"><div class="hm-coming-k">Coming up</div>${rows.map(g => `
-    <div class="hm-coming-r"><span class="hm-coming-d"><b>${esc(hmDate(g, true).split(' ').slice(1).join(' '))}</b><span>${esc(g.time)}</span></span>
-      <span class="hm-coming-m"><span>${crest(g.h, 18)}${esc(g.h)}</span><span>${crest(g.a, 18)}${esc(g.a)}</span></span>
-      <span class="hm-coming-in" data-countdown="${liveStart(g)}">${hmCountdown(liveStart(g) - liveNow())}</span></div>`).join('')}</div>`;
+    }).join('')}</div></section>`;
 }
 
 function hmSpotlight() {
@@ -374,51 +300,97 @@ function hmExplore() {
     <div class="hm-explore">${items.map(([h, t, d]) => `<a class="card hm-door" href="${h}"><b>${t}</b><span>${esc(d)}</span><i>→</i></a>`).join('')}</div></section>`;
 }
 
-/* ---------------------------- search with suggestions ---------------------------- */
-function hmSuggest(q) {
-  q = q.trim().toLowerCase();
-  if (q.length < 2) return [];
-  const score = (n) => { const s = n.toLowerCase(); return s.startsWith(q) ? 0 : s.split(/[\s,]+/).some(w => w.startsWith(q)) ? 1 : s.includes(q) ? 2 : -1; };
-  const ppl = [];
-  Object.keys(PERSONS).forEach(pid => {
-    const r = score(PERSONS[pid]); if (r < 0) return;
-    ppl.push([r, -(CAREER[pid] || []).length, pid]);
-  });
-  ppl.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
-  const out = ppl.slice(0, 6).map(([, , pid]) => ({ href: '#/p/' + pid, label: PERSONS[pid], kind: 'Player', pid }));
-  const seenT = {};
-  Object.keys(TEAMS).forEach(tid => {
-    const n = TEAMS[tid], k = teamKey(n); if (seenT[k] || score(n) < 0 || out.length >= 9) return; seenT[k] = 1;
-    out.push({ href: '#/t/' + encodeURIComponent(k), label: n, kind: 'Team', team: n });
-  });
-  COMPS.forEach(c => { if (out.length < 11 && score(c.label || c.name) >= 0) out.push({ href: '#/c/' + c.id, label: c.label || c.name, kind: 'Competition' }); });
-  return out;
+/* ---------------------------- the games box (update-51) ----------------------------
+   The top of Home is the site's only list of games now that the Games page is gone:
+   Up next (the game being played, else the next tip-off with a countdown, then the
+   fixtures after it) and Results (newest first, by competition, more on request).
+   The featured card sits in #lv-hero-side, which the live layer repaints by itself. */
+HM.box = { show: 'up', comp: '', nRes: 6, nUp: 3 };
+const HM_TBD = n => /^(to be (determined|decided|confirmed)|tbd|tba|tbc)$/i.test(String(n || '').trim());
+const hmTeamName = n => HM_TBD(n) ? 'To be decided' : n;
+const hmMark = (n, sz) => HM_TBD(n) ? `<span class="hmg-tbd" style="width:${sz}px;height:${sz}px"></span>` : crest(n, sz);
+// every fixture still to come, the to-be-decided ones included (they show as such)
+function hmFixtures() {
+  const now = liveNow(), rows = [];
+  COMPS.forEach(c => c.games.forEach(g => {
+    if (g.st === 'COMPLETE' || g.st === 'NOT_PLAYED') return;
+    const s = liveStart(g);
+    if (s != null && s > now - LIVE_AFTER) rows.push(g);
+  }));
+  return rows.sort((a, b) => liveStart(a) - liveStart(b));
 }
-function hmDrawSug(list, sel) {
-  const box = document.getElementById('hm-sug'); if (!box) return;
-  box.hidden = !list.length;
-  box.innerHTML = list.map((x, i) => `<a class="hm-sug-i${i === sel ? ' on' : ''}" href="${x.href}" role="option">
-    ${x.pid ? avatar(x.pid) : x.team ? crest(x.team, 24) : '<span class="hm-sug-c">C</span>'}
-    <span>${esc(x.label)}</span><em>${x.kind}</em></a>`).join('');
+const hmDayKey = g => { const s = liveStart(g); return s == null ? g.date || '' : new Date(s + 8 * 3600e3).toISOString().slice(0, 10); };
+const hmDayLabel = g => hmDate(g, true);
+function hmCdBoxes(ms) {
+  if (ms <= 0) return '<span class="hmg-soon"><i></i>Tip-off</span>';
+  const d = Math.floor(ms / HM_DAY), h = Math.floor(ms % HM_DAY / 3600e3), m = Math.floor(ms % 3600e3 / 60e3);
+  return [[d, 'Days'], [h, 'Hrs'], [m, 'Min']].map(([v, l]) => `<span><b>${String(v).padStart(2, '0')}</b>${l}</span>`).join('');
 }
-HM.sel = -1; HM.list = [];
-document.addEventListener('input', e => {
-  if (e.target.id !== 'hm-q') return;
-  HM.list = hmSuggest(e.target.value); HM.sel = -1; hmDrawSug(HM.list, HM.sel);
+// the featured card: a live game, a game the feed has just finished, else the next tip-off
+function hmHeroSide() {
+  const on = liveList('live')[0] || liveList('final')[0];
+  if (on && on.data) {
+    const d = on.data, [h, a] = d.teams, fin = d.status === 'final', c = COMP_BY_ID[on.g.cid];
+    return `<a class="hmg-feat hmg-feat-on" href="#/live/${on.g.mid}">
+      <div class="hmg-feat-k">${c ? compCrest(c, 22) : ''}<span>${esc(liveCompName(on.g.cid))}</span>${fin ? '<em class="hmg-fin">Final</em>' : '<em class="hmg-live"><i></i>Live</em>'}</div>
+      <div class="hmg-match">${[h, a].map((t, i) => `<div class="hmg-side${fin && t.score > [h, a][1 - i].score ? ' w' : ''}">${crest(t.name, 60)}<b>${esc(t.name)}</b><strong>${t.score}</strong></div>`).join('<div class="hmg-vs">–</div>')}</div>
+      <div class="hmg-feat-f"><span>${esc(liveClock(d))}</span><span class="hmg-go">${fin ? 'Box score and plays' : 'Follow the game'} →</span></div></a>`;
+  }
+  const g = hmUpcoming()[0];
+  if (!g) return `<div class="hmg-empty">No fixtures published yet. New games show here as soon as an organiser lists them.</div>`;
+  const c = COMP_BY_ID[g.cid], s = liveStart(g);
+  return `<a class="hmg-feat" href="#/c/${g.cid}/schedule">
+    <div class="hmg-feat-k">${c ? compCrest(c, 22) : ''}<span>${esc(liveCompName(g.cid))}</span><em>Next game</em></div>
+    <div class="hmg-match"><div class="hmg-side">${crest(g.h, 60)}<b>${esc(g.h)}</b></div><div class="hmg-vs">VS</div><div class="hmg-side">${crest(g.a, 60)}<b>${esc(g.a)}</b></div></div>
+    <div class="hmg-feat-f"><span>${esc(hmDayLabel(g))}${g.time ? ' · ' + esc(g.time) : ''}${g.venue ? `<small>${esc(g.venue)}</small>` : ''}</span>
+      <span class="hmg-cd" data-cdbox="${s}">${hmCdBoxes(s - liveNow())}</span></div></a>`;
+}
+function hmTeams(g, hs, as) {
+  const done = hs != null, hw = done && +hs > +as, aw = done && +as > +hs;
+  const t = (n, sc, w) => `<span class="hmg-tm${w ? ' w' : ''}${HM_TBD(n) ? ' tbd' : ''}">${hmMark(n, 22)}<span class="nm">${esc(hmTeamName(n))}</span>${done ? `<b>${sc == null ? '' : sc}</b>` : ''}</span>`;
+  return `<span class="hmg-tms">${t(g.h, hs, hw)}${t(g.a, as, aw)}</span>`;
+}
+function hmByDay(list, row) {
+  let last = '';
+  return list.map(g => { const k = hmDayKey(g), head = k !== last ? `<div class="hmg-day">${esc(hmDayLabel(g))}</div>` : ''; last = k; return head + row(g); }).join('');
+}
+function hmGamesInner() {
+  const B = HM.box, feat = (liveList('live')[0] || liveList('final')[0] || {}).g || hmUpcoming()[0];
+  const later = hmFixtures().filter(g => !feat || g.mid !== feat.mid).filter(g => !(LIVE.games[g.mid] && LIVE.games[g.mid].data));
+  const done = hmCompleted(), comps = [...new Set(done.slice(0, 400).map(g => g.cid))].map(id => COMP_BY_ID[id]).filter(Boolean)
+    .sort((a, b) => (a.label || a.name).localeCompare(b.label || b.name));
+  const res = done.filter(g => !B.comp || g.cid === B.comp), shownRes = res.slice(0, B.nRes), shownUp = later.slice(0, B.nUp);
+  const logo = cid => { const c = COMP_BY_ID[cid]; return c ? compCrest(c, 20) : ''; };
+  return `<div class="hmg-head"><div class="hm-eyebrow"><span class="hm-eyebrow-dot"></span>HoopStatsMY · Games</div>
+      <div class="hmg-tabs" role="group" aria-label="Show"><button data-hmshow="up" aria-pressed="${B.show === 'up'}">Upcoming</button><button data-hmshow="res" aria-pressed="${B.show === 'res'}">Results</button></div></div>
+    <div class="hmg-cols" data-show="${B.show}">
+      <section class="hmg-up" aria-label="Upcoming games">
+        <div class="hmg-col-h"><h2>Up next</h2><span>${later.length + (feat ? 1 : 0)} fixture${later.length + (feat ? 1 : 0) === 1 ? '' : 's'}</span></div>
+        <div id="lv-hero-side">${hmHeroSide()}</div>
+        ${shownUp.length ? `<div class="hmg-list">${hmByDay(shownUp, g => `<a class="hmg-row" href="#/c/${g.cid}/schedule">${hmTeams(g)}<span class="hmg-meta"><b>${esc(g.time || 'Time TBC')}</b>${logo(g.cid)}</span></a>`)}</div>` : ''}
+        ${later.length > B.nUp ? `<button class="hmg-more" data-hmmore="up">Show more fixtures</button>` : ''}
+      </section>
+      <section class="hmg-res" aria-label="Results">
+        <div class="hmg-col-h"><h2>Results</h2>
+          <select class="hmg-sel" data-hmcomp aria-label="Competition"><option value="">All competitions</option>${comps.map(c => `<option value="${esc(c.id)}" ${c.id === B.comp ? 'selected' : ''}>${esc(c.label || c.name)}</option>`).join('')}</select></div>
+        ${shownRes.length ? `<div class="hmg-list">${hmByDay(shownRes, g => `<a class="hmg-row" href="${g.box ? `#/c/${g.cid}/box/${g.mid}` : `#/c/${g.cid}`}" title="${esc(liveCompName(g.cid))}">${hmTeams(g, g.hs, g.as)}<span class="hmg-meta"><b>${logo(g.cid)}${g.ff ? 'Forfeit' : 'Final'}</b><span class="${g.box ? 'hmg-box' : ''}">${g.box ? 'Box score →' : 'No box score'}</span></span></a>`)}</div>`
+          : '<div class="hmg-empty">No results yet.</div>'}
+        ${res.length > B.nRes ? `<button class="hmg-more" data-hmmore="res">Show more results</button>` : ''}
+      </section>
+    </div>`;
+}
+const hmBoxPaint = () => { const el = document.getElementById('hm-games'); if (el) el.innerHTML = hmGamesInner(); };
+document.addEventListener('click', e => {
+  const sh = e.target.closest && e.target.closest('[data-hmshow]');
+  if (sh) { HM.box.show = sh.dataset.hmshow; hmBoxPaint(); return; }
+  const mo = e.target.closest && e.target.closest('[data-hmmore]');
+  if (mo) { if (mo.dataset.hmmore === 'res') HM.box.nRes += 8; else HM.box.nUp += 4; hmBoxPaint(); }
 });
-document.addEventListener('keydown', e => {
-  if (e.target.id !== 'hm-q' || !HM.list.length) return;
-  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-    e.preventDefault();
-    HM.sel = (HM.sel + (e.key === 'ArrowDown' ? 1 : -1) + HM.list.length) % HM.list.length;
-    hmDrawSug(HM.list, HM.sel);
-  } else if (e.key === 'Enter') {
-    HS.go(HM.list[Math.max(HM.sel, 0)].href);
-  } else if (e.key === 'Escape') { HM.list = []; hmDrawSug([], -1); }
+document.addEventListener('change', e => {
+  if (!e.target.matches || !e.target.matches('[data-hmcomp]')) return;
+  HM.box.comp = e.target.value; HM.box.nRes = 6; hmBoxPaint();
 });
-document.addEventListener('focusout', e => {
-  if (e.target.id === 'hm-q') setTimeout(() => hmDrawSug([], -1), 180);
-});
+
 document.addEventListener('click', e => {
   const sh = e.target.closest && e.target.closest('#hm-shuffle');
   if (sh) { hmPickSpot(); const s = document.getElementById('hm-spot'); if (s) s.innerHTML = hmSpotlight(); return; }
@@ -426,4 +398,5 @@ document.addEventListener('click', e => {
 /* the countdown ticks while Home is open */
 setInterval(() => {
   document.querySelectorAll('[data-countdown]').forEach(el => { el.textContent = hmCountdown(+el.dataset.countdown - liveNow()); });
-}, 30e3);
+  document.querySelectorAll('[data-cdbox]').forEach(el => { el.innerHTML = hmCdBoxes(+el.dataset.cdbox - liveNow()); });
+}, 20e3);

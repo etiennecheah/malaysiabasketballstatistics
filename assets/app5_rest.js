@@ -122,14 +122,6 @@ function renderBox(cid, mid) {
 /* ---------------------------- interactions ---------------------------- */
 // In-page state changes (expanding a tier, switching stat mode) re-render
 // through the router but must not throw the reader back to the top.
-/* A busy month can run past the strip's right edge; after a re-render the
-   selected day has to be brought back into view or an arrow click looks like
-   it did nothing. inline only — the page must not jump vertically. */
-function gDayIntoView() {
-  const el = document.querySelector('.gday.on');
-  if (el) el.scrollIntoView({ block: 'nearest', inline: 'center' });
-}
-
 function softRoute() {
   const y = window.scrollY;
   route();
@@ -181,12 +173,6 @@ document.addEventListener('click', e => {
   const lt = e.target.closest('[data-logtier]');
   if (lt) { PROFILE.logTier = lt.dataset.logtier; softRoute(); return; }
 
-  const gd = e.target.closest('[data-gday]');
-  if (gd) {
-    if (!gd.dataset.gday) return;
-    GAMES.day = gd.dataset.gday; softRoute(); gDayIntoView(); return;
-  }
-  if (e.target.closest('[data-ghide]')) { GAMES.hide = !GAMES.hide; softRoute(); return; }
   const fj = e.target.closest('[data-fxjump]');
   if (fj) {
     const sec = document.querySelector(`[data-fxsec="${fj.dataset.fxjump}"]`);
@@ -304,11 +290,6 @@ document.addEventListener('click', e => {
 });
 
 document.addEventListener('change', e => {
-  if (e.target.matches('[data-gmonth]')) {
-    const ix = gameIndex();
-    GAMES.day = ix.days.find(d => d.slice(0, 7) === e.target.value) || GAMES.day;
-    softRoute(); gDayIntoView(); return;
-  }
   const f = e.target.closest('[data-filter]');
   if (f) { FILTER[f.dataset.filter] = f.value; route(); return; }
   const tt = e.target.closest('[data-teamcat]');

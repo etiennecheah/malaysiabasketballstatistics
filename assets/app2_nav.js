@@ -33,7 +33,6 @@ function siteLinks(state) {
           ['#/players', 'Players', state === 'global-players' || state === 'player'],
           ['#/competitions', 'Competitions', state === 'hub' || state === 'notfound' || state === 'comp' || state === 'cfam'],
           ['#/teams', 'Teams', state === 'teams-hub' || state === 'team-global'],
-          ['#/games', 'Games', state === 'games'],
           ['stats', 'Stats', state === 'stats'],            // a button: it opens the Lineups / Clutch menu
           ['#/compare', 'Compare', state === 'compare'],
           ['#/formulas', 'Formulas', state === 'formulas']]
@@ -46,12 +45,11 @@ function renderNav(state, cid, tab) {
   // and a team's own page belong here too; left out, they fell through to the
   // competition bar with no competition behind it.
   if (!cid || state === 'hub' || state === 'global-players' || state === 'player' || state === 'compare'
-      || state === 'formulas' || state === 'games' || state === 'notfound'
+      || state === 'formulas' || state === 'notfound'
       || state === 'teams-hub' || state === 'team-global' || state === 'cfam'
       || state === 'home' || state === 'live' || state === 'me' || state === 'stats') {
     const links = siteLinks(state);
     const label = state === 'stats' ? 'Stats' : state === 'compare' ? 'Compare' : state === 'formulas' ? 'Formulas'
-      : state === 'games' ? 'Games'
       : (state === 'teams-hub' || state === 'team-global') ? 'Teams'
       : (state === 'global-players' || state === 'player') ? 'Players' : 'Competitions';
     const crumb = state === 'stats'
@@ -60,8 +58,6 @@ function renderNav(state, cid, tab) {
       ? '<span class="subnav-crumb">two players, inside a competition they both played</span>'
       : state === 'formulas'
       ? '<span class="subnav-crumb">what every abbreviation means, and where the number comes from</span>'
-      : state === 'games'
-      ? '<span class="subnav-crumb">every competition\'s fixtures and results, by date</span>'
       : `<span class="subnav-crumb">Malaysia basketball database · ${COMPS.length} competitions</span>`;
     // a player's page opens straight into its own full-width hero
     return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' ? '' : subnav(label, crumb, []));
@@ -135,8 +131,6 @@ function route() {
     state = 'teams-hub'; body = renderTeamsHub();
   } else if (parts[0] === 't' && parts[1]) {
     state = 'team-global'; body = renderTeamGlobal(decodeURIComponent(parts[1]));
-  } else if (parts[0] === 'games') {
-    state = 'games'; body = renderGames();
   } else if (parts[0] === 'stats') {
     // Stats: Lineups and Clutch, chosen from the menu under the Stats tab
     state = 'stats'; tab = parts[1] === 'clutch' ? 'clutch' : 'lineups'; body = renderStats(tab);

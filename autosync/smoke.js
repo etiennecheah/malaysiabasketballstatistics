@@ -1,8 +1,8 @@
 // Open the freshly built site in a real browser before it is published.
 //   node smoke.js <site directory (public/ or _site/)> [<cid>:<mid> ...]
 // The directory is served the way GitHub Pages serves it (pages at their own paths under
-// the base, 404.html for the rest). Fails (exit 1) on any script error, if Home or Games do
-// not render, if a page written for search engines is missing or wrong, or if a newly
+// the base, 404.html for the rest). Fails (exit 1) on any script error, if Home or its games box
+// does not render, if a page written for search engines is missing or wrong, or if a newly
 // synced game does not show as final with its box score.
 let pw;
 try { pw = require('playwright-core'); } catch (e) { pw = require('playwright'); }
@@ -72,20 +72,16 @@ function serve(root, base) {
   await ready();
   await page.waitForTimeout(800);
   const home = await page.evaluate(() => ({
-    title: (document.querySelector('.hm-title') || {}).textContent || '',
-    tiles: document.querySelectorAll('.hm-tile').length,
+    title: (document.querySelector('#hm-games') || {}).textContent || '',
+    tiles: document.querySelectorAll('#hm-games .hmg-res .hmg-row').length,
     comps: typeof COMPS !== 'undefined' ? COMPS.length : 0,
     faces: typeof DB !== 'undefined' ? Object.keys(DB.photos || {}).filter(k => !(DB.avatars && DB.avatars[k])).length : -1,
     photos: typeof DB !== 'undefined' ? Object.keys(DB.photos || {}).length : 0,
   }));
   if (!home.title) errors.push('Home did not render');
-  if (!home.tiles) errors.push('Home shows no latest results');
+  if (!home.tiles) errors.push('Home games box shows no results');
   if (home.comps < 70) errors.push('only ' + home.comps + ' competitions in the page data');
   if (home.faces !== 0) errors.push(home.faces + ' of ' + home.photos + ' portraits have no face crop for the small avatar discs');
-
-  await go('/games');
-  const cards = await page.evaluate(() => document.querySelectorAll('.gcard').length);
-  if (!cards) errors.push('Games page shows no game cards');
 
   await go('/players');
   const pcards = await page.evaluate(() => document.querySelectorAll('.pcard').length);
@@ -133,6 +129,6 @@ function serve(root, base) {
   }
   await browser.close();
   srv.close();
-  console.log('page check: Home ' + home.tiles + ' result tiles, ' + home.comps + ' competitions, Games ' + cards + ' cards, Players ' + pcards + ' cards, ' + games.length + ' new game(s)');
+  console.log('page check: Home ' + home.tiles + ' results in the games box, ' + home.comps + ' competitions, Players ' + pcards + ' cards, ' + games.length + ' new game(s)');
   if (errors.length) { console.log('PAGE CHECK FAILED\n  ' + errors.join('\n  ')); process.exit(1); }
 })().catch(e => { console.log('PAGE CHECK FAILED\n  ' + e.message); process.exit(1); });

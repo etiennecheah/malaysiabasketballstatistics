@@ -103,8 +103,7 @@ function liveRefresh() {
   }
   // the Watch page repaints its stats panels (never its video)
   if (typeof watchRefresh === 'function') watchRefresh();
-  // the fixture lists: the Games page and a competition's schedule
-  if (typeof gamesLiveRefresh === 'function') gamesLiveRefresh();
+  // the fixture list of a competition's schedule
   if (typeof scheduleLiveRefresh === 'function') scheduleLiveRefresh();
 }
 
@@ -283,7 +282,7 @@ function liveGameInner(mid) {
       <a href="#/c/${g.cid}/box/${g.mid}">open its box score</a>.</div>`;
   }
   if (!x || !x.data) {
-    return `<div class="lv-crumb"><a href="#/games">Games</a> › <a href="#/c/${g.cid}">${esc(liveCompName(g.cid))}</a></div>
+    return `<div class="lv-crumb"><a href="#/">Home</a> › <a href="#/c/${g.cid}">${esc(liveCompName(g.cid))}</a></div>
       <div class="card lv-quiet"><span class="lv-dot lv-dot-idle"></span><b>${esc(g.h)}</b> vs <b>${esc(g.a)}</b> · ${esc(liveTip(g))}.
       ${x && x.err ? 'The live feed is not answering right now — this page keeps trying.' : 'Waiting for the game to start — this page fills in by itself.'}</div>`;
   }
@@ -305,7 +304,7 @@ function liveGameInner(mid) {
     .forEach(k => { o[k] = (o[k] || 0) + (p[k] || 0); }); return o; }, {});
   const pct = (m, a) => a ? Math.round(100 * m / a) + '%' : '–';
   let prev = null;
-  return `<div class="lv-crumb"><a href="#/games">Games</a> › <a href="#/c/${g.cid}">${esc(liveCompName(g.cid))}</a> › ${esc(h.name)} vs ${esc(a.name)}</div>
+  return `<div class="lv-crumb"><a href="#/">Home</a> › <a href="#/c/${g.cid}">${esc(liveCompName(g.cid))}</a> › ${esc(h.name)} vs ${esc(a.name)}</div>
   <section class="lv-stage">
     <div class="lv-stage-top">${fin ? '<span class="lv-tag lv-tag-fin">FINAL</span>' : '<span class="lv-tag"><span class="lv-dot"></span>LIVE</span>'}<span>${esc(liveCompName(g.cid))}</span>${typeof watchLink === 'function' ? watchLink(g.mid, 'Watch with live stats', 'm-watch lv-watch-top') : ''}</div>
     <div class="lv-board">
