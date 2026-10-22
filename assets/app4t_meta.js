@@ -122,7 +122,7 @@ function hsMeta(hash) {
     competitions: ['Competitions', 'All ' + nComps + ' Malaysian basketball competitions in the database: MBL, D-League, Agong Cup, national youth championships, schools and FIBA youth events.'],
     teams: ['Teams', 'Every Malaysian basketball team and state side in the database, with their competitions, titles and rosters.'],
     formulas: ['Formulas', 'How every statistic on ' + SITE_NAME + ' is calculated: shooting percentages, PER, usage, Win Shares and BPM.'],
-    stats: ['Stats', 'Lineup and clutch statistics for Malaysian basketball competitions.'],
+    stats: ['Tools · Lineups and Clutch', 'Lineup and clutch statistics for Malaysian basketball competitions.'],
     privacy: ['Privacy & Site Rules', 'How ' + SITE_NAME + ' handles accounts, player profile claims and personal data, and the rules for using the site.'],
     compare: ['Compare Players', 'Compare two Malaysian basketball players side by side: career stats, peak seasons and head-to-head games.'],
   };

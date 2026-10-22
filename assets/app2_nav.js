@@ -2,7 +2,10 @@
 const SITE = 'HOOPSTATS MY';
 
 function navShell(links, sub) {
-  const statsPage = /^#\/stats/.test(HS.hash()) ? (/^#\/stats\/clutch/.test(HS.hash()) ? 'clutch' : 'lineups') : '';
+  // which page of the Tools menu is open, so the menu can mark it
+  const h = HS.hash();
+  const statsPage = /^#\/stats/.test(h) ? (/^#\/stats\/clutch/.test(h) ? 'clutch' : 'lineups')
+    : /^#\/compare\/lineups/.test(h) ? 'cmp-lineups' : /^#\/compare/.test(h) ? 'cmp-players' : '';
   return `
   <div class="nav">
     <div class="nav-left">
@@ -33,8 +36,7 @@ function siteLinks(state) {
           ['#/players', 'Players', state === 'global-players' || state === 'player'],
           ['#/competitions', 'Competitions', state === 'hub' || state === 'notfound' || state === 'comp' || state === 'cfam'],
           ['#/teams', 'Teams', state === 'teams-hub' || state === 'team-global'],
-          ['stats', 'Stats', state === 'stats'],            // a button: it opens the Lineups / Clutch menu
-          ['#/compare', 'Compare', state === 'compare'],
+          ['stats', 'Tools', state === 'stats' || state === 'compare'],   // a button: it opens the Tools menu (Lineups, Clutch, Compare)
           ['#/formulas', 'Formulas', state === 'formulas']]
     .map(([h, t, a]) => h === 'stats' ? (typeof STATS !== 'undefined' ? STATS.navButton(a) : '')
       : `<a href="${h}" class="nav-link ${a ? 'active' : ''}">${esc(t)}</a>`).join('');
@@ -49,13 +51,13 @@ function renderNav(state, cid, tab) {
       || state === 'teams-hub' || state === 'team-global' || state === 'cfam'
       || state === 'home' || state === 'live' || state === 'me' || state === 'stats') {
     const links = siteLinks(state);
-    const label = state === 'stats' ? 'Stats' : state === 'compare' ? 'Compare' : state === 'formulas' ? 'Formulas'
+    const label = state === 'stats' || state === 'compare' ? 'Tools' : state === 'formulas' ? 'Formulas'
       : (state === 'teams-hub' || state === 'team-global') ? 'Teams'
       : (state === 'global-players' || state === 'player') ? 'Players' : 'Competitions';
     const crumb = state === 'stats'
       ? '<span class="subnav-crumb" id="st-crumb"></span>'
       : state === 'compare'
-      ? '<span class="subnav-crumb">two players, or two teams\' lineups, inside a competition they both played</span>'
+      ? '<span class="subnav-crumb">Compare · two players, or two teams\' lineups, inside a competition they both played</span>'
       : state === 'formulas'
       ? '<span class="subnav-crumb">what every abbreviation means, and where the number comes from</span>'
       : `<span class="subnav-crumb">Malaysia basketball database · ${COMPS.length} competitions</span>`;

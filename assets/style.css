@@ -2817,6 +2817,7 @@
   .st-menu a small{ font-family:var(--body); font-weight:400; font-size:11.5px; color:var(--ink-text-dim); }
   .st-menu a:hover{ background:rgba(255,255,255,.08); text-decoration:none; }
   .st-menu a[aria-current="page"]{ background:rgba(255,255,255,.12); box-shadow:inset 3px 0 0 var(--accent-2); }
+  .st-menu-sep{ height:1px; margin:4px 8px; background:rgba(255,255,255,.12); }
   @media (max-width:900px){ .nav{ position:relative; } }
 
   .st-page{ --st-row-alt: oklch(98% 0.004 250); --st-row-hover: oklch(95.5% 0.012 250); --st-neg: oklch(50% 0.19 25); }

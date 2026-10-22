@@ -753,10 +753,13 @@ const STATS = (function () {
     }
     if (el('st-root')) (PAGE === 'clutch' ? CL : LU).mount();
   }
-  const navButton = active => `<button class="nav-link st-navbtn ${active ? 'active' : ''}" id="st-navbtn" aria-haspopup="true" aria-expanded="false" aria-controls="st-menu">Stats<span class="st-caret" aria-hidden="true">▼</span></button>`;
+  const navButton = active => `<button class="nav-link st-navbtn ${active ? 'active' : ''}" id="st-navbtn" aria-haspopup="true" aria-expanded="false" aria-controls="st-menu">Tools<span class="st-caret" aria-hidden="true">▼</span></button>`;
   const navMenu = cur => `<div class="st-menu" id="st-menu" hidden>
       <a href="#/stats/lineups"${cur === 'lineups' ? ' aria-current="page"' : ''}>Lineups<small>Groups of 5, 4, 3 or 2 players on court together</small></a>
       <a href="#/stats/clutch"${cur === 'clutch' ? ' aria-current="page"' : ''}>Clutch<small>Last five minutes, score within five</small></a>
+      <span class="st-menu-sep" role="separator"></span>
+      <a href="#/compare"${cur === 'cmp-players' ? ' aria-current="page"' : ''}>Compare players<small>Two players, inside a competition they both played</small></a>
+      <a href="#/compare/lineups"${cur === 'cmp-lineups' ? ' aria-current="page"' : ''}>Compare lineups<small>Two teams' fives against each other in one competition</small></a>
     </div>`;
   return { put, render, afterRender, navButton, navMenu, LU, CL, DATA, page: () => PAGE };
 })();
