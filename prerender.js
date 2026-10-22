@@ -53,7 +53,7 @@ vm.runInContext(fs.readFileSync(APPJS, 'utf8') + '\n;this.__route = route; this.
 
 // ---- every page that gets a file of its own
 const routes = vm.runInContext(`(() => {
-  const r = ['', 'players', 'competitions', 'teams', 'formulas', 'compare', 'privacy'];
+  const r = ['', 'players', 'competitions', 'teams', 'milestones', 'formulas', 'compare', 'privacy'];
   Object.keys(PERSONS).forEach(pid => { if (!PALIAS[pid]) r.push('p/' + pid); });
   COMPS.forEach(c => {
     r.push('c/' + c.id);

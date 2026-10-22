@@ -124,6 +124,11 @@ function serve(root, base) {
     if (!ok) errors.push('Shot map tab for player ' + shotPid + ' did not draw');
   }
 
+  // Milestones: the MBL leaders and the milestones reached, worked out from the box scores
+  await go('/milestones');
+  const ms = await page.evaluate(() => [document.querySelectorAll('.ms-lr').length, document.querySelectorAll('.ms-fi').length, document.querySelectorAll('.ms-ft').length]);
+  if (!(ms[0] > 0 && ms[1] > 0 && ms[2] === 7)) errors.push('Milestones page did not fill (' + ms.join('/') + ')');
+
   // a game's Shot chart tab (box score page), where a finished game has a chart: both teams' toggles and the court
   const shotGame = await page.evaluate(() => { for (const c of COMPS) for (const g of c.games) if (typeof hasGameShots === 'function' && hasGameShots(c.id, g.mid)) return [c.id, g.mid]; return null; });
   if (shotGame) {

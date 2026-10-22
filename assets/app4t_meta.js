@@ -128,6 +128,7 @@ function hsMeta(hash) {
     players: ['Players', 'Search ' + nPlayers.toLocaleString('en') + ' Malaysian basketball players: career totals across every competition, filtered by level and year.'],
     competitions: ['Competitions', 'All ' + nComps + ' Malaysian basketball competitions in the database: MBL, D-League, Agong Cup, national youth championships, schools and FIBA youth events.'],
     teams: ['Teams', 'Every Malaysian basketball team and state side in the database, with their competitions, titles and rosters.'],
+    milestones: ['MBL Milestones', 'Milestones of Malaysian players in the MBL: career and team totals every 50 points, rebounds, assists, steals, blocks and games, who is next, and single-game feats.'],
     formulas: ['Formulas', 'How every statistic on ' + SITE_NAME + ' is calculated: shooting percentages, PER, usage, Win Shares and BPM.'],
     stats: ['Tools · Lineups and Clutch', 'Lineup and clutch statistics for Malaysian basketball competitions.'],
     privacy: ['Privacy & Site Rules', 'How ' + SITE_NAME + ' handles accounts, player profile claims and personal data, and the rules for using the site.'],
