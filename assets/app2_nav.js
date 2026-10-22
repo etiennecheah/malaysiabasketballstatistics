@@ -163,6 +163,7 @@ function route() {
     else if (r[0] === 'box' && r[1]) { state = 'schedule'; body = renderBox(cid, r[1]); }
     else if (r[0] === 'pbp' && r[1]) { state = 'schedule'; body = renderPBP(cid, r[1]); }
     else if (r[0] === 'manalysis' && r[1]) { state = 'schedule'; body = renderMatchAnalysis(cid, r[1]); }
+    else if (r[0] === 'shots' && r[1]) { state = 'schedule'; body = renderMatchShots(cid, r[1]); }
     else { state = 'dashboard'; body = renderCompDash(cid); }
   } else if (parts[0] === 'c') {
     state = 'notfound'; body = renderNotFound(parts[1]);

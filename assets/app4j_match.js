@@ -1,6 +1,6 @@
 /* -------------------- Match detail: shared header + sub-tabs -------------------- */
-/* One match now has three views — the box score, a FIBA-style play-by-play, and a
-   computed team analysis. They share a header (crest · score · period breakdown)
+/* One match has up to four views — the box score, a FIBA-style play-by-play, a
+   computed team analysis and the shot chart (app4z_gameshots.js). They share a header (crest · score · period breakdown)
    and a sub-tab bar. Play-by-play is scraped per game and only exists for games in
    DB.pbp; team analysis is computed from the box score, so it works for any game
    that has one. */
@@ -53,6 +53,8 @@ function matchHead(cid, mid, tab) {
         <tr><td class="left"><div class="team">${crest(g.a)}${esc(g.a)}</div></td>${periods.map(p => `<td>${fmt0(p[1])}</td>`).join('')}<td style="padding-right:20px;font-weight:700;">${fmt0(g.as)}</td></tr>
       </tbody></table></div>` : '';
   const tabs = [['box', 'Box Score', hasBox], ['pbp', 'Play-by-play', pbpOk], ['manalysis', 'Team Analysis', hasBox]];
+  // the Shot chart tab only where the game has a chart (app4z_gameshots.js)
+  if (typeof hasGameShots === 'function' && hasGameShots(cid, mid)) tabs.push(['shots', 'Shot Chart', true]);
   const tabbar = `<div class="msub">${tabs.map(([k, l, ok]) =>
     `<a class="msub-t ${tab === k ? 'on' : ''} ${ok ? '' : 'msub-off'}" href="#/c/${cid}/${k}/${mid}">${l}</a>`).join('')}</div>`;
   return `<div class="page">

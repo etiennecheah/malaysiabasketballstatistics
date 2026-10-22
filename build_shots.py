@@ -20,6 +20,15 @@ Output:
                           career map loads one file of his own plus the averages of his events
       T  shot types, M match ids (indexed from E)
       E  {cid: [[x, y, made, three, type, match, period], ...]}
+  stats/shg/<mid>.js      SHOTG_PUT('<mid>', {c, T, P, s}): one game's chart, for the Shot chart tab of
+                          its box score page (both teams, every shot in the chart's order)
+      c  the competition; T shot types; P the shooters' ids
+      s  [[x, y, made, three, type, period, shooter (index in P, -1 = one the site cannot name), side (0 home, 1 away)], ...]
+      The side comes from the box score: the chart's team id of each shot is matched to the team the
+      box score lists its shooters under.
+  data/shots_games.json   {"c": "cid,...", "x": "mid,..."}: the competitions with charts and their
+                          finished games without one, embedded by build_site.py so a box score page
+                          knows whether to offer the Shot chart tab
   data/shots_index.json   "pid,pid,...": every player with a shot, embedded by build_site.py so a
                           profile knows whether to offer the tab before any file is loaded (kept to
                           a bare list: it rides in the main data file every page loads)
@@ -33,6 +42,7 @@ R = os.path.dirname(os.path.abspath(__file__))
 D = os.path.join(R, 'data')
 OUT = os.path.join(R, 'stats', 'sh')
 OUTP = os.path.join(R, 'stats', 'shp')
+OUTG = os.path.join(R, 'stats', 'shg')
 RIM = 1.575            # rim centre, metres from the baseline (FIBA)
 
 
@@ -56,18 +66,57 @@ def zone(x, y, three):
     return 'MC' if abs(x) <= 2.45 else 'M' + side
 
 
+def game_file(mid, cid, rows, g, box, alias, persons):
+    """stats/shg/<mid>.js: the whole chart of one game, each shot with its side (0 home, 1 away)."""
+    if not g:
+        return
+    team = {}                                      # pid -> 0 / 1, from the box score
+    names = (box or {}).get('t', [])               # the site's box score: {t: [team names], p: [[pid, team index, ...]]}
+    for r in (box or {}).get('p', []):
+        nm = names[r[1]] if len(r) > 1 and 0 <= r[1] < len(names) else ''
+        side = 0 if nm == g['h'] else 1 if nm == g['a'] else None
+        if side is not None and r[0]:
+            team[r[0]] = side
+            team[alias.get(r[0], r[0])] = side
+    votes = {}                                     # the chart's team id -> side, by its named shooters
+    for per, pid, tn, *_ in rows:
+        sd = team.get(pid, team.get(alias.get(pid, pid)))
+        if sd is not None:
+            votes.setdefault(tn, [0, 0])[sd] += 1
+    tside = {tn: 0 if v[0] >= v[1] else 1 for tn, v in votes.items()}
+    rest = {r[2] for r in rows} - set(tside)
+    if len(tside) == 1 and len(rest) == 1:         # one side's shooters unnamed on the chart: the other team id is theirs
+        tside[rest.pop()] = 1 - next(iter(tside.values()))
+    T, P, out = [], [], []
+    for per, pid, tn, top, left, three, typ, made in rows:
+        x, y = place(float(top), float(left))
+        pid = alias.get(pid, pid)
+        sd = team.get(pid, tside.get(tn))
+        if sd is None:
+            continue
+        if typ not in T:
+            T.append(typ)
+        if pid in persons and pid not in P:
+            P.append(pid)
+        out.append([round(x, 2), round(y, 2), made, three, T.index(typ), per, P.index(pid) if pid in persons else -1, sd])
+    with open(os.path.join(OUTG, mid + '.js'), 'w') as f:
+        f.write('SHOTG_PUT(%s,%s);' % (json.dumps(mid), json.dumps({'c': cid, 'T': T, 'P': P, 's': out}, separators=(',', ':'))))
+
+
 def main():
     site = json.load(open(os.path.join(D, 'site_data.json')))
     alias = site.get('palias', {})
     persons = site.get('persons', {})
     comps = {c['id']: c for c in site['comps']}
+    games_by = {g['mid']: g for c in site['comps'] for g in c['games']}
+    boxes = site.get('boxes', {})
     by = {}
     for f in sorted(glob.glob(os.path.join(D, 'shots', '*.json'))):
         mid = os.path.basename(f)[:-5]
         g = json.load(open(f))
         if g.get('cid') in comps:
             by.setdefault(g['cid'], []).append((mid, g['s']))
-    for d in (OUT, OUTP):
+    for d in (OUT, OUTP, OUTG):
         shutil.rmtree(d, ignore_errors=True)
         os.makedirs(d, exist_ok=True)
     total, players, per_comp = 0, {}, {}
@@ -90,6 +139,7 @@ def main():
                     pl['M'].append(mid)
                 pl['E'].setdefault(cid, []).append([round(x, 2), round(y, 2), made, three, pl['T'].index(typ), pl['M'].index(mid), per])
                 P[pid] = P.get(pid, 0) + 1
+            game_file(mid, cid, rows, games_by.get(mid), boxes.get(mid), alias, persons)
         n = sum(a[0] for a in Z.values())
         total += n
         data = {'Z': Z, 'G': ';'.join(k + ',%d,%d' % tuple(v) for k, v in sorted(grid.items())), 'n': n, 'g': len(games)}
@@ -100,6 +150,11 @@ def main():
         with open(os.path.join(OUTP, pid + '.js'), 'w') as f:
             f.write('SHOTP_PUT(%s,%s);' % (json.dumps(pid), json.dumps(pl, separators=(',', ':'))))
     json.dump(','.join(sorted(players)), open(os.path.join(D, 'shots_index.json'), 'w'))
+    # which box score pages get a Shot chart tab: every game of a competition with charts, less the
+    # finished games of it that have none (the source's chart page was empty or never read)
+    have = {mid for games in by.values() for mid, _ in games}
+    miss = [g['mid'] for cid in by for g in comps[cid]['games'] if g.get('st') == 'COMPLETE' and g['mid'] not in have]
+    json.dump({'c': ','.join(sorted(by)), 'x': ','.join(sorted(miss))}, open(os.path.join(D, 'shots_games.json'), 'w'))
     print('shots: %d attempts in %d games of %d competition(s), %d players with a shot map'
           % (total, sum(len(v) for v in by.values()), len(by), len(players)))
 

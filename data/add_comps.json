@@ -1,5 +1,5 @@
 {
- "_note": "Competitions waiting to be imported by the sync (autosync/store.py _queue): teams, rosters and names read by hand from the source; the first sync pass reads fixtures, every box score and play-by-play, standings, leaders and season lines. An entry already in backbone.json is skipped, so this file can stay as a record. \"nolines\": true marks a competition whose season lines the source does not publish (lines are built from the box scores), so the sync never asks for them.",
+ "_note": "Competitions waiting to be imported by the sync (autosync/store.py _queue): teams, rosters and names read by hand from the source; the first sync pass reads fixtures, every box score and play-by-play, standings, leaders and season lines. An entry already in backbone.json is skipped, so this file can stay as a record. \"nolines\": true marks a competition whose season lines the source does not publish (lines are built from the box scores), so the sync never asks for them. Every competition here also gets its games' shot charts read (autosync/store.py); \"shots\": false turns that off for one whose source has no chart pages.",
  "comps": [
   {
    "id": "35136",

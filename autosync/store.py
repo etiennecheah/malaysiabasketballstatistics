@@ -26,6 +26,18 @@ class Store:
         scp = os.path.join(d, 'shot_comps.json')
         self.shot_comps = set(json.load(open(scp)).get('comps', [])) if os.path.exists(scp) else set()
         self.queued = self._queue(d)
+        # every competition imported through data/add_comps.json is a MABA / Genius Sports one, whose
+        # games all have a shot chart page: its charts are read as its games finish, without a separate
+        # entry in shot_comps.json (the next MBL season gets its Shot chart tabs the day it is added).
+        # An entry with "shots": false opts out.
+        self.shot_comps |= self.chart_comps
+
+    @property
+    def chart_comps(self):
+        qp = os.path.join(self.d, 'add_comps.json')
+        if not os.path.exists(qp):
+            return set()
+        return {c['id'] for c in json.load(open(qp)).get('comps', []) if c.get('shots', True) is not False}
 
     def _queue(self, d):
         """Competitions waiting to be imported (data/add_comps.json): the teams, rosters and

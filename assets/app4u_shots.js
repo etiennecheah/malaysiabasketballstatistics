@@ -11,6 +11,9 @@
    (zones and a 0.5 m grid); stats/shp/<pid>.js holds one player's shots in
    every event. DB.shotIdx (the ids of every player with a shot, comma-joined) says
    beforehand who gets the tab; the rest comes with his file.
+   The same tab draws a game's Shot chart on its box score page (app4z_gameshots.js):
+   SM.src then names the game, the side and the shooter, and the shots come from
+   stats/shg/<mid>.js instead of a player's file.
    ========================================================================= */
 const SH_DATA = {}, SH_ST = {}, SHP_DATA = {}, SHP_ST = {};
 function SHOTS_PUT(cid, d) {
@@ -19,17 +22,20 @@ function SHOTS_PUT(cid, d) {
   d.LZ = {}; Object.entries(d.Z).forEach(([k, [a, m]]) => { d.LZ[k] = a ? m / a : 0; });
 }
 function SHOTP_PUT(pid, d) { SHP_DATA[pid] = d; }
+const SHG_DATA = {}, SHG_ST = {};
+function SHOTG_PUT(mid, d) { SHG_DATA[mid] = d; }
 function smLoad(url, key, st, data) {
   if (st[key]) return;
   st[key] = 'loading';
   const s = document.createElement('script');
   s.src = HS.BASE + url;
-  const done = ok => { st[key] = ok && data[key] ? 'done' : 'error'; if (/\/(shots|report)$/.test(HS.hash()) || /\/compare\//.test(HS.hash())) softRoute(); };   // the Report tab and the Compare page read these files too
+  const done = ok => { st[key] = ok && data[key] ? 'done' : 'error'; if (/\/(shots|report)$/.test(HS.hash()) || /\/compare\//.test(HS.hash()) || /\/shots\/[^/]+$/.test(HS.hash())) softRoute(); };   // the Report tab, the Compare page and a game's Shot chart read these files too
   s.onload = () => done(true); s.onerror = () => done(false);
   document.head.appendChild(s);
 }
 const ensureShots = cid => smLoad('stats/sh/' + cid + '.js', cid, SH_ST, SH_DATA);
 const ensurePlayerShots = pid => smLoad('stats/shp/' + pid + '.js', pid, SHP_ST, SHP_DATA);
+const ensureGameShots = mid => smLoad('stats/shg/' + mid + '.js', mid, SHG_ST, SHG_DATA);
 // the events he has shots in, newest first (from his file, once it is loaded)
 function smComps(pid) {
   const d = SHP_DATA[pid]; if (!d) return [];
@@ -62,9 +68,11 @@ function smZoneAt(x, d) {                 // a floor point: beyond the line coun
 
 /* ------------------------------------------------------------- state */
 // scope: 'career' or a season ('2026'); ev: 'all' or one event of the scope; game: 'all' or one game of that event
-const SM = {pid: null, scope: 'career', ev: 'all', game: 'all', view: 'terrain', zone: null, surf: null, surfKey: '', Zv: null, lg: {}, mix: null};
+// src: null on a profile; on a game's Shot chart {mid, cid, side (0 home, 1 away), pid ('' = the whole team), q ('all' or a period)}
+const SM = {pid: null, scope: 'career', ev: 'all', game: 'all', view: 'terrain', zone: null, surf: null, surfKey: '', Zv: null, lg: {}, mix: null, src: null};
 try { const v = localStorage.getItem('hs-shotmap-view'); if (v === 'terrain' || v === 'zones' || v === 'shots') SM.view = v; } catch (e) {}
 function smScopeComps(pid) {
+  if (SM.src) return [SM.src.cid];
   const all = smComps(pid);
   const inScope = SM.scope === 'career' ? all : all.filter(cid => smYear(cid) === SM.scope);
   return SM.ev === 'all' ? inScope : inScope.filter(cid => cid === SM.ev);
@@ -75,11 +83,21 @@ function smAllShots(pid) {
   Object.entries(d.E).forEach(([cid, rows]) => rows.forEach(s => out.push({x: s[0], y: s[1], made: s[2], three: s[3], type: d.T[s[4]], mid: d.M[s[5]], per: s[6], cid, z: smZoneOf(s[0], s[1], s[3])})));
   return out;
 }
+// one game's shots, both sides: {x, y, made, three, type, mid, per, cid, z, pid, side}
+function smGameShots(mid) {
+  const d = SHG_DATA[mid]; if (!d) return [];
+  return d._all || (d._all = d.s.map(s => ({x: s[0], y: s[1], made: s[2], three: s[3], type: d.T[s[4]], mid, per: s[5], cid: d.c, pid: s[6] >= 0 ? d.P[s[6]] : '', side: s[7], z: smZoneOf(s[0], s[1], s[3])})));
+}
 function smShots() {
+  if (SM.src) { const o = SM.src; return smGameShots(o.mid).filter(s => s.side === o.side && (!o.pid || s.pid === o.pid) && (o.q === 'all' || String(s.per) === o.q)); }
   const keep = new Set(smScopeComps(SM.pid));
   const all = smAllShots(SM.pid).filter(s => keep.has(s.cid));
   return SM.game === 'all' ? all : all.filter(s => s.mid === SM.game);
 }
+// what the map is of, for the terrain's cache and the 3D view: a player's scope, or one game's side, shooter and period
+const smKey = () => SM.src ? ['g', SM.src.mid, SM.src.side, SM.src.pid, SM.src.q].join('|') : [SM.pid, SM.scope, SM.ev, SM.game].join('|');
+const smWho = () => SM.src ? 'g' + SM.src.mid : SM.pid;
+const smHis = () => SM.src && !SM.src.pid ? 'their' : 'his';
 const smPct = p => (p * 100).toFixed(1) + '%';
 const smDiff = d => (d >= 0 ? '+' : '−') + Math.abs(d * 100).toFixed(1) + ' pts';
 const smCls = d => d > 0.02 ? 'sm-up' : d < -0.02 ? 'sm-down' : 'sm-even';
@@ -124,6 +142,7 @@ function smGameInfo(pid, mid) {
 
 /* -------------------------------------------------------------- tab */
 function smTab(pid) {
+  SM.src = null;
   if (!SHP_DATA[pid]) {
     ensurePlayerShots(pid);
     return pvSec('Shot map', '', '', `<div class="card pv-card"><div class="empty-row"><span class="empty-dot"></span>${SHP_ST[pid] === 'error' ? 'The shot chart could not be loaded. Refresh the page to try again.' : 'Loading the shot chart…'}</div></div>`);
@@ -150,64 +169,81 @@ function smTab(pid) {
   }
   const games = SM.ev !== 'all' ? smGames(pid, SM.ev) : [];
   if (SM.game !== 'all' && !games.some(g => g.mid === SM.game)) SM.game = 'all';
+  const where = SM.ev !== 'all' ? smShort(SM.ev) : SM.scope === 'career' ? 'Career' : 'Season ' + SM.scope;
+  const nGames = new Set(smShots().map(s => s.mid)).size;
+  const badge = SM.game === 'all' ? `${where} · ${cids.length > 1 ? cids.length + ' events, ' : ''}${nGames} game${nGames === 1 ? '' : 's'}` : (games.find(g => g.mid === SM.game) || {}).label || '';
+  const m = smMain(cids, games, badge);
+  const sub = `${esc(where)} · ${m.sm.a} field-goal attempt${m.sm.a === 1 ? '' : 's'}`;
+  return pvSec('Shot map', sub, '', scopeBar + m.html);
+}
+// the tiles under the map (also redrawn by the 3D replay as shots land)
+function smTiles(sm) {
+  const fg = sm.a ? sm.m / sm.a : 0;
+  return `<div><small>FG%</small><b>${sm.a ? smPct(fg) : '–'}</b></div>
+    <div><small>Expected at ${smHis()} spots</small><b>${sm.a ? smPct(sm.exp) : '–'}</b></div>
+    <div><small>Versus average</small><b class="${smCls(fg - sm.exp)}">${sm.a ? smDiff(fg - sm.exp) : '–'}</b></div>`;
+}
+/* The map and the panel beside it, for the shots of the current view (smShots): a profile's
+   scope, or a game's side and shooter. games: the chips under the map (a profile's event). */
+function smMain(cids, games, badge) {
   const list = smShots(), sm = smSummary(list), mix = SM.mix = smMixLZ(list, cids);
   if (SM.view === 'terrain' && typeof sm3dEnsure === 'function') sm3dEnsure();
   const three = SM.view === 'terrain' && typeof sm3dStage === 'function' ? sm3dStage() : '';
   if (!SM.zone || !sm.byZ[SM.zone]) SM.zone = Object.entries(sm.byZ).sort((p, q) => q[1][0] - p[1][0])[0]?.[0] || 'PT';
-  const fg = sm.a ? sm.m / sm.a : 0, LZ = mix.LZ;
-  const nGames = new Set(list.map(s => s.mid)).size;
-  const where = SM.ev !== 'all' ? smShort(SM.ev) : SM.scope === 'career' ? 'Career' : 'Season ' + SM.scope;
+  const LZ = mix.LZ, his = smHis(), game = !!SM.src;
   const avgName = cids.length > 1 ? 'the same events' : 'this event';
   const views = [['terrain', '3D terrain'], ['zones', 'Zones'], ['shots', 'Every shot']];
   const note = {
-    terrain: `Colour: his shooting compared with the average from the same spot in ${avgName}. Height: how often he shoots there.${three && sm3dReady() ? ' Drag to turn the court; Play throws every shot, oldest first.' : ''}`,
-    zones: `His FG% in each zone, coloured against the average for that zone in ${avgName}. Grey zones: no attempts.`,
+    terrain: `Colour: ${his} shooting compared with the average from the same spot in ${avgName}. Height: how often ${his === 'his' ? 'he shoots' : 'they shoot'} there.${three && sm3dReady() ? ` Drag to turn the court; Play throws every shot, ${game ? 'in the order of the game' : 'oldest first'}.` : ''}`,
+    zones: `${his === 'his' ? 'His' : 'Their'} FG% in each zone, coloured against the average for that zone in ${avgName}. Grey zones: no attempts.`,
     shots: 'Every attempt where it was taken, with the hoop at its real height. Filled circle: made. Cross: missed.'}[SM.view];
   const rows = Object.entries(sm.byZ).sort((p, q) => q[1][0] - p[1][0] || q[1][1] - p[1][1]);
-  const body = `${scopeBar}
-  <div class="sm">
+  const ev = SH_DATA[cids[0]];
+  const method = game ? `
+        <p><b>Source.</b> Shot positions from the organiser's shot chart of this game, in 1% steps (about 28 cm along the court, 15 cm across), read by the sync once the game is final and checked against the box score's field-goal attempts. Every shot is turned round to the basket it was taken at.</p>
+        <p><b>The average.</b> Each shot is compared with every shot of ${esc(smShort(cids[0]))} (${ev.n.toLocaleString('en')} shots in ${ev.g} game${ev.g === 1 ? '' : 's'}) from the same spot.</p>
+        <p><b>Zones.</b> Two or three points is the source's own label. Corner 3 = within about 3.1 m of the baseline; top of the arc = between the lane lines extended. Left and right are from the shooter's view, facing the basket.</p>
+        <p><b>Terrain.</b> Makes are smoothed over about 1.6 m and pulled toward the average where there are few shots. Expected FG% = what an average shooter in this event would make from the same spots.</p>
+        <p><b>Replay.</b> Quarter by quarter, in the order of the game's shot chart. The map and the numbers beside it count only the shots that have landed so far.</p>` : `
+        <p><b>Source.</b> Shot positions from the organiser's shot chart for each game, in 1% steps (about 28 cm along the court, 15 cm across). Shot charts start with the 2026 competitions; the NXT Championship, MSSM and FIBA events have none.</p>
+        <p><b>The average.</b> Each shot is compared with the event it was taken in: ${cids.map(c => `${esc(smShort(c))} (${SH_DATA[c].n.toLocaleString('en')} shots in ${SH_DATA[c].g} game${SH_DATA[c].g === 1 ? '' : 's'})`).join(', ')}. A career map that mixes a U20 league with the Agong Cup therefore never holds a U20 shot to a senior average, or the other way round.</p>
+        <p><b>Zones.</b> Two or three points is the source's own label. Corner 3 = within about 3.1 m of the baseline; top of the arc = between the lane lines extended. Left and right are from the shooter's view, facing the basket.</p>
+        <p><b>Terrain.</b> His makes are smoothed over about 1.6 m and pulled toward the average where he has few shots. Expected FG% = what an average shooter in the same events would make from his spots.</p>
+        <p><b>Replay.</b> Games play in date order and, within a game, by quarter, then in the order of the game's shot chart. The map and the numbers beside it count only the shots that have landed so far.</p>`;
+  const html = `
+  <div class="sm${game ? ' sm-game' : ''}">
     <div class="sm-left">
       <div class="sm-views" role="group" aria-label="Chart style">${views.map(([k, l]) => `<button data-smv="${k}" aria-pressed="${SM.view === k}">${l}</button>`).join('')}</div>
       <div class="sm-stage">
         ${three || `<canvas id="sm-cv" width="1440" height="880" role="img" aria-label="Shot map"></canvas>
         <canvas id="sm-ov" class="sm-ov" width="1440" height="880" aria-hidden="true"></canvas>`}
-        <div class="sm-badge"><span>${esc(SM.game === 'all' ? where : (games.find(g => g.mid === SM.game) || {}).label || '')}${SM.game === 'all' ? ` · ${cids.length > 1 ? cids.length + ' events, ' : ''}${nGames} game${nGames === 1 ? '' : 's'}` : ''}</span><b>${sm.m}/${sm.a} FG</b></div>
+        <div class="sm-badge"><span>${esc(badge)}</span><b>${sm.m}/${sm.a} FG</b></div>
         <div class="sm-tip" id="sm-tip" hidden></div>
         ${games.length > 1 ? `<div class="sm-chips" role="group" aria-label="Games"><button data-smg="all" aria-pressed="${SM.game === 'all'}">All games</button>${games.map(g => `<button data-smg="${g.mid}" aria-pressed="${SM.game === g.mid}">${esc(g.label)}</button>`).join('')}</div>` : ''}
       </div>
       ${three ? sm3dBar() : ''}
       ${SM.view !== 'shots' ? `<div class="sm-legend" aria-label="Colour scale">Below average <i style="background:#1f8fff"></i><i style="background:#4b86c8"></i><i style="background:#6c7486"></i><i style="background:#c2507a"></i><i style="background:#ff2e58"></i> Above average</div>` : ''}
       <div class="sm-note">${note}</div>
-      <div class="sm-tiles">
-        <div><small>FG%</small><b>${sm.a ? smPct(fg) : '–'}</b></div>
-        <div><small>Expected at his spots</small><b>${sm.a ? smPct(sm.exp) : '–'}</b></div>
-        <div><small>Versus average</small><b class="${smCls(fg - sm.exp)}">${sm.a ? smDiff(fg - sm.exp) : '–'}</b></div>
-      </div>
+      <div class="sm-tiles">${smTiles(sm)}</div>
     </div>
     <aside class="sm-explain" aria-label="What the map shows">
       <div class="sm-zone" id="sm-zone" aria-live="polite">${smZonePanel(list)}</div>
       ${smNotes(list)}
-      ${cids.length > 1 ? smEvents(pid, cids) : ''}
+      ${cids.length > 1 ? smEvents(SM.pid, cids) : ''}
       <div class="sm-zones">
         <div class="sm-zones-h"><h3>Zones</h3><span>most attempts first</span></div>
         ${rows.map(([z, [a, m]]) => { const p = m / a, df = p - (LZ[z] || 0);
           return `<div class="sm-zrow${SM.zone === z ? ' on' : ''}" data-smz="${z}" tabindex="0">
             <span class="nm">${SM_ZONES[z]}</span><span class="pc">${smPct(p)}</span>
-            <span class="sb">${m}/${a} · ${(a / sm.a * 100).toFixed(0)}% of his shots · average ${smPct(LZ[z] || 0)}</span><span class="df ${smCls(df)}">${smDiff(df)}</span>
+            <span class="sb">${m}/${a} · ${(a / sm.a * 100).toFixed(0)}% of ${his} shots · average ${smPct(LZ[z] || 0)}</span><span class="df ${smCls(df)}">${smDiff(df)}</span>
             <span class="bar" aria-hidden="true"><i style="width:${(a / sm.a * 100).toFixed(1)}%"></i></span></div>`; }).join('')}
       </div>
       <details class="sm-method">
-        <summary>How to read this map</summary>
-        <p><b>Source.</b> Shot positions from the organiser's shot chart for each game, in 1% steps (about 28 cm along the court, 15 cm across). Shot charts start with the 2026 competitions; the NXT Championship, MSSM and FIBA events have none.</p>
-        <p><b>The average.</b> Each shot is compared with the event it was taken in: ${cids.map(c => `${esc(smShort(c))} (${SH_DATA[c].n.toLocaleString('en')} shots in ${SH_DATA[c].g} game${SH_DATA[c].g === 1 ? '' : 's'})`).join(', ')}. A career map that mixes a U20 league with the Agong Cup therefore never holds a U20 shot to a senior average, or the other way round.</p>
-        <p><b>Zones.</b> Two or three points is the source's own label. Corner 3 = within about 3.1 m of the baseline; top of the arc = between the lane lines extended. Left and right are from the shooter's view, facing the basket.</p>
-        <p><b>Terrain.</b> His makes are smoothed over about 1.6 m and pulled toward the average where he has few shots. Expected FG% = what an average shooter in the same events would make from his spots.</p>
-        <p><b>Replay.</b> Games play in date order and, within a game, by quarter, then in the order of the game's shot chart. The map and the numbers beside it count only the shots that have landed so far.</p>
+        <summary>How to read this map</summary>${method}
       </details>
     </aside>
   </div>`;
-  const sub = `${esc(where)} · ${sm.a} field-goal attempt${sm.a === 1 ? '' : 's'}`;
-  return pvSec('Shot map', sub, '', body);
+  return {html, sm};
 }
 
 /* the selected zone, at the top of the explanation box; redrawn on hover without a re-render */
@@ -251,7 +287,7 @@ function smNotes(list) {
     if (Math.abs(l - r) >= 0.1) N.push([l > r ? 'u' : 'd', `Threes: better from the ${l > r ? 'left' : 'right'}`, `${L3[1]}/${L3[0]} (${smPct(l)}) on the left, ${R3[1]}/${R3[0]} (${smPct(r)}) on the right; the average is ${smPct(lgOf('C3L', 'W3L'))} and ${smPct(lgOf('C3R', 'W3R'))}.`]);
   }
   const pt = Z.PT || [0, 0];
-  if (pt[0] >= 4) N.push([pt[1] / pt[0] - LZ.PT > 0 ? 'u' : 'd', 'In the paint', `${pt[1]}/${pt[0]} (${smPct(pt[1] / pt[0])}) against ${smPct(LZ.PT)}; ${Math.round(pt[0] / sm.a * 100)}% of his shots come from there.`]);
+  if (pt[0] >= 4) N.push([pt[1] / pt[0] - LZ.PT > 0 ? 'u' : 'd', 'In the paint', `${pt[1]}/${pt[0]} (${smPct(pt[1] / pt[0])}) against ${smPct(LZ.PT)}; ${Math.round(pt[0] / sm.a * 100)}% of ${smHis()} shots come from there.`]);
   const mid = sum('ML', 'MC', 'MR'), all3 = sum('C3L', 'C3R', 'W3L', 'W3R', 'T3');
   if (mid[0] >= 3) N.push(['', 'Mid-range', `${mid[1]}/${mid[0]} (${smPct(mid[1] / mid[0])}) against ${smPct(lgOf('ML', 'MC', 'MR'))}.`]);
   const fg = sm.m / sm.a;
@@ -407,7 +443,7 @@ function smLines(g, alpha, lift) {
   }
 }
 function smDrawTerrain(g, list) {
-  const key = [SM.pid, SM.scope, SM.ev, SM.game].join('|');
+  const key = smKey();
   if (SM.surfKey !== key) { SM.surf = smSurfaces(list); SM.surfKey = key; }
   const s = SM.surf, thr = s.max * 0.05;
   smLines(g, 0.28, false);

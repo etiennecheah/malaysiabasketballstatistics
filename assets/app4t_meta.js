@@ -69,6 +69,13 @@ function hsMeta(hash) {
     const when = c.start ? fmtDate(c.start) + (c.end && c.end !== c.start ? ' – ' + fmtDate(c.end) : '') : yrs;
     const champ = c.champ ? ' Champion: ' + c.champ + '.' : '';
     const sub = parts[2] || '';
+    if (sub === 'shots' && parts[3]) {
+      const g = GAME_BY_MID[parts[3]];
+      if (!g || g.cid !== c.id) return page('Shot chart', label, { index: false });
+      const sc = (g.hs !== undefined && g.hs !== null && g.hs !== '') ? ' ' + g.hs + '–' + g.as + ' ' : ' v ';
+      return page(g.h + sc + g.a + ' — Shot Chart', 'Every shot of ' + g.h + sc + g.a + ', ' + label + (g.date ? ', ' + hsMetaDate(g) : '') +
+        ': 3D shot terrain, zones and every attempt, for each team and each player, against the event average.', { index: false });
+    }
     if (sub === 'box' && parts[3]) {
       const g = GAME_BY_MID[parts[3]];
       if (!g || g.cid !== c.id) return page('Box score', label, { index: false });

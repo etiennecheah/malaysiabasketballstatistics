@@ -41,7 +41,7 @@ function sm3dEnsure() {
   const s = document.createElement('script');
   s.src = HS.BASE + 'vendor/three.r128.min.js'; s.async = true;
   // the Shot map tab and the Compare page both draw with it; each makes its own renderer when it first needs one
-  const again = () => { const h = HS.hash(); if ((/\/shots$/.test(h) && SM.view === 'terrain') || /\/compare\//.test(h)) softRoute(); };
+  const again = () => { const h = HS.hash(); if (((/\/shots$/.test(h) || /\/shots\/[^/]+$/.test(h)) && SM.view === 'terrain') || /\/compare\//.test(h)) softRoute(); };
   s.onload = () => { SM3.st = window.THREE ? 'ready' : 'error'; again(); };
   s.onerror = () => { SM3.st = 'error'; again(); };
   document.head.appendChild(s);
@@ -338,8 +338,12 @@ function sm3dOrder(list) {
 // the shots the map and the numbers show: all of the view, or those that have landed so far
 function sm3dList() { return SM3.play.k >= SM3.list.length ? SM3.list : SM3.list.slice(0, SM3.play.k); }
 function sm3dLive() { return sm3dReady() && SM.view === 'terrain' && document.getElementById('sm-3d') && SM3.play.k < SM3.list.length ? sm3dList() : null; }
+// the replay's chapters: a profile's games, or a game's periods
+const sm3dSeg = s => SM.src ? String(s.per) : s.mid;
+const sm3dPer = p => (+p > 4 ? 'OT' + (+p > 5 ? +p - 4 : '') : 'Q' + p);
 function sm3dGames() {
   SM3.games = [];
+  if (SM.src) { SM3.list.forEach((s, i) => { if (!i || s.per !== SM3.list[i - 1].per) SM3.games.push(i); }); SM3.info = {}; return; }
   SM3.list.forEach((s, i) => { if (!i || s.mid !== SM3.list[i - 1].mid) SM3.games.push(i); });
   SM3.info = {};
   SM3.list.forEach(s => { if (!SM3.info[s.mid]) SM3.info[s.mid] = smGameInfo(SM.pid, s.mid); });
@@ -376,7 +380,7 @@ function sm3dStep(dt) {
     while (P.on && P.wait <= 0 && P.L < N) {
       const i = P.L++, nx = SM3.list[i + 1];
       if (SM3_RM) { P.k = i + 1; sm3dRefresh(); } else sm3dLaunch(i);
-      P.wait += nx && nx.mid !== SM3.list[i].mid ? 2.4 : 0.8;
+      P.wait += nx && sm3dSeg(nx) !== sm3dSeg(SM3.list[i]) ? 2.4 : 0.8;    // a pause between games (a profile) or periods (a game)
     }
     if (P.L >= N && !SM3.balls.length) { P.on = false; sm3dBarUpdate(); }
   }
@@ -414,10 +418,10 @@ function sm3dStep(dt) {
 // after a shot lands (or the slider moves): the terrain, the numbers beside it and the bar
 function sm3dRefresh() { const list = sm3dList(); sm3dBuild(list); sm3dPanels(list); sm3dBarUpdate(); }
 function sm3dPanels(list) {
-  const sm = smSummary(list), fg = sm.a ? sm.m / sm.a : 0;
+  const sm = smSummary(list);
   const b = document.querySelector('.sm-badge b'); if (b) b.textContent = `${sm.m}/${sm.a} FG`;
   const t = document.querySelector('.sm-tiles');
-  if (t) t.innerHTML = `<div><small>FG%</small><b>${sm.a ? smPct(fg) : '–'}</b></div><div><small>Expected at his spots</small><b>${sm.a ? smPct(sm.exp) : '–'}</b></div><div><small>Versus average</small><b class="${smCls(fg - sm.exp)}">${sm.a ? smDiff(fg - sm.exp) : '–'}</b></div>`;
+  if (t) t.innerHTML = smTiles(sm);
   const z = document.getElementById('sm-zone'); if (z) z.innerHTML = smZonePanel(list);
 }
 function sm3dBarUpdate() {
@@ -430,7 +434,17 @@ function sm3dBarUpdate() {
   btn.setAttribute('aria-label', on ? 'Pause the replay' : 'Play his shots, oldest first');
   const m = sm3dList().reduce((t, s) => t + s.made, 0), G = SM3.games.length;
   const first = SM3.info[SM3.list[0].mid], lastG = SM3.info[SM3.list[N - 1].mid];
-  if (k >= N && !on) {
+  const who = s => SM.src && !SM.src.pid && s.pid ? ' · ' + esc(personName(s.pid)) : '';
+  if (SM.src) {                                  // one game: chapters are its periods
+    if (k >= N && !on) {
+      $('sm3-game').innerHTML = `<b>${SM.src.q === 'all' ? 'Whole game' : sm3dPer(SM.src.q)}</b> · in the order the shots were taken`;
+      $('sm3-count').textContent = `${N} shots · ${m}/${N} FG`;
+    } else {
+      const s = SM3.list[Math.max(0, Math.min(N - 1, (on ? P.L : k) - 1))];
+      $('sm3-game').innerHTML = k || on ? `<b>${sm3dPer(s.per)}</b>${who(s)}` : `<b>${SM.src.q === 'all' ? 'Whole game' : sm3dPer(SM.src.q)}</b>`;
+      $('sm3-count').textContent = `Shot ${k} of ${N} · ${m}/${k} FG${k ? ' (' + smPct(m / k) + ')' : ''}`;
+    }
+  } else if (k >= N && !on) {
     $('sm3-game').innerHTML = `<b>${G} game${G === 1 ? '' : 's'}</b>${first.date ? ` · ${esc(fmtDate(first.date))}${G > 1 ? ' to ' + esc(fmtDate(lastG.date)) : ''}` : ''}`;
     $('sm3-count').textContent = `${N} shots · ${m}/${N} FG`;
   } else {
@@ -442,15 +456,16 @@ function sm3dBarUpdate() {
   }
   const last = k ? SM3.list[k - 1] : null;
   $('sm3-last').innerHTML = last && (on || k < N)
-    ? `<i class="${last.made ? 'm' : 'x'}"></i><span><b>${last.made ? 'Made' : 'Missed'}</b> ${last.three ? '3' : '2'}-pointer · ${esc(SM3_TYPE[last.type] || last.type || 'shot')} · ${SM_ZONES[last.z]}${last.per ? ' · ' + (last.per > 4 ? 'OT' + (last.per > 5 ? last.per - 4 : '') : 'Q' + last.per) : ''}</span>`
-    : '<span>Press Play to watch every shot land, oldest first. Misses included.</span>';
-  const cur = k || on ? SM3.list[Math.max(0, Math.min(N, on ? P.L : k) - 1)].cid : null;
+    ? `<i class="${last.made ? 'm' : 'x'}"></i><span><b>${last.made ? 'Made' : 'Missed'}</b> ${last.three ? '3' : '2'}-pointer · ${esc(SM3_TYPE[last.type] || last.type || 'shot')} · ${SM_ZONES[last.z]}${last.per ? ' · ' + sm3dPer(last.per) : ''}${who(last)}</span>`
+    : `<span>Press Play to watch every shot land, ${SM.src ? 'in game order' : 'oldest first'}. Misses included.</span>`;
+  const curS = k || on ? SM3.list[Math.max(0, Math.min(N, on ? P.L : k) - 1)] : null, cur = curS ? (SM.src ? String(curS.per) : curS.cid) : null;
   document.querySelectorAll('#sm3-strip span').forEach(x => x.classList.toggle('on', (on || k < N) && x.dataset.c === cur));
 }
 function sm3dStrip() {
   const el = document.getElementById('sm3-strip'); if (!el) return;
-  const segs = []; SM3.list.forEach(s => { const l = segs[segs.length - 1]; if (l && l.c === s.cid) l.n++; else segs.push({c: s.cid, n: 1}); });
-  el.innerHTML = segs.map(g => `<span data-c="${g.c}" style="flex:${g.n} 1 0" title="${esc(smShort(g.c))}">${esc(smShort(g.c))}</span>`).join('');
+  const segs = [], key = s => SM.src ? String(s.per) : s.cid, name = c => SM.src ? sm3dPer(c) : smShort(c);
+  SM3.list.forEach(s => { const l = segs[segs.length - 1]; if (l && l.c === key(s)) l.n++; else segs.push({c: key(s), n: 1}); });
+  el.innerHTML = segs.map(g => `<span data-c="${g.c}" style="flex:${g.n} 1 0" title="${esc(name(g.c))}">${esc(name(g.c))}</span>`).join('');
 }
 
 /* ------------------------------------------------------------ into the tab */
@@ -460,10 +475,10 @@ function sm3dMount() {
   host.insertBefore(SM3.R.domElement, host.firstChild);
   if (SM3.ro) SM3.ro.disconnect();
   if (typeof ResizeObserver === 'function') { SM3.ro = new ResizeObserver(sm3dResize); SM3.ro.observe(host); }
-  const key = [SM.pid, SM.scope, SM.ev, SM.game].join('|');
+  const key = smKey();
   if (key !== SM3.key) {
-    const first = SM3.pid !== SM.pid;
-    SM3.key = key; SM3.pid = SM.pid; sm3dStop();
+    const first = SM3.pid !== smWho();
+    SM3.key = key; SM3.pid = smWho(); sm3dStop();
     SM3.list = sm3dOrder(smShots()); SM3.play.k = SM3.play.L = SM3.list.length; SM3.play.started = false;
     sm3dGames(); sm3dMarker(null);
     if (first) sm3dView('broadcast', true);

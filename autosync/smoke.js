@@ -124,6 +124,18 @@ function serve(root, base) {
     if (!ok) errors.push('Shot map tab for player ' + shotPid + ' did not draw');
   }
 
+  // a game's Shot chart tab (box score page), where a finished game has a chart: both teams' toggles and the court
+  const shotGame = await page.evaluate(() => { for (const c of COMPS) for (const g of c.games) if (typeof hasGameShots === 'function' && hasGameShots(c.id, g.mid)) return [c.id, g.mid]; return null; });
+  if (shotGame) {
+    await go('/c/' + shotGame[0] + '/shots/' + shotGame[1]);
+    let ok = false;
+    for (let i = 0; i < 80 && !ok; i++) {
+      ok = await page.evaluate(() => document.querySelectorAll('.sg-team').length === 2 && !!(document.getElementById('sm-cv') || document.querySelector('#sm-3d canvas')) && document.querySelectorAll('.sm-zrow').length > 0);
+      if (!ok) await page.waitForTimeout(150);
+    }
+    if (!ok) errors.push('Shot chart tab of game ' + shotGame[1] + ' did not draw');
+  }
+
   for (const [cid, mid] of games) {
     await go('/c/' + cid + '/box/' + mid);
     const r = await page.evaluate(([cid, mid]) => {

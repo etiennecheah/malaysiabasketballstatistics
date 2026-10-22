@@ -19,3 +19,4 @@ __pycache__/
 node_modules/
 /public/
 /data/shots_index.json
+/data/shots_games.json
