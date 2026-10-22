@@ -1713,6 +1713,11 @@
   .pv-dets{ display:flex; flex-wrap:wrap; gap:6px 20px; margin-top:20px; font-size:14px; color:oklch(100% 0 0 / .62); }
   .pv-dets span{ display:inline-flex; align-items:baseline; gap:4px; white-space:nowrap; }
   .pv-dets b{ color:#fff; font-weight:600; }
+  .pv-dets i{ font-style:normal; color:oklch(100% 0 0 / .55); }
+  /* the last MBL team's crest stands behind the portrait, faint, never recoloured */
+  .pv-photo img.pv-mbl{ position:absolute; z-index:0; left:50%; top:46%; bottom:auto; width:88%; height:auto; max-height:80%; object-fit:contain;
+    transform:translate(-50%,-50%); opacity:.16; border-radius:0; filter:none; box-shadow:none; pointer-events:none; }
+  .pv-photo > img:not(.pv-mbl), .pv-photo .pv-initials{ z-index:1; }
   .pv-facts{ display:flex; flex-wrap:wrap; gap:10px 30px; margin:24px 0 0; padding-top:18px; border-top:1px solid oklch(100% 0 0 / .14); max-width:760px; }
   .pv-facts dt{ font-size:12px; color:oklch(100% 0 0 / .6); }
   .pv-facts dd{ margin:2px 0 0; font-weight:600; font-size:14.5px; color:#fff; }

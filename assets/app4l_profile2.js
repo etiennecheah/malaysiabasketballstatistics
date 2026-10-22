@@ -138,9 +138,14 @@ function pvHero(pid, d, t) {
   const pos = b.pos ? (PV_POS[b.pos] || b.pos) : '';
   // the details, one short row: age, height, weight, nationality, career span, caps
   const caps = pvCapsCount(pid).all;
-  const facts = [[b.age, 'yrs'], [b.ht, 'cm'], [b.wt, 'kg'], [b.nat ? PV_NAT[b.nat] || b.nat : '', ''],
-    [d.span ? (d.span[0] === d.span[1] ? d.span[0] : d.span[0] + '–' + d.span[1]) : '', ''], [caps || '', caps === 1 ? 'cap' : 'caps']]
+  // age with the birthday beside it, height, weight, nationality, national caps
+  const facts = [[b.age, 'yrs', b.dob ? pvDob(b.dob) : ''], [b.ht, 'cm'], [b.wt, 'kg'], [b.nat ? PV_NAT[b.nat] || b.nat : '', ''],
+    [caps || '', caps === 1 ? 'national cap' : 'national caps']]
     .filter(x => has(x[0]) && x[0] !== '');
+  // behind the portrait: the crest of the last MBL team he played for (none, nothing)
+  const mblRow = d.rows.filter(r => /^Major Basketball League/i.test(r.c.name || '') && r.p.team)
+    .sort((x, y) => (y.c.start || String(y.c.year || '')).localeCompare(x.c.start || String(x.c.year || '')))[0];
+  const mblLogo = mblRow ? teamLogo(mblRow.p.team) : null;
   // a verified badge, the player's links and the claim button come from the accounts layer
   const ax = typeof accProfile === 'function' ? accProfile(pid) : {};
   let stats = '';
@@ -163,16 +168,15 @@ function pvHero(pid, d, t) {
     stats = `<div class="pv-bar"><div class="pv-bar-in"><div class="pv-scope"><div class="sub">No published statistical line in any competition yet.</div></div></div></div>`;
   }
   return `<section class="pv-hero" aria-label="Player summary">
-    ${has(b.num) ? `<div class="pv-num" aria-hidden="true">${esc(b.num)}</div>` : ''}
     ${ax.claim ? `<div class="acc-claim-w">${ax.claim}</div>` : ''}
     <div class="pv-in">
       <div class="pv-id">
         <div class="pv-eyebrow">${team ? crest(team, 28) + `<b>${esc(pvCase(team))}</b>` : ''}<span>${[has(b.num) ? '#' + esc(b.num) : '', esc(pos)].filter(Boolean).join(' · ')}</span>${ax.badge || ''}</div>
         <h1 class="pv-name page-title"><span>${esc(first)}</span>${last ? `<span>${esc(last)}</span>` : ''}</h1>
-        ${facts.length ? `<div class="pv-dets"${b.dob ? ` data-imtip="${esc('Born ' + pvDob(b.dob))}"` : ''}>${facts.map(([v, u]) => `<span><b>${esc(v)}</b>${u ? ' ' + u : ''}</span>`).join('')}</div>` : ''}
+        ${facts.length ? `<div class="pv-dets">${facts.map(([v, u, x]) => `<span><b>${esc(v)}</b>${u ? ' ' + u : ''}${x ? ` <i>(${esc(x)})</i>` : ''}</span>`).join('')}</div>` : ''}
         ${ax.links || ''}${ax.fav ? `<div class="acc-hero-act">${ax.fav}</div>` : ''}
       </div>
-      <div class="pv-photo">${PHOTOS[pid] ? `<img src="${PHOTOS[pid]}" alt="${esc(name)}">` : `<div class="pv-initials" title="Photo slot — awaiting a portrait">${initials(nl ? nl.join(' ') : name)}</div>`}</div>
+      <div class="pv-photo">${mblLogo ? `<img class="pv-mbl" src="${mblLogo}" alt="" title="${esc(pvCase(mblRow.p.team) + ' · ' + (mblRow.c.label || mblRow.c.name))}">` : ''}${PHOTOS[pid] ? `<img src="${PHOTOS[pid]}" alt="${esc(name)}">` : `<div class="pv-initials" title="Photo slot — awaiting a portrait">${initials(nl ? nl.join(' ') : name)}</div>`}</div>
     </div>
     ${stats}
   </section>`;
