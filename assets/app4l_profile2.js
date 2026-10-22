@@ -417,10 +417,33 @@ function pvShots(t) {
     ${pts.map(([n, v]) => `<tr><td class="left">${n}</td><td>${v}</td><td>${t.pts ? pvF0(v / t.pts * 100) + '%' : '—'}</td></tr>`).join('')}</tbody></table>
     ${m.fgpct && m.fgpct.med != null ? `<div class="pv-note in">FG% ${pvF1(m.fgpct.v)} against a tier median of ${pvF1(m.fgpct.med)}${m.tppct && m.tppct.v != null ? `; 3P% ${pvF1(m.tppct.v)} against ${pvF1(m.tppct.med)}` : ''}.</div>` : ''}</div>`);
 }
+/* Club seasons abroad (data/player_extras.json "abroad"): lines copied by hand from the league's own
+   player page, per game with the total on hover. They sit apart from the database and never enter
+   his tier lines or career numbers. */
+function pvAbroad(pid) {
+  const L = ((DB.playerExtras || {})[pid] || {}).abroad || [];
+  if (!L.length) return '';
+  const K = [['pts', 'PTS'], ['reb', 'REB'], ['ast', 'AST'], ['stl', 'STL'], ['blk', 'BLK'], ['tov', 'TOV'], ['pf', 'PF']];
+  const host = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return ''; } };
+  const rows = L.map(r => { const g = r.g || 0, mn = pvMin(r.min);
+    return `<tr><td class="left">${esc(r.year)}</td>
+      <td class="left">${r.src ? `<a href="${esc(r.src)}" target="_blank" rel="noopener" title="${esc(r.name || r.comp)}">${esc(r.comp)}</a>` : esc(r.comp)}</td>
+      <td class="left"><span class="pv-teamc">${r.team ? crest(r.team, 18) + esc(r.team) : '—'}</span></td>
+      <td>${g || '—'}</td><td${mn ? ` data-imtip="${esc('MIN total: ' + r.min)}"` : ''}>${mn && g ? pvF1(mn / g) : '—'}</td>
+      ${K.map(([k, h]) => `<td${r[k] != null ? ` data-imtip="${esc(h + ' total: ' + r[k])}"` : ''}>${r[k] != null && g ? pvF1(r[k] / g) : '—'}</td>`).join('')}
+      <td>${r.fgp != null ? pvF1(r.fgp) : '—'}</td><td>${r.ftp != null ? pvF1(r.ftp) : '—'}</td></tr>`; }).join('');
+  const srcs = [...new Set(L.map(r => host(r.src)).filter(Boolean))];
+  const g = L.reduce((t, r) => t + (r.g || 0), 0);
+  return pvSec('Club seasons abroad', `${g} game${g === 1 ? '' : 's'} · ${L.length} season${L.length === 1 ? '' : 's'}${srcs.length ? ' · from ' + esc(srcs.join(', ')) : ''}`, '',
+    `<div class="card pv-card"><div class="table-scroll"><table class="pv-table pv-caps"><thead><tr><th class="left nosort">Season</th><th class="left nosort">League</th><th class="left nosort">Team</th><th class="nosort">G</th><th class="nosort"${gloss('MIN')}>MIN</th>${K.map(([, h]) => `<th class="nosort"${gloss(h)}>${h}</th>`).join('')}<th class="nosort"${gloss('FG%')}>FG%</th><th class="nosort"${gloss('FT%')}>FT%</th></tr></thead>
+      <tbody>${rows}</tbody></table></div></div>
+     <div class="pv-note">Per game, as the league publishes them; hover a figure for the total. These games are outside the database, so they are not in his career lines above. A dash: the league's page leaves it blank.</div>`);
+}
 function pvStats(pid, d, t) {
-  if (!d.tiers.length) return `<div class="card"><div class="empty-row"><span class="empty-dot"></span>No published statistical line in any competition in the database yet.</div></div>`;
+  const ab = pvAbroad(pid);
+  if (!d.tiers.length) return `<div class="card"><div class="empty-row"><span class="empty-dot"></span>No published statistical line in any competition in the database yet.</div></div>` + ab;
   const rp = pvRsPo(pid, d), sh = pvShots(t);
-  return pvCareer(pid, d) + (rp || sh ? `<div class="pv-two ${rp && sh ? '' : 'one'}">${rp}${sh}</div>` : '') + pvCaps(pid);
+  return pvCareer(pid, d) + (rp || sh ? `<div class="pv-two ${rp && sh ? '' : 'one'}">${rp}${sh}</div>` : '') + ab + pvCaps(pid);
 }
 
 /* ---- game log ---------------------------------------------------------- */
