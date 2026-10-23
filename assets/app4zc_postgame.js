@@ -200,10 +200,17 @@ function pgSheets(R, c) {
 
   /* ---------------- page 4: players ---------------- */
   const pl = P.filter(p => p.min > 0);
-  const pick = (f, ok) => pl.filter(ok || (() => true)).sort((a, b) => f(b) - f(a))[0];
+  // a value the box score leaves blank (no TS% without a shot, no +/-) counts as nothing: a NaN in the
+  // comparison would leave the order to chance and crown a scoreless player
+  const nz = v => (typeof v === 'number' && isFinite(v) ? v : 0);
+  const pick = (f, ok) => { let best = null, bv = -Infinity;
+    pl.filter(ok || (() => true)).forEach(p => { const v = f(p); if (isFinite(v) && v > bv) { bv = v; best = p; } });
+    return best; };
   const av = p => { const a = p.pid && ((DB.avatars || {})[p.pid] || PHOTOS[p.pid]); return `<span class="pg-av">${a ? `<img src="${a}" alt="">` : esc(short(p.name).split(/\s+/).map(w => w[0]).join('').slice(0, 2))}</span>`; };
   const line = p => `${f0(p.pts)} PTS · ${f0(p.reb)} REB · ${f0(p.ast)} AST`;
-  const K = [['Top scorer', pick(p => p.pts + p.ts / 1000)], ['Most efficient', pick(p => p.ts, p => p.fga + 0.44 * p.fta >= 7)], ['Rebounds', pick(p => p.reb + p.pts / 1000)], ['Assists', pick(p => p.ast + p.pts / 1000)], ['Steals + blocks', pick(p => p.stl + p.blk + p.pts / 1000)], ['Best +/-', pick(p => p.pm)]];
+  const K = [['Top scorer', pick(p => nz(p.pts) + nz(p.ts) / 1000, p => nz(p.pts) > 0)], ['Most efficient', pick(p => p.ts, p => nz(p.fga) + 0.44 * nz(p.fta) >= 7)],
+    ['Rebounds', pick(p => nz(p.reb) + nz(p.pts) / 1000, p => nz(p.reb) > 0)], ['Assists', pick(p => nz(p.ast) + nz(p.pts) / 1000, p => nz(p.ast) > 0)],
+    ['Steals + blocks', pick(p => nz(p.stl) + nz(p.blk) + nz(p.pts) / 1000, p => nz(p.stl) + nz(p.blk) > 0)], ['Best +/-', pick(p => p.pm)]];
   const kv = (k, p) => k === 'Most efficient' ? `${f1(p.ts)} TS% · ${f0(p.pts)} PTS` : k === 'Steals + blocks' ? `${f0(p.stl)} STL · ${f0(p.blk)} BLK · ${f0(p.pts)} PTS` : k === 'Best +/-' ? `${p.pm > 0 ? '+' : ''}${f0(p.pm)} in ${mmss(p.min * 60)}` : line(p);
   const boxT = sd => { const L = P.filter(p => p.side === sd && p.min > 0).sort((a, b) => (b.start ? 1 : 0) - (a.start ? 1 : 0) || b.min - a.min), t = T[sd];
     return `<div class="pg-table-x"><table class="pg-boxsc">${thead([['<span class="pg-dot" style="background:' + (sd ? AC : HC) + '"></span>' + esc(TN[sd]), 'l'], ['MIN'], ['PTS'], ['FG'], ['3P'], ['FT'], ['OR'], ['DR'], ['REB'], ['AST'], ['STL'], ['BLK'], ['TOV'], ['PF'], ['+/-'], ['TS%']])}<tbody>
