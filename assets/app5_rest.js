@@ -290,10 +290,6 @@ document.addEventListener('click', e => {
 });
 
 document.addEventListener('change', e => {
-  const f = e.target.closest('[data-filter]');
-  if (f) { FILTER[f.dataset.filter] = f.value; route(); return; }
-  const tt = e.target.closest('[data-teamcat]');
-  if (tt) { TEAMHUB.cat = tt.value; route(); return; }
   const h = e.target.closest('[data-herotier]');
   if (h) { PROFILE.heroTier = h.value; softRoute(); return; }
   const rc = e.target.closest('[data-rdcmp]');
@@ -340,7 +336,7 @@ document.addEventListener('input', e => {
     clearTimeout(qTimer);
     const v = e.target.value;
     qTimer = setTimeout(() => {
-      FILTER.q = v; route();
+      FILTER.q = v; softRoute();
       const el = document.getElementById('comp-q');
       if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
     }, 220);
@@ -349,22 +345,19 @@ document.addEventListener('input', e => {
     clearTimeout(qTimer);
     const v = e.target.value;
     qTimer = setTimeout(() => {
-      TEAMHUB.q = v; route();
+      TEAMHUB.q = v; softRoute();
       const el = document.getElementById('team-q');
       if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
     }, 220);
   }
-  // both search boxes — the one in the hero and the one in the filter bar —
-  // drive the same filter, and redraw only the results so the caret survives
-  if (e.target.id === 'glob-q' || e.target.id === 'glob-q-hero') {
+  // the player search redraws only the results, so the caret survives
+  if (e.target.id === 'glob-q') {
     clearTimeout(qTimer);
-    const v = e.target.value, other = e.target.id === 'glob-q' ? 'glob-q-hero' : 'glob-q';
+    const v = e.target.value;
     qTimer = setTimeout(() => {
       GFILTER.q = v; PAGE.glob = 0; PAGE.cards = 1;
       const el = document.getElementById('glob-body');
       if (el) el.innerHTML = GVIEW === 'cards' ? globCards() : globTable();
-      const o = document.getElementById(other);
-      if (o && o.value !== v) o.value = v;
     }, 220);
   }
 });
@@ -441,4 +434,32 @@ document.addEventListener('input', e => {
        <em>${(CAREER[pid] || []).filter(r => hasStats(r.p)).length} comps</em>
      </button>`).join('') || '<div class="cmp-res-none">No player matches that.</div>';
   box.classList.add('on');
+});
+
+/* the search-and-filter bar (filterPanel in app3_comp.js): the Filters button folds the panel in
+   place; a chip or a tag sets one filter of its page, Clear all resets them */
+const FB_RESET = { comp: () => { ['year', 'gender', 'level'].forEach(k => { FILTER[k] = ''; }); }, team: () => { TEAMHUB.cat = ''; },
+  glob: () => { ['tier', 'series', 'yFrom', 'yTo'].forEach(k => { GFILTER[k] = ''; }); } };
+function fbApply(scope) {
+  if (scope !== 'glob') { softRoute(); return; }
+  PAGE.glob = 0; PAGE.cards = 1; GLOB_CACHE = null;
+  const el = document.getElementById('glob-body');
+  if (el) el.innerHTML = GVIEW === 'cards' ? globCards() : globTable();
+  const bar = document.getElementById('glob-filters');
+  if (bar) bar.outerHTML = globFilterBar();
+}
+document.addEventListener('click', e => {
+  const t = e.target.closest && e.target.closest('[data-fbopen],[data-fb],[data-fbclear]'); if (!t) return;
+  if (t.dataset.fbopen) {
+    const sc = t.dataset.fbopen, open = FBAR.open[sc] = !FBAR.open[sc];
+    t.setAttribute('aria-expanded', open);
+    const p = document.getElementById('fb-' + sc + '-panel'); if (p) p.classList.toggle('open', open);
+    return;
+  }
+  if (t.dataset.fbclear) { FB_RESET[t.dataset.fbclear](); fbApply(t.dataset.fbclear); return; }
+  const [sc, key] = t.dataset.fb.split('|'), v = t.dataset.v;
+  if (sc === 'comp') FILTER[key] = v;
+  else if (sc === 'team') TEAMHUB.cat = v;
+  else if (sc === 'glob') GFILTER[key] = v;
+  fbApply(sc);
 });

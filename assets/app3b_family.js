@@ -126,8 +126,6 @@ function renderHub() {
   const shown = fams.filter(f => f.list.some(cfPasses));
   const ongoing = COMPS.filter(c => compStatus(c) !== 'Completed' && cfPasses(c))
     .sort((a, b) => (b.year || 0) - (a.year || 0) || a.name.localeCompare(b.name));
-  const totGames = COMPS.reduce((a, c) => a + c.nGames, 0);
-  const totPlayers = Object.keys(PERSONS).length;
   const sections = CF_SECTIONS.map(([k, label, dot]) => {
     const L = shown.filter(f => f.sec === k);
     return L.length ? `<div class="cat-head"><span class="cat-dot" style="background:${dot};"></span>
@@ -144,22 +142,10 @@ function renderHub() {
       <div class="badge">${fams.length} competitions · ${COMPS.length} editions</div>
     </div>
 
-    <div class="tiles">
-      <div class="tile"><div class="tile-label">Competitions</div><div class="tile-value">${fams.length}</div><div class="tile-sub">${COMPS.length} editions over ${uniqSorted(c => c.year, true).length} seasons</div></div>
-      <div class="tile"><div class="tile-label">Games</div><div class="tile-value">${totGames.toLocaleString()}</div><div class="tile-sub">${COMPS.reduce((a, c) => a + c.nDone, 0).toLocaleString()} completed</div></div>
-      <div class="tile"><div class="tile-label">Players</div><div class="tile-value">${totPlayers.toLocaleString()}</div><div class="tile-sub">${Object.values(CAREER).filter(v => v.length > 1).length.toLocaleString()} in more than one edition</div></div>
-      <div class="tile"><div class="tile-label">Teams</div><div class="tile-value">${Object.keys(TEAMS).length}</div><div class="tile-sub">across all competitions</div></div>
-    </div>
-
-    <div class="filter-bar">
-      ${selectField('Season', 'year', uniqSorted(c => c.year, true))}
-      ${selectField('Category', 'gender', uniqSorted(c => c.gender))}
-      ${selectField('Age group', 'level', uniqSorted(c => c.level))}
-      <div class="filter-field" style="flex:1;min-width:200px;">
-        <div class="filter-field-label">Find a competition</div>
-        <input class="filter" id="comp-q" value="${esc(FILTER.q)}" placeholder="Type to filter by name…" style="width:100%;">
-      </div>
-    </div>
+    ${filterPanel({scope: 'comp', qid: 'comp-q', q: FILTER.q || '', ph: 'Find a competition…', groups: [
+      ['Season', 'year', FILTER.year || '', uniqSorted(c => c.year, true).map(y => [y, y])],
+      ['Category', 'gender', FILTER.gender || '', uniqSorted(c => c.gender).map(g => [g, g])],
+      ['Age group', 'level', FILTER.level || '', uniqSorted(c => c.level).map(l => [l, l])]]})}
 
     ${ongoing.length ? `<div class="cat-head"><span class="cat-dot" style="background:#33c17a;"></span>
       <h2>Happening now</h2><span class="cat-count">${ongoing.length}</span><span class="cat-rule"></span></div>

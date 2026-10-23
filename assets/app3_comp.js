@@ -14,12 +14,30 @@ function filteredComps() {
     (!FILTER.q || (c.label||c.name).toLowerCase().includes(FILTER.q.toLowerCase()))
   ).sort((a, b) => (b.year || 0) - (a.year || 0) || a.series.localeCompare(b.series) || a.name.localeCompare(b.name));
 }
-function selectField(label, key, opts) {
-  return `<div class="filter-field"><div class="filter-field-label">${esc(label)}</div>
-    <select class="filter" data-filter="${key}">
-      <option value="">All</option>
-      ${opts.map(o => `<option value="${esc(o)}" ${FILTER[key] === String(o) ? 'selected' : ''}>${esc(o)}</option>`).join('')}
-    </select></div>`;
+/* The search-and-filter bar of the Players, Competitions and Teams pages: one search field
+   and a Filters button that folds out a panel of one-tap chips; the filters in use show as
+   tags under the bar, each removable. o = {scope, qid, q, ph, groups: [[label, key, cur, [[value, text], ...]], ...]}.
+   A chip is data-fb="scope|key" data-v="value"; app5_rest.js applies it to that page's filter. */
+const FBAR = { open: {} };
+function filterPanel(o) {
+  const used = o.groups.filter(g => g[2] !== '' && g[2] != null);
+  const text = (g, v) => { const x = g[3].find(([k]) => String(k) === String(v)); return x ? String(x[1]).replace(/ · \d+$/, '') : v; };   // a tag drops the chip's count
+  const open = !!FBAR.open[o.scope];
+  return `<div class="fb" id="fb-${o.scope}">
+    <div class="fb-bar">
+      <label class="fb-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input type="search" id="${o.qid}" value="${esc(o.q)}" placeholder="${esc(o.ph)}" autocomplete="off" aria-label="${esc(o.ph)}"></label>
+      <button class="fb-btn ${used.length ? 'has' : ''}" data-fbopen="${o.scope}" aria-expanded="${open}" aria-controls="fb-${o.scope}-panel">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filters</span>${used.length ? `<em>${used.length}</em>` : ''}</button>
+    </div>
+    <div class="fb-panel ${open ? 'open' : ''}" id="fb-${o.scope}-panel"><div><div class="fb-in">
+      ${o.groups.map(g => `<div class="fb-grp"><span>${esc(g[0])}</span><div class="fb-chips">
+        <button class="fb-chip" data-fb="${o.scope}|${g[1]}" data-v="" aria-pressed="${g[2] === '' || g[2] == null}">All</button>
+        ${g[3].map(([v, t]) => `<button class="fb-chip" data-fb="${o.scope}|${g[1]}" data-v="${esc(v)}" aria-pressed="${String(g[2]) === String(v)}">${esc(t)}</button>`).join('')}</div></div>`).join('')}
+      ${used.length ? `<button class="fb-clear" data-fbclear="${o.scope}">Clear all</button>` : ''}
+    </div></div></div>
+    ${used.length ? `<div class="fb-tags">${used.map(g => `<button class="fb-tag" data-fb="${o.scope}|${g[1]}" data-v="">${esc(g[0])}: ${esc(text(g, g[2]))}<i aria-hidden="true">×</i></button>`).join('')}</div>` : ''}
+  </div>`;
 }
 
 /* A competition card, in the same dark-glass language as the player cards: the

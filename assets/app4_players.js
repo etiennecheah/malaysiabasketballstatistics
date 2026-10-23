@@ -197,21 +197,11 @@ function globRows() {
 function globFilterBar() {
   const years = [...new Set(COMPS.map(c => c.year).filter(has))].sort((a, b) => b - a);
   const seriesList = [...new Set(COMPS.map(c => c.series))].sort();
-  const sel = (label, key, opts, cur) => `<div class="filter-field"><div class="filter-field-label">${esc(label)}</div>
-    <select class="filter" data-gfilter="${key}">
-      <option value="">All</option>
-      ${opts.map(([v, l]) => `<option value="${esc(v)}" ${String(cur) === String(v) ? 'selected' : ''}>${esc(l)}</option>`).join('')}
-    </select></div>`;
-  return `<div class="filter-bar" id="glob-filters">
-    ${sel('Competition tier', 'tier', tierOptions(), GFILTER.tier)}
-    ${sel('Series', 'series', seriesList.map(s => [s, s]), GFILTER.series)}
-    ${sel('From season', 'yFrom', years.map(y => [y, y]), GFILTER.yFrom)}
-    ${sel('To season', 'yTo', years.map(y => [y, y]), GFILTER.yTo)}
-    <div class="filter-field" style="flex:1;min-width:200px;">
-      <div class="filter-field-label">Search players</div>
-      <input class="filter" id="glob-q" value="${esc(GFILTER.q)}" placeholder="Type a player's name…" style="width:100%;">
-    </div>
-  </div>`;
+  return `<div id="glob-filters">${filterPanel({scope: 'glob', qid: 'glob-q', q: GFILTER.q || '', ph: "Search a player's name…", groups: [
+    ['Tier', 'tier', GFILTER.tier || '', tierOptions()],
+    ['Series', 'series', GFILTER.series || '', seriesList.map(s => [s, s])],
+    ['From season', 'yFrom', GFILTER.yFrom || '', years.map(y => [y, y])],
+    ['To season', 'yTo', GFILTER.yTo || '', years.map(y => [y, y])]]})}</div>`;
 }
 
 function renderGlobalPlayers() {
@@ -222,7 +212,6 @@ function renderGlobalPlayers() {
       <div class="dir-hero-in">
         <h1 class="dir-hero-title">Player index</h1>
         <p class="dir-hero-sub">Every player the MABA / Genius Sports portal has published a line for, across all ${COMPS.length} competitions — matched on the source's own person identity, so one person is one card even across clubs, age groups and years. Where the source registered the same player twice under different spellings, the records are merged by hand.</p>
-        <input class="dir-hero-search" id="glob-q-hero" value="${esc(GFILTER.q)}" placeholder="Search a player by name…" autocomplete="off">
       </div>
     </div>
     <div class="dir-bar">

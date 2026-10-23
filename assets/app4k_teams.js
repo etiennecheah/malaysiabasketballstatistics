@@ -277,24 +277,8 @@ function renderTeamsHub() {
       <div class="badge">${all.length} teams</div>
     </div>
 
-    <div class="tiles">
-      <div class="tile"><div class="tile-label">Teams</div><div class="tile-value">${all.length}</div><div class="tile-sub">across all competitions</div></div>
-      <div class="tile"><div class="tile-label">Categories</div><div class="tile-value">${cats.length}</div><div class="tile-sub">National · Agong Cup · MBL · D-League · SBL …</div></div>
-      <div class="tile"><div class="tile-label">State sides</div><div class="tile-value">${all.filter(t => t.state).length}</div><div class="tile-sub">with a second squad merged in</div></div>
-      <div class="tile"><div class="tile-label">Games</div><div class="tile-value">${all.reduce((a, t) => a + t.played, 0).toLocaleString()}</div><div class="tile-sub">completed team-games</div></div>
-    </div>
-
-    <div class="filter-bar">
-      <div class="filter-field"><div class="filter-field-label">Category</div>
-        <select class="filter" data-teamcat>
-          <option value="" ${TEAMHUB.cat === '' ? 'selected' : ''}>All categories</option>
-          ${cats.map(k => `<option value="${k}" ${TEAMHUB.cat === k ? 'selected' : ''}>${esc(CAT_META[k].label)} (${catMembers(all, k).length})</option>`).join('')}
-        </select></div>
-      <div class="filter-field" style="flex:1;min-width:200px;">
-        <div class="filter-field-label">Find a team</div>
-        <input class="filter" id="team-q" value="${esc(TEAMHUB.q)}" placeholder="Type to filter by name…" style="width:100%;">
-      </div>
-    </div>
+    ${filterPanel({scope: 'team', qid: 'team-q', q: TEAMHUB.q, ph: 'Find a team…', groups: [
+      ['Category', 'cat', TEAMHUB.cat, cats.map(k => [k, `${CAT_META[k].short || CAT_META[k].label.replace(/ — .*$/, '')} · ${catMembers(all, k).length}`])]]})}
 
     ${nCards ? sections
       : `<div class="card"><div class="empty-row" style="border:none;"><span class="empty-dot"></span>No team matches those filters.</div></div>`}
