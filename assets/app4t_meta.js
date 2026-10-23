@@ -129,6 +129,7 @@ function hsMeta(hash) {
     competitions: ['Competitions', 'All ' + nComps + ' Malaysian basketball competitions in the database: MBL, D-League, Agong Cup, national youth championships, schools and FIBA youth events.'],
     teams: ['Teams', 'Every Malaysian basketball team and state side in the database, with their competitions, titles and rosters.'],
     milestones: ['MBL Milestones', 'Milestones of Malaysian players in the MBL: career and team totals every 50 points, rebounds, assists, steals, blocks and games, who is next, and single-game feats.'],
+    records: ['Records & Honours', 'Records and honours in Malaysian basketball: champions and individual awards, single-game, tournament and career records, youngest and oldest players and the 180 Club, for U15, U17, U20, U23, the MBL and the Agong Cup.'],
     formulas: ['Formulas', 'How every statistic on ' + SITE_NAME + ' is calculated: shooting percentages, PER, usage, Win Shares and BPM.'],
     stats: ['Tools · Lineups and Clutch', 'Lineup and clutch statistics for Malaysian basketball competitions.'],
     privacy: ['Privacy & Site Rules', 'How ' + SITE_NAME + ' handles accounts, player profile claims and personal data, and the rules for using the site.'],

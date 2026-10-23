@@ -370,7 +370,7 @@ document.addEventListener('input', e => {
 });
 
 /* post-render work: the Stats pages wire their filters and the Stats menu once the page is in place */
-function afterRender() { if (typeof pvPathFit === 'function') pvPathFit(); if (typeof statsAfterRender === 'function') statsAfterRender(); if (typeof shotsAfterRender === 'function') shotsAfterRender(); if (typeof reportAfterRender === 'function') reportAfterRender(); if (typeof cmpShotsAfterRender === 'function') cmpShotsAfterRender(); if (typeof milestonesAfterRender === 'function') milestonesAfterRender(); }
+function afterRender() { if (typeof pvPathFit === 'function') pvPathFit(); if (typeof statsAfterRender === 'function') statsAfterRender(); if (typeof shotsAfterRender === 'function') shotsAfterRender(); if (typeof reportAfterRender === 'function') reportAfterRender(); if (typeof cmpShotsAfterRender === 'function') cmpShotsAfterRender(); if (typeof milestonesAfterRender === 'function') milestonesAfterRender(); if (typeof recordsAfterRender === 'function') recordsAfterRender(); }
 
 HS.start();
 

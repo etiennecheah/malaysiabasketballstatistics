@@ -36,6 +36,7 @@ function siteLinks(state) {
           ['#/competitions', 'Competitions', state === 'hub' || state === 'notfound' || state === 'comp' || state === 'cfam'],
           ['#/teams', 'Teams', state === 'teams-hub' || state === 'team-global'],
           ['#/milestones', 'Milestones', state === 'milestones'],
+          ['#/records', 'Records & Honours', state === 'records'],
           ['stats', 'Tools', state === 'stats' || state === 'compare'],   // a button: it opens the Tools menu (Lineups, Clutch, Compare)
           ['#/formulas', 'Formulas', state === 'formulas']]
     .map(([h, t, a]) => h === 'stats' ? (typeof STATS !== 'undefined' ? STATS.navButton(a) : '')
@@ -49,7 +50,7 @@ function renderNav(state, cid, tab) {
   if (!cid || state === 'hub' || state === 'global-players' || state === 'player' || state === 'compare'
       || state === 'formulas' || state === 'notfound'
       || state === 'teams-hub' || state === 'team-global' || state === 'cfam'
-      || state === 'home' || state === 'live' || state === 'me' || state === 'stats' || state === 'milestones') {
+      || state === 'home' || state === 'live' || state === 'me' || state === 'stats' || state === 'milestones' || state === 'records') {
     const links = siteLinks(state);
     const label = state === 'stats' || state === 'compare' ? 'Tools' : state === 'formulas' ? 'Formulas'
       : (state === 'teams-hub' || state === 'team-global') ? 'Teams'
@@ -62,7 +63,7 @@ function renderNav(state, cid, tab) {
       ? '<span class="subnav-crumb">what every abbreviation means, and where the number comes from</span>'
       : `<span class="subnav-crumb">Malaysia basketball database · ${COMPS.length} competitions</span>`;
     // a player's page opens straight into its own full-width hero
-    return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' || state === 'milestones' ? '' : subnav(label, crumb, []));
+    return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' || state === 'milestones' || state === 'records' ? '' : subnav(label, crumb, []));
   }
   // Competition-scoped pages: the site bar, with Competitions lit. The sections of
   // the competition are tabs in the page's own header (compHeader); a team or a
@@ -138,6 +139,8 @@ function route() {
     state = 'stats'; tab = parts[1] === 'clutch' ? 'clutch' : 'lineups'; body = renderStats(tab);
   } else if (parts[0] === 'cf' && parts[1]) {
     state = 'cfam'; body = renderFamily(parts[1]);
+  } else if (parts[0] === 'records') {
+    state = 'records'; body = renderRecords();
   } else if (parts[0] === 'milestones') {
     state = 'milestones'; body = renderMilestones();
   } else if (parts[0] === 'formulas') {

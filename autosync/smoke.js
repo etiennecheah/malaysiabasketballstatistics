@@ -129,6 +129,11 @@ function serve(root, base) {
   const ms = await page.evaluate(() => [document.querySelectorAll('.ms-lr').length, document.querySelectorAll('.ms-fi').length, document.querySelectorAll('.ms-ft').length]);
   if (!(ms[0] > 0 && ms[1] > 0 && ms[2] === 7)) errors.push('Milestones page did not fill (' + ms.join('/') + ')');
 
+  // Records & Honours: the roll of honour and the record cards, worked out from the box scores
+  await go('/records');
+  const rh = await page.evaluate(() => [document.querySelectorAll('.rh-roll tbody tr').length, document.querySelectorAll('.rh-rc').length, document.querySelectorAll('.rh-hc').length]);
+  if (!(rh[0] > 0 && rh[1] > 0 && rh[2] > 0)) errors.push('Records & Honours page did not fill (' + rh.join('/') + ')');
+
   // a game's Shot chart tab (box score page), where a finished game has a chart: both teams' toggles and the court
   const shotGame = await page.evaluate(() => { for (const c of COMPS) for (const g of c.games) if (typeof hasGameShots === 'function' && hasGameShots(c.id, g.mid)) return [c.id, g.mid]; return null; });
   if (shotGame) {
