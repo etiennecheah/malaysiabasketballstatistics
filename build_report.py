@@ -159,6 +159,11 @@ def main():
                     e['pos'] = x['pos']
                 if x.get('ht'):
                     e['ht'] = x['ht']
+    # a height checked against the club's own player page wins (data/player_extras.json "bio")
+    pe = os.path.join(D, 'player_extras.json')
+    for pid, x in (json.load(open(pe)).items() if os.path.exists(pe) else []):
+        if isinstance(x, dict) and (x.get('bio') or {}).get('ht'):
+            bio.setdefault(pid, {})['ht'] = x['bio']['ht']
     out = {}
     for c in s['comps']:
         rs = rows_of(c, K, B)

@@ -112,6 +112,21 @@ COMPS.forEach(c => {
     });
   });
 });
+// A birthday, height or weight checked by hand against the club's own player page
+// (data/player_extras.json "bio") replaces what the competitions' rosters registered, in every
+// competition, so the profile, Compare and the player cards all show the club's figure.
+Object.entries(DB.playerExtras || {}).forEach(([pid, x]) => {
+  const f = x && x.bio;
+  if (!f || !BIO[pid]) return;
+  const d = /^\d{4}-\d{2}-\d{2}$/.test(f.dob || '') ? f.dob.split('-').map(Number) : null;
+  let age = null;
+  if (d) { const n = new Date(); age = n.getFullYear() - d[0] - (n.getMonth() + 1 < d[1] || (n.getMonth() + 1 === d[1] && n.getDate() < d[2]) ? 1 : 0); }
+  Object.values(BIO[pid]).forEach(b => {
+    if (+f.ht > 0) b.ht = +f.ht;
+    if (+f.wt > 0) b.wt = +f.wt;
+    if (d) { b.dob = d[1] + '/' + d[2] + '/' + d[0]; b.age = age; }
+  });
+});
 // A player's position: the one his team registered in the latest competition that gives
 // one (by start date). Rosters disagree over a career - a U17 centre is a senior guard - so
 // the newest registration wins everywhere: player card, profile, Compare. The Report tab

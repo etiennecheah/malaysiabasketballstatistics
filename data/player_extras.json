@@ -1,5 +1,5 @@
 {
- "_note": "Hand-kept extras per player, supplied by the user. badges: short labels shown in the profile hero. moves: career steps outside the database (year, team, league), shown on the career path. abroad: statistical lines in competitions outside the database (a club season abroad), copied by hand from the league's own player page and shown on the profile's Stats tab, never added into his database totals: year, comp (short name), name, team, g, min (\"mm:ss\" total), pts, reb, ast, stl, blk, tov, pf (totals), fgp, ftp (the percentages as published; null where the source leaves it blank), src (the page they were read from), read (the day they were read).",
+ "_note": "Hand-kept extras per player, supplied by the user. badges: short labels shown in the profile hero. moves: career steps outside the database (year, team, league), shown on the career path. abroad: statistical lines in competitions outside the database (a club season abroad), copied by hand from the league's own player page and shown on the profile's Stats tab, never added into his database totals: year, comp (short name), name, team, g, min (\"mm:ss\" total), pts, reb, ast, stl, blk, tov, pf (totals), fgp, ftp (the percentages as published; null where the source leaves it blank), src (the page they were read from), read (the day they were read). bio: birthday (dob, YYYY-MM-DD), height (ht, cm) and weight (wt, kg) checked by hand against the club's official player page; they replace what the competitions' rosters registered, in every competition. Only the fields that differed are given. src: the page they were read from; read: the day they were read.",
  "2252562": {
   "badges": [
    "SEA Games medalist",
@@ -121,5 +121,69 @@
    "FIBA U18 Asia Cup Div. B champion"
   ],
   "moves": []
+ },
+ "2341473": {
+  "bio": {
+   "ht": 180,
+   "src": "https://jst.zutt.com.my/players/heng-yee-tong",
+   "read": "2026-10-23"
+  }
+ },
+ "2786676": {
+  "bio": {
+   "ht": 186,
+   "src": "https://jst.zutt.com.my/players/tang-jun-kai",
+   "read": "2026-10-23"
+  }
+ },
+ "2371557": {
+  "bio": {
+   "ht": 176,
+   "src": "https://jst.zutt.com.my/players/lee-joon-kang",
+   "read": "2026-10-23"
+  }
+ },
+ "2786658": {
+  "bio": {
+   "wt": 85,
+   "src": "https://jst.zutt.com.my/players",
+   "read": "2026-10-23"
+  }
+ },
+ "1885900": {
+  "bio": {
+   "wt": 76,
+   "src": "https://jst.zutt.com.my/players",
+   "read": "2026-10-23"
+  }
+ },
+ "1287317": {
+  "bio": {
+   "ht": 194,
+   "src": "https://jst.zutt.com.my/players/ng-yong-liang",
+   "read": "2026-10-23"
+  }
+ },
+ "1957810": {
+  "bio": {
+   "ht": 190,
+   "src": "https://jst.zutt.com.my/players/wong-khai-chiek",
+   "read": "2026-10-23"
+  }
+ },
+ "2778711": {
+  "bio": {
+   "ht": 195,
+   "wt": 122,
+   "src": "https://jst.zutt.com.my/players",
+   "read": "2026-10-23"
+  }
+ },
+ "2341474": {
+  "bio": {
+   "ht": 190,
+   "src": "https://jst.zutt.com.my/players/chin-jin-yen",
+   "read": "2026-10-23"
+  }
  }
 }
