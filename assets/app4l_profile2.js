@@ -418,26 +418,27 @@ function pvShots(t) {
     ${m.fgpct && m.fgpct.med != null ? `<div class="pv-note in">FG% ${pvF1(m.fgpct.v)} against a tier median of ${pvF1(m.fgpct.med)}${m.tppct && m.tppct.v != null ? `; 3P% ${pvF1(m.tppct.v)} against ${pvF1(m.tppct.med)}` : ''}.</div>` : ''}</div>`);
 }
 /* Club seasons abroad (data/player_extras.json "abroad"): lines copied by hand from the league's own
-   player page, per game with the total on hover. They sit apart from the database and never enter
-   his tier lines or career numbers. */
+   player page, per game with the total on hover (a league that publishes only averages, per: "game",
+   is shown as published). They sit apart from the database and never enter his tier lines or career numbers. */
 function pvAbroad(pid) {
   const L = ((DB.playerExtras || {})[pid] || {}).abroad || [];
   if (!L.length) return '';
   const K = [['pts', 'PTS'], ['reb', 'REB'], ['ast', 'AST'], ['stl', 'STL'], ['blk', 'BLK'], ['tov', 'TOV'], ['pf', 'PF']];
   const host = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return ''; } };
-  const rows = L.map(r => { const g = r.g || 0, mn = pvMin(r.min);
+  const rows = L.map(r => { const g = r.g || 0, avg = r.per === 'game', mn = avg ? +r.min || 0 : pvMin(r.min);
+    const cell = (v, h) => avg ? `<td>${v != null ? pvF1(v) : '—'}</td>` : `<td${v != null ? ` data-imtip="${esc(h + ' total: ' + v)}"` : ''}>${v != null && g ? pvF1(v / g) : '—'}</td>`;
     return `<tr><td class="left">${esc(r.year)}</td>
       <td class="left">${r.src ? `<a href="${esc(r.src)}" target="_blank" rel="noopener" title="${esc(r.name || r.comp)}">${esc(r.comp)}</a>` : esc(r.comp)}</td>
       <td class="left"><span class="pv-teamc">${r.team ? crest(r.team, 18) + esc(r.team) : '—'}</span></td>
-      <td>${g || '—'}</td><td${mn ? ` data-imtip="${esc('MIN total: ' + r.min)}"` : ''}>${mn && g ? pvF1(mn / g) : '—'}</td>
-      ${K.map(([k, h]) => `<td${r[k] != null ? ` data-imtip="${esc(h + ' total: ' + r[k])}"` : ''}>${r[k] != null && g ? pvF1(r[k] / g) : '—'}</td>`).join('')}
-      <td>${r.fgp != null ? pvF1(r.fgp) : '—'}</td><td>${r.ftp != null ? pvF1(r.ftp) : '—'}</td></tr>`; }).join('');
+      <td>${g || '—'}</td>${avg ? `<td>${mn ? pvF1(mn) : '—'}</td>` : `<td${mn ? ` data-imtip="${esc('MIN total: ' + r.min)}"` : ''}>${mn && g ? pvF1(mn / g) : '—'}</td>`}
+      ${K.map(([k, h]) => cell(r[k], h)).join('')}
+      <td>${r.fgp != null ? pvF1(r.fgp) : '—'}</td><td>${r.tpp != null ? pvF1(r.tpp) : '—'}</td><td>${r.ftp != null ? pvF1(r.ftp) : '—'}</td></tr>`; }).join('');
   const srcs = [...new Set(L.map(r => host(r.src)).filter(Boolean))];
   const g = L.reduce((t, r) => t + (r.g || 0), 0);
   return pvSec('Club seasons abroad', `${g} game${g === 1 ? '' : 's'} · ${L.length} season${L.length === 1 ? '' : 's'}${srcs.length ? ' · from ' + esc(srcs.join(', ')) : ''}`, '',
-    `<div class="card pv-card"><div class="table-scroll"><table class="pv-table pv-caps"><thead><tr><th class="left nosort">Season</th><th class="left nosort">League</th><th class="left nosort">Team</th><th class="nosort">G</th><th class="nosort"${gloss('MIN')}>MIN</th>${K.map(([, h]) => `<th class="nosort"${gloss(h)}>${h}</th>`).join('')}<th class="nosort"${gloss('FG%')}>FG%</th><th class="nosort"${gloss('FT%')}>FT%</th></tr></thead>
+    `<div class="card pv-card"><div class="table-scroll"><table class="pv-table pv-caps"><thead><tr><th class="left nosort">Season</th><th class="left nosort">League</th><th class="left nosort">Team</th><th class="nosort">G</th><th class="nosort"${gloss('MIN')}>MIN</th>${K.map(([, h]) => `<th class="nosort"${gloss(h)}>${h}</th>`).join('')}<th class="nosort"${gloss('FG%')}>FG%</th><th class="nosort"${gloss('3P%')}>3P%</th><th class="nosort"${gloss('FT%')}>FT%</th></tr></thead>
       <tbody>${rows}</tbody></table></div></div>
-     <div class="pv-note">Per game, as the league publishes them; hover a figure for the total. These games are outside the database, so they are not in his career lines above. A dash: the league's page leaves it blank.</div>`);
+     <div class="pv-note">Per game, as the league publishes them; hover a figure for the total where the league gives totals. These games are outside the database, so they are not in his career lines above. A dash: the league's page leaves it blank.</div>`);
 }
 function pvStats(pid, d, t) {
   const ab = pvAbroad(pid);
