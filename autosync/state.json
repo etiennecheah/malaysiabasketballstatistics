@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792764273.8293161,
-  "fp": "6da31ff3cf167e9babf7"
+  "at": 1792795256.4078295,
+  "fp": "d9716529bd4bd50f3456"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -18,7 +18,7 @@
   "26279": "2026-10-10",
   "35136": "2026-10-10",
   "38575": "2026-10-16",
-  "48654": "2026-10-23",
+  "48654": "2026-10-24",
   "49965": "2026-10-23",
   "50247": "2026-10-21",
   "50248": "2026-10-21"
@@ -35,7 +35,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-16 21:57  FAILED shots (1): page check failed",
   "2026-10-16 22:06  sync: shot charts of 2 games in 2 competitions",
   "2026-10-16 23:28  FAILED shots (1): page check failed",
   "2026-10-16 23:56  sync: Bina Harta Pro Basketball Cup 2024 \u2014 Parkcity Heat Basketball Club 57-82 Knight Fury; RNC-MI Basketball Club 69-100 Speed Hunter; MBC Kirin 71-58 Lutong Silver Wolves Basketball Club; Selangor Rising Star 84-59 Johor Sukma Team; Speed Hunter 70-72 Johor Sukma Team; Lutong Silver Wolves Basketball Club 81-61 Parkcity Heat Basketball Club; RNC-MI Basketball Club 60-92 Selangor Rising Star; MBC Kirin 70-82 Knight Fury; Speed Hunter 55-109 Selangor Rising Star; Johor Sukma Team 83-69 RNC-MI Basketball Club; Parkcity Heat Basketball Club 53-75 MBC Kirin; Knight Fury 85-80 Lutong Silver Wolves Basketball Club; Knight Fury 72-75 Johor Sukma Team; Selangor Rising Star 66-72 MBC Kirin; Knight Fury 67-80 Selangor Rising Star; Johor Sukma Team 47-79 MBC Kirin; shot charts of 16 games  [2446772: shot chart draws 155 attempts, the box score has 152 FGA]",
@@ -74,7 +73,8 @@
   "2026-10-22 06:46  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [rosters published for 7 of 8 teams]",
   "2026-10-23 04:49  FAILED 48654 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-23 04:53  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 8 teams; the standings page failed: ours kept, read again with the next game; the leaders page failed: ours kept]",
-  "2026-10-23 04:58  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated"
+  "2026-10-23 04:58  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
+  "2026-10-24 06:40  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
