@@ -76,6 +76,13 @@ function hsMeta(hash) {
       return page(g.h + sc + g.a + ' — Shot Chart', 'Every shot of ' + g.h + sc + g.a + ', ' + label + (g.date ? ', ' + hsMetaDate(g) : '') +
         ': 3D shot terrain, zones and every attempt, for each team and each player, against the event average.', { index: false });
     }
+    if (sub === 'postgame' && parts[3]) {
+      const g = GAME_BY_MID[parts[3]];
+      if (!g || g.cid !== c.id) return page('Post game report', label, { index: false });
+      const sc = (g.hs !== undefined && g.hs !== null && g.hs !== '') ? ' ' + g.hs + '–' + g.as + ' ' : ' v ';
+      return page(g.h + sc + g.a + ' — Post Game Report', 'Post game report of ' + g.h + sc + g.a + ', ' + label + (g.date ? ', ' + hsMetaDate(g) : '') +
+        ': key insights, game flow and runs, four factors, shot zones, box scores, advanced numbers and lineups. Download it as a PDF.', { index: false });
+    }
     if (sub === 'box' && parts[3]) {
       const g = GAME_BY_MID[parts[3]];
       if (!g || g.cid !== c.id) return page('Box score', label, { index: false });

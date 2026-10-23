@@ -25,7 +25,7 @@ from store import Store, Gate, tipoff, done, MYT   # noqa: E402
 SITE = json.load(open(os.path.join(ROOT, 'data', 'site_config.json')))['url'].rstrip('/') + '/'
 STATE = os.path.join(HERE, 'state.json')
 OUT = os.path.join(ROOT, '_site')
-BUILD = ['build_data.py', 'build_lineups.py', 'build_bpm.py', 'build_pbp.py', 'build_stats.py', 'build_shots.py', 'build_report.py', 'build_site.py']
+BUILD = ['build_data.py', 'build_lineups.py', 'build_bpm.py', 'build_pbp.py', 'build_stats.py', 'build_shots.py', 'build_report.py', 'build_postgame.py', 'build_site.py']
 
 HOLD_BEFORE = 14 * 3600      # a run that starts this close to tip-off stays on. GitHub starts the scheduled
                              # runs only every few hours, so during a tournament a run is kept alive across

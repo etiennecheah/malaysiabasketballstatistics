@@ -55,6 +55,8 @@ function matchHead(cid, mid, tab) {
   const tabs = [['box', 'Box Score', hasBox], ['pbp', 'Play-by-play', pbpOk], ['manalysis', 'Team Analysis', hasBox]];
   // the Shot chart tab only where the game has a chart (app4z_gameshots.js)
   if (typeof hasGameShots === 'function' && hasGameShots(cid, mid)) tabs.push(['shots', 'Shot Chart', true]);
+  // the Post Game Report wherever the game is final with a play-by-play (app4zc_postgame.js)
+  if (typeof hasPostgame === 'function' && hasPostgame(cid, mid)) tabs.push(['postgame', 'Post Game Report', true]);
   const tabbar = `<div class="msub">${tabs.map(([k, l, ok]) =>
     `<a class="msub-t ${tab === k ? 'on' : ''} ${ok ? '' : 'msub-off'}" href="#/c/${cid}/${k}/${mid}">${l}</a>`).join('')}</div>`;
   return `<div class="page">

@@ -146,6 +146,25 @@ function serve(root, base) {
     if (!ok) errors.push('Shot chart tab of game ' + shotGame[1] + ' did not draw');
   }
 
+  // the Post Game Report tab of a finished game with a play-by-play: its file loads and the A4 pages are drawn
+  // (a few odd feeds have no report and say so; the next game is tried then)
+  const pgGames = await page.evaluate(() => { const out = []; for (const c of COMPS) for (const g of c.games) if (out.length < 4 && typeof hasPostgame === 'function' && hasPostgame(c.id, g.mid)) out.push([c.id, g.mid]); return out; });
+  if (pgGames.length) {
+    let drawn = 0, tried = [];
+    for (const [cid, mid] of pgGames) {
+      if (drawn) break;
+      tried.push(mid);
+      await go('/c/' + cid + '/postgame/' + mid);
+      for (let i = 0; i < 80; i++) {
+        const st = await page.evaluate(m => [document.querySelectorAll('.pgr .pg-sheet').length, PG_ST[m]], mid);
+        if (st[0] >= 6) { drawn = st[0]; break; }
+        if (st[1] === 'error') break;
+        await page.waitForTimeout(150);
+      }
+    }
+    if (!drawn) errors.push('Post Game Report did not draw for games ' + tried.join(', '));
+  }
+
   for (const [cid, mid] of games) {
     await go('/c/' + cid + '/box/' + mid);
     const r = await page.evaluate(([cid, mid]) => {
