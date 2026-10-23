@@ -179,20 +179,20 @@ function rhLower(m) {
 }
 
 /* ---------------------------------------------------------------- page */
+// the MBL is men only: it has no Men / Women switch, and the switch keeps its place for the other categories
+const rhGd = g => (g || RH.g) === 'mbl' ? 'm' : RH.gd;
 function renderRecords() {
   RH.anim = true;
-  // a category with nothing for this gender (the MBL for women) gives way to the Agong Cup
-  if (!RH_GROUPS.find(x => x[0] === RH.g)[2].some(l => rhModel(l, RH.gd))) RH.g = 'agong';
   const cats = RH_GROUPS.map(([g, name, lvs]) => {
-    const ms = lvs.map(l => rhModel(l, RH.gd)).filter(Boolean), yrs = ms.flatMap(m => m.years), n = ms.reduce((t, m) => t + m.comps.length, 0);
+    const ms = lvs.map(l => rhModel(l, rhGd(g))).filter(Boolean), yrs = ms.flatMap(m => m.years), n = ms.reduce((t, m) => t + m.comps.length, 0);
     return `<button class="rh-cat" data-rhg="${g}" aria-pressed="${RH.g === g}"${n ? '' : ' disabled'}><b>${name}</b><small>${n ? `${n} tournaments · ${Math.min(...yrs)}–${Math.max(...yrs)}` : '—'}</small></button>`; }).join('');
   const lvs = RH_GROUPS.find(x => x[0] === RH.g)[2];
   const sub = lvs.length > 1 ? `<div class="rh-sub"><div class="rh-seg" role="group" aria-label="Age group">${lvs.map(l => `<button data-rhlv="${l}" aria-pressed="${RH.lv[RH.g] === l}">${l}</button>`).join('')}</div></div>` : '';
-  const m = rhModel(RH.lv[RH.g], RH.gd);
+  const m = rhModel(RH.lv[RH.g], rhGd());
   const body = m ? `${rhHero(m)}${rhHonours(m)}<div id="rh-rec">${rhRecords(m)}</div>${rhLower(m)}` : `<div class="rh-card"><div class="rh-none">No tournament in this category yet</div></div>`;
   return `<div class="page rh-page">
     <div class="rh-head"><h1>Records &amp; Honours</h1>
-      <div class="rh-seg" role="group" aria-label="Category"><button data-rhgd="m" aria-pressed="${RH.gd === 'm'}">Men</button><button data-rhgd="w" aria-pressed="${RH.gd === 'w'}">Women</button></div></div>
+      ${RH.g === 'mbl' ? '' : `<div class="rh-seg" role="group" aria-label="Category"><button data-rhgd="m" aria-pressed="${RH.gd === 'm'}">Men</button><button data-rhgd="w" aria-pressed="${RH.gd === 'w'}">Women</button></div>`}</div>
     <div class="rh-cats" role="group" aria-label="Tournament">${cats}</div>${sub}
     ${body}
   </div>`;
@@ -215,7 +215,7 @@ document.addEventListener('click', e => {
   if (b.dataset.rhrec) {
     if (b.dataset.rhrec === RH.rec) return;
     RH.rec = b.dataset.rhrec; RH.anim = true;
-    const r = document.getElementById('rh-rec'), m = rhModel(RH.lv[RH.g], RH.gd);
+    const r = document.getElementById('rh-rec'), m = rhModel(RH.lv[RH.g], rhGd());
     if (r && m) { r.innerHTML = rhRecords(m); recordsAfterRender(r); }
     return;
   }
