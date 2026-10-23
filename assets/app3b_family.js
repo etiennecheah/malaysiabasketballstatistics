@@ -134,13 +134,7 @@ function renderHub() {
   }).join('');
   return `
   <div class="page">
-    <div class="page-head">
-      <div>
-        <h1 class="page-title">Competitions</h1>
-        <div class="page-sub">Every Malaysian basketball competition on the MABA / Genius Sports portal, one card per competition. Open one for its honour roll — each season's champion, MVP and Finals MVP — and every edition's teams, fixtures, standings and statistics.</div>
-      </div>
-      <div class="badge">${fams.length} competitions · ${COMPS.length} editions</div>
-    </div>
+    ${dirHero('Competitions')}
 
     ${filterPanel({scope: 'comp', qid: 'comp-q', q: FILTER.q || '', ph: 'Find a competition…', groups: [
       ['Season', 'year', FILTER.year || '', uniqSorted(c => c.year, true).map(y => [y, y])],

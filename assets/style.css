@@ -262,7 +262,6 @@
     letter-spacing:-.008em; text-transform:none; margin:0; padding-bottom:2px;
     background:linear-gradient(178deg,#fff 32%,rgba(255,255,255,.74));
     -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .dir-hero-sub{ color:rgba(255,255,255,.72); font-size:13.5px; line-height:1.6; margin:8px 0 18px; max-width:78ch; }
 
   .dir-bar{ display:flex; align-items:center; justify-content:space-between; gap:12px;
     flex-wrap:wrap; margin-bottom:14px; }

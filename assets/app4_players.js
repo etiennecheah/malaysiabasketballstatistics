@@ -206,14 +206,7 @@ function globFilterBar() {
 
 function renderGlobalPlayers() {
   return `<div class="page">
-    <div class="dir-hero">
-      <div class="bloom"><i class="b1"></i><i class="b2"></i></div>
-      <div class="grain"></div>
-      <div class="dir-hero-in">
-        <h1 class="dir-hero-title">Player index</h1>
-        <p class="dir-hero-sub">Every player the MABA / Genius Sports portal has published a line for, across all ${COMPS.length} competitions — matched on the source's own person identity, so one person is one card even across clubs, age groups and years. Where the source registered the same player twice under different spellings, the records are merged by hand.</p>
-      </div>
-    </div>
+    ${dirHero('Player index')}
     <div class="dir-bar">
       <div><span class="dir-count">${Object.keys(CAREER).length.toLocaleString()}</span> <span class="dir-count-l">players</span></div>
       <span class="seg">

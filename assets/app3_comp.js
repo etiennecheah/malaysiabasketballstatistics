@@ -19,6 +19,9 @@ function filteredComps() {
    tags under the bar, each removable. o = {scope, qid, q, ph, groups: [[label, key, cur, [[value, text], ...]], ...]}.
    A chip is data-fb="scope|key" data-v="value"; app5_rest.js applies it to that page's filter. */
 const FBAR = { open: {} };
+// the dark title box at the top of Players, Competitions and Teams
+const dirHero = title => `<div class="dir-hero"><div class="bloom"><i class="b1"></i><i class="b2"></i></div><div class="grain"></div>
+  <div class="dir-hero-in"><h1 class="dir-hero-title">${esc(title)}</h1></div></div>`;
 function filterPanel(o) {
   const used = o.groups.filter(g => g[2] !== '' && g[2] != null);
   const text = (g, v) => { const x = g[3].find(([k]) => String(k) === String(v)); return x ? String(x[1]).replace(/ · \d+$/, '') : v; };   // a tag drops the chip's count

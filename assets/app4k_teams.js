@@ -269,13 +269,7 @@ function renderTeamsHub() {
 
   return `
   <div class="page">
-    <div class="page-head">
-      <div>
-        <h1 class="page-title">Teams</h1>
-        <div class="page-sub">Every team that has taken part in a Malaysian basketball competition on the MABA / Genius Sports portal, under every competition it has played in — a state side appears with the national championships, the Agong Cup and SUKMA alike. Each card counts that competition only.</div>
-      </div>
-      <div class="badge">${all.length} teams</div>
-    </div>
+    ${dirHero('Teams')}
 
     ${filterPanel({scope: 'team', qid: 'team-q', q: TEAMHUB.q, ph: 'Find a team…', groups: [
       ['Category', 'cat', TEAMHUB.cat, cats.map(k => [k, `${CAT_META[k].short || CAT_META[k].label.replace(/ — .*$/, '')} · ${catMembers(all, k).length}`])]]})}
