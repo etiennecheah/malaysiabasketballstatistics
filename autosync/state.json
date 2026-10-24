@@ -25,10 +25,10 @@
  },
  "fail": {
   "49965": {
-   "last": 1792834794.4507108,
+   "last": 1792856395.0190544,
    "msg": "fixtures missing from the source page: 2896892",
-   "n": 7,
-   "next": 1792856394.4507108
+   "n": 8,
+   "next": 1792877995.0190544
   }
  },
  "full": {
@@ -42,7 +42,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-17 13:13  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Kelantan 58-107 Negeri Sembilan; shot charts of 1 game  [2938231: final 58-107 read from the live feed (the schedule page does not show it as final yet)]",
   "2026-10-17 15:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 75-80 ATM; shot charts of 1 game  [2938188: final 75-80 read from the live feed (the schedule page does not show it as final yet)]",
   "2026-10-17 17:53  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Johor 67-48 Selangor; shot charts of 1 game  [2938222: final 67-48 read from the live feed (the schedule page does not show it as final yet)]",
   "2026-10-17 19:45  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 95-62 Johor  [2938191: final 95-62 read from the live feed (the schedule page does not show it as final yet); 2938191: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 95 (Negeri Sembilan))]",
@@ -81,7 +80,8 @@
   "2026-10-24 07:52  FAILED 49965 (4): fixtures missing from the source page: 2896892",
   "2026-10-24 09:12  FAILED 49965 (5): fixtures missing from the source page: 2896892",
   "2026-10-24 11:53  FAILED 49965 (6): fixtures missing from the source page: 2896892",
-  "2026-10-24 17:40  FAILED 49965 (7): fixtures missing from the source page: 2896892"
+  "2026-10-24 17:40  FAILED 49965 (7): fixtures missing from the source page: 2896892",
+  "2026-10-24 23:39  FAILED 49965 (8): fixtures missing from the source page: 2896892"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -100,7 +100,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1792838625.4024832,
+  "21375": 1792859420.690238,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
