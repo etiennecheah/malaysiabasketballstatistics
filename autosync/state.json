@@ -25,10 +25,10 @@
  },
  "fail": {
   "49965": {
-   "last": 1792804370.0469553,
+   "last": 1792813981.4038455,
    "msg": "fixtures missing from the source page: 2896892",
-   "n": 5,
-   "next": 1792813970.0469553
+   "n": 6,
+   "next": 1792833181.4038455
   }
  },
  "full": {
@@ -42,7 +42,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-17 04:13  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated  [7 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-17 09:58  sync: shot charts of 1 game in 1 competition  [886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept]",
   "2026-10-17 13:13  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Kelantan 58-107 Negeri Sembilan; shot charts of 1 game  [2938231: final 58-107 read from the live feed (the schedule page does not show it as final yet)]",
   "2026-10-17 15:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Pahang 75-80 ATM; shot charts of 1 game  [2938188: final 75-80 read from the live feed (the schedule page does not show it as final yet)]",
@@ -81,7 +80,8 @@
   "2026-10-24 06:52  FAILED 49965 (2): fixtures missing from the source page: 2896892",
   "2026-10-24 07:12  FAILED 49965 (3): fixtures missing from the source page: 2896892",
   "2026-10-24 07:52  FAILED 49965 (4): fixtures missing from the source page: 2896892",
-  "2026-10-24 09:12  FAILED 49965 (5): fixtures missing from the source page: 2896892"
+  "2026-10-24 09:12  FAILED 49965 (5): fixtures missing from the source page: 2896892",
+  "2026-10-24 11:53  FAILED 49965 (6): fixtures missing from the source page: 2896892"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -100,7 +100,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1792813352.6328685,
+  "21375": 1792831395.4208412,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
