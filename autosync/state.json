@@ -23,7 +23,14 @@
   "50247": "2026-10-21",
   "50248": "2026-10-21"
  },
- "fail": {},
+ "fail": {
+  "49965": {
+   "last": 1792804370.0469553,
+   "msg": "fixtures missing from the source page: 2896892",
+   "n": 5,
+   "next": 1792813970.0469553
+  }
+ },
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
@@ -35,11 +42,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-16 22:06  sync: shot charts of 2 games in 2 competitions",
-  "2026-10-16 23:28  FAILED shots (1): page check failed",
-  "2026-10-16 23:56  sync: Bina Harta Pro Basketball Cup 2024 \u2014 Parkcity Heat Basketball Club 57-82 Knight Fury; RNC-MI Basketball Club 69-100 Speed Hunter; MBC Kirin 71-58 Lutong Silver Wolves Basketball Club; Selangor Rising Star 84-59 Johor Sukma Team; Speed Hunter 70-72 Johor Sukma Team; Lutong Silver Wolves Basketball Club 81-61 Parkcity Heat Basketball Club; RNC-MI Basketball Club 60-92 Selangor Rising Star; MBC Kirin 70-82 Knight Fury; Speed Hunter 55-109 Selangor Rising Star; Johor Sukma Team 83-69 RNC-MI Basketball Club; Parkcity Heat Basketball Club 53-75 MBC Kirin; Knight Fury 85-80 Lutong Silver Wolves Basketball Club; Knight Fury 72-75 Johor Sukma Team; Selangor Rising Star 66-72 MBC Kirin; Knight Fury 67-80 Selangor Rising Star; Johor Sukma Team 47-79 MBC Kirin; shot charts of 16 games  [2446772: shot chart draws 155 attempts, the box score has 152 FGA]",
-  "2026-10-17 00:20  sync: shot charts of 233 games in 12 competitions  [2396103: shot chart draws 122 attempts, the box score has 123 FGA; 2220351: shot chart draws 167 attempts, the box score has 168 FGA; 2220393: shot chart draws 134 attempts, the box score has 136 FGA; 2220423: shot chart draws 179 attempts, the box score has 180 FGA; 2220429: shot chart draws 151 attempts, the box score has 153 FGA; 2135673: shot chart draws 139 attempts, the box score has 138 FGA; 2220399: shot chart draws 181 attempts, the box score has 182 FGA; 2220400: shot chart draws 135 attempts, the box score has 136 FGA; 2220433: shot chart draws 175 attempts, the box score has 176 FGA; 2220425: shot chart draws 152 attempts, the box score has 153 FGA; 886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept; 886174: shot chart draws 67 attempts, the box score has 130 FGA: not kept]",
-  "2026-10-17 04:07  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [rosters published for 6 of 7 teams; 2 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-17 04:13  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated  [7 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-17 09:58  sync: shot charts of 1 game in 1 competition  [886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept]",
   "2026-10-17 13:13  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Kelantan 58-107 Negeri Sembilan; shot charts of 1 game  [2938231: final 58-107 read from the live feed (the schedule page does not show it as final yet)]",
@@ -74,7 +76,12 @@
   "2026-10-23 04:49  FAILED 48654 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 500: Internal Server Error",
   "2026-10-23 04:53  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 8 teams; the standings page failed: ours kept, read again with the next game; the leaders page failed: ours kept]",
   "2026-10-23 04:58  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
-  "2026-10-24 06:40  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated"
+  "2026-10-24 06:40  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
+  "2026-10-24 06:41  FAILED 49965 (1): fixtures missing from the source page: 2896892",
+  "2026-10-24 06:52  FAILED 49965 (2): fixtures missing from the source page: 2896892",
+  "2026-10-24 07:12  FAILED 49965 (3): fixtures missing from the source page: 2896892",
+  "2026-10-24 07:52  FAILED 49965 (4): fixtures missing from the source page: 2896892",
+  "2026-10-24 09:12  FAILED 49965 (5): fixtures missing from the source page: 2896892"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -93,7 +100,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1792782484.3126285,
+  "21375": 1792813352.6328685,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
