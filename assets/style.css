@@ -1615,7 +1615,10 @@
   .cx-page .row{ grid-template-columns:64px minmax(0,1fr) auto; grid-template-rows:auto auto; column-gap:16px; row-gap:5px; padding:13px 18px; border-bottom-color:var(--hair); }
   .cx-page .row .r-date{ grid-row:1 / 3; align-self:center; }
   .cx-page .row .team{ grid-column:2; font-size:14px; }
-  .cx-page .row .team .score{ font-family:var(--display); font-size:16px; min-width:2.2em; text-align:right; }
+  .cx-page .row .team .score{ font-family:var(--display); font-size:16px; min-width:2.2em; text-align:right; font-variant-numeric:tabular-nums; }
+  /* the venue column is the same width on every row, so the score column lines up down the list
+     (an auto column took each row's own venue width and moved the scores with it) */
+  .cx-page .row{ grid-template-columns:64px minmax(0,1fr) 220px; }
   .cx-page .row .venue{ grid-column:3; grid-row:1 / 3; align-self:center; max-width:220px; }
 
   .cx-list{ display:flex; flex-direction:column; }
