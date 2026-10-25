@@ -102,7 +102,7 @@ function pgSheets(R, c) {
   /* ---------------- page 1: summary ---------------- */
   const quarters = `<table class="pg-q">${thead([['Team', 'l']].concat(R.periods.map((_, i) => [i < 4 ? 'Q' + (i + 1) : 'OT' + (i - 3)]), [['Final']]))}<tbody>
     ${[0, 1].map(sd => `<tr><td class="pg-l"><span class="pg-dot" style="background:${sd ? AC : HC}"></span>${esc(TN[sd])}</td>${R.periods.map(q => `<td class="${q[sd] > q[1 - sd] ? 'pg-win' : ''}">${q[sd]}</td>`).join('')}<td class="pg-b">${sc[sd]}</td></tr>`).join('')}
-    <tr class="pg-tot"><td class="pg-l">Margin (${abbr(TN[0])})</td>${R.periods.map(q => `<td>${q[0] - q[1] > 0 ? '+' : ''}${q[0] - q[1]}</td>`).join('')}<td>${R.hs - R.as > 0 ? '+' : ''}${R.hs - R.as}</td></tr></tbody></table>`;
+    <tr class="pg-tot"><td class="pg-l">Margin (${abbr(TN[0])})</td>${R.periods.map(q => `<td>${sgn(q[0] - q[1])}</td>`).join('')}<td>${sgn(R.hs - R.as)}</td></tr></tbody></table>`;
   const quick = mirror([['Poss', T[0].poss, T[1].poss, null, f1], ['ORtg', T[0].ortg, T[1].ortg, 1, f1, 140], ['DRtg', T[0].drtg, T[1].drtg, 0, f1, 140], ['eFG%', T[0].efg, T[1].efg, 1, f1, 80], ['TS%', T[0].ts, T[1].ts, 1, f1, 80],
     ['TOV%', T[0].tovp, T[1].tovp, 0, f1, 40], ['ORB%', T[0].orbp, T[1].orbp, 1, f1, 70], ['FT rate', T[0].ftr, T[1].ftr, 1, v => v.toFixed(2), 0.8]]);
   const p1 = sheet(`
@@ -156,7 +156,7 @@ function pgSheets(R, c) {
     ${R.runs.length ? `<div><h3>Runs (8–0 or more)</h3><table class="pg-runs">${thead([['Team', 'l'], ['Run'], ['When', 'l'], ['Score', 'l'], ['Led by', 'l']])}<tbody>
       ${R.runs.map(r => `<tr><td class="pg-l"><span class="pg-dot" style="background:${r.side ? AC : HC}"></span>${abbr(TN[r.side])}</td><td class="pg-b">${r.pts}–0</td><td class="pg-l">${at(r.t0)} – ${at(r.t1)}</td><td class="pg-l">${fmtRun(r)}</td><td class="pg-l">${r.top ? esc(nm(r.top)) + ' ' + r.topPts : '—'}</td></tr>`).join('')}</tbody></table></div>` : `<div><h3>Runs (8–0 or more)</h3><p class="pg-note">Neither side scored eight unanswered points.</p></div>`}
     <div class="pg-two"><div><h3>Quarter by quarter</h3><table>${thead([['Quarter', 'l'], [abbr(TN[0])], [abbr(TN[1])], ['Margin'], ['Running', 'l']])}<tbody>
-      ${R.periods.map((q, i) => `<tr><td class="pg-l">${i < 4 ? 'Q' + (i + 1) : 'OT' + (i - 3)}</td><td class="${q[0] > q[1] ? 'pg-win' : ''}">${q[0]}</td><td class="${q[1] > q[0] ? 'pg-win' : ''}">${q[1]}</td><td>${q[0] - q[1] > 0 ? '+' : ''}${q[0] - q[1]} ${q[0] === q[1] ? '' : abbr(TN[q[0] > q[1] ? 0 : 1])}</td><td class="pg-l">${cum[i][0]}–${cum[i][1]}</td></tr>`).join('')}</tbody></table></div>
+      ${R.periods.map((q, i) => `<tr><td class="pg-l">${i < 4 ? 'Q' + (i + 1) : 'OT' + (i - 3)}</td><td class="${q[0] > q[1] ? 'pg-win' : ''}">${q[0]}</td><td class="${q[1] > q[0] ? 'pg-win' : ''}">${q[1]}</td><td>${sgn(q[0] - q[1])} ${q[0] === q[1] ? '' : abbr(TN[q[0] > q[1] ? 0 : 1])}</td><td class="pg-l">${cum[i][0]}–${cum[i][1]}</td></tr>`).join('')}</tbody></table></div>
     ${R.solo.length ? `<div><h3>Hot stretches · 6+ points inside four minutes</h3><table>${thead([['Player', 'l'], ['Team', 'l'], ['Pts'], ['From', 'l']])}<tbody>
       ${R.solo.map(x => `<tr><td class="pg-l">${esc(nm(x.pid))}</td><td class="pg-l"><span class="pg-dot" style="background:${x.side ? AC : HC}"></span>${abbr(TN[x.side])}</td><td class="pg-b">${x.pts}</td><td class="pg-l">${at(x.t0)}</td></tr>`).join('')}</tbody></table></div>` : ''}</div>`);
 
@@ -211,10 +211,10 @@ function pgSheets(R, c) {
   const K = [['Top scorer', pick(p => nz(p.pts) + nz(p.ts) / 1000, p => nz(p.pts) > 0)], ['Most efficient', pick(p => p.ts, p => nz(p.fga) + 0.44 * nz(p.fta) >= 7)],
     ['Rebounds', pick(p => nz(p.reb) + nz(p.pts) / 1000, p => nz(p.reb) > 0)], ['Assists', pick(p => nz(p.ast) + nz(p.pts) / 1000, p => nz(p.ast) > 0)],
     ['Steals + blocks', pick(p => nz(p.stl) + nz(p.blk) + nz(p.pts) / 1000, p => nz(p.stl) + nz(p.blk) > 0)], ['Best +/-', pick(p => p.pm)]];
-  const kv = (k, p) => k === 'Most efficient' ? `${f1(p.ts)} TS% · ${f0(p.pts)} PTS` : k === 'Steals + blocks' ? `${f0(p.stl)} STL · ${f0(p.blk)} BLK · ${f0(p.pts)} PTS` : k === 'Best +/-' ? `${p.pm > 0 ? '+' : ''}${f0(p.pm)} in ${mmss(p.min * 60)}` : line(p);
+  const kv = (k, p) => k === 'Most efficient' ? `${f1(p.ts)} TS% · ${f0(p.pts)} PTS` : k === 'Steals + blocks' ? `${f0(p.stl)} STL · ${f0(p.blk)} BLK · ${f0(p.pts)} PTS` : k === 'Best +/-' ? `${sgn(p.pm, f0(p.pm))} in ${mmss(p.min * 60)}` : line(p);
   const boxT = sd => { const L = P.filter(p => p.side === sd && p.min > 0).sort((a, b) => (b.start ? 1 : 0) - (a.start ? 1 : 0) || b.min - a.min), t = T[sd];
     return `<div class="pg-table-x"><table class="pg-boxsc">${thead([['<span class="pg-dot" style="background:' + (sd ? AC : HC) + '"></span>' + esc(TN[sd]), 'l'], ['MIN'], ['PTS'], ['FG'], ['3P'], ['FT'], ['OR'], ['DR'], ['REB'], ['AST'], ['STL'], ['BLK'], ['TOV'], ['PF'], ['+/-'], ['TS%']])}<tbody>
-    ${L.map(p => `<tr><td class="pg-l pg-nm ${p.start ? 'pg-st' : ''}"><span>${esc(p.name)}</span></td><td>${p.min ? mmss(p.min * 60) : 'DNP'}</td><td class="pg-b">${f0(p.pts)}</td><td>${f0(p.fgm)}-${f0(p.fga)}</td><td>${f0(p.tpm)}-${f0(p.tpa)}</td><td>${f0(p.ftm)}-${f0(p.fta)}</td><td>${f0(p.oreb)}</td><td>${f0(p.dreb)}</td><td>${f0(p.reb)}</td><td>${f0(p.ast)}</td><td>${f0(p.stl)}</td><td>${f0(p.blk)}</td><td>${f0(p.tov)}</td><td>${f0(p.pf)}</td><td>${p.pm > 0 ? '+' : ''}${f0(p.pm)}</td><td>${f1(p.ts)}</td></tr>`).join('')}
+    ${L.map(p => `<tr><td class="pg-l pg-nm ${p.start ? 'pg-st' : ''}"><span>${esc(p.name)}</span></td><td>${p.min ? mmss(p.min * 60) : 'DNP'}</td><td class="pg-b">${f0(p.pts)}</td><td>${f0(p.fgm)}-${f0(p.fga)}</td><td>${f0(p.tpm)}-${f0(p.tpa)}</td><td>${f0(p.ftm)}-${f0(p.fta)}</td><td>${f0(p.oreb)}</td><td>${f0(p.dreb)}</td><td>${f0(p.reb)}</td><td>${f0(p.ast)}</td><td>${f0(p.stl)}</td><td>${f0(p.blk)}</td><td>${f0(p.tov)}</td><td>${f0(p.pf)}</td><td>${sgn(p.pm, f0(p.pm))}</td><td>${f1(p.ts)}</td></tr>`).join('')}
     <tr class="pg-tot"><td class="pg-l">Team</td><td></td><td>${f0(t.pts)}</td><td>${f0(t.fgm)}-${f0(t.fga)}</td><td>${f0(t.tpm)}-${f0(t.tpa)}</td><td>${f0(t.ftm)}-${f0(t.fta)}</td><td>${f0(t.oreb)}</td><td>${f0(t.dreb)}</td><td>${f0(t.oreb + t.dreb)}</td><td>${f0(t.ast)}</td><td>${f0(t.stl)}</td><td>${f0(t.blk)}</td><td>${f0(t.tov)}</td><td>${f0(t.pf)}</td><td></td><td>${f1(t.ts)}</td></tr></tbody></table></div>`; };
   const dnp = [0, 1].map(sd => { const L = P.filter(p => p.side === sd && !(p.min > 0)); return L.length ? `${esc(abbr(TN[sd]))} ${L.map(p => esc(short(p.name))).join(', ')}` : ''; }).filter(Boolean).join('; ');
   const p4 = sheet(`
@@ -224,7 +224,7 @@ function pgSheets(R, c) {
 
   /* ---------------- page 5: advanced, lineups, top scorers ---------------- */
   const adv = pl.filter(p => p.min >= 10).sort((a, b) => b.min - a.min);
-  const ch = v => v == null ? '—' : `<span class="pg-chip ${v >= 0 ? 'pg-p' : 'pg-n'}">${v > 0 ? '+' : ''}${f1(v)}</span>`;
+  const ch = v => v == null ? '—' : `<span class="pg-chip ${v >= 0 ? 'pg-p' : 'pg-n'}">${sgn(v, f1(v))}</span>`;
   const advT = `<table>${thead([['Player', 'l'], ['Team', 'l'], ['MIN'], ['TS%'], ['USG%'], ['AST%'], ['TOV%'], ['On-court net']])}<tbody>${adv.map(p => `<tr><td class="pg-l">${esc(p.name)}</td><td class="pg-l"><span class="pg-dot" style="background:${p.side ? AC : HC};width:6px;height:6px"></span>${abbr(TN[p.side])}</td><td>${mmss(p.min * 60)}</td><td>${f1(p.ts)}</td><td>${f1(p.usg)}</td><td>${f1(p.astp)}</td><td>${f1(p.tovp)}</td><td>${ch(p.net)}</td></tr>`).join('')}</tbody></table>`;
   const luRows = sd => { const L = R.lineups.filter(l => l.side === sd).sort((a, b) => b.pm - a.pm || b.min - a.min), best = L.slice(0, 3), worst = L.filter(l => !best.includes(l) && l.pm < 0).slice(-2);
     return best.map(l => [l, 'Best']).concat(worst.map(l => [l, 'Worst'])); };

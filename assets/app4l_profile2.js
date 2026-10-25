@@ -39,7 +39,7 @@ function pvDob(s) {
 const pvF1 = v => v == null || !isFinite(v) ? '—' : (Math.round(v * 10) / 10).toFixed(1);
 const pvF0 = v => v == null || !isFinite(v) ? '—' : Math.round(v).toLocaleString();
 const pvPc = (m, a) => a ? pvF1(m / a * 100) : '—';
-const pvSg = v => v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : '') + (Number.isInteger(v) ? v : pvF1(v));
+const pvSg = v => v == null || !isFinite(v) ? '—' : sgn(v, Number.isInteger(v) ? v : pvF1(v));
 const pvTs = p => { const d = (p.fga || 0) + 0.44 * (p.fta || 0); return d ? p.pts / (2 * d) * 100 : null; };
 const pvMin = m => minsToNum(m) || 0;
 function pvOrd(n) { n = Math.round(n); const s = ['th', 'st', 'nd', 'rd'], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }

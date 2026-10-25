@@ -11,6 +11,7 @@ const HS = (() => {
   const meta = document.querySelector('meta[name="hs-base"]');
   const BASE = (meta && meta.getAttribute('content')) || '/';
   const PATHS = location.protocol !== 'file:';
+  const BOOT_PATH = location.pathname;        // the page the server drew (its HTML is in #app until the app draws)
 
   // '#/p/1', '/p/1', 'p/1/' -> the route without its slashes at either end ('p/1')
   const clean = h => String(h || '').replace(/^#/, '').replace(/^\/+/, '').replace(/\/+$/, '');
@@ -65,17 +66,38 @@ const HS = (() => {
       window.addEventListener('hashchange', route);
     }
     route();
+    // after the first page: the box scores, then the ratings. One at a time, so on a slow line the
+    // box scores (which most pages wait for) are not sharing it with the ratings
+    if (boxesIn()) loadMore(); else loadBoxes();
+  }
+  const load = (src, onerror) => {
+    const s = document.createElement('script');
+    s.src = src; s.async = true;
+    if (onerror) s.onerror = onerror;
+    document.head.appendChild(s);
+  };
+  // The box scores come in a file of their own right after the first page (DB.box -> boxes()). Home and
+  // the directories never read them; any other page waits for them (route(): a page the server drew
+  // stays on screen meanwhile) and is drawn when they arrive. A failed load is tried once more.
+  let boxIn = false, boxTry = 0;
+  const boxesIn = () => boxIn || !DB.box || typeof DB_BOX === 'object';
+  function loadBoxes() {
+    load(DB.box, () => { if (++boxTry < 2) setTimeout(loadBoxes, 1500); else loadMore(); });
+  }
+  function boxes(part) {
+    if (boxIn) return;
+    boxIn = true;
+    if (typeof boxesArrived === 'function') boxesArrived(part);
+    if (typeof softRoute === 'function' && document.getElementById('app')) softRoute();
     loadMore();
   }
   // The ratings (BPM, PER, Win Shares, on/off) and the play-by-play periods come in a second file after
-  // the first page is drawn; the pages that show them are drawn again when it arrives.
-  let moreIn = false;
+  // the box scores; the pages that show them are drawn again when it arrives.
+  let moreIn = false, moreAsked = false;
   function loadMore() {
-    if (!DB.more || moreIn) return;
-    const s = document.createElement('script');
-    s.src = DB.more;
-    s.async = true;
-    document.head.appendChild(s);
+    if (!DB.more || moreIn || moreAsked) return;
+    moreAsked = true;
+    load(DB.more);
   }
   function more(part) {
     Object.assign(DB, part);
@@ -83,5 +105,5 @@ const HS = (() => {
     if (typeof PV !== 'undefined') PV.data = null;
     if (/^#\/(p|c|compare|watch|stats)\//.test(hash()) && typeof softRoute === 'function') softRoute();
   }
-  return { BASE, PATHS, hash, url, go, start, more, hasMore: () => moreIn || !DB.more };
+  return { BASE, PATHS, BOOT_PATH, hash, url, go, start, more, boxes, hasBoxes: boxesIn, hasMore: () => moreIn || !DB.more };
 })();

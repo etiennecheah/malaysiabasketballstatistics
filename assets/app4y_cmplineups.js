@@ -33,7 +33,7 @@ function clLoad(cid) {
 
 /* ---- the numbers ---- */
 const clMin = s => { const m = Math.floor(s / 60), r = Math.round(s % 60); return m + ':' + String(r).padStart(2, '0'); };
-const clSg = v => (v > 0 ? '+' : '') + v;
+const clSg = v => sgn(v, v);
 const clF1 = v => v == null || !isFinite(v) ? '—' : (Math.round(v * 10) / 10).toFixed(1);
 const clPoss = c => c[CLI.fga] + 0.44 * c[CLI.fta] - c[CLI.oreb] - c[CLI.toreb] + c[CLI.tov] + c[CLI.ttov];
 const clPmC = v => v > 0 ? 'pos' : v < 0 ? 'neg' : '';

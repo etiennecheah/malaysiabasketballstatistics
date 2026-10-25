@@ -24,8 +24,9 @@ const COMPLOGOS = DB.complogos || {};
 /* ids the source published twice for one player, folded onto the survivor */
 const PALIAS = DB.palias || {};
 // Box scores ship as {t:[team names], p:[schema-ordered arrays]}; hydrate lazily,
-// because most sessions only ever open a handful of the ~2,000 games.
-const BOX_RAW = DB.boxes || {};
+// because most sessions only ever open a handful of the ~2,000 games. They come in their own
+// file after the first page (HS.boxes -> boxesArrived); the prerender has them first, as DB_BOX.
+const BOX_RAW = DB.boxes || (typeof DB_BOX === 'object' && DB_BOX) || {};
 const BKEYS = DB.bkeys || [];
 const BOX_CACHE = {};
 const BOXES = {
@@ -149,12 +150,24 @@ COMPS.forEach(c => { c.games.forEach(g => { g.cid = c.id; GAME_BY_MID[g.mid] = g
 // person id -> [match ids they have a box score line in. Built straight off the
 // compact arrays (pid is column 0) so no box score needs hydrating to index it.
 const BOX_BY_PID = {};
-Object.keys(BOX_RAW).forEach(mid => {
-  BOX_RAW[mid].p.forEach(row => {
-    const pid = row[0];
-    if (pid) (BOX_BY_PID[pid] = BOX_BY_PID[pid] || []).push(mid);
+function indexBoxes(raw) {
+  Object.keys(raw).forEach(mid => {
+    raw[mid].p.forEach(row => {
+      const pid = row[0];
+      if (pid) (BOX_BY_PID[pid] = BOX_BY_PID[pid] || []).push(mid);
+    });
   });
-});
+}
+indexBoxes(BOX_RAW);
+// the box score file is in: keep it, index it, and forget anything worked out without it
+function boxesArrived(part) {
+  if (part !== BOX_RAW) { Object.assign(BOX_RAW, part); indexBoxes(part); }
+  [typeof IM_LINES === 'object' && IM_LINES, typeof RD_FIELD === 'object' && RD_FIELD].forEach(o => { if (o) Object.keys(o).forEach(k => delete o[k]); });
+  if (typeof CMP_SUGG !== 'undefined') CMP_SUGG = null;
+  if (typeof MS === 'object') MS.m = null;
+  if (typeof RH === 'object') RH.cache = {};
+  if (typeof PV === 'object') PV.data = null;
+}
 
 // team name -> team id (names are unique enough in this source to key on)
 const TID_BY_NAME = {};
@@ -254,7 +267,10 @@ function gloss(label) {
 function fmt1(v) { return has(v) && typeof v === 'number' ? v.toFixed(1) : (has(v) ? v : '—'); }
 function fmt0(v) { return has(v) ? (typeof v === 'number' ? String(Math.round(v)) : v) : '—'; }
 function pct1(v) { return has(v) ? Number(v).toFixed(1) : '—'; }
-function fmtPM(v) { return has(v) ? (v > 0 ? '+' + v : String(v)) : '—'; }
+// a signed figure: "+" for a gain and a true minus "−" (U+2212, as wide as "+") for a loss, so the
+// digits of a column of +/- line up; s is the figure already formatted, v the value it came from
+function sgn(v, s) { const t = s == null ? String(Math.abs(v)) : String(s).replace(/^[-\u2212]/, ''); return (v > 0 ? '+' : v < 0 ? '\u2212' : '') + t; }
+function fmtPM(v) { return has(v) ? sgn(+v, v) : '—'; }
 function slugName(n) { return String(n || '').trim(); }
 
 // Per-game value derived from a real total and a real games-played count.

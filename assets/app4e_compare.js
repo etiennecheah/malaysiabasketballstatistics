@@ -98,7 +98,7 @@ function cmpRaw(tot, row) {
 function cmpFmt(v, row) {
   if (!has(v)) return '—';
   const n = Number(v).toFixed(1);
-  return (row.signed && v > 0 ? '+' : '') + n + (row.pct ? '%' : '');
+  return (row.signed ? sgn(v, n) : n) + (row.pct ? '%' : '');
 }
 /* The mirrored row: two values leaning away from a shared centre, and in that
    centre the only number this page is really about — the gap. */
@@ -214,7 +214,7 @@ function cmpVal(T, row, per) {
 function cmpShow(v, row, per) {
   if (!has(v)) return '—';
   const dp = has(row.dp) ? row.dp : (row.cnt && per === 'tot' ? 0 : 1);
-  return (row.signed && v > 0 ? '+' : '') + Number(v).toFixed(dp) + (row.pct ? '%' : '');
+  return (row.signed ? sgn(v, Number(v).toFixed(dp)) : Number(v).toFixed(dp)) + (row.pct ? '%' : '');
 }
 /* Renders the groups and keeps score: how many decided measures each side leads,
    and where each one's widest relative edges are. */

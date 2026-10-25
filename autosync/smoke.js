@@ -52,7 +52,8 @@ function serve(root, base) {
   // the site alone, as built: fonts, sign-in and the live relay are left out of the check
   await page.route('**/*', r => (r.request().url().startsWith(origin) ? r.continue() : r.abort()));
   const go = async h => { await page.evaluate(x => HS.go('#' + x), h); await page.waitForTimeout(250); };
-  const ready = () => page.waitForFunction(() => typeof HS !== 'undefined' && typeof COMPS !== 'undefined', null, { timeout: 30000 });
+  // ready: the app is running and the box scores (a file of their own, loaded after the first page) are in
+  const ready = () => page.waitForFunction(() => typeof HS !== 'undefined' && typeof COMPS !== 'undefined' && (!HS.hasBoxes || HS.hasBoxes()), null, { timeout: 30000 });
 
   // a player's page opened at its own address: the file names the player, and the app draws the same page
   const pids = fs.existsSync(path.join(root, 'p')) ? fs.readdirSync(path.join(root, 'p')) : [];

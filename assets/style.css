@@ -4110,3 +4110,27 @@ a.hmg-feat:hover{ text-decoration:none; border-color:rgba(255,255,255,.26); }
 @media (prefers-reduced-motion: reduce){ .pgr-dl{ transition:none; } }
 .pgr .pg-tm .pg-crest-f{ border-radius:3px; box-shadow:0 0 0 1px var(--pg-line); height:auto; aspect-ratio:auto; }
 .pgr .pg-boxsc td.pg-nm span{ display:inline-block; max-width:44mm; overflow:hidden; text-overflow:ellipsis; vertical-align:bottom; }
+
+/* ---------- Optical alignment: type and marks placed by how they look, not by their boxes ---------- */
+/* big titles hang their first letter's side bearing (--oa, measured from the font by oaHang) */
+.page-title, .pv-name > span, .dir-hero-title, .pv-stat .v, .rh-hc .v, .m-name{ margin-left:var(--oa, 0); }
+/* the match score: the dash on the centre axis whatever the digits (88–78, 118–49, 59–117) and
+   lifted from the lower-case middle to the middle of the figures (8% of the size in Archivo) */
+.m-score{ display:grid; grid-template-columns:1fr auto 1fr; align-items:baseline; column-gap:.22em; }
+.m-score .h{ text-align:right; } .m-score .a{ text-align:left; }
+.m-score .d{ font-weight:500; color:var(--text-faint); transform:translateY(-.08em); }
+/* a pill that starts with an icon: the triangle's ink sits 3px inside its box, so the left side
+   needs that much less padding to look even */
+.m-watch{ padding:7px 15px 7px 11px; }
+/* list bullets hang in the margin: the text lines up with the heading above it */
+.rp-bullets li{ padding-left:0; } .rp-bullets li::before{ left:-14px; }
+.pgr .pg-box li{ padding-left:0; } .pgr .pg-box li::before{ left:-11px; }
+/* letter-spaced capitals carry the spacing after their last letter too: centred, they sit left of
+   centre; right-aligned, they stop short of the numbers under them. Give the spacing back */
+.vs-row em{ text-indent:.12em; } .tp-h h3{ text-indent:.14em; }
+.pgr th:not(.pg-l){ padding-right:calc(6px - .08em); }
+.pgr .pg-stage{ padding-left:8px; padding-right:calc(8px - .12em); }
+.pgr .pg-mr .pg-k{ text-indent:.06em; }
+/* a square initials badge looks bigger than a crest or a flag in the same box */
+.swatch.crest{ transform:scale(.92); }
+.crest-flag img{ border-radius:2px; }

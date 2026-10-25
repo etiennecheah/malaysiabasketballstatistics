@@ -74,10 +74,12 @@ function renderNav(state, cid, tab) {
   return navShell(links, inHeader ? '' : subnav('Competitions', `<a href="#/c/${cid}" class="subnav-crumb subnav-crumb-link">${esc(c ? c.name : '')}</a>`, []));
 }
 
+// the same every time: worked out once (the first number formatting starts the locale data, slow on a phone)
+let FOOTER = null;
 function renderFooter() {
-  return `<div class="footer-note">
+  return FOOTER || (FOOTER = `<div class="footer-note">
     ${SITE} — a database of Malaysian basketball competitions. ${COMPS.length} competitions, ${Object.keys(PERSONS).length.toLocaleString()} players and ${COMPS.reduce((a, c) => a + c.nGames, 0).toLocaleString()} fixtures, all sourced from the MABA / Genius Sports competition portal. Every figure shown is the source's own published value or a total/percentage computed from it, and gaps in the source are labelled rather than filled in. The exception is the player Advanced tab, where PER, usage, Win Shares and BPM are computed here from box scores — Win Shares and BPM are models, their numbers are estimates, and the tab says so and shows their uncertainty.
-  </div>`;
+  </div>`);
 }
 
 /* ---------------------------- router ---------------------------- */
@@ -92,6 +94,8 @@ function pvKeepScroll(y) {
   const natural = pg.getBoundingClientRect().top + window.scrollY, stick = parseFloat(getComputedStyle(nav).top) || 0;
   window.scrollTo(0, Math.min(y, Math.max(0, natural - stick)));
 }
+const ROUTE_NO_BOX = /^(|home|players|competitions|teams|live|me|admin|privacy)$/;
+let ROUTE_DRAWN = false;
 function route() {
   const hash = HS.hash().replace(/^#/, '') || '/';
   const parts = hash.split('/').filter(Boolean).map(decodeURIComponent);
@@ -108,6 +112,19 @@ function route() {
     HS.go('#/' + parts.map(encodeURIComponent).join('/'), true);
     return;
   }
+
+  // Every page but Home and the directories reads the box scores, which arrive just after the first
+  // page (HS.boxes draws it again then). Until they are in, the page the server already drew for
+  // this address stays on screen as it is; a page opened from a link meanwhile says it is loading.
+  if (!HS.hasBoxes() && !ROUTE_NO_BOX.test(parts[0] || '')) {
+    const first = !ROUTE_DRAWN && HS.PATHS && location.pathname === HS.BOOT_PATH && !!app.firstElementChild;
+    ROUTE_DRAWN = true;
+    if (first) return;
+    app.innerHTML = renderNav('hub', null, '') + '<div class="page"><div class="page-head"><div><h1 class="page-title">Loading…</h1></div></div></div>' + renderFooter();
+    window.scrollTo(0, 0);
+    return;
+  }
+  ROUTE_DRAWN = true;
 
   if (parts.length === 0 || parts[0] === 'home') {
     // Home is the front door: live games when there are any, otherwise what's next and what just happened

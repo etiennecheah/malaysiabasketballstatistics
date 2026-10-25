@@ -56,7 +56,7 @@ const STATS = (function () {
     if (v == null || !isFinite(v)) return '<span class="st-dash">—</span>';
     const s = v.toFixed(col.count ? (mode === 'tot' ? 0 : 1) : col.dec);
     if (!col.sign) return s;
-    return '<span class="' + (v > 0 ? 'st-pos' : v < 0 ? 'st-neg' : '') + '">' + (v > 0 ? '+' : '') + s + '</span>';
+    return '<span class="' + (v > 0 ? 'st-pos' : v < 0 ? 'st-neg' : '') + '">' + sgn(v, s) + '</span>';
   }
   function sortRows(rows, dir, val, tie) {
     return rows.slice().sort((a, b) => {

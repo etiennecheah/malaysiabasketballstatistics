@@ -363,7 +363,36 @@ document.addEventListener('input', e => {
 });
 
 /* post-render work: the Stats pages wire their filters and the Stats menu once the page is in place */
-function afterRender() { if (typeof pvPathFit === 'function') pvPathFit(); if (typeof statsAfterRender === 'function') statsAfterRender(); if (typeof shotsAfterRender === 'function') shotsAfterRender(); if (typeof reportAfterRender === 'function') reportAfterRender(); if (typeof cmpShotsAfterRender === 'function') cmpShotsAfterRender(); if (typeof milestonesAfterRender === 'function') milestonesAfterRender(); if (typeof recordsAfterRender === 'function') recordsAfterRender(); }
+/* Optical margins. Display type is drawn from its glyph's box, and the box starts before the ink:
+   in Archivo Narrow a B, H or N carries 6% of the size as space on its left, a C or O 3%, a J or A
+   none. Set at 88px that is a name starting 5px right of the line above it. Each big title is moved
+   left by its first letter's own side bearing, measured from the font in a canvas, and a round letter
+   a hair further so its curve meets the edge the way a stem does (the CSS reads --oa). */
+const OA_SEL = '.page-title, .pv-name > span, .dir-hero-title, .pv-stat .v, .rh-hc .v, .m-name';
+const OA_ROUND = /[COGQSU0369]/;
+const OA_BEAR = {};
+let OA_CTX = null;
+function oaHang(root) {
+  if (!document.fonts || !document.fonts.check || typeof document.createElement !== 'function') return;
+  (root || document).querySelectorAll(OA_SEL).forEach(el => {
+    const ch = (el.textContent || '').trim().charAt(0);
+    if (!ch) return;
+    const cs = getComputedStyle(el);
+    if (!(parseFloat(cs.fontSize) >= 18) || /center|right|end/.test(cs.textAlign)) return;
+    const font = cs.fontStyle + ' ' + cs.fontWeight + ' 100px ' + cs.fontFamily;
+    if (!document.fonts.check(font)) return;              // the face is not in yet: done again when it is
+    const k = font + '|' + ch;
+    if (OA_BEAR[k] == null) {
+      OA_CTX = OA_CTX || document.createElement('canvas').getContext('2d');
+      if (!OA_CTX) return;
+      OA_CTX.font = font;
+      OA_BEAR[k] = Math.max(0, -OA_CTX.measureText(ch).actualBoundingBoxLeft) + (OA_ROUND.test(ch) ? 1.2 : 0);
+    }
+    el.style.setProperty('--oa', (-OA_BEAR[k] / 100).toFixed(3) + 'em');
+  });
+}
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => oaHang());
+function afterRender() { oaHang(); if (typeof pvPathFit === 'function') pvPathFit(); if (typeof statsAfterRender === 'function') statsAfterRender(); if (typeof shotsAfterRender === 'function') shotsAfterRender(); if (typeof reportAfterRender === 'function') reportAfterRender(); if (typeof cmpShotsAfterRender === 'function') cmpShotsAfterRender(); if (typeof milestonesAfterRender === 'function') milestonesAfterRender(); if (typeof recordsAfterRender === 'function') recordsAfterRender(); }
 
 HS.start();
 

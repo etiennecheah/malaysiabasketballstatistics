@@ -122,7 +122,7 @@ function rpEvidence(k, rows, W) {
     care: `turns it over on ${rpF1(t.topct)}% of the possessions ${W.he} uses`,
     reb: `${rpF1(t.reb / g)} REB a game; grabs ${rpF1(t.orpct)}% of offensive and ${rpF1(t.drpct)}% of defensive rebounds`,
     def: `${rpF1(t.stl / g)} STL and ${rpF1(t.blk / g)} BLK a game`,
-    impact: `box plus-minus ${t.bpm > 0 ? '+' : ''}${rpF1(t.bpm)}`,
+    impact: `box plus-minus ${sgn(t.bpm, rpF1(t.bpm))}`,
   }[k];
 }
 const rpEvNames = rows => { const n = rows.map(r => esc(r.name)); return n.length <= 3 ? n.join(', ') : n.slice(-3).join(', ') + ` and ${n.length - 3} more`; };

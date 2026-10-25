@@ -29,8 +29,17 @@ function livePlaysFilter(per, scoring) {
 }
 
 /* tip-off as a timestamp: the fixture's date and time are Malaysian (UTC+8) */
+// worked out once per fixture: Home sorts every game of the database by it on the first page
+const LIVE_T0 = new Map();
 function liveStart(g) {
   if (!g || !g.date) return null;
+  const k = g.date + ' ' + (g.time || '');
+  if (LIVE_T0.has(k)) return LIVE_T0.get(k);
+  const v = liveStart0(g);
+  LIVE_T0.set(k, v);
+  return v;
+}
+function liveStart0(g) {
   const [y, m, d] = g.date.split('-').map(Number);
   const t = String(g.time || '').match(/(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
   if (!t) return null;

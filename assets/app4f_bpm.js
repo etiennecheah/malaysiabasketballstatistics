@@ -112,7 +112,7 @@ function bpmField(cid, pid) {
   let ax = '';
   for (let v = -25; v <= 25; v += 5) {
     const left = (v - lo) / (hi - lo) * 100;
-    ax += `<div class="bpm-ax-g" style="left:${left}%"></div><div class="bpm-ax-t" style="left:${left}%">${v > 0 ? '+' : ''}${v}</div>`;
+    ax += `<div class="bpm-ax-g" style="left:${left}%"></div><div class="bpm-ax-t" style="left:${left}%">${sgn(v, v)}</div>`;
   }
   return `<div class="bpm-field"><div class="bpm-dots" style="height:${H}px">${dots}</div>
     <div class="bpm-axis">${ax}</div></div>`;

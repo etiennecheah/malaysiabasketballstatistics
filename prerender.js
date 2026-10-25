@@ -6,7 +6,11 @@
 // once its scripts arrive.
 //   node prerender.js <out dir> <shell template> <site url> <db.js> <app.js>
 const fs = require('fs'), path = require('path'), vm = require('vm');
-const [OUT, SHELL, SITE, DBJS, APPJS] = process.argv.slice(2);
+const [OUT, SHELL, SITE, DBJS, APPJS, BOXJS, BOXURL] = process.argv.slice(2);
+// a page that reads the box scores starts fetching them with the rest (Home and the directories
+// fetch them after they are drawn, so on a slow line they don't share it): the same list as ROUTE_NO_BOX
+const NO_BOX = /^(|home|players|competitions|teams|live|me|admin|privacy)$/;
+const preload = r => (BOXURL && !NO_BOX.test(String(r || '').split('/')[0]) ? '<link rel="preload" as="script" href="' + BOXURL + '">' : '');
 const BASE = new URL(SITE).pathname.replace(/\/?$/, '/');
 const shell = fs.readFileSync(SHELL, 'utf8');
 
@@ -49,6 +53,8 @@ const ctx = {
 ctx.window = ctx; ctx.self = ctx; ctx.globalThis = ctx;
 vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(DBJS, 'utf8'), ctx, { filename: 'db.js' });
+// the box scores, which the browser loads after the first page: here they are in before the app starts (DB_BOX)
+if (BOXJS) vm.runInContext(fs.readFileSync(BOXJS, 'utf8'), ctx, { filename: 'db-box.js' });
 vm.runInContext(fs.readFileSync(APPJS, 'utf8') + '\n;this.__route = route; this.__meta = hsMeta;', ctx, { filename: 'app.js' });
 
 // ---- every page that gets a file of its own
@@ -74,7 +80,7 @@ function fill(t, m, html, r) {
   const ld = (m.ld || []).map(o => '<script type="application/ld+json">' + JSON.stringify(Object.assign({ url: absOf(r) }, o)).replace(/</g, '\\u003c') + '</script>').join('\n');
   return t.replace('{{TITLE}}', esc(m.title)).replace(/\{\{DESC\}\}/g, esc(m.desc)).replace('{{OGTITLE}}', esc(m.title.replace(/ \| HoopStatsMY$/, '')))
     .replace(/\{\{URL\}\}/g, esc(absOf(r))).replace('{{ROBOTS}}', m.index ? '' : '<meta name="robots" content="noindex">\n')
-    .replace('{{LD}}', ld).replace('{{APP}}', () => html);
+    .replace('{{LD}}', ld).replace('{{PRELOAD}}', preload(r)).replace('{{APP}}', () => html);
 }
 
 const t0 = Date.now(), sitemap = [];
@@ -102,7 +108,7 @@ for (const r of routes) {
 // any address without a file of its own (a player's Stats tab, a play-by-play, Compare with two players)
 // gets the app with nothing drawn yet; the app draws the page from the address
 fs.writeFileSync(path.join(OUT, '404.html'), fill(shell, { title: 'HoopStatsMY — Malaysia Basketball Database', desc: 'Malaysian basketball statistics.', index: false, ld: [] },
-  '<div class="page"><div class="page-head"><div><h1 class="page-title">Loading…</h1></div></div></div>', '')
+  '<div class="page"><div class="page-head"><div><h1 class="page-title">Loading…</h1></div></div></div>', 'p')
   .replace(/<link rel="canonical"[^>]*>\n?/, '').replace(/<meta property="og:url"[^>]*>\n?/, ''));
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
   sitemap.map(u => '<url><loc>' + esc(u) + '</loc></url>').join('\n') + '\n</urlset>\n');

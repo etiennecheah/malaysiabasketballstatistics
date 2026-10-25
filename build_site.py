@@ -332,9 +332,15 @@ def write_site(payload, css):
     os.makedirs(out)
     n_img, img_bytes = externalize_images(payload, out, base)
     more = {k: payload.pop(k) for k in MORE_KEYS if k in payload}
-    more_url = hashed(out, base, 'db-more', 'js', 'HS.more(' + json.dumps(more, separators=(',', ':')) + ');')
+    more_url = hashed(out, base, 'db-more', 'js', 'HS.more(' + js_json(more) + ');')
+    # the box scores (half the data) come in a file of their own right after the first page is drawn
+    # (HS.boxes): Home and the directories never read them, and a page the server drew stays on screen
+    # until they are in. The prerender reads them first, as DB_BOX
+    boxes = payload.pop('boxes', {})
+    box_url = hashed(out, base, 'db-box', 'js', 'var DB_BOX=' + js_json(boxes) + ';if(typeof HS!=="undefined")HS.boxes(DB_BOX);')
     payload['more'] = more_url
-    db = 'var DB=' + json.dumps(payload, separators=(',', ':')) + ';'
+    payload['box'] = box_url
+    db = 'var DB=' + js_json(payload) + ';'
     db_url = hashed(out, base, 'db', 'js', db)
     js = '\n\n'.join(open(os.path.join(A, p)).read() for p in PARTS)
     js_url = hashed(out, base, 'app', 'js', js)
@@ -356,7 +362,8 @@ def write_site(payload, css):
     tmp = os.path.join(D, 'shell.tmp')
     open(tmp, 'w').write(shell)
     sh = subprocess.run(['node', os.path.join(R, 'prerender.js'), out, tmp, url,
-                         os.path.join(out, db_url[len(base):]), os.path.join(out, js_url[len(base):])],
+                         os.path.join(out, db_url[len(base):]), os.path.join(out, js_url[len(base):]),
+                         os.path.join(out, box_url[len(base):]), box_url],
                         capture_output=True, text=True)
     os.remove(tmp)
     sys.stdout.write(sh.stdout)
@@ -365,9 +372,17 @@ def write_site(payload, css):
     if sh.stderr.strip():
         print(sh.stderr.strip()[-2000:])
     first = len(db) + len(js) + len(css)
+    after = sum(os.path.getsize(os.path.join(out, u[len(base):])) for u in (more_url, box_url))
     print('site: %s  data %.2f MB (+%.2f MB after the first page), app %d kB, css %d kB, %d images (%.2f MB)'
-          % (url, len(db) / 1048576, os.path.getsize(os.path.join(out, more_url[len(base):])) / 1048576,
-             len(js) / 1024, len(css) / 1024, n_img, img_bytes / 1048576))
+          % (url, len(db) / 1048576, after / 1048576, len(js) / 1024, len(css) / 1024, n_img, img_bytes / 1048576))
+
+
+def js_json(obj):
+    """The data as a JSON.parse('…') string: V8 reads a large JSON string several times faster than
+    the same object written as a JavaScript literal, which is most of the time a phone spends
+    starting the site. The JSON is ASCII (non-ASCII escaped), so only \\ and ' need escaping."""
+    s = json.dumps(obj, separators=(',', ':'))
+    return "JSON.parse('" + s.replace('\\', '\\\\').replace("'", "\\'") + "')"
 
 
 def html_esc(s):
@@ -396,11 +411,13 @@ SHELL = """<!doctype html>
 {verify}<link rel="icon" type="image/png" href="{base}favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Archivo+Narrow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Archivo+Narrow:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Archivo+Narrow:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="{css}">
 <script>try{{var t=localStorage.getItem("hsmy-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}}catch(e){{}}</script>
 {gatehead}<script defer src="{db}"></script>
 <script defer src="{js}"></script>
+{{{{PRELOAD}}}}
 {{{{LD}}}}
 </head>
 <body>
