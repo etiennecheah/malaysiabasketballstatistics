@@ -30,7 +30,7 @@ function filterPanel(o) {
     <div class="fb-bar">
       <label class="fb-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
         <input type="search" id="${o.qid}" value="${esc(o.q)}" placeholder="${esc(o.ph)}" autocomplete="off" aria-label="${esc(o.ph)}"></label>
-      <button class="fb-btn ${used.length ? 'has' : ''}" data-fbopen="${o.scope}" aria-expanded="${open}" aria-controls="fb-${o.scope}-panel">
+      <button type="button" class="fb-btn ${used.length ? 'has' : ''}" data-fbopen="${o.scope}" aria-expanded="${open}" aria-controls="fb-${o.scope}-panel" aria-label="Filters${used.length ? ', ' + used.length + ' on' : ''}">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filters</span>${used.length ? `<em>${used.length}</em>` : ''}</button>
     </div>
     <div class="fb-panel ${open ? 'open' : ''}" id="fb-${o.scope}-panel"><div><div class="fb-in">
@@ -259,22 +259,22 @@ function gameRow(cid, g) {
   if (lv && lv.d) {
     const fin = lv.state === 'final', hs = lv.d.teams[0].score, as = lv.d.teams[1].score;
     const cls = (mine, theirs) => fin ? (mine > theirs ? 'win' : 'loss') : (mine > theirs ? 'win' : '');
-    return `<div class="row clickable row-live" data-gmid="${esc(g.mid)}" onclick="HS.go('#/live/${g.mid}')">
+    return `<div class="row clickable row-live" data-gmid="${esc(g.mid)}" data-href="#/live/${g.mid}">
     <div class="r-date"><div class="d1">${fmtDateShort(g.date)}</div><div>${g.date ? g.date.slice(0, 4) : ''}</div></div>
     <div class="team ${cls(hs, as)}">${crest(g.h)}<span class="name">${esc(g.h)}</span><span class="score">${fmt0(hs)}</span></div>
     <div class="team ${cls(as, hs)}">${crest(g.a)}<span class="name">${esc(g.a)}</span><span class="score">${fmt0(as)}</span></div>
     <div class="venue">${fin ? '<span class="lv-tag lv-tag-fin">FINAL</span>' : '<span class="lv-tag"><span class="lv-dot"></span>LIVE</span>'}
-      <span class="row-clock">${fin ? '' : esc(liveClock(lv.d))}</span><span class="box-link">${fin ? 'Box score and plays' : 'Follow the game'} →</span></div>
+      <span class="row-clock">${fin ? '' : esc(liveClock(lv.d))}</span><a class="box-link row-link" href="#/live/${g.mid}">${fin ? 'Box score and plays' : 'Follow the game'} →</a></div>
   </div>`;
   }
   const complete = g.st === 'COMPLETE';
   const hw = complete && g.hs > g.as, aw = complete && g.as > g.hs;
   const clickable = complete && g.box;
-  return `<div class="row ${clickable ? 'clickable' : ''}" data-gmid="${esc(g.mid)}" ${clickable ? `onclick="HS.go('#/c/${cid}/box/${g.mid}')"` : ''}>
+  return `<div class="row ${clickable ? 'clickable' : ''}" data-gmid="${esc(g.mid)}" ${clickable ? `data-href="#/c/${cid}/box/${g.mid}"` : ''}>
     <div class="r-date"><div class="d1">${fmtDateShort(g.date)}</div><div>${g.date ? g.date.slice(0, 4) : ''}</div></div>
     <div class="team ${complete ? (hw ? 'win' : 'loss') : ''}">${crest(g.h)}<span class="name">${esc(g.h)}</span><span class="score">${complete ? fmt0(g.hs) : ''}</span></div>
     <div class="team ${complete ? (aw ? 'win' : 'loss') : ''}">${crest(g.a)}<span class="name">${esc(g.a)}</span><span class="score">${complete ? fmt0(g.as) : ''}</span></div>
-    <div class="venue">${phaseLabel(COMP_BY_ID[cid], g.mid) || g.ff || (complete && g.hs == null) ? `<div class="po-line">${phaseLabel(COMP_BY_ID[cid], g.mid) ? `<span class="po-tag">${esc(phaseLabel(COMP_BY_ID[cid], g.mid))}</span> ` : ''}${gameFlag(g)}</div>` : ''}${esc(g.venue || '')}${clickable ? `<span class="box-link">${hasPbp(g.mid) ? 'Play-by-play' : 'Match'} →</span>`
+    <div class="venue">${phaseLabel(COMP_BY_ID[cid], g.mid) || g.ff || (complete && g.hs == null) ? `<div class="po-line">${phaseLabel(COMP_BY_ID[cid], g.mid) ? `<span class="po-tag">${esc(phaseLabel(COMP_BY_ID[cid], g.mid))}</span> ` : ''}${gameFlag(g)}</div>` : ''}${esc(g.venue || '')}${clickable ? `<a class="box-link row-link" href="#/c/${cid}/box/${g.mid}">${hasPbp(g.mid) ? 'Play-by-play' : 'Match'} →</a>`
       : g.st === 'NOT_PLAYED' ? `<span class="box-link np-flag" data-imtip="${esc(g.np || 'Never played')}">Not played</span>`
       : (complete ? '' : `<span class="box-link" style="color:var(--text-faint);font-weight:500;">${esc(g.time || 'Scheduled')}</span>`)}</div>
   </div>`;
@@ -463,9 +463,9 @@ function renderTeams(cid) {
     <div class="team-grid">
       ${rows.map(r => {
         const roster = (c.roster[r.tid] || []).length;
-        return `<div class="team-card" onclick="HS.go('#/c/${cid}/team/${r.tid}')">
+        return `<div class="team-card" data-href="#/c/${cid}/team/${r.tid}">
           <div class="team-card-head">${crest(r.name, 44)}
-            <div><div class="team-card-name">${esc(r.name)}</div>
+            <div><div class="team-card-name"><a class="row-link" href="#/c/${cid}/team/${r.tid}">${esc(r.name)}</a></div>
               <div class="team-card-rank">${r.s ? ordinal(r.s.pos) + ' · ' + r.s.w + '–' + r.s.l : 'No standings row'}</div></div>
           </div>
           <div class="team-card-stats">
@@ -528,8 +528,8 @@ function teamRoster(cid, pids, roster, statByPid, tid) {
       ${anyStats ? `<th class="nosort"${gloss('G')}>G</th><th class="nosort"${gloss('PTS')}>PTS</th><th class="nosort"${gloss('PPG')}>PPG</th><th class="nosort"${gloss('RPG')}>RPG</th><th class="nosort" style="padding-right:20px;"${gloss('APG')}>APG</th>` : '<th class="nosort" style="padding-right:20px;"></th>'}</tr></thead>
       <tbody>${rows.map(r => {
         const p = r.p, b = r.b;
-        return `<tr class="clickable" onclick="HS.go('#/p/${r.pid}')" style="cursor:pointer;">
-          <td class="left"><div class="player-cell"><div class="avatar">${initials(personName(r.pid))}</div><div class="p-name">${esc(personName(r.pid))}</div></div></td>
+        return `<tr class="clickable" data-href="#/p/${r.pid}">
+          <td class="left"><div class="player-cell"><div class="avatar">${initials(personName(r.pid))}</div><div class="p-name"><a class="row-link" href="#/p/${r.pid}">${esc(personName(r.pid))}</a></div></div></td>
           <td>${has(b.num) ? esc(b.num) : '—'}</td><td>${esc(b.pos || '—')}</td>
           <td>${has(b.ht) ? b.ht + ' cm' : '—'}</td><td>${has(b.wt) ? b.wt + ' kg' : '—'}</td>
           <td>${has(b.age) ? b.age : '—'}</td><td>${esc(b.nat || '—')}</td>
@@ -549,11 +549,11 @@ function teamResults(cid, name, games) {
     ${done.length ? done.map(g => {
       const home = g.h === name, own = home ? g.hs : g.as, opp = home ? g.as : g.hs;
       const win = own > opp;
-      return `<div class="row ${g.box ? 'clickable' : ''}" ${g.box ? `onclick="HS.go('#/c/${cid}/box/${g.mid}')"` : ''}>
+      return `<div class="row ${g.box ? 'clickable' : ''}" ${g.box ? `data-href="#/c/${cid}/box/${g.mid}"` : ''}>
         <div class="r-date"><div class="d1">${fmtDateShort(g.date)}</div><div>${g.date ? g.date.slice(0, 4) : ''}</div></div>
         <div class="team">${crest(home ? g.a : g.h)}<span class="name">${home ? '' : '@ '}${esc(home ? g.a : g.h)}</span></div>
         <div class="team"><span class="name ${win ? 'win-txt' : 'loss-txt'}">${win ? 'W' : 'L'} ${fmt0(own)}–${fmt0(opp)}</span></div>
-        <div class="venue">${esc(g.venue || '')}${g.box ? '<span class="box-link">Box score →</span>' : ''}</div>
+        <div class="venue">${esc(g.venue || '')}${g.box ? `<a class="box-link row-link" href="#/c/${cid}/box/${g.mid}">Box score →</a>` : ''}</div>
       </div>`;
     }).join('') : `<div class="empty-row"><span class="empty-dot"></span>No completed games.</div>`}
     ${up.length ? `<div class="card-head" style="border-top:1px solid var(--border);">Upcoming</div>${up.map(g => gameRow(cid, g)).join('')}` : ''}

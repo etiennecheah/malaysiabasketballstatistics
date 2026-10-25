@@ -481,7 +481,7 @@ function renderCompare() {
     const wa = meets.filter(m => m.aw).length;
     const tp = cmpTape(ta, tb, 'pg');
     return `<div class="card cmp-card">
-      <div class="card-head">When they met<span class="head-sub">every published game with the two of them on opposite benches</span></div>
+      <div class="card-head"><h2 class="ch-t">When they met</h2><span class="head-sub">every published game with the two of them on opposite benches</span></div>
       <div class="h2h-top">
         <div><div class="cmp-biglabel">Games ${esc(nameA.split(' ')[0])}'s teams won</div><div class="h2h-rec a">${wa}</div></div>
         <div class="cmp-biglabel" style="text-align:center">${meets.length} meeting${meets.length > 1 ? 's' : ''}<br>
@@ -511,7 +511,7 @@ function renderCompare() {
         <div class="fp-note" style="margin-top:8px;max-width:92ch;">${esc(nameA)} and ${esc(nameB)} have never appeared in the same competition, so there is no field that could hold both of their per-game figures. Putting those figures side by side would compare two different levels of opposition and call it a difference between two players — this page will not do that. What it can show is <b>where each of them stands inside his own strongest field</b>, on one 0–100 scale.</div>
       </div>
       <div class="card cmp-card">
-        <div class="card-head">Each inside his own competition<span class="head-sub">percentile, the one scale that survives a change of field</span></div>
+        <div class="card-head"><h2 class="ch-t">Each inside his own competition</h2><span class="head-sub">percentile, the one scale that survives a change of field</span></div>
         <div class="cmp-duel">
           <div class="cmp-bigwrap a"><div class="cmp-biglabel">Efficiency per game</div><div class="cmp-big a">${fmt1(ra.read.eff)}</div>
             <div class="cmp-bigsub">${ra.read.g} games · #${ra.read.effRank} of ${ra.read.effPool}</div>
@@ -560,7 +560,7 @@ function renderCompare() {
 
     <div class="cmp-two">
     <div class="card cmp-card">
-      <div class="card-head">The duel<span class="head-sub">six basic measures · percentile inside ${esc(label)}</span></div>
+      <div class="card-head"><h2 class="ch-t">The duel</h2><span class="head-sub">six basic measures · percentile inside ${esc(label)}</span></div>
       <div class="cmp-duel">
         <div class="cmp-bigwrap a"><div class="cmp-biglabel">Efficiency per game</div><div class="cmp-big a">${fmt1(ra.read.eff)}</div>
           <div class="cmp-bigsub">${ra.read.g} games · #${ra.read.effRank} of ${ra.read.effPool}</div></div>
@@ -582,7 +582,7 @@ function renderCompare() {
       <div class="note">Each axis is a percentile inside ${esc(label)}'s own field, so both shapes are drawn against one yardstick.</div>
     </div>
     ${highs ? `<div class="card cmp-card">
-      <div class="card-head">Best single games<span class="head-sub">each man's highs inside ${esc(label)}</span></div>
+      <div class="card-head"><h2 class="ch-t">Best single games</h2><span class="head-sub">each man's highs inside ${esc(label)}</span></div>
       <div class="tp">${highs}</div>
       <div class="note">The most each of them has put up in one game in this field, with the opponent and year underneath. From the published box scores.</div>
     </div>` : ''}
@@ -590,7 +590,7 @@ function renderCompare() {
     ${typeof cmpShotCard === 'function' ? cmpShotCard(A, B, cids, label) : ''}
 
     <div class="card cmp-card">
-      <div class="card-head tp-head"><span>Tale of the tape<span class="head-sub">${esc(label)} · ${tp.rows} measures · ${perLabel}</span></span>
+      <div class="card-head tp-head"><span><h2 class="ch-t">Tale of the tape</h2><span class="head-sub">${esc(label)} · ${tp.rows} measures · ${perLabel}</span></span>
         <span class="seg">${CMP_PER.map(([k, l]) => `<button class="seg-btn ${per === k ? 'seg-on' : ''}" data-cmpper="${k}">${l}</button>`).join('')}</span></div>
       <div class="tp tp-cols"><div>${['Scoring', 'Shooting', 'Rebounding', 'Playmaking'].map(k => tp.sec[k] || '').join('')}</div>
         <div>${['Impact', 'Defence', 'Availability'].map(k => tp.sec[k] || '').join('')}</div></div>

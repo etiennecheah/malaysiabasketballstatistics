@@ -296,8 +296,8 @@ function smNotes(list) {
     (all3[0] ? `. From three: ${all3[1]}/${all3[0]} (${smPct(all3[1] / all3[0])}) against ${smPct(lgOf('C3L', 'C3R', 'W3L', 'W3R', 'T3'))}.` : '.')]);
   const L = list.filter(s => s.x < -0.75), R = list.filter(s => s.x > 0.75), mk = a => a.reduce((t, s) => t + s.made, 0);
   const sides = L.length && R.length ? `<div class="sm-side"><div><small>Left side of the floor</small><b>${mk(L)}/${L.length} · ${smPct(mk(L) / L.length)}</b></div><div><small>Right side of the floor</small><b>${mk(R)}/${R.length} · ${smPct(mk(R) / R.length)}</b></div></div>` : '';
-  return `<div class="sm-notes"><h3>What stands out</h3>${sm.a < 40 ? `<p class="sm-small">${sm.a} shots: a zone with only a few attempts can swing a long way on one make, so read the small ones as a lean.</p>` : ''}
-    ${sides}${N.map(([c, h, p]) => `<div class="sm-n ${c === 'u' ? 'u' : c === 'd' ? 'd' : ''}"><h4>${h}</h4><p>${p}</p></div>`).join('')}</div>`;
+  return `<div class="sm-notes"><h2>What stands out</h2>${sm.a < 40 ? `<p class="sm-small">${sm.a} shots: a zone with only a few attempts can swing a long way on one make, so read the small ones as a lean.</p>` : ''}
+    ${sides}${N.map(([c, h, p]) => `<div class="sm-n ${c === 'u' ? 'u' : c === 'd' ? 'd' : ''}"><h3>${h}</h3><p>${p}</p></div>`).join('')}</div>`;
 }
 
 /* ------------------------------------------------------- the drawing */

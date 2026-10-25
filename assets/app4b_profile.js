@@ -596,8 +596,8 @@ function playerLog(pid, career) {
         <tbody>${x.lines.map(y => {
           const l = y.l, g = y.g;
           const own = l.team === g.h ? g.hs : g.as, opp = l.team === g.h ? g.as : g.hs;
-          return `<tr class="clickable" onclick="HS.go('#/c/${x.c.id}/box/${g.mid}')" style="cursor:pointer;">
-            <td class="left">${fmtDateShort(g.date)} <span style="color:var(--text-faint);">${g.date ? g.date.slice(0, 4) : ''}</span></td>
+          return `<tr class="clickable" data-href="#/c/${x.c.id}/box/${g.mid}">
+            <td class="left"><a class="row-link" href="#/c/${x.c.id}/box/${g.mid}">${fmtDateShort(g.date)}</a> <span style="color:var(--text-faint);">${g.date ? g.date.slice(0, 4) : ''}</span></td>
             <td class="left">${esc(l.team === g.h ? g.a : g.h)} <span class="${own > opp ? 'win-txt' : 'loss-txt'}">${own > opp ? 'W' : 'L'} ${fmt0(own)}–${fmt0(opp)}</span>${phaseLabel(x.c, g.mid) ? ` <span class="po-tag">${esc(phaseLabel(x.c, g.mid))}</span>` : ''}</td>
             <td>${esc(l.min || '—')}</td><td class="lead">${fmt0(l.pts)}</td>
             <td>${has(l.fgm) ? l.fgm + '/' + l.fga : '—'}</td><td>${has(l.tpm) ? l.tpm + '/' + l.tpa : '—'}</td><td>${has(l.ftm) ? l.ftm + '/' + l.fta : '—'}</td>

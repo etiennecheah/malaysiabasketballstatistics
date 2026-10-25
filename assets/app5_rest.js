@@ -86,8 +86,8 @@ function boxTable(title, teamName, lines) {
     <div class="table-scroll sticky-first"><table>
       <thead><tr><th class="left nosort">Player</th>${BOX_COLS.map(([k, l], i) => `<th class="nosort" ${i === BOX_COLS.length - 1 ? 'style="padding-right:20px;"' : ''}${gloss(l)}>${l}</th>`).join('')}</tr></thead>
       <tbody>
-        ${lines.map(l => `<tr class="clickable" ${l.pid ? `onclick="HS.go('#/p/${l.pid}')" style="cursor:pointer;"` : ''}>
-          <td class="left"><div class="player-cell">${has(l.num) && l.num !== '' ? `<span class="num-pill">#${esc(l.num)}</span>` : ''}<span class="p-name">${esc(l.name || (l.pid ? personName(l.pid) : '—'))}</span>${l.starter ? '<span style="color:var(--accent);font-weight:700;font-size:10px;">★</span>' : ''}</div></td>
+        ${lines.map(l => `<tr class="clickable" ${l.pid ? `data-href="#/p/${l.pid}"` : ''}>
+          <td class="left"><div class="player-cell">${has(l.num) && l.num !== '' ? `<span class="num-pill">#${esc(l.num)}</span>` : ''}<span class="p-name">${l.pid ? `<a class="row-link" href="#/p/${l.pid}">${esc(l.name || personName(l.pid))}</a>` : esc(l.name || '—')}</span>${l.starter ? '<span style="color:var(--accent);font-weight:700;font-size:10px;">★</span>' : ''}</div></td>
           ${BOX_COLS.map(([k], i) => `<td class="${k === 'pts' ? 'lead' : ''} ${k === 'pm' && has(l.pm) ? (l.pm > 0 ? 'pm-pos' : (l.pm < 0 ? 'pm-neg' : '')) : ''}" ${i === BOX_COLS.length - 1 ? 'style="padding-right:20px;"' : ''}>${boxCell(l, k)}</td>`).join('')}
         </tr>`).join('')}
         <tr class="totals"><td class="left">Team totals</td>
@@ -392,7 +392,88 @@ function oaHang(root) {
   });
 }
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => oaHang());
-function afterRender() { oaHang(); if (typeof pvPathFit === 'function') pvPathFit(); if (typeof statsAfterRender === 'function') statsAfterRender(); if (typeof shotsAfterRender === 'function') shotsAfterRender(); if (typeof reportAfterRender === 'function') reportAfterRender(); if (typeof cmpShotsAfterRender === 'function') cmpShotsAfterRender(); if (typeof milestonesAfterRender === 'function') milestonesAfterRender(); if (typeof recordsAfterRender === 'function') recordsAfterRender(); }
+function afterRender() { fbToUrl(); oaHang(); if (typeof pvPathFit === 'function') pvPathFit(); if (typeof statsAfterRender === 'function') statsAfterRender(); if (typeof shotsAfterRender === 'function') shotsAfterRender(); if (typeof reportAfterRender === 'function') reportAfterRender(); if (typeof cmpShotsAfterRender === 'function') cmpShotsAfterRender(); if (typeof milestonesAfterRender === 'function') milestonesAfterRender(); if (typeof recordsAfterRender === 'function') recordsAfterRender(); }
+
+/* ---- web interface guidelines (update-76) ---------------------------------------------- */
+// The skip link moves focus past the site bar to the page itself, without touching the address.
+document.addEventListener('click', e => {
+  const sk = e.target.closest && e.target.closest('[data-skip]'); if (!sk) return;
+  e.preventDefault();
+  const m = document.getElementById('main'); if (m) { m.focus(); m.scrollIntoView(); }
+});
+// A row that opens a page: a click anywhere on it follows the row's own link (a.row-link, which
+// the keyboard and screen readers reach); Ctrl/Cmd-click or a middle click opens it in a new tab.
+function rowOf(e) {
+  const row = e.target.closest && e.target.closest('[data-href]');
+  if (!row || e.target.closest('a, button, input, select, textarea, label, summary')) return null;
+  if (String(window.getSelection ? getSelection() : '')) return null;     // selecting text, not opening
+  return row;
+}
+function rowUrl(row) { const a = row.querySelector('a.row-link[href]'); return a ? a.href : null; }
+document.addEventListener('click', e => {
+  if (e.defaultPrevented || e.button !== 0) return;
+  const row = rowOf(e); if (!row) return;
+  if (e.metaKey || e.ctrlKey || e.shiftKey) { const u = rowUrl(row); if (u) { window.open(u, '_blank', 'noopener'); return; } }
+  HS.go(row.dataset.href);
+});
+document.addEventListener('auxclick', e => {
+  if (e.button !== 1) return;
+  const row = rowOf(e), u = row && rowUrl(row);
+  if (u) { e.preventDefault(); window.open(u, '_blank', 'noopener'); }
+});
+// Anything that scrolls sideways can be focused and scrolled with the arrow keys, and is named.
+const SF_SEL = '.table-scroll, .tbl-wrap, .rp-ev, .pg-runs, .hmg-scroll, .sticky-first, .pg-table-x, .pg-body table';
+function sfName(el) {
+  const box = el.closest('.card, section, .pg-box, .rp-rep') || el.parentElement;
+  const h = box && box.querySelector('h1, h2, h3, h4, .card-head, .card-title, caption');
+  const t = h ? h.textContent.replace(/\s+/g, ' ').trim().slice(0, 80) : '';
+  return t ? t + ', scrolls sideways' : 'Table, scrolls sideways';
+}
+function scrollFocus() {
+  const used = {};
+  document.querySelectorAll(SF_SEL).forEach(el => {
+    if (el.parentElement && el.parentElement.closest('[data-sf]')) return;     // inside one already named
+    const over = el.scrollWidth > el.clientWidth + 1;
+    if (el.dataset.sf && over) { const nm = el.getAttribute('aria-label').replace(/ \(\d+\)$/, ''); used[nm] = (used[nm] || 0) + 1; return; }
+    if (over && !el.hasAttribute('tabindex')) {
+      el.setAttribute('tabindex', '0'); el.setAttribute('role', 'region'); const nm = sfName(el), k = used[nm] = (used[nm] || 0) + 1;
+      el.setAttribute('aria-label', k > 1 ? nm + ' (' + k + ')' : nm); el.dataset.sf = '1';
+    } else if (!over && el.dataset.sf) {
+      el.removeAttribute('tabindex'); el.removeAttribute('role'); el.removeAttribute('aria-label'); delete el.dataset.sf;
+    }
+  });
+}
+let SF_T = 0;
+const sfSoon = () => { clearTimeout(SF_T); SF_T = setTimeout(scrollFocus, 120); };
+if (document.getElementById('app')) new MutationObserver(sfSoon).observe(document.getElementById('app'), { childList: true, subtree: true });
+window.addEventListener('resize', sfSoon);
+// The filters of Players, Competitions and Teams live in the address (?series=…&from=…), so a
+// reload, a bookmark or a shared link opens the same list. Changing one replaces the address,
+// so Back still leaves the page in one step.
+const FB_URL = {
+  players: [() => GFILTER, [['tier', 'tier'], ['series', 'series'], ['yFrom', 'from'], ['yTo', 'to'], ['q', 'q']]],
+  competitions: [() => FILTER, [['year', 'year'], ['series', 'series'], ['gender', 'gender'], ['level', 'level'], ['q', 'q']]],
+  teams: [() => TEAMHUB, [['cat', 'cat'], ['q', 'q']]]
+};
+const FB_PAGE = { glob: 'players', comp: 'competitions', team: 'teams' };
+function fbPage() { const h = HS.hash().replace(/^#\/?/, '').split('/')[0]; return FB_URL[h] ? h : ''; }
+let FB_SEEN = null;   // the query this page last read or wrote: a redraw after a filter change must not read the old one back
+function fbFromUrl() {
+  const pg = fbPage(); if (!pg || !location.search || location.search === FB_SEEN) return;
+  FB_SEEN = location.search;
+  const [st, keys] = FB_URL[pg], q = new URLSearchParams(location.search), o = st();
+  keys.forEach(([k, n]) => { if (q.has(n)) o[k] = q.get(n); });
+}
+function fbToUrl() {
+  const pg = fbPage(); if (!pg) return;
+  const [st, keys] = FB_URL[pg], o = st(), q = new URLSearchParams();
+  keys.forEach(([k, n]) => { const v = o[k]; if (v !== '' && v != null) q.set(n, v); });
+  const qs = q.toString(), want = location.pathname + (qs ? '?' + qs : '') + location.hash;
+  if (want !== location.pathname + location.search + location.hash) history.replaceState(history.state, '', want);
+  FB_SEEN = location.search;
+}
+document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-fb],[data-fbclear]')) setTimeout(fbToUrl, 0); });
+document.addEventListener('input', e => { if (/^(comp|glob|team)-q$/.test(e.target.id)) setTimeout(fbToUrl, 400); });
 
 HS.start();
 

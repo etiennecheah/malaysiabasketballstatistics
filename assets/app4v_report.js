@@ -424,7 +424,7 @@ function rpNotesDev(R, imp, dec) {
 /* against other players: kept to one note, with the ranks one click away */
 function rpAgainst(R) {
   const W = R.W;
-  if (!R.graded.length) return `<aside class="rp-aside"><div class="rp-aside-i" aria-hidden="true">i</div><div><b>Against other players</b><p>${W.He} has no event yet with enough minutes to be ranked against the field.</p></div></aside>`;
+  if (!R.graded.length) return `<div class="rp-aside" role="note"><div class="rp-aside-i" aria-hidden="true">i</div><div><b>Against other players</b><p>${W.He} has no event yet with enough minutes to be ranked against the field.</p></div></div>`;
   const top = R.strengths.find(x => !['ft', 'line'].includes(x.s.k)) || R.strengths[0];
   const gap = R.gaps[0], imp = R.prof.find(x => x.s.k === 'impact');
   const nowNoun = R.mainCat === 'Senior' ? 'senior events' : 'age-group events';
@@ -437,13 +437,13 @@ function rpAgainst(R) {
   const key = c => `<span class="rp-key" style="background:${RP_LV[c].c};${RP_LV[c].sh === 'circle' ? 'border-radius:50%' : RP_LV[c].sh === 'diamond' ? 'transform:rotate(45deg) scale(.8)' : ''}"></span>`;
   const tbl = `<div class="rp-htw"><table class="rp-ht"><thead><tr><th>Skill</th>${cats.map(c => `<th>${key(c)}${c}<br><span>${R.byCat[c].length} event${R.byCat[c].length === 1 ? '' : 's'}</span></th>`).join('')}<th>Last 12<br>months</th></tr></thead><tbody>` +
     R.prof.map(x => `<tr class="rp-hrow${x.s.k === RP.metric ? ' on' : ''}" data-rpk="${x.s.k}"><td><button type="button" data-rpm="${x.s.k}">${x.s.n}</button></td>${cats.map(c => x.cat[c] == null ? '<td class="na">–</td>' : `<td style="${rpCell(x.cat[c])}" title="${rpEvRanks(R.byCat[c], x.s, 8)}">#${rpPer100(x.cat[c])}</td>`).join('')}${x.now == null ? '<td class="na">–</td>' : `<td style="${rpCell(x.now)}" title="${rpEvRanks(R.main, x.s, 8)}">#${rpPer100(x.now)}</td>`}</tr>`).join('') + '</tbody></table></div>';
-  return `<aside class="rp-aside"><div class="rp-aside-i" aria-hidden="true">i</div><div><b>Against other players</b><p>${txt}</p>
+  return `<div class="rp-aside" role="note"><div class="rp-aside-i" aria-hidden="true">i</div><div><b>Against other players</b><p>${txt}</p>
     <details class="rp-aside-more"><summary>Ranks at each level</summary>
       <p class="rp-lede">Where ${W.he} ranks among every 100 rotation players at each level: #1 is the best, #50 the middle of the field. Events of different sizes are scaled to 100. Pick a row to trace it.</p>
       <div class="rp-lvl"><div>${tbl}<div class="rp-scale" aria-hidden="true"><span>Near the bottom</span>${[0, 1, 2, 3, 4].map(b => `<i style="background:var(--rp-dv-${b})"></i>`).join('')}<span>Near the top</span></div></div>
       <div><div class="rp-chips" role="group" aria-label="Skill to trace">${RP_SKILLS.map(s => `<button type="button" data-rpm="${s.k}" aria-pressed="${s.k === RP.metric}">${s.n}</button>`).join('')}</div>
         <div class="rp-legend" id="rp-newest"></div><div class="rp-chart"><svg id="rp-arc" viewBox="0 0 640 290" role="img"></svg><div class="rp-tip" id="rp-tip"></div></div></div></div>
-    </details></div></aside>`;
+    </details></div></div>`;
 }
 
 function rpTable(R) {

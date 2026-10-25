@@ -62,6 +62,7 @@ function matchHead(cid, mid, tab) {
   return `<div class="page">
     <div class="crumb"><a href="#/c/${cid}/schedule">Games</a> / ${esc(g.h)} v ${esc(g.a)}</div>
     <div class="card mmatch">
+      <h1 class="sr-only">${esc(g.h)}${g.hs != null ? ' ' + fmt0(g.hs) + ' – ' + fmt0(g.as) + ' ' : ' v '}${esc(g.a)}</h1>
       <div class="matchup-head">
         <div class="mside">${crest(g.h, 48)}<div><div class="m-name">${esc(g.h)}</div><div class="m-rec">${esc(fmtDate(g.date))}</div></div></div>
         <div class="m-mid"><div class="m-score"><span class="h">${fmt0(g.hs)}</span><span class="d">–</span><span class="a">${fmt0(g.as)}</span></div><div class="m-status">${g.st === 'COMPLETE' ? (g.ff ? 'Forfeit · awarded 20–0' : g.hs == null ? 'Final · score not published' : g.sb ? 'Final · score from the box score' : 'Final') : g.st === 'NOT_PLAYED' ? 'Not played' : esc(g.st)}</div>${phaseLabel(c, mid) ? `<div class="m-round"><span class="po-tag">${esc(phaseLabel(c, mid))}</span></div>` : ''}${typeof watchLink === 'function' ? watchLink(mid, g.st === 'COMPLETE' ? 'Watch the game with stats' : 'Watch with live stats') : ''}</div>

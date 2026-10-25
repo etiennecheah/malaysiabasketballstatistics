@@ -7,7 +7,8 @@ function navShell(links, sub) {
   const statsPage = /^#\/stats/.test(h) ? (/^#\/stats\/clutch/.test(h) ? 'clutch' : 'lineups')
     : /^#\/compare\/lineups/.test(h) ? 'cmp-lineups' : /^#\/compare/.test(h) ? 'cmp-players' : '';
   return `
-  <div class="nav">
+  <a class="skip-link" href="#main" data-skip>Skip to content</a>
+  <nav class="nav" aria-label="Site">
     <div class="nav-left">
       <a href="#/" class="wordmark" style="color:#fff;"><span class="dot"></span>${SITE}</a>
       <div class="nav-links">${links}</div>
@@ -19,12 +20,12 @@ function navShell(links, sub) {
       </button>
     </div>
     ${typeof STATS !== 'undefined' ? STATS.navMenu(statsPage) : ''}
-  </div>
+  </nav>
   ${typeof liveBar === 'function' ? liveBar() : ''}
   ${sub}`;
 }
 function subnav(label, crumb, links) {
-  return `<div class="subnav"><div class="subnav-inner">
+  return `<div class="subnav" role="navigation" aria-label="Section"><div class="subnav-inner">
     <div class="subnav-eyebrow"><span class="subnav-label">${esc(label)}</span>${crumb ? `<span class="subnav-sep">·</span>${crumb}` : ''}</div>
     ${links && links.length ? `<div class="subnav-links">${links.map(([h, t, a]) => `<a href="${h}" class="subnav-link ${a ? 'active' : ''}">${esc(t)}</a>`).join('')}</div>` : ''}
   </div></div>`;
@@ -77,9 +78,9 @@ function renderNav(state, cid, tab) {
 // the same every time: worked out once (the first number formatting starts the locale data, slow on a phone)
 let FOOTER = null;
 function renderFooter() {
-  return FOOTER || (FOOTER = `<div class="footer-note">
+  return FOOTER || (FOOTER = `<footer class="footer-note">
     ${SITE} — a database of Malaysian basketball competitions. ${COMPS.length} competitions, ${Object.keys(PERSONS).length.toLocaleString()} players and ${COMPS.reduce((a, c) => a + c.nGames, 0).toLocaleString()} fixtures, all sourced from the MABA / Genius Sports competition portal. Every figure shown is the source's own published value or a total/percentage computed from it, and gaps in the source are labelled rather than filled in. The exception is the player Advanced tab, where PER, usage, Win Shares and BPM are computed here from box scores — Win Shares and BPM are models, their numbers are estimates, and the tab says so and shows their uncertainty.
-  </div>`);
+  </footer>`);
 }
 
 /* ---------------------------- router ---------------------------- */
@@ -120,11 +121,12 @@ function route() {
     const first = !ROUTE_DRAWN && HS.PATHS && location.pathname === HS.BOOT_PATH && !!app.firstElementChild;
     ROUTE_DRAWN = true;
     if (first) return;
-    app.innerHTML = renderNav('hub', null, '') + '<div class="page"><div class="page-head"><div><h1 class="page-title">Loading…</h1></div></div></div>' + renderFooter();
+    app.innerHTML = renderNav('hub', null, '') + '<main id="main" tabindex="-1"><div class="page"><div class="page-head"><div><h1 class="page-title">Loading…</h1></div></div></div></main>' + renderFooter();
     window.scrollTo(0, 0);
     return;
   }
   ROUTE_DRAWN = true;
+  if (typeof fbFromUrl === 'function') fbFromUrl();   // filters written in the address (?series=…)
 
   if (parts.length === 0 || parts[0] === 'home') {
     // Home is the front door: live games when there are any, otherwise what's next and what just happened
@@ -194,7 +196,7 @@ function route() {
     body = renderHub();
   }
 
-  app.innerHTML = renderNav(state, cid, tab) + body + renderFooter();
+  app.innerHTML = renderNav(state, cid, tab) + '<main id="main" tabindex="-1">' + body + '</main>' + renderFooter();
   if (samePlayer) pvKeepScroll(keepY); else window.scrollTo(0, 0);
   if (typeof afterRender === 'function') afterRender();
   if (typeof hsApplyMeta === 'function') hsApplyMeta(HS.hash());

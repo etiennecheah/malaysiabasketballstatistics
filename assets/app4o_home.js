@@ -40,7 +40,7 @@ function hmCountdown(ms) {
 }
 /* ---------------------------- sections ---------------------------- */
 function renderHome() {
-  return `<div class="hm">
+  return `<div class="hm"><h1 class="sr-only">HoopStats MY: Malaysian basketball statistics</h1>
     <section class="hm-hero">
       <div class="bloom" style="--team:${teamBloom((hmUpcoming()[0] || {}).h || '')}"><i class="b1"></i><i class="b2"></i></div><div class="grain"></div>
       <div class="hm-hero-in hmg" id="hm-games">${hmGamesInner()}</div>

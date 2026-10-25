@@ -366,7 +366,7 @@ function compCrest(c, size) {
   const sz = size || 30;
   if (key) {
     const dark = COMP_MARK_DARK[key] ? ' comp-crest-dark' : '';
-    return `<span class="comp-crest${dark}" style="width:${sz}px;height:${sz}px;"><img src="${COMPLOGOS[key]}" alt=""></span>`;
+    return `<span class="comp-crest${dark}" style="width:${sz}px;height:${sz}px;"><img src="${COMPLOGOS[key]}" alt="" loading="lazy" decoding="async"></span>`;
   }
   // no mark supplied: the series' initials, or the abbreviation it actually goes by
   const code = { 'Women\'s Basketball Alliance': 'WMBA' }[c.series] || teamCode(c.series);
@@ -514,13 +514,13 @@ function crest(name, size) {
   const sz = size || 26;
   const logo = teamLogo(name);
   if (logo) {
-    return `<img class="crest-logo${crestPlate(name)}" src="${logo}" alt="" style="width:${sz}px;height:${sz}px;">`;
+    return `<img class="crest-logo${crestPlate(name)}" src="${logo}" alt="" width="${sz}" height="${sz}" loading="lazy" decoding="async" style="width:${sz}px;height:${sz}px;">`;
   }
   const flag = flagOf(name);
   if (flag) {
     // flags are 2:1; they sit letterboxed inside the same square every other
     // crest occupies, so a column of badges still lines up
-    return `<span class="crest-flag" style="width:${sz}px;height:${sz}px;"><img src="${FLAGS[flag]}" alt=""></span>`;
+    return `<span class="crest-flag" style="width:${sz}px;height:${sz}px;"><img src="${FLAGS[flag]}" alt="" loading="lazy" decoding="async"></span>`;
   }
   return `<span class="swatch crest" style="background-color:${teamColor(name)};width:${sz}px;height:${sz}px;font-size:${Math.round(sz * 0.36)}px;">${esc(teamCode(name))}</span>`;
 }
@@ -558,18 +558,18 @@ function avatar(pid, name) {
   const n = name || personName(pid);
   // a square head crop cut at build time (avatars.py) fits every portrait the same way
   const av = (DB.avatars || {})[pid];
-  if (av) return `<span class="avatar avatar-face"><img src="${av}" alt=""></span>`;
+  if (av) return `<span class="avatar avatar-face"><img src="${av}" alt="" loading="lazy" decoding="async"></span>`;
   return PHOTOS[pid]
-    ? `<span class="avatar avatar-img"><img src="${PHOTOS[pid]}" alt=""></span>`
+    ? `<span class="avatar avatar-img"><img src="${PHOTOS[pid]}" alt="" loading="lazy" decoding="async"></span>`
     : `<span class="avatar">${esc(initials(n))}</span>`;
 }
 /* The mark beside a team name in a list: the club's crest, the state's flag,
    or the deterministic colour chip the site falls back to. */
 function teamMark(name) {
   const logo = teamLogo(name);
-  if (logo) return `<img class="p-mark${crestPlate(name)}" src="${logo}" alt="">`;
+  if (logo) return `<img class="p-mark${crestPlate(name)}" src="${logo}" alt="" loading="lazy" decoding="async">`;
   const flag = flagOf(name);
-  if (flag) return `<img class="p-mark p-mark-flag" src="${FLAGS[flag]}" alt="">`;
+  if (flag) return `<img class="p-mark p-mark-flag" src="${FLAGS[flag]}" alt="" loading="lazy" decoding="async">`;
   return `<span class="p-sw" style="background:${teamColor(name)};"></span>`;
 }
 

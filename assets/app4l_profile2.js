@@ -292,7 +292,7 @@ function pvPath(d, avail) {
     const g = `<g class="mk" transform="translate(${m.x},${m.cy})" data-imtip="${esc(tip)}"><rect x="${-w / 2 - 5}" y="${-h / 2 - 5}" width="${w + 10}" height="${h + 10}" rx="9" class="ko"/>${img}</g>`;
     s.push(cid ? `<a href="#/c/${cid}" aria-label="${esc(e0.short + ' ' + m.y)}">${g}</a>` : g);
   });
-  return `<div class="card pv-cpath"><div class="pv-cpath-s" data-pid="${d.pid}"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Career path: teams by level and year">${s.join('')}</svg></div></div>`;
+  return `<div class="card pv-cpath"><div class="pv-cpath-s" data-pid="${d.pid}"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="group" aria-label="Career path: teams by level and year">${s.join('')}</svg></div></div>`;
 }
 // drawn once at the default width; redrawn to the card's own width once it is on screen
 function pvPathFit() {
@@ -475,7 +475,7 @@ function pvLog(pid, d) {
     <div class="pv-legend"><span><i style="background:var(--accent)"></i>Win</span><span><i style="background:var(--pv-bar)"></i>Loss</span>${G.some(g => g.phase) ? '<span><i style="background:var(--accent-2)"></i>Playoff game</span>' : ''}<span>Bar height is points</span></div>
     <div class="table-scroll"><table class="pv-table"><thead><tr><th class="left nosort">Date</th><th class="left nosort">Opponent</th><th class="left nosort">Result</th>${['MIN', 'PTS', 'FG', '3P', 'FT', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', '+/-', 'EFF'].map(h => `<th class="nosort"${gloss(h)}>${h}</th>`).join('')}</tr></thead>
     <tbody>${G.slice().reverse().map(g => { const l = g.l, reb = pvReb(l), h = (k, v) => v === hi[k] && v > 0 ? 'pv-hi' : '';
-      return `<tr class="clickable" onclick="HS.go('#/c/${g.cid}/box/${g.mid}')"><td class="left">${pvDay(g.date, false)}</td><td class="left"><span class="pv-teamc">${g.home ? 'vs' : '@'} ${crest(g.oppRaw, 18)}${esc(g.oppName)}</span></td>
+      return `<tr class="clickable" data-href="#/c/${g.cid}/box/${g.mid}"><td class="left"><a class="row-link" href="#/c/${g.cid}/box/${g.mid}">${pvDay(g.date, false)}</a></td><td class="left"><span class="pv-teamc">${g.home ? 'vs' : '@'} ${crest(g.oppRaw, 18)}${esc(g.oppName)}</span></td>
       <td class="left"><span class="pv-wl ${g.win ? 'w' : 'l'}">${g.win ? 'W' : 'L'}</span>${g.own}–${g.opp}${g.phase ? ` <span class="pv-tag po">${esc(g.phase)}</span>` : ''}</td>
       <td>${Math.round(g.min)}</td><td class="${h('pts', l.pts)}">${fmt0(l.pts)}</td><td>${fmt0(l.fgm)}–${fmt0(l.fga)}</td><td>${fmt0(l.tpm)}–${fmt0(l.tpa)}</td><td>${fmt0(l.ftm)}–${fmt0(l.fta)}</td>
       <td class="${h('reb', reb)}">${reb}</td><td class="${h('ast', l.ast)}">${fmt0(l.ast)}</td><td class="${h('stl', l.stl)}">${fmt0(l.stl)}</td><td>${fmt0(l.blk)}</td><td>${fmt0(l.tov)}</td><td>${fmt0(l.pf)}</td><td>${fmtPM(l.pm)}</td><td class="${h('eff', l.eff)}">${fmt0(l.eff)}</td></tr>`; }).join('')}

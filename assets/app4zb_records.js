@@ -137,7 +137,7 @@ function rhHonours(m) {
     return `<div class="rh-dr${rhIn(i)}"><span class="rk">${rk}</span><div>${rhWho(pid, rhTeam(T.t))}<div class="rh-pips">${T.list.map(a => `<i class="${/MVP/.test(a) ? 'g' : 's'}" title="${esc(a)}"></i>`).join('')}</div></div><span class="n">${T.n}<small>${T.mvp ? T.mvp + ' MVP' : 'awards'}</small></span></div>`; }).join('');
   return `<div class="rh-honour">
     <section class="rh-card"><div class="rh-h"><h2>Roll of honour</h2></div>
-      <div class="rh-roll"><table><thead><tr><th></th><th>Champion</th>${cols.map(([, l, g]) => `<th class="${g ? 'g' : ''}">${l}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div></section>
+      <div class="rh-roll"><table><thead><tr><th><span class="sr-only">Year</span></th><th>Champion</th>${cols.map(([, l, g]) => `<th class="${g ? 'g' : ''}">${l}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div></section>
     <section class="rh-card"><div class="rh-h"><h2>Most decorated</h2></div><div class="rh-deco">${deco || '<div class="rh-none">—</div>'}</div></section>
   </div>`;
 }

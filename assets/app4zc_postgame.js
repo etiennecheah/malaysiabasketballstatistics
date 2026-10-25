@@ -97,7 +97,8 @@ function pgSheets(R, c) {
   const mirror = (rows) => `<div class="pg-mir">${rows.map(([k, a, b, hi, fmt, max]) => {
     const best = hi == null ? -1 : (hi ? (a > b ? 0 : b > a ? 1 : -1) : (a < b ? 0 : b < a ? 1 : -1)), M = max || Math.max(a, b) || 1;
     return `<div class="pg-mr"><span class="pg-v pg-l ${best === 0 ? 'pg-on' : ''}">${fmt(a)}</span><span class="pg-bar pg-l"><i class="${best === 1 ? 'pg-off' : ''}" style="width:${Math.min(100, a / M * 100)}%"></i></span><span class="pg-k">${k}</span><span class="pg-bar pg-r"><i class="${best === 0 ? 'pg-off' : ''}" style="width:${Math.min(100, b / M * 100)}%"></i></span><span class="pg-v ${best === 1 ? 'pg-on' : ''}">${fmt(b)}</span></div>`; }).join('')}</div>`;
-  const thead = (cols) => `<thead><tr>${cols.map(c => `<th class="${c[1] ? 'pg-' + c[1] : ''}">${c[0]}</th>`).join('')}</tr></thead>`;
+  // a corner cell with no title is a plain cell, not a header
+  const thead = (cols) => `<thead><tr>${cols.map(c => c[0] === '' ? `<td class="${c[1] ? 'pg-' + c[1] : ''}"></td>` : `<th class="${c[1] ? 'pg-' + c[1] : ''}">${c[0]}</th>`).join('')}</tr></thead>`;
 
   /* ---------------- page 1: summary ---------------- */
   const quarters = `<table class="pg-q">${thead([['Team', 'l']].concat(R.periods.map((_, i) => [i < 4 ? 'Q' + (i + 1) : 'OT' + (i - 3)]), [['Final']]))}<tbody>
@@ -112,7 +113,7 @@ function pgSheets(R, c) {
       <div class="pg-tm pg-r"><span><small class="${W === 1 ? 'pg-w' : ''}">${W === 1 ? (isFinal && R.champ === TN[W] ? 'Champion' : 'Winner') : 'Away'}</small><b>${esc(TN[1])}</b></span>${pgCrest(TN[1])}</div></div>
       <div class="pg-meta">${stage ? `<span class="pg-stage">${esc(stage)}</span>` : ''}<span><b>${esc(compName)}</b></span><span>${dt(R.date)}${R.time ? ' · ' + esc(R.time) : ''}</span><span>${esc(R.venue || '')}</span><span>Pace ${f1(R.pace)}</span></div></div>
     <p class="pg-headline">${headline} <span>${esc(TN[W])} led for ${mmss(R.lead_t[W])} and by as many as ${R.big[W]}.</span></p>
-    <div class="pg-two pg-w3"><div><h3>Score by quarter</h3>${quarters}</div><div><h3>Quick summary</h3>
+    <h2 class="sr-only">Summary</h2><div class="pg-two pg-w3"><div><h3>Score by quarter</h3>${quarters}</div><div><h3>Quick summary</h3>
       <div class="pg-mr" style="margin-bottom:2mm"><span class="pg-v pg-l pg-on pg-hc">${abbr(TN[0])}</span><span></span><span></span><span></span><span class="pg-v pg-on pg-ac">${abbr(TN[1])}</span></div>${quick}</div></div>
     <div class="pg-ins"><div class="pg-box"><h3>Key insights</h3><ul>${ins.slice(0, 5).map(x => `<li>${x}</li>`).join('')}</ul></div>
       <div class="pg-stack"><div class="pg-box pg-dark pg-sotg"><h3>Stat of the game</h3><div class="pg-n">${sotg.n}</div><p>${sotg.t}</p></div>
@@ -196,7 +197,7 @@ function pgSheets(R, c) {
       ${HAS_SH ? `<h2 class="pg-sec" style="margin-top:6mm">Shot zones</h2>${zoneTable}
       <div class="pg-box" style="margin-top:4mm"><h3>Shot insights</h3><ul>${shotIns.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}</div>
       <div><h2 class="pg-sec">Team comparison</h2>${cmpTable}</div></div>
-    ${HAS_SH ? `<div><h2 class="pg-sec">Shot charts</h2><div class="pg-courts">${[0, 1].map(sd => { const L = R.shots.filter(p => p[4] === sd); return `<div class="pg-court"><h4><span class="pg-dot" style="background:${sd ? AC : HC}"></span>${esc(TN[sd])}</h4>${courtSvg(L, sd ? AC : HC)}<p>${shotLine(L)} · filled = made, cross = missed</p></div>`; }).join('')}</div></div>` : ''}`);
+    ${HAS_SH ? `<div><h2 class="pg-sec">Shot charts</h2><div class="pg-courts">${[0, 1].map(sd => { const L = R.shots.filter(p => p[4] === sd); return `<div class="pg-court"><h3><span class="pg-dot" style="background:${sd ? AC : HC}"></span>${esc(TN[sd])}</h3>${courtSvg(L, sd ? AC : HC)}<p>${shotLine(L)} · filled = made, cross = missed</p></div>`; }).join('')}</div></div>` : ''}`);
 
   /* ---------------- page 4: players ---------------- */
   const pl = P.filter(p => p.min > 0);
@@ -235,7 +236,7 @@ function pgSheets(R, c) {
     <div><h2 class="pg-sec">Advanced · 10+ minutes</h2>${advT}<div class="pg-note">USG% = share of team plays used on court. AST% = share of teammates' baskets assisted on court. On-court net = points scored minus allowed per 100 possessions while on court.</div></div>
     ${R.lineups && R.lineups.length ? `<div><h2 class="pg-sec">Lineups · 2+ minutes together</h2>${luT}</div>` : ''}`);
   const p6 = sheet(`
-    ${HAS_SH ? `<div><h2 class="pg-sec">Top scorers' shots</h2><div class="pg-courts">${top.map(p => { const L = R.shots.filter(s => s[5] === p.pid); return `<div class="pg-court"><h4><span class="pg-dot" style="background:${p.side ? AC : HC}"></span>${esc(p.name)} · ${abbr(TN[p.side])}</h4>${courtSvg(L, p.side ? AC : HC)}<p>${f0(p.pts)} PTS · ${shotLine(L)} · ${f1(p.ts)} TS%</p></div>`; }).join('')}</div></div>` : ''}
+    ${HAS_SH ? `<div><h2 class="pg-sec">Top scorers' shots</h2><div class="pg-courts">${top.map(p => { const L = R.shots.filter(s => s[5] === p.pid); return `<div class="pg-court"><h3><span class="pg-dot" style="background:${p.side ? AC : HC}"></span>${esc(p.name)} · ${abbr(TN[p.side])}</h3>${courtSvg(L, p.side ? AC : HC)}<p>${f0(p.pts)} PTS · ${shotLine(L)} · ${f1(p.ts)} TS%</p></div>`; }).join('')}</div></div>` : ''}
     <div><h2 class="pg-sec">Scoring by quarter</h2><div class="pg-two">${[0, 1].map(sd => { const L = P.filter(p => p.side === sd && p.pts > 0).sort((a, b) => b.pts - a.pts);
       return `<table>${thead([['<span class="pg-dot" style="background:' + (sd ? AC : HC) + '"></span>' + esc(TN[sd]), 'l']].concat(R.periods.map((_, i) => [i < 4 ? 'Q' + (i + 1) : 'OT' + (i - 3)]), [['PTS']]))}<tbody>
         ${L.map(p => { const q = R.qpts[p.pid] || []; return `<tr><td class="pg-l">${esc(short(p.name))}</td>${R.periods.map((_, i) => `<td style="${q[i] ? '' : 'color:var(--pg-faint)'}">${q[i] || '·'}</td>`).join('')}<td class="pg-b">${f0(p.pts)}</td></tr>`; }).join('')}
@@ -369,7 +370,7 @@ async function pgDownload(btn) {
     if (PG_HTML.mid !== mid) PG_HTML = {mid, html: pgSheets(R, COMP_BY_ID[R.cid]), pages: 6, p: null};
     await pgPage(mid);
     host = document.createElement('div');
-    host.className = 'pgr pgr-export'; host.setAttribute('aria-hidden', 'true'); host.innerHTML = PG_HTML.html;
+    host.className = 'pgr pgr-export'; host.setAttribute('aria-hidden', 'true'); host.innerHTML = PG_HTML.html.replace(/ loading="lazy"/g, '');   // off screen, a lazy image would never load
     document.body.appendChild(host);
     await pgScript('html2canvas.min.js');
     await Promise.all([...host.querySelectorAll('img')].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })));
