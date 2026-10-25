@@ -583,21 +583,26 @@ function teamLinkC(cid, name) {
   return `<a href="#/c/${cid}/team/${tid}" class="team-link">${esc(name)}</a>`;
 }
 
+const FD_MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+/* Day first, as Malaysian papers write it: 18 Oct 2026. */
 function fmtDate(iso) {
   if (!iso) return '—';
   const [y, m, d] = iso.split('-').map(Number);
-  const M = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  return M[m - 1] + ' ' + d + ', ' + y;
+  return d + ' ' + FD_MON[m - 1] + ' ' + y;
 }
 function fmtDateShort(iso) {
   if (!iso) return '—';
-  const [y, m, d] = iso.split('-').map(Number);
-  const M = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  return M[m - 1] + ' ' + d;
+  const [, m, d] = iso.split('-').map(Number);
+  return d + ' ' + FD_MON[m - 1];
 }
+/* A range writes the shared month and year once: 11–18 Oct 2026, 12 Sep – 28 Nov 2026. */
 function compRange(c) {
   if (!c.start) return '—';
-  return c.start === c.end ? fmtDate(c.start) : fmtDate(c.start) + ' – ' + fmtDate(c.end);
+  if (!c.end || c.start === c.end) return fmtDate(c.start);
+  const [y1, m1, d1] = c.start.split('-').map(Number), [y2, m2] = c.end.split('-').map(Number);
+  if (y1 !== y2) return fmtDate(c.start) + ' – ' + fmtDate(c.end);
+  if (m1 !== m2) return d1 + ' ' + FD_MON[m1 - 1] + ' – ' + fmtDate(c.end);
+  return d1 + '–' + fmtDate(c.end);
 }
 /* A fixture still to be played. A not-played fixture — a placeholder whose teams
    were never decided, or a game the source left unfinished for years — is not. */

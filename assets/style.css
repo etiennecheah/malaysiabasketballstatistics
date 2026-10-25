@@ -9,7 +9,7 @@
   :root{
     --bg: oklch(96.5% 0.006 250); --surface: oklch(100% 0 0); --surface-alt: oklch(95% 0.008 250);
     --border: oklch(88% 0.012 250); --text: oklch(18% 0.015 255); --text-muted: oklch(46% 0.02 255);
-    --text-faint: oklch(54% 0.016 255); --accent: oklch(46% 0.16 255); --accent-hover: oklch(40% 0.16 255);
+    --text-faint: oklch(50.5% 0.016 255); --accent: oklch(46% 0.16 255); --accent-hover: oklch(40% 0.16 255);
     --accent-soft: oklch(94% 0.03 255); --accent-ink: oklch(44% 0.16 255); --accent-2: oklch(60% 0.17 45); --accent-2-soft: oklch(95% 0.05 55);
     --accent-2-ink: oklch(47% 0.16 42);
     --positive: oklch(56% 0.14 148); --positive-soft: oklch(95% 0.03 148); --positive-ink: oklch(47% 0.13 148); --negative: oklch(56% 0.19 25);
@@ -3981,8 +3981,8 @@ a.hmg-feat:hover{ text-decoration:none; border-color:rgba(255,255,255,.26); }
 .pgr-dl[disabled]{ opacity:.7; cursor:progress; transform:none; }
 .pgr-dl span{ color:inherit; font-size:13px; }
 .pgr-scroll{ container-type:inline-size; padding:18px 0 4px; }
-.pgr{ line-height:1.4; --pg-ink:#0b1016; --pg-muted:#4e5661; --pg-faint:#717881; --pg-line:#d6dbe1; --pg-hair:#e8ebef; --pg-tint:#f4f7fa; --pg-void:#04060d; --pg-ember:#f38c48;
-  --pg-good:#1d7d3e; --pg-good-soft:#dcf7e1; --pg-bad:#c13c3b; --pg-display:var(--display); --pg-body:var(--body);
+.pgr{ line-height:1.4; --pg-ink:#0b1016; --pg-muted:#4e5661; --pg-faint:#656b74; --pg-line:#d6dbe1; --pg-hair:#e8ebef; --pg-tint:#f4f7fa; --pg-void:#04060d; --pg-ember:#f38c48;
+  --pg-good:#1d7d3e; --pg-good-soft:#dcf7e1; --pg-bad:#b03433; --pg-display:var(--display); --pg-body:var(--body);
   color:var(--pg-ink); font-family:var(--pg-body); -webkit-font-smoothing:antialiased; color-scheme:light; text-align:left; }
 .pgr *{ box-sizing:border-box; }
 .pgr th, .pgr th:hover{ cursor:default; user-select:auto; color:var(--pg-faint); }
@@ -4134,3 +4134,6 @@ a.hmg-feat:hover{ text-decoration:none; border-color:rgba(255,255,255,.26); }
 /* a square initials badge looks bigger than a crest or a flag in the same box */
 .swatch.crest{ transform:scale(.92); }
 .crest-flag img{ border-radius:2px; }
+
+/* Taps: no grey flash, no double-tap wait (pinch-zoom still works). */
+a, button, summary, [role="button"], label, select{ -webkit-tap-highlight-color:transparent; touch-action:manipulation; }

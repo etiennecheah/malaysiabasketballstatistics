@@ -172,7 +172,7 @@ function pvHero(pid, d, t) {
     <div class="pv-in">
       <div class="pv-id">
         <div class="pv-eyebrow">${team ? crest(team, 28) + `<b>${esc(pvCase(team))}</b>` : ''}<span>${[has(b.num) ? '#' + esc(b.num) : '', esc(pos)].filter(Boolean).join(' · ')}</span>${ax.badge || ''}</div>
-        <h1 class="pv-name page-title"><span>${esc(first)}</span>${last ? `<span>${esc(last)}</span>` : ''}</h1>
+        <h1 class="pv-name page-title"><span>${esc(first)}</span>${last ? ` <span>${esc(last)}</span>` : ''}</h1>
         ${facts.length ? `<div class="pv-dets">${facts.map(([v, u, x]) => `<span><b>${esc(v)}</b>${u ? ' ' + u : ''}${x ? ` <i>(${esc(x)})</i>` : ''}</span>`).join('')}</div>` : ''}
         ${ax.links || ''}${ax.fav ? `<div class="acc-hero-act">${ax.fav}</div>` : ''}
       </div>
