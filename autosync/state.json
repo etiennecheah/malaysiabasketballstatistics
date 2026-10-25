@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1792957591.0285969,
-  "fp": "4fd8db2d50e91ca06fab"
+  "at": 1792961371.9457974,
+  "fp": "434911be92f1fc9b1292"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -18,7 +18,7 @@
   "26279": "2026-10-10",
   "35136": "2026-10-10",
   "38575": "2026-10-16",
-  "48654": "2026-10-25",
+  "48654": "2026-10-26",
   "49965": "2026-10-25",
   "50247": "2026-10-21",
   "50248": "2026-10-21"
@@ -28,14 +28,13 @@
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
   "38575": 1792080511.4872327,
-  "48654": 1792273394.2428384,
+  "48654": 1792961148.5225172,
   "49965": 1792938438.5244927,
   "50247": 1792360197.0091074,
   "50248": 1792360741.928966
  },
  "lines_retry": {},
  "log": [
-  "2026-10-17 19:55  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Negeri Sembilan 95-62 Johor  [2938191: the source's box score replaces the one from the live feed]",
   "2026-10-17 21:50  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Perak 94-83 PDRM  [2938192: final 94-83 read from the live feed (the schedule page does not show it as final yet); 2938192: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 94 (Perak))]",
   "2026-10-17 21:53  sync: shot charts of 1 game in 1 competition",
   "2026-10-17 22:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Perak 94-83 PDRM  [2938192: the source's box score replaces the one from the live feed]",
@@ -74,7 +73,8 @@
   "2026-10-25 05:40  FAILED 49965 (9): fixtures missing from the source page: 2896892",
   "2026-10-25 11:40  FAILED 49965 (10): fixtures missing from the source page: 2896892",
   "2026-10-25 17:40  FAILED 49965 (11): fixtures missing from the source page: 2896892",
-  "2026-10-25 22:31  sync: Dream Ball Championship 2026 \u2014 The Smurfs 38-118 Vigor x TARUMT; Sang Kancil 59-117 Ai Play; Brayden x MG Living Sport 56-81 Vigor x TARUMT; Vigor x TARUMT 79-63 Trapo; Brayden x MG Living Sport 83-57 The Smurfs; shot charts of 5 games  [2896892: Vigor x TARUMT v Trapo (Nov 1, 2026, 5:00 PM) is no longer on the schedule: removed by the organiser, never played; rosters published for 7 of 8 teams]"
+  "2026-10-25 22:31  sync: Dream Ball Championship 2026 \u2014 The Smurfs 38-118 Vigor x TARUMT; Sang Kancil 59-117 Ai Play; Brayden x MG Living Sport 56-81 Vigor x TARUMT; Vigor x TARUMT 79-63 Trapo; Brayden x MG Living Sport 83-57 The Smurfs; shot charts of 5 games  [2896892: Vigor x TARUMT v Trapo (Nov 1, 2026, 5:00 PM) is no longer on the schedule: removed by the organiser, never played; rosters published for 7 of 8 teams]",
+  "2026-10-26 04:49  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [1 player page(s) not published by the source now: the lines we hold are kept]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
