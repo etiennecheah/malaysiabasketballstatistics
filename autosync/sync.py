@@ -348,8 +348,17 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
         if o and o[1] == 'COMPLETE' and not done(g) and (st.boxes.get(g[0]) or {}).get('src') == 'ls':
             fx[i] = theirs[g[0]] = list(o[:8])
     gone = [m for m in ours if m not in theirs]
-    if gone:
+    # an organiser moving a fixture deletes it and lists a new one (Dream Ball 2026: 2896892, 1 Nov, went
+    # and 2946767, 23 Oct, came). A fixture that was never played - not final, no box score - dropping
+    # off a page that still lists every game we hold as final is that, and it goes with a note. Anything
+    # else (a finished game gone, more than two fixtures at once, a page far shorter than ours) is a page
+    # served short, and the competition waits for the next run as before
+    dropped = [m for m in gone if ours[m][1] != 'COMPLETE' and m not in st.boxes and m not in st.not_played]
+    if gone and (len(dropped) < len(gone) or len(gone) > 2 or len(fx) < 0.75 * len(ours)):
         raise Gate('fixtures missing from the source page: ' + ', '.join(gone[:6]))
+    for m in dropped:
+        g = ours[m]
+        note('%s: %s v %s (%s) is no longer on the schedule: removed by the organiser, never played' % (m, g[4], g[6], g[2]))
     undone = [m for m in ours if ours[m][1] == 'COMPLETE' and m not in st.not_played and not done(theirs[m])]
     if undone:
         raise Gate('games we hold as final are no longer final on the source: ' + ', '.join(undone[:6]))
@@ -397,7 +406,7 @@ def sync_comp(st, cid, lines='new', force=False, retry_box=(), retry_pbp=(), ext
             continue
         k[3] = k[3] or (o[3] if o else '')
         out.append(k + [o[8] if o else 0])
-    fx_changed = [g[0] for g in out if (ours.get(g[0]) or [None])[:8] != g[:8]]
+    fx_changed = [g[0] for g in out if (ours.get(g[0]) or [None])[:8] != g[:8]] + dropped
 
     # shot charts, for the competitions listed in data/shot_comps.json: every finished game whose
     # chart is not stored yet (the first runs catch up on the games played before, a few at a time)
