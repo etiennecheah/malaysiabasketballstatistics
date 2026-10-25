@@ -1,5 +1,5 @@
 {
-  "_note": "MBL playoff games and series, as given by the user 2026-09-29. Every other game in these competitions is regular season. MBL 2022 (35104) has no published player statistics and is left alone. SBL U20 2026 (48654), from the user 2026-10-03: the two series played so far are best-of-three quarter-finals; later rounds are not on the source yet. 'from' = every game on or after this date is a playoff game even before it is listed in a series; 'bo' = best of.",
+  "_note": "MBL playoff games and series, as given by the user 2026-09-29. Every other game in these competitions is regular season. MBL 2022 (35104) has no published player statistics and is left alone. SBL U20 2026 (48654), from the user 2026-10-03 and 2026-10-25: Hornbills and EST Jersey x Valuevest finished top 2 and went straight to the semi-finals; the two best-of-three series before that are the Playoff round (not quarter-finals). 'from' = every game on or after this date is a playoff game even before it is listed in a series; 'bo' = best of.",
   "37621": {
     "champion": "NS Matrix Deers",
     "series": [
@@ -20,8 +20,8 @@
     "from": "2026-09-27",
     "bo": 3,
     "series": [
-      {"round": "Quarter-final", "n": 1, "teams": ["HSBA", "DREAMINDER"], "games": ["2917943", "2917945"]},
-      {"round": "Quarter-final", "n": 2, "teams": ["SUPERSPORTS x REX BBA", "SELANGOR TIGER"], "games": ["2917944", "2917946"]}
+      {"round": "Playoff", "n": 1, "teams": ["HSBA", "DREAMINDER"], "games": ["2917943", "2917945"]},
+      {"round": "Playoff", "n": 2, "teams": ["SUPERSPORTS x REX BBA", "SELANGOR TIGER"], "games": ["2917944", "2917946"]}, {"round": "Semi-final", "n": 1, "teams": ["HORNBILLS", "DREAMINDER"], "games": ["2944613", "2944618", "2944615"]}, {"round": "Semi-final", "n": 2, "teams": ["EST JERSEY x VALUEVEST", "SUPERSPORTS x REX BBA"], "games": ["2944614", "2944617", "2944616"]}
     ]
   }
 }

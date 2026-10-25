@@ -84,7 +84,7 @@ function phaseSeg(c) {
 // "Semi-final 1 · Game 2", "Quarter-final 2 · Game 1" for a playoff game, '' otherwise
 /* "quarter-finals", "semi-finals and final": the rounds a competition's playoff games belong to */
 function phaseRounds(c) {
-  const order = ['Quarter-final', 'Semi-final', 'Final', 'Playoffs'];
+  const order = ['Playoff', 'Quarter-final', 'Semi-final', 'Final', 'Playoffs'];
   const seen = [...new Set(Object.values(c.phase || {}).map(p => p.r))].sort((x, y) => order.indexOf(x) - order.indexOf(y));
   const names = seen.map(r => r === 'Final' ? 'final' : r === 'Playoffs' ? 'later rounds' : r.toLowerCase() + 's');
   return names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : (names[0] || 'playoffs');

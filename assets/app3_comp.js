@@ -146,7 +146,7 @@ function compSeries(c) {
       s.wins[w] = (s.wins[w] || 0) + 1; s.wins[l] = s.wins[l] || 0;
     }
   });
-  const rank = r => r === 'Final' ? 0 : /semi/i.test(r) ? 1 : /quarter/i.test(r) ? 2 : r === 'Playoffs' ? -1 : 3;
+  const rank = r => r === 'Final' ? 0 : /semi/i.test(r) ? 1 : /quarter/i.test(r) ? 2 : r === 'Playoff' ? 3 : r === 'Playoffs' ? -1 : 4;
   return Object.values(by).sort((a, b) => rank(a.r) - rank(b.r) || a.n - b.n).map(s => {
     const t = Object.entries(s.wins).sort((a, b) => b[1] - a[1]);
     const multi = Object.values(by).filter(x => x.r === s.r).length > 1;
