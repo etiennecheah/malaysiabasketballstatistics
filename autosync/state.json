@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1793546998.2219899,
+  "at": 1793547198.6055942,
   "fp": "985d243fd5fa5b9245b0"
  },
  "daily": {
@@ -35,7 +35,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-18 13:52  FAILED build (3): /usr/bin/python3 build_site.py",
   "2026-10-18 13:59  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-18 14:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
   "2026-10-18 15:34  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 82-25 Johor; shot charts of 1 game  [2943476: final 82-25 read from the live feed (the schedule page does not show it as final yet); season lines not read for 1 player(s): tried again next time]",
@@ -74,7 +73,8 @@
   "2026-11-01 22:22  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 HORNBILLS 90-81 DREAMINDER  [2944613: final 90-81 read from the live feed (the schedule page does not show it as final yet); 2944613: box score taken from the live feed (the box score page failed); 2944613: shot chart page failed (503): tried again later]",
   "2026-11-01 22:32  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]",
   "2026-11-01 22:42  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]",
-  "2026-11-01 22:52  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]"
+  "2026-11-01 22:52  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]",
+  "2026-11-01 23:33  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -84,7 +84,7 @@
   "2944613": {
    "cid": "48654",
    "kind": "box",
-   "next": 1793545215.1949432,
+   "next": 1793547669.8620522,
    "since": 1793542768.821561
   }
  },
@@ -100,7 +100,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1793542955.6042597,
+  "21375": 1793547033.6784348,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
@@ -172,7 +172,7 @@
   "48103": 1792147425.7033217,
   "48105": 1792147425.7033217,
   "48653": 1792144911.6393926,
-  "48654": 1793542955.6042597,
+  "48654": 1793547033.6784348,
   "48926": 1792145848.872564,
   "48931": 1792144911.6393926,
   "48932": 1792144911.6393926,
