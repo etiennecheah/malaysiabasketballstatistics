@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1793547198.6055942,
+  "at": 1793547847.1036248,
   "fp": "985d243fd5fa5b9245b0"
  },
  "daily": {
@@ -35,7 +35,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-18 13:59  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
   "2026-10-18 14:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
   "2026-10-18 15:34  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 Negeri Sembilan 82-25 Johor; shot charts of 1 game  [2943476: final 82-25 read from the live feed (the schedule page does not show it as final yet); season lines not read for 1 player(s): tried again next time]",
   "2026-10-18 15:43  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated",
@@ -74,7 +73,8 @@
   "2026-11-01 22:32  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]",
   "2026-11-01 22:42  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]",
   "2026-11-01 22:52  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]",
-  "2026-11-01 23:33  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]"
+  "2026-11-01 23:33  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]",
+  "2026-11-01 23:44  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -84,7 +84,7 @@
   "2944613": {
    "cid": "48654",
    "kind": "box",
-   "next": 1793547669.8620522,
+   "next": 1793548281.459614,
    "since": 1793542768.821561
   }
  },
