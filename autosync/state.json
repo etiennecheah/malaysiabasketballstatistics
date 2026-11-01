@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1793534972.3040738,
-  "fp": "b1c6a0e1a2e929ac9462"
+  "at": 1793536799.7365527,
+  "fp": "e44fd0a42b6019974a0c"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -33,9 +33,39 @@
   "50247": 1792360197.0091074,
   "50248": 1792360741.928966
  },
- "lines_retry": {},
+ "lines_retry": {
+  "49965": {
+   "n": 1,
+   "next": 1793537193.8712525,
+   "pids": [
+    "1974747",
+    "2096977",
+    "2299190",
+    "2302695",
+    "2386449",
+    "2386454",
+    "2455070",
+    "2607642",
+    "2607653",
+    "2799730",
+    "2799732",
+    "2799737",
+    "2799739",
+    "2799742",
+    "2799743",
+    "2799745",
+    "2799746",
+    "2799748",
+    "2799749",
+    "2799750",
+    "2799753",
+    "2799755",
+    "2799760",
+    "2799762"
+   ]
+  }
+ },
  "log": [
-  "2026-10-17 22:02  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 Perak 94-83 PDRM  [2938192: the source's box score replaces the one from the live feed]",
   "2026-10-18 05:50  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [36 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-18 05:51  FAILED 49965 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 500: Internal Server Error",
   "2026-10-18 05:56  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [17 player page(s) not published by the source now: the lines we hold are kept]",
@@ -74,7 +104,8 @@
   "2026-10-25 22:31  sync: Dream Ball Championship 2026 \u2014 The Smurfs 38-118 Vigor x TARUMT; Sang Kancil 59-117 Ai Play; Brayden x MG Living Sport 56-81 Vigor x TARUMT; Vigor x TARUMT 79-63 Trapo; Brayden x MG Living Sport 83-57 The Smurfs; shot charts of 5 games  [2896892: Vigor x TARUMT v Trapo (Nov 1, 2026, 5:00 PM) is no longer on the schedule: removed by the organiser, never played; rosters published for 7 of 8 teams]",
   "2026-10-26 04:49  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [1 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-31 04:09  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
-  "2026-10-31 04:12  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated"
+  "2026-10-31 04:12  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated",
+  "2026-11-01 20:39  sync: Dream Ball Championship 2026 \u2014 YYC x MMU 65-54 Ho Hotel x Pay Fong; shot charts of 1 game  [season lines not read for 24 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
