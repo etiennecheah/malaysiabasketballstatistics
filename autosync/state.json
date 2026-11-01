@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1793538506.6938584,
-  "fp": "2b8932e6fe56e5080b4e"
+  "at": 1793542925.8077054,
+  "fp": "40346c2c458a209d9086"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -35,7 +35,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-18 05:56  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [17 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-18 06:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated  [15 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-18 13:49  FAILED build (1): /usr/bin/python3 build_site.py",
   "2026-10-18 13:50  FAILED build (2): /usr/bin/python3 build_site.py",
@@ -74,13 +73,21 @@
   "2026-10-31 04:12  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated",
   "2026-11-01 20:39  sync: Dream Ball Championship 2026 \u2014 YYC x MMU 65-54 Ho Hotel x Pay Fong; shot charts of 1 game  [season lines not read for 24 player(s): tried again next time]",
   "2026-11-01 20:50  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [season lines not read for 8 player(s): tried again next time]",
-  "2026-11-01 21:08  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated"
+  "2026-11-01 21:08  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated",
+  "2026-11-01 22:22  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 HORNBILLS 90-81 DREAMINDER  [2944613: final 90-81 read from the live feed (the schedule page does not show it as final yet); 2944613: box score taken from the live feed (the box score page failed); 2944613: shot chart page failed (503): tried again later]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
   "50247": 1791743461.92955
  },
- "pending": {},
+ "pending": {
+  "2944613": {
+   "cid": "48654",
+   "kind": "box",
+   "next": 1793543368.821561,
+   "since": 1793542768.821561
+  }
+ },
  "rechecked": {
   "1312929": "25340",
   "1312947": "25341",
