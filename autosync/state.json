@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1793547847.1036248,
-  "fp": "985d243fd5fa5b9245b0"
+  "at": 1793573739.8003945,
+  "fp": "60d1469addd437cc3e49"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -18,59 +18,23 @@
   "26279": "2026-10-10",
   "35136": "2026-10-10",
   "38575": "2026-10-16",
-  "48654": "2026-11-01",
-  "49965": "2026-11-01",
+  "48654": "2026-11-02",
+  "49965": "2026-11-02",
   "50247": "2026-10-21",
   "50248": "2026-10-21"
  },
- "fail": {
-  "48654": {
-   "last": 1793566021.5544438,
-   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-   "n": 30,
-   "next": 1793566621.5544438
-  },
-  "49965": {
-   "last": 1793565987.9688003,
-   "msg": "https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
-   "n": 10,
-   "next": 1793566587.9688003
-  }
- },
+ "fail": {},
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
   "38575": 1792080511.4872327,
-  "48654": 1792961148.5225172,
-  "49965": 1792938438.5244927,
+  "48654": 1793573525.4894218,
+  "49965": 1793573444.3163853,
   "50247": 1792360197.0091074,
   "50248": 1792360741.928966
  },
  "lines_retry": {},
  "log": [
-  "2026-11-01 23:51  FAILED 48654 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 00:01  FAILED 48654 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 00:12  FAILED 48654 (3): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 00:22  FAILED 48654 (4): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 00:32  FAILED 48654 (5): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 00:42  FAILED 48654 (6): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 00:52  FAILED 48654 (7): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 01:02  FAILED 48654 (8): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 01:13  FAILED 48654 (9): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 01:23  FAILED 48654 (10): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 01:33  FAILED 48654 (11): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 01:43  FAILED 48654 (12): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 01:53  FAILED 48654 (13): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 02:03  FAILED 48654 (14): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 02:14  FAILED 48654 (15): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 02:24  FAILED 48654 (16): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 02:34  FAILED 48654 (17): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 02:44  FAILED 48654 (18): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 02:54  FAILED 48654 (19): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 03:04  FAILED 48654 (20): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 03:15  FAILED 48654 (21): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 03:25  FAILED 48654 (22): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 03:35  FAILED 48654 (23): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 03:45  FAILED 48654 (24): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 03:55  FAILED 48654 (25): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:00  FAILED 49965 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
@@ -87,20 +51,36 @@
   "2026-11-02 04:36  FAILED 48654 (29): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:37  FAILED 49965 (9): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:46  FAILED 49965 (10): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
-  "2026-11-02 04:47  FAILED 48654 (30): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable"
+  "2026-11-02 04:47  FAILED 48654 (30): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
+  "2026-11-02 04:56  FAILED 49965 (11): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
+  "2026-11-02 04:57  FAILED 48654 (31): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
+  "2026-11-02 05:07  FAILED 49965 (12): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
+  "2026-11-02 05:07  FAILED 48654 (32): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
+  "2026-11-02 05:17  FAILED 49965 (13): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
+  "2026-11-02 05:18  FAILED 48654 (33): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
+  "2026-11-02 05:27  FAILED 49965 (14): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
+  "2026-11-02 05:28  FAILED 48654 (34): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
+  "2026-11-02 05:38  FAILED 49965 (15): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
+  "2026-11-02 05:38  FAILED 48654 (35): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
+  "2026-11-02 05:48  FAILED 49965 (16): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
+  "2026-11-02 05:49  FAILED 48654 (36): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
+  "2026-11-02 05:58  FAILED 49965 (17): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
+  "2026-11-02 05:59  FAILED 48654 (37): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
+  "2026-11-02 06:09  FAILED 49965 (18): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
+  "2026-11-02 06:09  FAILED 48654 (38): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
+  "2026-11-02 06:19  FAILED 49965 (19): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
+  "2026-11-02 06:20  FAILED 48654 (39): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
+  "2026-11-02 06:30  FAILED 49965 (20): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
+  "2026-11-02 06:30  FAILED 48654 (40): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
+  "2026-11-02 06:40  FAILED 49965 (21): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
+  "2026-11-02 06:41  FAILED 48654 (41): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
+  "2026-11-02 06:55  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 HORNBILLS 90-81 DREAMINDER; shot charts of 1 game  [2944613: the source's box score replaces the one from the live feed; 1 player page(s) not published by the source now: the lines we hold are kept]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
   "50247": 1791743461.92955
  },
- "pending": {
-  "2944613": {
-   "cid": "48654",
-   "kind": "box",
-   "next": 1793548281.459614,
-   "since": 1793542768.821561
-  }
- },
+ "pending": {},
  "rechecked": {
   "1312929": "25340",
   "1312947": "25341",
@@ -113,7 +93,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1793565162.5591705,
+  "21375": 1793572396.9643097,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
