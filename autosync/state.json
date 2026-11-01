@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1793543545.8284109,
+  "at": 1793544162.7211182,
   "fp": "40346c2c458a209d9086"
  },
  "daily": {
@@ -35,7 +35,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-10-18 13:49  FAILED build (1): /usr/bin/python3 build_site.py",
   "2026-10-18 13:50  FAILED build (2): /usr/bin/python3 build_site.py",
   "2026-10-18 13:52  FAILED build (3): /usr/bin/python3 build_site.py",
   "2026-10-18 13:59  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated",
@@ -74,7 +73,8 @@
   "2026-11-01 20:50  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [season lines not read for 8 player(s): tried again next time]",
   "2026-11-01 21:08  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated",
   "2026-11-01 22:22  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 HORNBILLS 90-81 DREAMINDER  [2944613: final 90-81 read from the live feed (the schedule page does not show it as final yet); 2944613: box score taken from the live feed (the box score page failed); 2944613: shot chart page failed (503): tried again later]",
-  "2026-11-01 22:32  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]"
+  "2026-11-01 22:32  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]",
+  "2026-11-01 22:42  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 play-by-play of HORNBILLS v DREAMINDER  [2944613: shot chart page failed (503): tried again later]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -84,7 +84,7 @@
   "2944613": {
    "cid": "48654",
    "kind": "box",
-   "next": 1793543985.518284,
+   "next": 1793544599.3321924,
    "since": 1793542768.821561
   }
  },
