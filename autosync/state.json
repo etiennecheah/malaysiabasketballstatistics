@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1793537409.766937,
-  "fp": "c54f396e8ba55372047d"
+  "at": 1793538506.6938584,
+  "fp": "2b8932e6fe56e5080b4e"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -33,24 +33,8 @@
   "50247": 1792360197.0091074,
   "50248": 1792360741.928966
  },
- "lines_retry": {
-  "49965": {
-   "n": 2,
-   "next": 1793538397.3135583,
-   "pids": [
-    "2799746",
-    "2799748",
-    "2799749",
-    "2799750",
-    "2799753",
-    "2799755",
-    "2799760",
-    "2799762"
-   ]
-  }
- },
+ "lines_retry": {},
  "log": [
-  "2026-10-18 05:51  FAILED 49965 (1): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 500: Internal Server Error",
   "2026-10-18 05:56  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Men \u2014 fixtures, standings or season lines updated  [17 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-18 06:06  sync: MATRIX 66th MABA Agong Cup National Basketball Championships 2026 - Women \u2014 fixtures, standings or season lines updated  [15 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-10-18 13:49  FAILED build (1): /usr/bin/python3 build_site.py",
@@ -89,7 +73,8 @@
   "2026-10-31 04:09  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
   "2026-10-31 04:12  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated",
   "2026-11-01 20:39  sync: Dream Ball Championship 2026 \u2014 YYC x MMU 65-54 Ho Hotel x Pay Fong; shot charts of 1 game  [season lines not read for 24 player(s): tried again next time]",
-  "2026-11-01 20:50  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [season lines not read for 8 player(s): tried again next time]"
+  "2026-11-01 20:50  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [season lines not read for 8 player(s): tried again next time]",
+  "2026-11-01 21:08  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
