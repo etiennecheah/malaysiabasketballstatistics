@@ -20,12 +20,6 @@
 
    Only the four stats panels are repainted on a tick. The video is never
    touched, so it keeps playing.
-
-   A second tab over the video, Shot map, shows the live 3D shot map
-   (public/shotmap/, built from assets/shotmap.html) in an iframe. It reads the
-   LiveStats feed itself through the hoopstatsmy-feed relay; this page sends it the
-   teams' crests and the players' portraits (by shirt number) so the big screens
-   in the graphic can show them. The video keeps playing behind it.
    ========================================================================= */
 
 const STREAMS = DB.streams || {};
@@ -205,15 +199,10 @@ function renderWatch(mid) {
       ${watchBrand()}
       <span class="wt-crumb"><a href="#/c/${g.cid}">${esc(liveCompName(g.cid))}</a> · ${esc(g.h)} vs ${esc(g.a)}</span>
       <span id="wt-status">${watchStatus(m)}</span>
-      <span class="wt-tabs" role="tablist" aria-label="Main view">${['video', 'shots'].map(k =>
-        `<button type="button" role="tab" class="wt-tab" data-wt-tab="${k}" aria-selected="${WT_TAB === k}">${k === 'video' ? 'Video' : 'Shot map'}</button>`).join('')}</span>
       <span class="wt-links">${other}</span>
     </header>
     <div class="wt-grid">
-      <section class="wt-video${WT_TAB === 'shots' ? ' wt-sm' : ''}" id="wt-main" aria-label="${WT_TAB === 'shots' ? 'Shot map' : 'Video'}">
-        <div class="wt-layer wt-vid">${video}</div>
-        <div class="wt-layer wt-shots">${WT_TAB === 'shots' ? watchShotFrame(mid) : ''}</div>
-      </section>
+      <section class="wt-video" aria-label="Video">${video}</section>
       <div class="wt-players">
         <section class="wt-panel" id="wt-pa" aria-label="${esc(g.h)} player statistics">${watchPlayers(m, 0)}</section>
         <section class="wt-panel" id="wt-pb" aria-label="${esc(g.a)} player statistics">${watchPlayers(m, 1)}</section>
@@ -225,42 +214,6 @@ function renderWatch(mid) {
     </div>
   </div>`;
 }
-/* ---------------------------- the Shot map tab ---------------------------- */
-let WT_TAB = 'video';
-function watchShotFrame(mid) {
-  return `<iframe src="${HS.BASE}shotmap/?match=${encodeURIComponent(mid)}&amp;embed=1" title="Live shot map" allow="fullscreen" onload="watchShotPost()"></iframe>`;
-}
-function watchSetTab(k) {
-  const main = document.getElementById('wt-main'), root = document.getElementById('wt');
-  if (!main || !root) return;
-  WT_TAB = k === 'shots' ? 'shots' : 'video';
-  main.classList.toggle('wt-sm', WT_TAB === 'shots');
-  main.setAttribute('aria-label', WT_TAB === 'shots' ? 'Shot map' : 'Video');
-  document.querySelectorAll('.wt-tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.wtTab === WT_TAB)));
-  const box = main.querySelector('.wt-shots');
-  if (WT_TAB === 'shots' && !box.querySelector('iframe')) box.innerHTML = watchShotFrame(root.dataset.mid);
-}
-document.addEventListener('click', e => {
-  const b = e.target.closest && e.target.closest('.wt-tab');
-  if (b) watchSetTab(b.dataset.wtTab);
-});
-/* crests and portraits for the graphic's screens, keyed by team (the feed's order) and shirt number */
-function watchShotPost() {
-  const root = document.getElementById('wt'), f = document.querySelector('#wt-main .wt-shots iframe');
-  if (!root || !f || !f.contentWindow) return;
-  const m = watchModel(root.dataset.mid);
-  if (!m) return;
-  const teams = m.teams.map(t => {
-    const photos = {};
-    t.pl.forEach(p => {
-      const src = p.pid && (PHOTOS[p.pid] || (DB.avatars || {})[p.pid]);
-      if (src && p.no != null && p.no !== '') photos[String(p.no)] = src;
-    });
-    return { name: t.name, crest: teamLogo(t.name) || null, photos };
-  });
-  try { f.contentWindow.postMessage({ type: 'hs-shotmap', teams }, location.origin); } catch (e) { /* the frame is still loading */ }
-}
-
 function watchBrand() {
   return `<a class="wt-brand" href="#/" title="HoopStatsMY home"><span class="wt-dot"></span>HOOPSTATS MY</a>`;
 }
@@ -288,7 +241,6 @@ function watchRefresh() {
   put('wt-pb', watchPlayers(m, 1));
   put('wt-team', watchTeam(m));
   put('wt-plays', watchPlays(m));
-  if (WT_TAB === 'shots') watchShotPost();
 }
 
 /* Player statistics A / B: short name, PTS REB AST STL BLK; the team's best in each column in bold */

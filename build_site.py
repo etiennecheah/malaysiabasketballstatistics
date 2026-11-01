@@ -353,16 +353,6 @@ def write_site(payload, css):
     vendor = os.path.join(A, 'vendor')
     if os.path.isdir(vendor):
         shutil.copytree(vendor, os.path.join(out, 'vendor'))
-    # the live 3D shot map (assets/shotmap.html): its own page at <base>shotmap/, used by the Tools menu and,
-    # with ?embed=1, by the Watch page's Shot map tab. It reads three.js from ../vendor/
-    sm = os.path.join(A, 'shotmap.html')
-    if os.path.exists(sm):
-        os.makedirs(os.path.join(out, 'shotmap'), exist_ok=True)
-        page = open(sm, encoding='utf-8').read()
-        g = (cfg.get('gate_sha256') or '').strip().lower()
-        if g:   # the site's password screen: a visitor who has not entered it is sent to the front page, which asks
-            page = page.replace('<head>', '<head>\n<script>(function(){var ok=false;try{ok=localStorage.getItem("hs-gate")==="%s";}catch(e){}if(!ok)location.replace("../");})();</script>' % g, 1)
-        put(out, 'shotmap/index.html', page)
     verify = ('<meta name="google-site-verification" content="%s">\n' % html_esc(cfg['google_verification'])) if cfg.get('google_verification') else ''
     # the password screen (site_config.json "gate_sha256": SHA-256 of the password; empty = an open site).
     # It hides the pages from casual visitors only: GitHub Pages still serves every file to anyone.
