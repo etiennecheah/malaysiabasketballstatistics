@@ -26,6 +26,16 @@ D = os.path.join(R, 'data')
 OUT = os.path.join(R, 'stats')
 # the competitions Compare › Lineups offers: the three MBL seasons and the 2026 Agong Cup
 LV_COMPS = ['40226', '37621', '35104', '50247', '50248']
+# Tools › WOWY (app4zd_wowy.js) reads the same files, for the men's Agong Cup and the men's MBL only
+# (user decision, 3 Nov 2026): every edition of each that has rebuilt stints
+def wowy_comps(comps):
+    out = []
+    for c in comps:
+        if c['series'] == 'Agong Cup' and c.get('gender') == 'Men':
+            out.append((c['id'], 'agm'))
+        elif c['series'] == 'Major Basketball League' and c.get('gender') != 'Women':
+            out.append((c['id'], 'mbl'))
+    return out
 
 
 def code(name):
@@ -85,8 +95,9 @@ def main():
     SF = json.load(open(os.path.join(D, 'stints_full.json')))
     BOX = json.load(open(os.path.join(D, 'boxscores.json')))
     pal = db.get('palias', {})
-    lv = []
-    for cid in LV_COMPS:
+    lv, wy = [], []
+    WY = dict(wowy_comps(db['comps']))
+    for cid in list(dict.fromkeys(LV_COMPS + list(WY))):
         c = info.get(cid)
         if not c:
             continue
@@ -103,11 +114,15 @@ def main():
                 if r.get('pid') and r.get('num') not in (None, ''):
                     num[pal.get(r['pid'], r['pid'])] = str(r['num'])
             st = [[s[0], s[1], [pi(k) for k in s[2]], [pi(k) for k in s[3]], s[4], s[5]] for s in SF[g['mid']]['st']]
-            games.append({'mid': g['mid'], 'date': g.get('date', ''), 'h': g['h'], 'a': g['a'], 'hs': g['hs'], 'as': g['as'], 'st': st})
+            games.append({'mid': g['mid'], 'date': g.get('date', ''), 'h': g['h'], 'a': g['a'], 'hs': g['hs'], 'as': g['as'], 'st': st,
+                          **({'po': 1} if g['mid'] in (c.get('phase') or {}) else {})})
         players = [[p, p[1:] if p.startswith('?') else db['persons'].get(p, 'Unknown player'), num.get(p, '')] for p in ids]
         size += put('lv', cid, {'players': players, 'games': games})
         played = [g for g in c['games'] if g.get('st') == 'COMPLETE']
-        lv.append({'id': cid, 'label': c.get('label') or c['name'], 'year': c['year'], 'games': len(games), 'played': len(played)})
+        if cid in LV_COMPS:
+            lv.append({'id': cid, 'label': c.get('label') or c['name'], 'year': c['year'], 'games': len(games), 'played': len(played)})
+        if cid in WY and games:
+            wy.append({'id': cid, 'ser': WY[cid], 'label': c.get('label') or c['name'], 'year': c['year'], 'games': len(games), 'played': len(played)})
 
     index = {
         'lu': {'comps': lu, 'meta': {'games': L['meta']['games'], 'lineups': sum(c['fives'] for c in lu),
@@ -116,10 +131,11 @@ def main():
         'cl': {'comps': cl, 'meta': {'games': K['meta']['games'], 'clutch_games': K['meta']['clutch_games'],
                                      'pts_match': K['meta']['pts_match']}},
         'lv': {'comps': lv},
+        'wy': {'comps': sorted(wy, key=lambda c: (c['ser'], c['year']))},
     }
     json.dump(index, open(os.path.join(D, 'stats_index.json'), 'w'), separators=(',', ':'), ensure_ascii=False)
-    print('stats: %d lineup files, %d clutch files, %d compare-lineup files, %.2f MB in stats/ | opens on %s'
-          % (len(lu), len(cl), len(lv), size / 1e6, lu[0]['label'] if lu else '-'))
+    print('stats: %d lineup files, %d clutch files, %d compare-lineup files (%d for WOWY), %.2f MB in stats/ | opens on %s'
+          % (len(lu), len(cl), len(lv), len(wy), size / 1e6, lu[0]['label'] if lu else '-'))
 
 
 if __name__ == '__main__':

@@ -140,6 +140,7 @@ function hsMeta(hash) {
     formulas: ['Formulas', 'How every statistic on ' + SITE_NAME + ' is calculated: shooting percentages, PER, usage, Win Shares and BPM.'],
     stats: ['Tools · Lineups and Clutch', 'Lineup and clutch statistics for Malaysian basketball competitions.'],
     privacy: ['Privacy & Site Rules', 'How ' + SITE_NAME + ' handles accounts, player profile claims and personal data, and the rules for using the site.'],
+    wowy: ['WOWY · With or Without You', 'How Agong Cup and MBL teams played with each mix of their players on and off the floor: offensive, defensive and net rating, shooting, turnovers and rebounding, from every substitution in the play-by-play.'],
     compare: ['Compare Players', 'Compare two Malaysian basketball players side by side: career stats, peak seasons and head-to-head games.'],
   };
   if (S[p0]) return page(S[p0][0], S[p0][1], { index: p0 !== 'compare' || parts.length === 1 });
