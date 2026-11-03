@@ -45,8 +45,9 @@ function wyLoad(cid) {
   CL.load[cid] = 'loading';
   const s = document.createElement('script');
   s.src = HS.BASE + 'stats/lv/' + cid + '.js';
-  s.onload = () => { CL.load[cid] = CL.data[cid] ? 'done' : 'error'; wyPaint(); };
-  s.onerror = () => { CL.load[cid] = 'error'; wyPaint(); };
+  // Stat Line Shift (app4ze_shift.js) reads the same file: whichever page is open repaints
+  s.onload = () => { CL.load[cid] = CL.data[cid] ? 'done' : 'error'; wyPaint(); if (typeof slPaint === 'function') slPaint(); };
+  s.onerror = () => { CL.load[cid] = 'error'; wyPaint(); if (typeof slPaint === 'function') slPaint(); };
   document.head.appendChild(s);
   return false;
 }

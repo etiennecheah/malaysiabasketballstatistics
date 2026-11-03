@@ -71,6 +71,11 @@ BX = ['fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta', 'oreb', 'dreb', 'ast', 'tov', 's
       'toreb', 'tdreb', 'ttov']
 BXI = {k: i for i, k in enumerate(BX)}
 FOULS = {'Personal foul', 'Offensive foul', 'Unsportsmanlike foul', 'Technical foul', 'Disqualifying foul'}
+# each player's own counters inside a stint, for Tools › Stat Line Shift (app4ze_shift.js): what a
+# player did while a given set of teammates was or was not on the floor. Points come from his made
+# shots and free throws; the team's counters above stay as they are.
+PK = ['fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta', 'oreb', 'dreb', 'ast', 'tov', 'stl', 'blk', 'pf', 'pfd', 'pts']
+PKI = {k: i for i, k in enumerate(PK)}
 
 
 def box_counts(e):
@@ -199,7 +204,7 @@ def rebuild(ev, sides, rule=RULE, fill=None, log=None):
             return {'p': p, 's': 0, 'h': tuple(sorted(map(str, on[1]))), 'a': tuple(sorted(map(str, on[2]))),
                     'pts': [0, 0], 'fga': [0, 0], 'fta': [0, 0], 'oreb': [0, 0], 'tov': [0, 0],
                     'bx': [[0] * len(BX), [0] * len(BX)],
-                    'on1': frozenset(on[1]), 'on2': frozenset(on[2])}
+                    'on1': frozenset(on[1]), 'on2': frozenset(on[2]), 'pp': {}}
         cur = open_stint()
         for clk, G in groups.items():
             t_now = secs(clk) if isinstance(clk, str) else last
@@ -247,6 +252,12 @@ def rebuild(ev, sides, rule=RULE, fill=None, log=None):
                     # 43 games have a basket logged out of turn, where the printed
                     # score steps backwards and a difference of scores goes negative.
                     got = (3 if 'tpm' in cts else 2 if 'fgm' in cts else 0) + (1 if 'ftm' in cts else 0)
+                    if e[5] and cts:
+                        vv = cur['pp'].setdefault((e[1], key(e[1], e[4], e[5])), [0] * len(PK))
+                        for c_ in cts:
+                            if c_ in PKI:
+                                vv[PKI[c_]] += 1
+                        vv[PKI['pts']] += got
                 if got:
                     dh, da = (got, 0) if e[1] == 1 else (0, got)
                     sh += dh; sa += da
@@ -496,6 +507,16 @@ def main():
                                              for s in v['stf']]}
                for mid, v in games_out.items()},
               open(os.path.join(D, 'stints_full.json'), 'w'), separators=(',', ':'))
+    # each player's own counters in the same stints, in the same order as stints_full:
+    # [{player key: counters} for the home side, {...} for the away side] per stint
+    def pps(s):
+        out = [{}, {}]
+        for (t, k), v in s['pp'].items():
+            kk = k if not isinstance(k, tuple) else '?' + str(k[3] or k[2])
+            out[t - 1][kk] = v
+        return out
+    json.dump({'keys': PK, 'games': {mid: [pps(s) for s in v['stf']] for mid, v in games_out.items()}},
+              open(os.path.join(D, 'stints_pp.json'), 'w'), separators=(',', ':'))
     print('on/off rows: %d across %d competitions' % (sum(len(v) for v in onoff.values()), len(onoff)))
 
 

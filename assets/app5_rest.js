@@ -392,7 +392,7 @@ function oaHang(root) {
   });
 }
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => oaHang());
-function afterRender() { fbToUrl(); oaHang(); if (typeof pvPathFit === 'function') pvPathFit(); if (typeof statsAfterRender === 'function') statsAfterRender(); if (typeof shotsAfterRender === 'function') shotsAfterRender(); if (typeof reportAfterRender === 'function') reportAfterRender(); if (typeof wyAfterRender === 'function') wyAfterRender(); if (typeof cmpShotsAfterRender === 'function') cmpShotsAfterRender(); if (typeof milestonesAfterRender === 'function') milestonesAfterRender(); if (typeof recordsAfterRender === 'function') recordsAfterRender(); }
+function afterRender() { fbToUrl(); oaHang(); if (typeof pvPathFit === 'function') pvPathFit(); if (typeof statsAfterRender === 'function') statsAfterRender(); if (typeof shotsAfterRender === 'function') shotsAfterRender(); if (typeof reportAfterRender === 'function') reportAfterRender(); if (typeof wyAfterRender === 'function') wyAfterRender(); if (typeof slAfterRender === 'function') slAfterRender(); if (typeof cmpShotsAfterRender === 'function') cmpShotsAfterRender(); if (typeof milestonesAfterRender === 'function') milestonesAfterRender(); if (typeof recordsAfterRender === 'function') recordsAfterRender(); }
 
 /* ---- web interface guidelines (update-76) ---------------------------------------------- */
 // The skip link moves focus past the site bar to the page itself, without touching the address.

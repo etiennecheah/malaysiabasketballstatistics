@@ -49,8 +49,10 @@ def code(name):
 def put(kind, cid, obj):
     p = os.path.join(OUT, kind, cid + '.js')
     # the Compare › Lineups files answer to their own page (app4y_cmplineups.js)
-    call = "CMPL_PUT('%s',%s);\n" % (cid, json.dumps(obj, separators=(',', ':'), ensure_ascii=False)) if kind == 'lv' \
-        else "STATS_PUT('%s','%s',%s);\n" % (kind, cid, json.dumps(obj, separators=(',', ':'), ensure_ascii=False))
+    # and Stat Line Shift's player counters to theirs (app4ze_shift.js)
+    body = json.dumps(obj, separators=(',', ':'), ensure_ascii=False)
+    call = "CMPL_PUT('%s',%s);\n" % (cid, body) if kind == 'lv' else "SLS_PUT('%s',%s);\n" % (cid, body) if kind == 'sp' \
+        else "STATS_PUT('%s','%s',%s);\n" % (kind, cid, body)
     with open(p, 'w', encoding='utf-8') as f:
         f.write(call)
     return os.path.getsize(p)
@@ -73,6 +75,7 @@ def main():
     os.makedirs(os.path.join(OUT, 'lu'))
     os.makedirs(os.path.join(OUT, 'cl'))
     os.makedirs(os.path.join(OUT, 'lv'))
+    os.makedirs(os.path.join(OUT, 'sp'))
 
     lu, size = [], 0
     for cid, C in L['comps'].items():
@@ -93,6 +96,10 @@ def main():
     # Compare › Lineups: per game, every stint with both fives (as player indexes), the
     # points and the box-score counters of each side; the page adds them up for any pair
     SF = json.load(open(os.path.join(D, 'stints_full.json')))
+    # each player's own counters per stint (build_lineups.py), for Stat Line Shift
+    spp = os.path.join(D, 'stints_pp.json')
+    PPJ = json.load(open(spp)) if os.path.exists(spp) else {'keys': [], 'games': {}}
+    PP, PPK = PPJ['games'], PPJ['keys']
     BOX = json.load(open(os.path.join(D, 'boxscores.json')))
     pal = db.get('palias', {})
     lv, wy = [], []
@@ -101,7 +108,7 @@ def main():
         c = info.get(cid)
         if not c:
             continue
-        ids, num, games = [], {}, []
+        ids, num, games, spg = [], {}, [], []
         ix = {}
         def pi(p):
             if p not in ix:
@@ -114,10 +121,18 @@ def main():
                 if r.get('pid') and r.get('num') not in (None, ''):
                     num[pal.get(r['pid'], r['pid'])] = str(r['num'])
             st = [[s[0], s[1], [pi(k) for k in s[2]], [pi(k) for k in s[3]], s[4], s[5]] for s in SF[g['mid']]['st']]
+            # each player's own counters per stint, in a file of their own (stats/sp/<cid>.js) so WOWY
+            # and Compare › Lineups do not download them: one entry per stint, [home, away]
+            if cid in WY:
+                pp = PP.get(g['mid'])
+                spg.append([[{str(pi(k)): v for k, v in h.items()}, {str(pi(k)): v for k, v in a.items()}] for h, a in pp]
+                           if pp and len(pp) == len(st) else None)
             games.append({'mid': g['mid'], 'date': g.get('date', ''), 'h': g['h'], 'a': g['a'], 'hs': g['hs'], 'as': g['as'], 'st': st,
                           **({'po': 1} if g['mid'] in (c.get('phase') or {}) else {})})
         players = [[p, p[1:] if p.startswith('?') else db['persons'].get(p, 'Unknown player'), num.get(p, '')] for p in ids]
         size += put('lv', cid, {'players': players, 'games': games})
+        if cid in WY:
+            size += put('sp', cid, {'keys': PPK, 'games': spg})
         played = [g for g in c['games'] if g.get('st') == 'COMPLETE']
         if cid in LV_COMPS:
             lv.append({'id': cid, 'label': c.get('label') or c['name'], 'year': c['year'], 'games': len(games), 'played': len(played)})

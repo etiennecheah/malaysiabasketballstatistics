@@ -5,7 +5,7 @@ function navShell(links, sub) {
   // which page of the Tools menu is open, so the menu can mark it
   const h = HS.hash();
   const statsPage = /^#\/stats/.test(h) ? (/^#\/stats\/clutch/.test(h) ? 'clutch' : 'lineups')
-    : /^#\/compare\/lineups/.test(h) ? 'cmp-lineups' : /^#\/compare/.test(h) ? 'cmp-players' : /^#\/wowy/.test(h) ? 'wowy' : '';
+    : /^#\/compare\/lineups/.test(h) ? 'cmp-lineups' : /^#\/compare/.test(h) ? 'cmp-players' : /^#\/wowy/.test(h) ? 'wowy' : /^#\/shift/.test(h) ? 'shift' : '';
   return `
   <a class="skip-link" href="#main" data-skip>Skip to content</a>
   <nav class="nav" aria-label="Site">
@@ -38,7 +38,7 @@ function siteLinks(state) {
           ['#/teams', 'Teams', state === 'teams-hub' || state === 'team-global'],
           ['#/milestones', 'Milestones', state === 'milestones'],
           ['#/records', 'Records & Honours', state === 'records'],
-          ['stats', 'Tools', state === 'stats' || state === 'compare' || state === 'wowy'],   // a button: it opens the Tools menu (Lineups, Clutch, Compare)
+          ['stats', 'Tools', state === 'stats' || state === 'compare' || state === 'wowy' || state === 'shift'],   // a button: it opens the Tools menu (Lineups, Clutch, Compare)
           ['#/formulas', 'Formulas', state === 'formulas']]
     .map(([h, t, a]) => h === 'stats' ? (typeof STATS !== 'undefined' ? STATS.navButton(a) : '')
       : `<a href="${h}" class="nav-link ${a ? 'active' : ''}">${esc(t)}</a>`).join('');
@@ -51,9 +51,9 @@ function renderNav(state, cid, tab) {
   if (!cid || state === 'hub' || state === 'global-players' || state === 'player' || state === 'compare'
       || state === 'formulas' || state === 'notfound'
       || state === 'teams-hub' || state === 'team-global' || state === 'cfam'
-      || state === 'home' || state === 'live' || state === 'me' || state === 'stats' || state === 'milestones' || state === 'records' || state === 'wowy') {
+      || state === 'home' || state === 'live' || state === 'me' || state === 'stats' || state === 'milestones' || state === 'records' || state === 'wowy' || state === 'shift') {
     const links = siteLinks(state);
-    const label = state === 'stats' || state === 'compare' || state === 'wowy' ? 'Tools' : state === 'formulas' ? 'Formulas'
+    const label = state === 'stats' || state === 'compare' || state === 'wowy' || state === 'shift' ? 'Tools' : state === 'formulas' ? 'Formulas'
       : (state === 'teams-hub' || state === 'team-global') ? 'Teams'
       : (state === 'global-players' || state === 'player') ? 'Players' : 'Competitions';
     const crumb = state === 'stats'
@@ -64,6 +64,8 @@ function renderNav(state, cid, tab) {
       ? '<span class="subnav-crumb">what every abbreviation means, and where the number comes from</span>'
       : state === 'wowy'
       ? '<span class="subnav-crumb">WOWY · every on/off mix of up to five players, men’s Agong Cup and MBL</span>'
+      : state === 'shift'
+      ? '<span class="subnav-crumb">Stat Line Shift · one player’s line with and without his teammates, men’s Agong Cup and MBL</span>'
       : `<span class="subnav-crumb">Malaysia basketball database · ${COMPS.length} competitions</span>`;
     // a player's page opens straight into its own full-width hero
     return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' || state === 'milestones' || state === 'records' ? '' : subnav(label, crumb, []));
@@ -160,6 +162,9 @@ function route() {
     state = 'stats'; tab = parts[1] === 'clutch' ? 'clutch' : 'lineups'; body = renderStats(tab);
   } else if (parts[0] === 'cf' && parts[1]) {
     state = 'cfam'; body = renderFamily(parts[1]);
+  } else if (parts[0] === 'shift') {
+    // Tools › Stat Line Shift: one player's line with and without chosen teammates (app4ze_shift.js)
+    state = 'shift'; body = renderShift();
   } else if (parts[0] === 'wowy') {
     // Tools › WOWY: on/off combinations of up to five players (app4zd_wowy.js)
     state = 'wowy'; body = renderWowy();
