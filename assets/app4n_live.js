@@ -87,7 +87,7 @@ async function liveTick() {
   LIVE.last = Date.now();
   liveRefresh();
   // nothing near tip-off: look again in 5 minutes, without any network request
-  const wait = cands.length ? (liveFast() ? 30e3 : 60e3) : 5 * 60e3;
+  const wait = document.getElementById('cn') && LIVE.games[(document.getElementById('cn') || {}).dataset.mid] ? 15e3 : cands.length ? (liveFast() ? 30e3 : 60e3) : 5 * 60e3;
   LIVE.timer = setTimeout(liveTick, wait);
 }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) liveTick(); });
@@ -111,7 +111,8 @@ function liveRefresh() {
     if (box2 && top) box2.scrollTop = top;
   }
   // the Watch page repaints its stats panels (never its video)
-  if (typeof watchRefresh === 'function') watchRefresh();
+  if (typeof cpnOnTick === 'function' && document.getElementById('cn')) cpnOnTick();
+  else if (typeof watchRefresh === 'function') watchRefresh();
   // the fixture list of a competition's schedule
   if (typeof scheduleLiveRefresh === 'function') scheduleLiveRefresh();
 }

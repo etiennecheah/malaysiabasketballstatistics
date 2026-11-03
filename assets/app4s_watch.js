@@ -26,7 +26,9 @@ const STREAMS = DB.streams || {};
 function watchStream(mid) { return STREAMS[mid] || null; }
 /* a "Watch" link for the box-score header, the live page and Home's live cards */
 function watchLink(mid, label, cls) {
-  if (!watchStream(mid)) return '';
+  const cmp = typeof isCompanionGame === 'function' && isCompanionGame(GAME_BY_MID[mid]);
+  if (!watchStream(mid) && !cmp) return '';
+  if (cmp) label = GAME_BY_MID[mid].st === 'COMPLETE' ? 'Game screen with stats' : 'Live stats screen';
   return `<a class="${cls || 'm-watch'}" href="#/watch/${esc(mid)}"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg>${esc(label || 'Watch with live stats')}</a>`;
 }
 
@@ -177,6 +179,8 @@ function watchActText(act) {
 /* ---------------------------- the page ---------------------------- */
 function renderWatch(mid) {
   const g = GAME_BY_MID[mid];
+  // MBL men's games from 2025-26: video is on MBL's own platform, so the no-video companion
+  if (g && typeof isCompanionGame === 'function' && isCompanionGame(g) && !watchStream(mid)) return renderCompanion(mid);
   if (!g) {
     return `<div class="wt"><header class="wt-top">${watchBrand()}</header>
       <div class="wt-empty wt-empty-page">This game is not in the database. <a href="#/">See the latest games</a>.</div></div>`;
