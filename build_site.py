@@ -9,7 +9,7 @@ D = os.path.join(R, 'data')
 PARTS = ['app0_router.js', 'app1_core.js', 'app2_nav.js', 'app3_comp.js', 'app3b_family.js', 'app4_players.js',
          'app4b_profile.js', 'app4c_impact.js', 'app4d_radar.js', 'app4e_compare.js',
          'app4f_bpm.js', 'app4g_formulas.js', 'app4i_games.js',
-         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app4u_shots.js', 'app4w_shot3d.js', 'app4x_cmpshots.js', 'app4y_cmplineups.js', 'app4z_gameshots.js', 'app4za_milestones.js', 'app4zb_records.js', 'app4zc_postgame.js', 'app4zd_wowy.js', 'app4ze_shift.js', 'app4zf_companion.js', 'app4v_report.js', 'app5_rest.js']
+         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app4u_shots.js', 'app4w_shot3d.js', 'app4x_cmpshots.js', 'app4y_cmplineups.js', 'app4z_gameshots.js', 'app4za_milestones.js', 'app4zb_records.js', 'app4zc_postgame.js', 'app4zd_wowy.js', 'app4ze_shift.js', 'app4zf_companion.js', 'app4v_report.js', 'app4zg_scout.js', 'app5_rest.js']
 
 NEWS_TYPES = ('signing', 'transfer', 'departure', 'injury', 'return', 'retirement', 'national', 'other')
 
@@ -345,7 +345,8 @@ def write_site(payload, css):
     js = '\n\n'.join(open(os.path.join(A, p)).read() for p in PARTS)
     js_url = hashed(out, base, 'app', 'js', js)
     css_url = hashed(out, base, 'style', 'css', css)
-    for f in ('og.png', 'favicon.png'):
+    # scout.html: the film-tagging tool, run in a frame by #/scout and #/scouting (app4zg_scout.js)
+    for f in ('og.png', 'favicon.png', 'scout.html'):
         if os.path.exists(os.path.join(A, f)):
             shutil.copy(os.path.join(A, f), os.path.join(out, f))
     # three.js for the 3D shot map, fetched by app4w_shot3d.js only when that view first opens

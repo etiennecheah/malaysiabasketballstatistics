@@ -1,0 +1,1823 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>HoopStatsMY Scout Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Archivo+Narrow:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: the HoopStatsMY page shell — glass nav over an obsidian stage (the film),
+   an opaque working rail on the right (tag / shot map / report), the clip log under the film.
+   Tokens are the live site's own (style.css, "Obsidian & glass"), so this reads as one more page. */
+:root{
+  --bg: oklch(96.5% 0.006 250); --surface: oklch(100% 0 0); --surface-alt: oklch(95% 0.008 250);
+  --border: oklch(88% 0.012 250); --hair: oklch(94% 0.007 255);
+  --text: oklch(18% 0.015 255); --text-muted: oklch(46% 0.02 255); --text-faint: oklch(50.5% 0.016 255);
+  --accent: oklch(46% 0.16 255); --accent-soft: oklch(94% 0.03 255); --accent-ink: oklch(44% 0.16 255);
+  --accent-2: oklch(55% 0.165 45); --accent-2-soft: oklch(95% 0.05 55); --accent-2-ink: oklch(47% 0.16 42);
+  --positive: oklch(56% 0.14 148); --positive-ink: oklch(47% 0.13 148); --positive-soft: oklch(95% 0.03 148);
+  --negative: oklch(56% 0.19 25); --negative-soft: oklch(95% 0.04 25);
+  --on-bg: oklch(16% 0.012 255); --on-fg: #fff;
+  --void: oklch(12.5% 0.018 262); --ink-2: oklch(22% 0.014 255); --ink-line: oklch(30% 0.014 255); --ink-text-dim: oklch(68% 0.014 255);
+  --void-text: #eef2f8;
+  --court: oklch(97.5% 0.006 70); --court-line: oklch(70% 0.02 255); --court-paint: oklch(93.5% 0.012 255);
+  --shadow: 0 1px 2px oklch(20% 0.02 255 / .06);
+  --shadow-2: 0 2px 6px oklch(20% 0.02 255/.06), 0 8px 28px oklch(20% 0.02 255/.07);
+  --shadow-3: 0 18px 50px oklch(12% 0.02 255/.28);
+  --display: 'Archivo Narrow', 'Archivo', system-ui, sans-serif;
+  --body: 'Archivo', system-ui, sans-serif;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg: oklch(17% 0.012 255); --surface: oklch(21% 0.012 255); --surface-alt: oklch(25% 0.012 255);
+  --border: oklch(32% 0.012 255); --hair: oklch(25.5% 0.013 255);
+  --text: oklch(95% 0.006 255); --text-muted: oklch(75% 0.012 255); --text-faint: oklch(71% 0.012 255);
+  --accent: #4d93ea; --accent-soft: oklch(30% 0.06 255); --accent-ink: oklch(82% 0.1 255);
+  --accent-2: #d9762a; --accent-2-soft: oklch(30% 0.06 55); --accent-2-ink: oklch(80% 0.13 60);
+  --positive: oklch(70% 0.15 148); --positive-ink: oklch(78% 0.14 148); --positive-soft: oklch(30% 0.05 148);
+  --negative: oklch(68% 0.17 25); --negative-soft: oklch(30% 0.06 25);
+  --on-bg: oklch(92% 0.008 255); --on-fg: oklch(15% 0.012 255);
+  --court: oklch(23% 0.014 255); --court-line: oklch(52% 0.02 255); --court-paint: oklch(26.5% 0.016 255);
+  --shadow: 0 1px 2px rgba(0,0,0,.45); --shadow-2: 0 2px 8px rgba(0,0,0,.5); --shadow-3: 0 18px 50px rgba(0,0,0,.6);
+  color-scheme: dark; } }
+:root[data-theme="dark"]{
+  --bg: oklch(17% 0.012 255); --surface: oklch(21% 0.012 255); --surface-alt: oklch(25% 0.012 255);
+  --border: oklch(32% 0.012 255); --hair: oklch(25.5% 0.013 255);
+  --text: oklch(95% 0.006 255); --text-muted: oklch(75% 0.012 255); --text-faint: oklch(71% 0.012 255);
+  --accent: #4d93ea; --accent-soft: oklch(30% 0.06 255); --accent-ink: oklch(82% 0.1 255);
+  --accent-2: #d9762a; --accent-2-soft: oklch(30% 0.06 55); --accent-2-ink: oklch(80% 0.13 60);
+  --positive: oklch(70% 0.15 148); --positive-ink: oklch(78% 0.14 148); --positive-soft: oklch(30% 0.05 148);
+  --negative: oklch(68% 0.17 25); --negative-soft: oklch(30% 0.06 25);
+  --on-bg: oklch(92% 0.008 255); --on-fg: oklch(15% 0.012 255);
+  --court: oklch(23% 0.014 255); --court-line: oklch(52% 0.02 255); --court-paint: oklch(26.5% 0.016 255);
+  --shadow: 0 1px 2px rgba(0,0,0,.45); --shadow-2: 0 2px 8px rgba(0,0,0,.5); --shadow-3: 0 18px 50px rgba(0,0,0,.6);
+  color-scheme: dark; }
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; }
+body{ background:var(--bg); color:var(--text); font-family:var(--body); font-size:14px; line-height:1.5;
+  -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums; }
+body::before{ content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:30; background:var(--void); }
+button,input,select,textarea{ font-family:inherit; font-size:inherit; color:var(--text); }
+button{ background:none; border:none; cursor:pointer; }
+:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:3px; }
+h1,h2,h3{ text-wrap:balance; margin:0; }
+.lbl{ font-family:var(--display); font-size:11.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--text-faint); }
+kbd{ font-family:var(--display); font-size:10.5px; font-weight:600; padding:1px 5px; border-radius:4px; border:1px solid var(--border);
+  color:var(--text-faint); background:var(--surface-alt); line-height:1.4; }
+
+/* ---- the glass bar ---- */
+.nav{ position:sticky; top:env(safe-area-inset-top,0px); z-index:20; height:60px; display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px));
+  background:color-mix(in oklab, var(--void) 82%, transparent); backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%);
+  border-bottom:1px solid rgba(255,255,255,.09); box-shadow:inset 0 1px 0 rgba(255,255,255,.07); }
+.wordmark{ font-family:var(--display); font-weight:700; font-size:19px; color:#fff; display:flex; align-items:center; gap:9px; white-space:nowrap; }
+.wordmark .dot{ width:9px; height:9px; border-radius:2px; background:#d9762a; box-shadow:0 0 14px #d9762a; }
+.nav-left{ display:flex; align-items:center; gap:22px; min-width:0; }
+.nav-pill{ font-family:var(--display); font-size:12.5px; font-weight:600; color:#fff; padding:8px 14px; border-radius:100px;
+  background:rgba(255,255,255,.09); box-shadow:inset 0 1px 0 rgba(255,255,255,.16); white-space:nowrap; }
+.nav-right{ display:flex; align-items:center; gap:8px; }
+.nbtn{ height:34px; padding:0 13px; border-radius:100px; border:1px solid var(--ink-line); background:var(--ink-2); color:#fff;
+  font-family:var(--display); font-weight:600; font-size:12.5px; display:inline-flex; align-items:center; gap:7px; transition:border-color .15s; white-space:nowrap; }
+.nbtn:hover{ border-color:#d9762a; }
+.nbtn.icon{ width:34px; padding:0; justify-content:center; }
+.nbtn.lang{ gap:5px; padding:0 11px; }
+.nbtn.lang span{ color:var(--ink-text-dim); transition:color .2s; }
+.nbtn.lang .lg-sep{ opacity:.4; }
+:root[lang="en"] .nbtn.lang .lg-en, :root[lang="zh-Hans"] .nbtn.lang .lg-zh{ color:#fff; }
+/* film full screen: the stage keeps its transport, timeline and trim lane */
+.stage:fullscreen{ border-radius:0; display:flex; flex-direction:column; width:100%; height:100%; box-shadow:none; }
+.stage:fullscreen .screen{ flex:1; min-height:0; aspect-ratio:auto; }
+.stage:-webkit-full-screen{ border-radius:0; display:flex; flex-direction:column; width:100%; height:100%; }
+.stage:-webkit-full-screen .screen{ flex:1; min-height:0; aspect-ratio:auto; }
+.stage:fullscreen .toast{ bottom:24px; }
+html:fullscreen{ overflow:auto; }
+:root[lang="zh-Hans"] body{ font-family:var(--body), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif; }
+:root[lang="zh-Hans"] .lbl, :root[lang="zh-Hans"] .trim-top .lblv, :root[lang="zh-Hans"] .zt th, :root[lang="zh-Hans"] .kpi span{ letter-spacing:.02em; }
+.theme .moon{ display:none; }
+:root[data-theme="dark"] .theme .moon{ display:inline; } :root[data-theme="dark"] .theme .sun{ display:none; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .theme .moon{ display:inline; } :root:not([data-theme="light"]) .theme .sun{ display:none; } }
+
+/* ---- page ---- */
+.page{ max-width:1440px; margin:0 auto; padding-block:20px 64px;
+  padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px)); }
+.head{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:16px; }
+.title{ font-family:var(--display); font-weight:700; font-size:30px; line-height:1.08; letter-spacing:.005em; }
+.sub{ color:var(--text-muted); font-size:13px; margin-top:5px; max-width:88ch; }
+.match{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.tchip{ display:inline-flex; align-items:center; gap:8px; padding:6px 12px 6px 6px; border-radius:100px; border:1px solid var(--border); background:var(--surface);
+  font-family:var(--display); font-weight:600; font-size:13px; box-shadow:var(--shadow); }
+.crest.img{ background:transparent !important; }
+.crest.img img{ width:100%; height:100%; object-fit:contain; display:block; }
+.crest{ width:26px; height:26px; border-radius:7px; display:inline-flex; align-items:center; justify-content:center; color:#fff;
+  font-family:var(--display); font-weight:700; font-size:10.5px; letter-spacing:.02em; flex:none; }
+.vs{ font-family:var(--display); color:var(--text-faint); font-size:12px; }
+/* the game strip that replaced the page title: who, what, when, and the two actions that matter */
+.matchbar{ display:flex; align-items:center; justify-content:space-between; gap:12px 18px; flex-wrap:wrap; margin-bottom:16px; }
+.mb-teams{ display:flex; align-items:center; gap:12px; min-width:0; flex-wrap:wrap; }
+.mb-team{ display:flex; align-items:center; gap:10px; min-width:0; }
+.mb-team b{ font-family:var(--display); font-size:19px; font-weight:700; line-height:1.1; }
+.mb-team small{ display:block; font-family:var(--display); font-size:22px; font-weight:700; color:var(--text-muted); line-height:1; }
+.mb-team.win small{ color:var(--text); }
+.mb-meta{ font-size:12.5px; color:var(--text-muted); display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.mb-act{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.mb-state{ font-size:12px; color:var(--text-faint); display:inline-flex; align-items:center; gap:6px; }
+.mb-state i{ width:7px; height:7px; border-radius:50%; background:var(--text-faint); }
+.mb-state.ok i{ background:var(--positive); } .mb-state.dirty i{ background:var(--accent-2); }
+.btn.accent{ background:var(--accent); border-color:var(--accent); color:#fff; }
+.btn.accent:hover{ border-color:var(--accent-hover, var(--accent)); filter:brightness(1.08); }
+/* game picker */
+.gp-list{ display:flex; flex-direction:column; max-height:min(56vh, 520px); overflow:auto; border:1px solid var(--hair); border-radius:10px; }
+.gp-row{ display:grid; grid-template-columns:78px minmax(0,1fr) auto; gap:12px; align-items:center; padding:9px 12px; border-bottom:1px solid var(--hair); text-align:left; width:100%; transition:background-color .12s; }
+.gp-row:last-child{ border-bottom:0; }
+.gp-row:hover{ background:var(--surface-alt); }
+.gp-d{ font-size:12px; color:var(--text-muted); line-height:1.3; }
+.gp-d b{ display:block; color:var(--text); font-family:var(--display); font-size:13px; }
+.gp-m{ min-width:0; display:flex; flex-direction:column; gap:3px; }
+.gp-t{ display:flex; align-items:center; gap:7px; font-weight:600; font-size:13px; min-width:0; }
+.gp-t span{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.gp-t em{ font-style:normal; margin-left:auto; font-family:var(--display); font-weight:700; color:var(--text-muted); padding-left:8px; }
+.gp-c{ font-size:11.5px; color:var(--text-faint); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.gp-tag{ font-size:11px; font-weight:700; color:var(--positive-ink); background:var(--positive-soft); border-radius:100px; padding:2px 8px; white-space:nowrap; }
+.gp-tools{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; }
+/* viewer */
+.vbar{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px 16px; flex-wrap:wrap; margin-bottom:14px; }
+.vbar h1{ font-family:var(--display); font-size:26px; font-weight:700; line-height:1.1; }
+.vbar p{ margin:4px 0 0; font-size:13px; color:var(--text-muted); max-width:70ch; }
+.vsel{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+.vsel select{ height:36px; border-radius:100px; border:1px solid var(--border); background:var(--surface); padding:0 12px; font-weight:600; font-size:13px; max-width:280px; }
+.vgame{ font-size:11.5px; color:var(--text-faint); margin-top:2px; }
+.ib.yt{ color:#e33; }
+body.view .stage, body.view #b-reel, body.view .cact .ib:not(.yt), body.view #tabs .tab[data-v="tag"], body.view .nav, body.view .exbar{ display:none !important; }
+body.view .page{ padding-block:4px 24px; }
+body.embedded .nav-left .nav-pill{ display:none; }
+body.vempty #rail, body.vempty .log .filters{ display:none !important; }
+body.vempty .grid{ grid-template-columns:minmax(0,1fr); }
+@media (max-width: 430px){ .wordmark{ font-size:0; gap:0; } }
+.badge{ display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; color:var(--accent-2-ink); background:var(--accent-2-soft); border-radius:100px; padding:4px 10px; }
+.btn{ height:34px; padding:0 14px; border-radius:100px; border:1px solid var(--border); background:var(--surface); color:var(--text);
+  font-family:var(--display); font-weight:600; font-size:12.5px; display:inline-flex; align-items:center; gap:7px; transition:border-color .15s, background-color .15s, transform .12s; white-space:nowrap; }
+.btn:hover{ border-color:var(--accent); }
+.btn:active{ transform:scale(.97); }
+.btn.primary{ background:var(--on-bg); color:var(--on-fg); border-color:var(--on-bg); }
+.btn.primary:hover{ border-color:var(--accent); }
+.btn.ghost{ border-color:transparent; background:transparent; color:var(--text-muted); }
+.btn.ghost:hover{ color:var(--text); background:var(--surface-alt); }
+.btn.danger:hover{ border-color:var(--negative); color:var(--negative); }
+.btn[disabled]{ opacity:.45; pointer-events:none; }
+
+.grid{ display:grid; grid-template-columns:minmax(0,1fr) 420px; gap:18px; align-items:start; }
+.col{ display:flex; flex-direction:column; gap:14px; min-width:0; }
+
+/* ---- the stage ---- */
+.stage{ position:relative; border-radius:14px; overflow:hidden; background:var(--void); color:var(--void-text); box-shadow:var(--shadow-3); isolation:isolate; }
+.stage .bloom{ position:absolute; inset:-30%; z-index:0; pointer-events:none; }
+.bloom i{ position:absolute; display:block; border-radius:50%; filter:blur(90px); }
+.bloom .b1{ width:44%; height:100%; left:0; top:-10%; background:var(--home,#c8262f); opacity:.22; transition:background .4s; }
+.bloom .b2{ width:44%; height:100%; right:0; top:-10%; background:var(--away,#1f4fa3); opacity:.2; transition:background .4s; }
+.rim::before{ content:""; position:absolute; inset:0; border-radius:inherit; padding:1px; z-index:5;
+  background:linear-gradient(150deg, rgba(255,255,255,.30), rgba(255,255,255,.06) 44%, rgba(255,255,255,0) 66%, rgba(255,255,255,.11));
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite:exclude; pointer-events:none; }
+.screen{ position:relative; z-index:1; aspect-ratio:16/9; max-width:100%; background:#05070c; display:flex; align-items:center; justify-content:center; }
+.screen video{ width:100%; height:100%; display:block; object-fit:contain; background:#000; }
+.drop{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; padding:20px; text-align:center;
+  background:radial-gradient(ellipse at center, rgba(255,255,255,.04), transparent 70%); transition:background .2s; }
+.drop.over{ background:radial-gradient(ellipse at center, rgba(217,118,42,.22), transparent 70%); }
+.drop h2{ font-family:var(--display); font-size:22px; font-weight:700; color:#fff; }
+.drop p{ margin:0; color:var(--ink-text-dim); font-size:13px; max-width:46ch; }
+.drop .row{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+.vbtn{ height:36px; padding:0 15px; border-radius:100px; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.08); color:#fff;
+  font-family:var(--display); font-weight:600; font-size:13px; display:inline-flex; align-items:center; gap:7px; transition:background .15s, border-color .15s, transform .12s; }
+.vbtn:hover{ background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.3); }
+.vbtn:active{ transform:scale(.96); }
+.vbtn.hot{ background:#d9762a; border-color:#d9762a; }
+.hud{ position:absolute; z-index:3; left:12px; top:12px; display:flex; gap:6px; pointer-events:none; }
+.hud span{ font-family:var(--display); font-weight:700; font-size:12px; padding:4px 9px; border-radius:6px; background:rgba(5,7,12,.66); color:#fff; backdrop-filter:blur(6px); }
+.hud .rec{ background:#c0262f; }
+.hud .reel{ background:#d9762a; }
+
+.transport{ position:relative; z-index:2; display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding:10px 12px;
+  border-top:1px solid rgba(255,255,255,.07); background:linear-gradient(180deg, rgba(255,255,255,.035), transparent); }
+.tbtn{ height:32px; min-width:32px; padding:0 9px; border-radius:8px; color:#e9eef6; font-family:var(--display); font-weight:600; font-size:12.5px;
+  display:inline-flex; align-items:center; justify-content:center; gap:6px; transition:background .12s; }
+.tbtn:hover{ background:rgba(255,255,255,.08); }
+.tbtn.play{ width:40px; height:40px; border-radius:100px; background:#fff; color:var(--void); }
+.tbtn.play:hover{ background:#fff; transform:scale(1.04); }
+.tbtn svg{ width:16px; height:16px; fill:currentColor; }
+.tc{ font-family:var(--display); font-weight:700; font-size:17px; color:#fff; letter-spacing:.01em; padding:0 6px; min-width:84px; }
+.tc small{ font-weight:500; color:var(--ink-text-dim); font-size:12px; margin-left:4px; }
+.sep{ width:1px; height:22px; background:rgba(255,255,255,.12); margin:0 4px; }
+.spd{ display:inline-flex; background:rgba(255,255,255,.06); border-radius:8px; padding:2px; }
+.spd button{ height:28px; padding:0 8px; border-radius:6px; color:var(--ink-text-dim); font-family:var(--display); font-weight:600; font-size:12px; transition:background .15s, color .15s; }
+.spd button.on{ background:rgba(255,255,255,.16); color:#fff; }
+.grow{ flex:1; }
+.markio{ display:inline-flex; gap:4px; }
+.markio .tbtn{ border:1px solid rgba(255,255,255,.14); }
+.markio .tbtn.set{ border-color:#d9762a; color:#ffcf9f; }
+
+/* timeline */
+.tl{ position:relative; z-index:2; padding:6px 12px 12px; }
+.tl-bar{ position:relative; height:44px; border-radius:8px; background:rgba(255,255,255,.05); cursor:pointer; overflow:hidden; touch-action:none; }
+.tl-ticks{ position:absolute; inset:0; pointer-events:none; }
+.tl-ticks i{ position:absolute; top:0; bottom:0; width:1px; background:rgba(255,255,255,.07); }
+.tl-ticks b{ position:absolute; top:1px; font-family:var(--display); font-size:10px; font-weight:500; color:rgba(255,255,255,.4); transform:translateX(4px); }
+.tl-clip{ position:absolute; top:15px; height:14px; border-radius:4px; min-width:3px; opacity:.82; transition:opacity .15s, transform .2s var(--ease); }
+.tl-clip:hover{ opacity:1; }
+.tl-clip.sel{ opacity:1; box-shadow:0 0 0 2px #fff; z-index:2; }
+.tl-shot{ position:absolute; top:33px; width:7px; height:7px; border-radius:50%; transform:translateX(-50%); pointer-events:none; }
+.tl-shot.miss{ background:transparent !important; border:1.5px solid; }
+.tl-sel{ position:absolute; top:0; bottom:0; background:rgba(217,118,42,.22); border-left:2px solid #d9762a; border-right:2px solid #d9762a; pointer-events:none; }
+.tl-head{ position:absolute; top:-2px; bottom:-2px; width:2px; background:#fff; box-shadow:0 0 10px rgba(255,255,255,.7); pointer-events:none; transform:translateX(-1px); }
+.tl-hover{ position:absolute; top:-26px; transform:translateX(-50%); font-family:var(--display); font-size:11px; font-weight:700; background:#fff; color:var(--void);
+  padding:2px 6px; border-radius:4px; pointer-events:none; opacity:0; transition:opacity .1s; white-space:nowrap; }
+.tl-wrap{ position:relative; }
+.tl-wrap:hover .tl-hover{ opacity:1; }
+
+/* trim lane: a close-up of the clip being cut */
+.trim{ position:relative; z-index:2; padding:0 12px 14px; }
+.trim-top{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:6px; flex-wrap:wrap; }
+.trim-top .lblv{ font-family:var(--display); font-size:11.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-text-dim); }
+.trim-top .lblv b{ color:#fff; letter-spacing:0; text-transform:none; font-size:13px; margin-left:6px; }
+.nudge{ display:inline-flex; gap:3px; align-items:center; }
+.nudge .tbtn{ height:26px; min-width:26px; font-size:11.5px; border:1px solid rgba(255,255,255,.12); }
+.nudge em{ font-style:normal; font-family:var(--display); font-size:11px; color:var(--ink-text-dim); margin:0 4px 0 8px; }
+.lane{ position:relative; height:54px; border-radius:8px; background:repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 100%); background-size:var(--sec,20px) 100%;
+  background-color:rgba(255,255,255,.03); overflow:hidden; touch-action:none; cursor:pointer; }
+.lane-win{ position:absolute; top:6px; bottom:6px; background:linear-gradient(180deg, rgba(217,118,42,.38), rgba(217,118,42,.2)); border-radius:6px; border:1px solid rgba(255,190,130,.55); }
+.handle{ position:absolute; top:0; bottom:0; width:16px; margin-left:-8px; cursor:ew-resize; display:flex; align-items:center; justify-content:center; z-index:3; touch-action:none; }
+.handle::after{ content:""; width:6px; height:30px; border-radius:3px; background:#fff; box-shadow:0 1px 6px rgba(0,0,0,.5); transition:transform .15s var(--ease); }
+.handle:hover::after, .handle.drag::after{ transform:scaleY(1.18); }
+.lane-head{ position:absolute; top:0; bottom:0; width:2px; background:#fff; pointer-events:none; z-index:2; }
+.lane-empty{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--ink-text-dim); font-size:12.5px; }
+
+/* ---- the opaque rail ---- */
+.panel{ background:var(--surface); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow-2); min-width:0; }
+.tabbar{ display:flex; gap:2px; padding:4px; margin:12px 12px 0; border-radius:100px; border:1px solid var(--border); background:var(--surface-alt); position:relative; }
+.tab{ flex:1; position:relative; z-index:1; font-family:var(--display); font-size:12.5px; font-weight:600; padding:8px 10px; border-radius:100px; color:var(--text-muted); transition:color .2s; }
+.tab.on{ color:var(--on-fg); }
+.tab-pill{ position:absolute; top:4px; bottom:4px; border-radius:100px; background:var(--on-bg); transition:left .28s var(--ease), width .28s var(--ease); z-index:0; }
+.view{ padding:14px 16px 16px; display:flex; flex-direction:column; gap:14px; animation:viewIn .24s var(--ease); }
+@keyframes viewIn{ from{ opacity:.0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+.sect{ display:flex; flex-direction:column; gap:8px; }
+.sect-h{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.seg{ display:flex; border:1px solid var(--border); border-radius:100px; padding:3px; gap:3px; background:var(--surface-alt); }
+.seg button{ flex:1; border-radius:100px; padding:7px 10px; font-family:var(--display); font-weight:600; font-size:12.5px; color:var(--text-muted);
+  display:inline-flex; align-items:center; justify-content:center; gap:7px; transition:background-color .18s, color .18s; }
+.seg button.on{ background:var(--on-bg); color:var(--on-fg); }
+.seg button .sw{ width:10px; height:10px; border-radius:3px; flex:none; }
+.seg.team button.on{ background:var(--tc); color:var(--ti, #fff); box-shadow:inset 0 0 0 1px color-mix(in oklab, var(--text) 14%, transparent); }
+.seg.team button img{ width:18px; height:18px; object-fit:contain; flex:none; }
+.chips{ display:flex; flex-wrap:wrap; gap:6px; }
+.chip{ font-family:var(--body); font-size:12px; font-weight:600; padding:6px 11px; border-radius:100px; border:1px solid var(--border); background:var(--surface);
+  color:var(--text-muted); display:inline-flex; align-items:center; gap:6px; transition:background-color .15s, color .15s, border-color .15s, transform .12s; }
+.chip:hover{ border-color:var(--accent); color:var(--text); }
+.chip:active{ transform:scale(.95); }
+.chip.on{ background:var(--on-bg); border-color:var(--on-bg); color:var(--on-fg); }
+.chip kbd{ padding:0 4px; font-size:10px; }
+.chip.on kbd{ background:transparent; color:inherit; border-color:currentColor; opacity:.7; }
+/* results keep one neutral 'selected' plate; the outcome is a small dot, so the panel is not a traffic light */
+.chip .rd{ width:7px; height:7px; border-radius:50%; flex:none; background:var(--text-faint); }
+.chip.res-good .rd{ background:var(--positive); } .chip.res-bad .rd{ background:var(--negative); }
+.jersey{ min-width:40px; justify-content:center; font-family:var(--display); font-size:13px; padding:5px 9px; }
+.jersey.ph{ padding:3px 10px 3px 3px; gap:6px; }
+.jersey img{ width:24px; height:24px; border-radius:50%; object-fit:cover; background:var(--surface-alt); flex:none; }
+.jersey.on{ background:var(--tc); border-color:var(--tc); color:var(--ti, #fff); box-shadow:inset 0 0 0 1px color-mix(in oklab, var(--text) 14%, transparent); }
+.pick{ font-size:12.5px; color:var(--text-muted); min-height:18px; }
+.pick b{ color:var(--text); font-weight:600; }
+/* the groups of buttons fold away, so only what you are choosing is open */
+.folds{ display:flex; flex-direction:column; gap:6px; }
+.fold{ border:1px solid var(--hair); border-radius:10px; background:var(--surface); transition:border-color .2s; }
+.fold.open{ border-color:var(--border); }
+.fold-h{ display:flex; align-items:center; gap:10px; width:100%; padding:9px 12px; text-align:left; border-radius:10px; }
+.fold-h:hover{ background:var(--surface-alt); }
+.fold-h .lbl{ flex:none; min-width:66px; }
+.fold-sum{ flex:1; min-width:0; font-size:12.5px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.fold-sum.none{ color:var(--text-faint); font-weight:500; }
+.fold-car{ width:8px; height:8px; flex:none; border-right:2px solid var(--text-faint); border-bottom:2px solid var(--text-faint); transform:rotate(45deg) translate(-2px,-2px); transition:transform .25s var(--ease); }
+.fold.open .fold-car{ transform:rotate(225deg) translate(-2px,-2px); }
+.fold-b{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .26s var(--ease); }
+.fold.open .fold-b{ grid-template-rows:1fr; }
+.fold-in{ overflow:hidden; min-height:0; }
+.fold-in > div{ padding:2px 12px 12px; display:flex; flex-direction:column; gap:8px; }
+.prow{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.prow .lbl{ min-width:66px; }
+.grp{ display:grid; grid-template-columns:72px minmax(0,1fr); gap:8px; align-items:start; }
+.grp > .lbl{ padding-top:7px; }
+.win{ display:grid; grid-template-columns:1fr 1fr auto; gap:8px; align-items:center; }
+.field{ display:flex; flex-direction:column; gap:3px; min-width:0; }
+.inp{ width:100%; height:34px; border:1px solid var(--border); background:var(--surface-alt); border-radius:8px; padding:0 10px; color:var(--text); }
+.inp:focus{ border-color:var(--accent); outline:none; }
+.inp.sm{ height:30px; }
+.tval{ font-family:var(--display); font-weight:700; font-size:16px; }
+.tval.unset{ color:var(--text-faint); font-weight:500; font-size:13px; }
+.savebar{ display:flex; gap:8px; align-items:center; position:sticky; bottom:0; padding:8px 0 calc(2px + env(safe-area-inset-bottom,0px)); background:linear-gradient(180deg, transparent, var(--surface) 30%); z-index:2; }
+.savebar .btn.primary{ flex:1; height:42px; justify-content:center; font-size:14px; }
+.edit-note{ font-size:12px; color:var(--accent-2-ink); background:var(--accent-2-soft); padding:6px 10px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.toggle{ display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--text-muted); cursor:pointer; user-select:none; }
+.toggle input{ appearance:none; width:30px; height:18px; border-radius:100px; background:var(--border); position:relative; cursor:pointer; transition:background .2s; flex:none; margin:0; }
+.toggle input::after{ content:""; position:absolute; left:2px; top:2px; width:14px; height:14px; border-radius:50%; background:#fff; transition:transform .2s var(--ease); box-shadow:0 1px 2px rgba(0,0,0,.3); }
+.toggle input:checked{ background:var(--accent-2); }
+.toggle input:checked::after{ transform:translateX(12px); }
+
+/* ---- shot map ---- */
+.court-wrap{ position:relative; border-radius:10px; overflow:hidden; border:1px solid var(--border); background:var(--court); }
+.court{ display:block; width:100%; height:auto; touch-action:manipulation; }
+.court.rec{ cursor:crosshair; }
+.court .ln{ fill:none; stroke:var(--court-line); stroke-width:.6; }
+.court .paint{ fill:var(--court-paint); }
+.court .floor{ fill:var(--court); }
+.court .ghost{ fill:none; stroke:var(--accent-2); stroke-width:.5; stroke-dasharray:1.4 1.2; opacity:0; transition:opacity .12s; pointer-events:none; }
+.shot{ cursor:pointer; }
+.shot .m{ stroke:#fff; stroke-width:.45; }
+.shot .x{ stroke-width:1.15; stroke-linecap:round; fill:none; }
+.shot .hit{ fill:transparent; }
+.shot.new .g{ animation:pop .5s var(--ease); transform-box:fill-box; transform-origin:center; }
+.shot.new .ring{ animation:ring .7s ease-out forwards; transform-box:fill-box; transform-origin:center; }
+@keyframes pop{ 0%{ transform:scale(2.4); opacity:0; } 60%{ opacity:1; } 100%{ transform:scale(1); } }
+@keyframes ring{ from{ transform:scale(.6); opacity:.9; } to{ transform:scale(3.2); opacity:0; } }
+.shot.dim{ opacity:.18; }
+.shot.focus .g{ filter:drop-shadow(0 0 1.2px var(--text)); }
+.prompt{ position:absolute; left:50%; bottom:10px; transform:translateX(-50%); background:var(--on-bg); color:var(--on-fg); font-size:12.5px; font-weight:600;
+  padding:7px 12px; border-radius:100px; box-shadow:var(--shadow-2); white-space:nowrap; display:flex; gap:8px; align-items:center; animation:viewIn .24s var(--ease); max-width:calc(100% - 20px); }
+.prompt i{ width:8px; height:8px; border-radius:50%; background:#d9762a; animation:pulse 1.2s infinite; flex:none; }
+@keyframes pulse{ 50%{ opacity:.3; } }
+.prompt button{ color:inherit; opacity:.7; font-size:12px; text-decoration:underline; }
+.recfor{ display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--text-muted); flex-wrap:wrap; }
+.recfor b{ color:var(--text); }
+.recfor #s-who{ margin-left:auto; }
+.shotpop{ position:absolute; z-index:4; min-width:180px; background:var(--void); color:var(--void-text); border-radius:8px; padding:9px 11px; font-size:12.5px; line-height:1.45; box-shadow:0 10px 28px rgba(0,0,0,.35); animation:viewIn .16s var(--ease); }
+.shotpop .r{ display:flex; flex-wrap:wrap; gap:6px; margin-top:7px; }
+.shotpop button{ font-size:12px; font-weight:600; color:#fff; padding:4px 9px; border-radius:100px; background:rgba(255,255,255,.12); }
+.shotpop button:hover{ background:rgba(255,255,255,.2); }
+.chip.diff-open svg{ color:oklch(58% 0.12 200); } .chip.diff-cont svg{ color:oklch(66% 0.14 70); } .chip.diff-heavy svg{ color:oklch(58% 0.18 25); }
+.tag.diff-open, .tag.diff-cont, .tag.diff-heavy{ display:inline-flex; align-items:center; gap:4px; }
+.tag.diff-open{ color:oklch(48% 0.11 210); } .tag.diff-cont{ color:oklch(50% 0.12 65); } .tag.diff-heavy{ color:var(--negative); }
+.dt{ display:flex; flex-direction:column; gap:6px; }
+.dt-row{ display:grid; grid-template-columns:minmax(0,140px) minmax(0,1fr) 44px 40px; gap:8px; align-items:center; font-size:12.5px; }
+.dt-n{ display:inline-flex; align-items:center; gap:6px; white-space:nowrap; overflow:hidden; }
+.dt-row.diff-open .dt-n svg{ color:oklch(58% 0.12 200); } .dt-row.diff-cont .dt-n svg{ color:oklch(62% 0.14 70); } .dt-row.diff-heavy .dt-n svg{ color:oklch(55% 0.18 25); }
+.dt-bar{ position:relative; height:10px; border-radius:5px; background:var(--surface-alt); overflow:hidden; }
+.dt-bar i, .dt-bar b{ position:absolute; left:0; top:0; bottom:0; border-radius:5px; transition:width .7s var(--ease); }
+.dt-bar i{ background:color-mix(in oklab, var(--text-faint) 30%, transparent); }
+.dt-bar b{ background:var(--positive); }
+.dt-v{ text-align:right; color:var(--text-muted); } .dt-p{ text-align:right; font-weight:700; }
+.legend{ display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--text-muted); align-items:center; }
+.legend svg{ width:12px; height:12px; vertical-align:-2px; margin-right:4px; }
+.zt{ width:100%; border-collapse:collapse; font-size:12.5px; }
+.zt th{ text-align:right; font-family:var(--display); font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--text-faint); padding:4px 6px; border-bottom:1px solid var(--border); }
+.zt th:first-child, .zt td:first-child{ text-align:left; }
+.zt td{ text-align:right; padding:6px; border-bottom:1px solid var(--hair); }
+.zt tr:last-child td{ border-bottom:0; font-weight:700; }
+.pct{ display:inline-block; min-width:46px; padding:1px 6px; border-radius:4px; font-weight:700; text-align:center; }
+
+/* ---- report ---- */
+.kpis{ display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:8px; }
+.kpi{ border:1px solid var(--hair); border-radius:8px; padding:8px 10px; background:var(--surface-alt); }
+.kpi b{ display:block; font-family:var(--display); font-size:21px; font-weight:700; line-height:1.1; }
+.kpi span{ font-family:var(--display); font-size:10.5px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--text-faint); }
+.bars{ display:flex; flex-direction:column; gap:6px; }
+.bar-row{ display:grid; grid-template-columns:minmax(0,118px) minmax(0,1fr) 92px; gap:8px; align-items:center; font-size:12.5px; }
+.bar-row .nm{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.bar-track{ height:10px; border-radius:5px; background:var(--surface-alt); overflow:hidden; }
+.bar-fill{ display:block; height:100%; border-radius:5px; background:var(--tc); transition:width .9s var(--ease); }
+.bar-row .v{ text-align:right; color:var(--text-muted); font-size:12px; }
+.bar-row .v b{ color:var(--text); }
+.empty{ color:var(--text-faint); font-size:12.5px; padding:10px 0; }
+.note{ font-size:12px; color:var(--text-muted); }
+
+/* ---- clip log ---- */
+.log{ background:var(--surface); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); overflow:hidden; }
+.log-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:12px 14px; border-bottom:1px solid var(--border); }
+.log-head h2{ font-family:var(--display); font-size:15px; font-weight:600; display:flex; align-items:center; gap:8px; }
+.count{ font-family:var(--display); font-size:12px; font-weight:600; color:var(--text-muted); background:var(--surface-alt); border-radius:100px; padding:1px 8px; }
+.filters{ display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+.filters select{ height:32px; border-radius:100px; border:1px solid var(--border); background:var(--surface-alt); padding:0 10px; font-size:12.5px; font-weight:600; max-width:170px; }
+.rows{ max-height:430px; overflow-y:auto; }
+body.view .rows{ max-height:none; }
+.crow{ display:grid; grid-template-columns:6px 84px minmax(0,1fr) auto; gap:12px; align-items:center; padding:9px 14px 9px 0; border-bottom:1px solid var(--hair);
+  cursor:pointer; transition:background-color .15s; animation:rowIn .32s var(--ease); }
+@keyframes rowIn{ from{ background:var(--accent-2-soft); } }
+.crow:hover{ background:var(--surface-alt); }
+.crow.sel{ background:var(--accent-soft); }
+.crow.playing .stripe{ box-shadow:0 0 0 2px #d9762a; }
+.stripe{ align-self:stretch; border-radius:0 3px 3px 0; }
+.ctime{ font-family:var(--display); font-weight:700; font-size:14px; line-height:1.2; }
+.ctime small{ display:block; font-weight:500; font-size:11.5px; color:var(--text-faint); }
+.cmain{ min-width:0; }
+.ctitle{ font-weight:600; font-size:13px; display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+.ctags{ display:flex; gap:4px; flex-wrap:wrap; margin-top:3px; }
+.tag{ font-size:11px; font-weight:600; padding:1px 7px; border-radius:100px; background:var(--surface-alt); color:var(--text-muted); border:1px solid var(--hair); }
+.tag.good{ background:var(--positive-soft); color:var(--positive-ink); border-color:transparent; }
+.tag.bad{ background:var(--negative-soft); color:var(--negative); border-color:transparent; }
+.tag.q{ background:transparent; }
+.cnote{ font-size:12px; color:var(--text-muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cact{ display:flex; gap:2px; }
+.ib{ width:30px; height:30px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; color:var(--text-muted); transition:background .12s, color .12s; }
+.ib:hover{ background:var(--surface-alt); color:var(--text); }
+.ib.del:hover{ color:var(--negative); }
+.ib svg{ width:15px; height:15px; fill:currentColor; }
+.exbar{ display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; padding:10px 14px; background:var(--accent-2-soft); color:var(--accent-2-ink); font-size:12.5px; font-weight:600; }
+
+/* ---- sheets ---- */
+.scrim{ position:fixed; inset:0; z-index:40; background:oklch(10% 0.02 255 / .45); display:flex; align-items:center; justify-content:center; padding:20px; animation:fade .2s; }
+@keyframes fade{ from{ opacity:0; } }
+.sheet{ width:min(720px,100%); max-height:calc(100% - 20px); overflow:auto; background:var(--surface); color:var(--text); border-radius:14px; box-shadow:var(--shadow-3); border:1px solid var(--border); animation:rise .28s var(--ease); }
+@keyframes rise{ from{ transform:translateY(14px) scale(.985); opacity:0; } }
+.sheet-h{ display:flex; justify-content:space-between; align-items:center; padding:14px 18px; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--surface); z-index:1; }
+.sheet-h h3{ font-family:var(--display); font-size:17px; }
+.sheet-b{ padding:16px 18px 18px; display:flex; flex-direction:column; gap:16px; }
+.two{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.teamform{ display:flex; flex-direction:column; gap:8px; padding:12px; border:1px solid var(--hair); border-radius:10px; background:var(--surface-alt); }
+.teamform .r{ display:grid; grid-template-columns:minmax(0,1fr) 70px 44px; gap:6px; }
+.teamform input[type=color]{ width:44px; height:34px; border:1px solid var(--border); border-radius:8px; padding:2px; background:var(--surface); }
+textarea.inp{ height:auto; min-height:150px; padding:8px 10px; font-size:13px; line-height:1.5; resize:vertical; }
+.exp{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:8px; }
+.expi{ display:flex; flex-direction:column; align-items:flex-start; gap:2px; text-align:left; padding:11px 12px; border-radius:10px; border:1px solid var(--border); background:var(--surface); transition:border-color .15s, transform .12s; }
+.expi:hover{ border-color:var(--accent); }
+.expi:active{ transform:scale(.98); }
+.expi b{ font-family:var(--display); font-size:14px; }
+.expi span{ font-size:12px; color:var(--text-muted); }
+pre.code{ margin:0; max-height:220px; overflow:auto; background:var(--void); color:#dfe6f2; border-radius:8px; padding:10px 12px; font-size:12px; line-height:1.5; white-space:pre; }
+.keys{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:6px 18px; font-size:12.5px; color:var(--text-muted); }
+.keys div{ display:flex; justify-content:space-between; gap:8px; border-bottom:1px solid var(--hair); padding:4px 0; }
+
+.toast{ position:fixed; left:50%; bottom:calc(22px + env(safe-area-inset-bottom,0px)); z-index:60; transform:translate(-50%, 12px); background:var(--on-bg); color:var(--on-fg);
+  font-weight:600; font-size:13.5px; padding:10px 16px; border-radius:100px; box-shadow:var(--shadow-3); opacity:0; pointer-events:none; transition:opacity .2s, transform .25s var(--ease); max-width:calc(100% - 32px); text-align:center; }
+.toast.show{ opacity:1; transform:translate(-50%,0); }
+
+@media (max-width: 1080px){ .grid{ grid-template-columns:minmax(0,1fr); } .rail{ order:2; } }
+@media (max-width: 620px){
+  .nav-pill{ display:none; } .nbtn .t{ display:none; } .nbtn:not(.lang){ width:34px; padding:0; justify-content:center; } .nbtn.lang{ padding:0 9px; } .nav-right{ gap:5px; }
+  .title{ font-size:24px; } .two, .exp, .keys{ grid-template-columns:minmax(0,1fr); }
+  .kpis{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .crow{ grid-template-columns:6px 64px minmax(0,1fr); }
+  .cact{ grid-column:2 / -1; justify-content:flex-end; margin-top:-4px; }
+  .hide-sm{ display:none !important; }
+  .grp{ grid-template-columns:minmax(0,1fr); } .grp > .lbl{ padding-top:0; }
+  .transport{ gap:2px; padding:8px; } .tc{ min-width:0; font-size:15px; }
+}
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{ animation:none !important; transition:none !important; }
+}
+</style>
+</head>
+<body>
+
+
+<header class="nav">
+  <div class="nav-left">
+    <a class="wordmark" id="wordmark" href="./" target="_top" style="text-decoration:none"><span class="dot"></span>HoopStatsMY</a>
+    <span class="nav-pill" data-i="Scout room">Scout room</span>
+  </div>
+  <div class="nav-right">
+    <button class="nbtn" id="b-match" data-it="Teams and rosters" title="Teams and rosters"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11a3 3 0 1 0-3-3 3 3 0 0 0 3 3Zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3Zm0 2c-2.7 0-8 1.3-8 4v2h10v-2c0-1 .4-2 1.2-2.7A13 13 0 0 0 8 13Zm8 0c-.3 0-.7 0-1.1.1A4 4 0 0 1 17 17v2h7v-2c0-2.7-5.3-4-8-4Z"/></svg><span class="t" data-i="Teams">Teams</span></button>
+    <button class="nbtn" id="b-export" data-it="Export and import" title="Export and import"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 7 8h3.5v7h3V8H17ZM5 17v3h14v-3h2v5H3v-5Z"/></svg><span class="t" data-i="Export">Export</span></button>
+    <button class="nbtn icon" id="b-keys" data-it="Keyboard shortcuts" data-ia="Keyboard shortcuts" title="Keyboard shortcuts" aria-label="Keyboard shortcuts">⌘</button>
+    <button class="nbtn icon" id="b-fs" data-it="Full screen" data-ia="Full screen" title="Full screen" aria-label="Full screen"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" id="i-fs"><path d="M4 4h6v2H6v4H4Zm10 0h6v6h-2V6h-4ZM4 14h2v4h4v2H4Zm14 0h2v6h-6v-2h4Z"/></svg></button>
+    <button class="nbtn lang" id="b-lang" title="Language / 语言" aria-label="Language / 语言"><span class="lg-en">EN</span><span class="lg-sep">|</span><span class="lg-zh">中文</span></button>
+    <button class="nbtn icon theme" id="b-theme" data-it="Light or dark" data-ia="Switch theme" title="Light or dark" aria-label="Switch theme"><span class="sun">☀</span><span class="moon">☾</span></button>
+  </div>
+</header>
+
+<main class="page">
+  <div class="matchbar" id="matchbar"></div>
+
+  <div class="grid">
+    <div class="col">
+      <section class="stage rim" id="stage">
+        <div class="bloom"><i class="b1"></i><i class="b2"></i></div>
+        <div class="screen" id="screen">
+          <video id="vid" playsinline preload="metadata" hidden></video>
+          <div class="drop" id="drop">
+            <h2 data-i="Open the full-game replay">Open the full-game replay</h2>
+            <p data-i="Drop an MP4, MOV or WebM file here. It plays straight from your disk, so a two-hour game opens instantly and nothing is uploaded.">Drop an MP4, MOV or WebM file here. It plays straight from your disk, so a two-hour game opens instantly and nothing is uploaded.</p>
+            <div class="row">
+              <label class="vbtn hot" for="f-video"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h10l2 2h4v14H4Zm8 4-4 4h3v4h2v-4h3Z"/></svg><span data-i="Choose video file">Choose video file</span></label>
+              <button class="vbtn" id="b-url" data-i="Use a video link">Use a video link</button>
+            </div>
+            <p id="drop-note" style="font-size:12px"></p>
+          </div>
+          <div class="hud" id="hud" hidden><span id="hud-q">Q1</span><span class="rec" id="hud-rec" hidden data-i="● Recording clip">● Recording clip</span><span class="reel" id="hud-reel" hidden>Reel</span></div>
+        </div>
+        <input type="file" id="f-video" accept="video/*" hidden>
+
+        <div class="transport">
+          <button class="tbtn" id="t-back5" title="Back 5 s (J)" data-it="Back 5 s (J)"><svg viewBox="0 0 24 24"><path d="M11 6V2L5 8l6 6V9.5a6 6 0 1 1-6 6H3a8 8 0 1 0 8-8Z"/></svg>5</button>
+          <button class="tbtn" id="t-frb" title="Previous frame (,)" data-it="Previous frame (,)">‹</button>
+          <button class="tbtn play" id="t-play" title="Play / pause (Space)" data-it="Play / pause (Space)" aria-label="Play"><svg viewBox="0 0 24 24" id="i-play"><path d="M7 4v16l13-8Z"/></svg></button>
+          <button class="tbtn" id="t-frf" title="Next frame (.)" data-it="Next frame (.)">›</button>
+          <button class="tbtn" id="t-fwd5" title="Forward 5 s (L)" data-it="Forward 5 s (L)">5<svg viewBox="0 0 24 24"><path d="M13 6V2l6 6-6 6V9.5a6 6 0 1 0 6 6h2a8 8 0 1 1-8-8Z"/></svg></button>
+          <span class="tc" id="t-tc">0:00.0<small id="t-dur">/ 0:00</small></span>
+          <span class="grow"></span>
+          <div class="spd" id="t-speed"><button data-r="0.5">½×</button><button data-r="1" class="on">1×</button><button data-r="2">2×</button></div>
+          <span class="sep hide-sm"></span>
+          <div class="markio">
+            <button class="tbtn" id="t-in" title="Mark start (I)" data-it="Mark start (I)" data-i="[ In">[ In</button>
+            <button class="tbtn" id="t-out" title="Mark end (O)" data-it="Mark end (O)" data-i="Out ]">Out ]</button>
+          </div>
+          <span class="sep hide-sm"></span>
+          <div class="markio">
+            <button class="tbtn" id="t-fsfilm" data-it="Film full screen (F)" title="Film full screen (F)" aria-label="Film full screen"><svg viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4Zm10 0h6v6h-2V6h-4ZM4 14h2v4h4v2H4Zm14 0h2v6h-6v-2h4Z"/></svg></button>
+          </div>
+        </div>
+
+        <div class="tl">
+          <div class="tl-wrap">
+            <div class="tl-bar" id="tl" aria-label="Game timeline" data-ia="Game timeline">
+              <div class="tl-ticks" id="tl-ticks"></div>
+              <div id="tl-clips"></div>
+              <div class="tl-sel" id="tl-sel" hidden></div>
+              <div class="tl-head" id="tl-head"></div>
+            </div>
+            <div class="tl-hover" id="tl-hover">0:00</div>
+          </div>
+        </div>
+
+        <div class="trim">
+          <div class="trim-top">
+            <span class="lblv" id="trim-lbl"><span data-i="Clip window">Clip window</span> <b id="trim-len">—</b></span>
+            <div class="nudge">
+              <em data-i="Start">Start</em><button class="tbtn" data-n="in:-0.5">−½s</button><button class="tbtn" data-n="in:0.5">+½s</button>
+              <em data-i="End">End</em><button class="tbtn" data-n="out:-0.5">−½s</button><button class="tbtn" data-n="out:0.5">+½s</button>
+              <button class="tbtn" id="t-preview" title="Play the clip window (P)" data-it="Play the clip window (P)" data-i="▶ Clip">▶ Clip</button>
+            </div>
+          </div>
+          <div class="lane" id="lane">
+            <div class="lane-win" id="lane-win"></div>
+            <div class="handle" id="h-in" aria-label="Clip start" data-ia="Clip start" tabindex="0"></div>
+            <div class="handle" id="h-out" aria-label="Clip end" data-ia="Clip end" tabindex="0"></div>
+            <div class="lane-head" id="lane-head"></div>
+            <div class="lane-empty" id="lane-empty"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="log">
+        <div class="log-head">
+          <h2><span data-i="Clip log">Clip log</span> <span class="count" id="c-count">0</span></h2>
+          <div class="filters">
+            <select id="fl-team" aria-label="Team filter" data-ia="Team filter"></select>
+            <select id="fl-play" aria-label="Play type filter" data-ia="Play type filter"></select>
+            <select id="fl-res" aria-label="Result filter" data-ia="Result filter"></select>
+            <button class="btn" id="b-reel"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8Z"/></svg><span data-i="Play as reel">Play as reel</span></button>
+          </div>
+        </div>
+        <div class="exbar" id="exbar" hidden><span data-i="These clips and shots are an example session. Open your own replay and start tagging.">These clips and shots are an example session. Open your own replay and start tagging.</span><button class="btn" id="b-clearex" data-i="Clear example">Clear example</button></div>
+        <div class="rows" id="rows"></div>
+      </section>
+    </div>
+
+    <aside class="panel rail" id="rail">
+      <div class="tabbar" id="tabs" role="tablist">
+        <span class="tab-pill" id="tab-pill"></span>
+        <button class="tab on" data-v="tag" role="tab" data-i="Tag play">Tag play</button>
+        <button class="tab" data-v="shots" role="tab" data-i="Shot map">Shot map</button>
+        <button class="tab" data-v="report" role="tab" data-i="Report">Report</button>
+      </div>
+      <div id="views"></div>
+    </aside>
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+<input type="file" id="f-json" accept=".json,application/json" hidden>
+
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uid = () => Math.random().toString(36).slice(2, 9);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+/* ------------------------------------------------------------------ language: English and Mandarin (Simplified) */
+const STANDALONE = false;
+const ZH = {"+ Add roster": "+ 添加名单", "+ And-1": "+ 加罚", "+ and-1": "+ 加罚", "Above-break 3": "非底角三分", "After saving a shot, ask me to place it on the shot map": "保存投篮后，提示我在投篮图上标出位置", "After timeout": "暂停后战术", "All shots": "全部投篮", "Back / forward 1 s": "后退 / 前进 1 秒", "Back / forward 5 s": "后退 / 前进 5 秒", "Back 5 s (J)": "后退 5 秒 (J)", "Baseline out": "底线发球", "Blank session ready": "已准备好空白记录", "Block": "盖帽", "Body or hand in the face": "贴身或手在面前", "Both": "双方", "Both teams": "双方球队", "Box-out": "卡位", "Breakdown": "防守失位", "By shot difficulty": "按投篮难度", "Change": "更改", "Change contest": "更改干扰程度", "Charge taken": "制造进攻犯规", "Choose video file": "选择影片文件", "Clear example": "清除示例", "Click again to clear everything": "再按一次清除全部", "Clip deleted": "片段已删除", "Clip end": "片段结束", "Clip log": "片段记录", "Clip log (CSV)": "片段记录 (CSV)", "Clip saved": "片段已保存", "Clip start": "片段开始", "Clip updated": "片段已更新", "Clip window": "片段范围", "Clips are cut by ffmpeg straight from the full-game file, so they keep the original resolution and audio. The commands follow the clip log filters ({0} clips now).": "片段由 ffmpeg 直接从全场影片剪出，保留原始分辨率和声音。命令按片段记录的筛选生成（目前 {0} 个片段）。", "Close": "关闭", "Close a sheet": "关闭窗口", "Code": "简称", "Commands copied": "命令已复制", "Contest": "干扰程度", "Contest cleared": "已清除干扰程度", "Contest not set": "未设定干扰程度", "Contested": "有干扰", "Copy commands": "复制命令", "Corner 3": "底角三分", "Cut": "空切", "Cut the clips from your original file": "从原始影片剪出片段", "Cut the full-game replay into plays, tag each one, and chart every shot by hand. Your film never leaves this computer.": "把全场比赛录像剪成一个个回合，逐一标记，并亲手记录每一次投篮。影片不会离开这台电脑。", "Defense": "防守", "Deflection": "破坏传球", "Delete": "删除", "Delete clip": "删除片段", "Direct link to an MP4 or WebM file": "MP4 或 WebM 文件的直接链接", "Drive & kick": "突破分球", "Drop an MP4, MOV or WebM file here. It plays straight from your disk, so a two-hour game opens instantly and nothing is uploaded.": "把 MP4、MOV 或 WebM 文件拖到这里。影片直接从你的硬盘播放，两小时的比赛也能立即打开，不会上传任何内容。", "Edit clip": "编辑片段", "Edit tags and trim": "编辑标记与剪辑", "Editing clip at {0}": "正在编辑 {0} 的片段", "End": "结束", "End of quarter": "节末战术", "Every charted shot with court position in metres.": "每一次已标记的投篮及其球场位置（米）。", "Every play type": "所有战术", "Every player": "所有球员", "Every result": "所有结果", "Everything: teams, clips, shots. Open it again later.": "全部内容：球队、片段、投篮，之后可再次打开。", "Example cleared. Set your teams to start.": "示例已清除。请先设定球队。", "Example session": "示例", "Example: {0} vs {1}": "示例：{0} vs {1}", "Exit full screen": "退出全屏", "Exit full screen (F)": "退出全屏 (F)", "Export": "导出", "Export and import": "导出与导入", "FG": "投篮", "FG%": "命中率", "FGM–A": "命中–出手", "FT made": "罚中", "Figures count only the plays you have tagged, so they describe your sample of the film, not the full box score.": "数据只统计你已标记的回合，反映的是你看过的录像样本，而不是完整的技术统计。", "Files": "文件", "Film full screen": "影片全屏", "Film full screen (F)": "影片全屏 (F)", "Forward 5 s (L)": "前进 5 秒 (L)", "Foul drawn": "造成犯规", "Fouled on the make: adds 1 point": "投中并被犯规：加 1 分", "Frame-exact (re-encode)": "逐帧精准（重新编码）", "Free throws": "罚球", "Full screen": "全屏", "Full screen is not available here. Try the browser menu or F11.": "这里无法全屏。请试试浏览器菜单或 F11。", "Game timeline": "比赛时间轴", "Game title": "比赛名称", "Hand up, defender closing": "防守者举手扑防", "Handoff": "手递手", "Heavily contested": "严重干扰", "Help rotation": "协防轮转", "Home / away team": "主队 / 客队", "Home": "主队", "Away": "客队", "Isolation": "单打", "Keyboard shortcuts": "快捷键", "Last session used {0}. Open it again to carry on.": "上次使用的是 {0}，重新打开即可继续。", "Light or dark": "浅色 / 深色", "Location is a {0}-pointer, so the result is now {1}": "出手位置是 {0} 分区，结果已改为「{1}」", "Made": "命中", "Made 2": "两分命中", "Made 3": "三分命中", "Mark clip end": "标记片段结束", "Mark clip start": "标记片段开始", "Mark end (O)": "标记结束 (O)", "Mark made": "改为命中", "Mark missed": "改为不中", "Mark start (I)": "标记开始 (I)", "Mid-range": "中距离", "Missed": "不中", "Missed 2": "两分不中", "Missed 3": "三分不中", "New clip instead": "改为新增片段", "Next frame (.)": "下一帧 (.)", "Next shot: made": "下一投：命中", "Next shot: missed": "下一投：不中", "No clips match these filters.": "没有符合筛选的片段。", "No clips yet. Play the film, pick the team, player and play type on the right, then press {0}.": "还没有片段。播放影片，在右侧选择球队、球员和战术，然后按 {0}。", "No defender within reach": "附近没有防守者", "No plays tagged for {0} yet.": "{0} 还没有标记任何回合。", "No result": "无结果", "Not set": "未设定", "Note: e.g. rejects the screen, goes baseline": "备注：例如 拒绝掩护，走底线", "Nothing yet.": "暂无。", "Off screen": "绕掩护", "Offense": "进攻", "On the shot map": "已在投篮图上", "One row per play, for Excel or Sheets.": "每个回合一行，可用 Excel 或 Sheets 打开。", "Open": "打开", "Open a replay first": "请先打开录像", "Open a session": "打开记录", "Open session file…": "打开记录文件…", "Open the full-game replay": "打开全场比赛录像", "Open the replay first": "请先打开录像", "Open the replay to play the reel": "打开录像后才能连续播放", "Opened {0}": "已打开 {0}", "Opened {0} clips and {1} shots": "已打开 {0} 个片段和 {1} 次投篮", "Original quality, instant": "原画质，即时完成", "Out ]": "出点 ]", "PNG of the shot map as filtered now.": "当前筛选下的投篮图 PNG。", "Paint": "油漆区", "Paste a full https:// link": "请粘贴完整的 https:// 链接", "Pause": "暂停", "Period": "节次", "Pick & pop": "挡拆外弹", "Pick & roll – handler": "挡拆 – 持球人", "Pick & roll – roller": "挡拆 – 顺下", "Play": "播放", "Play / pause": "播放 / 暂停", "Play / pause (Space)": "播放 / 暂停 (空格)", "Play as reel": "连续播放", "Play clip": "播放片段", "Play clip window": "播放片段范围", "Play the clip window (P)": "播放片段范围 (P)", "Play type filter": "战术筛选", "Play types · frequency and points per play": "战术类型 · 次数与每回合得分", "Player": "球员", "Players · points from tagged plays": "球员 · 已标记回合的得分", "Plays": "回合", "Post-up": "背身单打", "Press break": "破紧逼", "Press {0} at the start of a play and {1} at the end, or just tag it and the window is set for you.": "回合开始时按 {0}，结束时按 {1}；或直接标记，系统会自动设定范围。", "Previous / next frame": "上一帧 / 下一帧", "Previous frame (,)": "上一帧 (,)", "Pts / play": "每回合得分", "Putback": "补篮", "Re-encodes: frame-exact cuts, near-original quality.": "重新编码：逐帧精准剪辑，画质接近原片。", "Record shots by tapping the court": "点击球场记录投篮", "Recording for": "记录", "Reel finished": "连续播放结束", "Reel {0} / {1}": "连播 {0} / {1}", "Report": "报告", "Reset": "重置", "Restricted area": "合理冲撞区", "Result": "结果", "Result filter": "结果筛选", "Roster · one player per line: number, then name": "名单 · 每行一名球员：号码，然后姓名", "Run in the folder that holds the video.": "请在存放影片的文件夹中运行。", "Save as .txt": "存为 .txt", "Save clip": "保存片段", "Save clip as video": "存为影片", "Save teams": "保存球队", "Save the session file first if you want to keep it.": "如需保留，请先保存记录文件。", "Save this clip as a video file": "把片段存为影片文件", "Saved": "已保存", "Saved {0}": "已保存 {0}", "Saving files is not available in this view. Use Copy instead.": "此处无法保存文件，请改用复制。", "Saving files is not available in this view. Use the ffmpeg commands in Export.": "此处无法保存文件，请使用导出中的 ffmpeg 命令。", "Scored": "得分", "Scout room": "球探室", "Selected: press Ctrl+C to copy": "已选取：按 Ctrl+C 复制", "Session file": "记录文件", "Set contest": "设定干扰程度", "Share": "占比", "Shooting by contest": "按干扰程度的投篮", "Shortcuts pause while you type in a text box.": "在文本框输入时，快捷键会暂停。", "Shot chart (CSV)": "投篮数据 (CSV)", "Shot deleted": "投篮已删除", "Shot made / missed": "投篮命中 / 不中", "Shot map": "投篮图", "Shot map image": "投篮图图片", "Shot placed": "已标出投篮", "Shot value comes from where you tap: outside the arc (or in the corner beyond 6.6 m) counts as a three, using FIBA court lines.": "投篮分值按点击位置判定：依 FIBA 球场线，三分线外（或底角距中线 6.6 米以外）算三分。", "Shots": "投篮", "Show": "显示", "Sideline out": "边线发球", "Situation": "情境", "Skip": "跳过", "Space": "空格", "Spot-up": "定点投篮", "Start": "开始", "Start a blank session": "开始新的空白记录", "Steal": "抢断", "Stop": "防守成功", "Stream copy: original quality, instant, but each cut snaps to the nearest keyframe before the start.": "直接复制：原画质、即时完成，但每段会从开始点之前最近的关键帧切入。", "Swap home and away": "交换主客队", "Switch theme": "切换主题", "TO rate": "失误率", "Tag play": "标记回合", "Tap a mark to jump to that moment": "点击标记可跳到该时刻", "Tap where {0} shot from": "点击 {0} 的出手位置", "Team": "全队", "Team colour": "球队颜色", "Team filter": "球队筛选", "Team name": "球队名称", "Teams": "球队", "Teams and rosters": "球队与名单", "Teams saved": "球队已保存", "That file could not be saved here.": "无法在此保存该文件。", "That file is not a Scout room session.": "这不是球探室的记录文件。", "That video could not be played here. MP4 (H.264) works in every browser; for a link, it must point straight to the video file.": "无法在此播放该影片。MP4 (H.264) 适用于所有浏览器；链接必须直接指向影片文件。", "The clip could not be saved here.": "无法在此保存片段。", "These clips and shots are an example session. Open your own replay and start tagging.": "这些片段和投篮是示例数据。打开你自己的录像开始标记吧。", "This browser cannot record clips.": "这个浏览器无法录制片段。", "This browser cannot record clips. Use the ffmpeg commands in Export.": "这个浏览器无法录制片段，请使用导出中的 ffmpeg 命令。", "This video cannot be recorded (it comes from another site).": "这个影片无法录制（来自其他网站）。", "Transition": "快攻", "Turnover": "失误", "Untagged": "未标记", "Update clip": "更新片段", "Use a video link": "使用影片链接", "Video opened": "影片已打开", "Watch": "观看", "Wide open": "完全空位", "Work is saved in this browser automatically; use Export → Session file to back it up.": "进度会自动保存在这个浏览器；可用「导出 → 记录文件」备份。", "YouTube and Facebook pages cannot be played here. Download the replay and open the file instead, which is also faster to scrub.": "无法在此播放 YouTube 和 Facebook 页面。请下载录像后打开文件，拖动进度也更快。", "Zone": "区域", "Zone offense": "破区域联防", "[ In": "[ 入点", "at": "时间", "auto +{0}s": "自动 +{0} 秒", "auto −{0}s": "自动 −{0} 秒", "e.g. Agong Cup 2026 Final": "例如：2026 Agong Cup 决赛", "pts": "分", "{0} clips from {1}": "{0} 个片段，来源 {1}", "{0} made": "罚中 {0}", "{0} of {1}": "{0} / {1}", "▶ Clip": "▶ 片段", "◎ charted": "◎ 已上图", "● Recording clip": "● 正在录制片段", "All games": "全部比赛", "Alley-oop": "空中接力", "Bank shot": "擦板", "By shot type": "按进攻方式", "Catch & shoot": "接球投篮", "Change game": "更换比赛", "Changes not saved to HoopStatsMY": "有改动尚未保存到 HoopStatsMY", "Choose a HoopStatsMY game": "选择 HoopStatsMY 比赛", "Clips will link to the YouTube replay.": "片段会链接到 YouTube 录像。", "Clips will not link to YouTube.": "片段不会链接到 YouTube。", "Could not reach HoopStatsMY. Check your connection and try again.": "无法连接 HoopStatsMY，请检查网络后再试。", "Dunk": "扣篮", "Euro step": "欧洲步", "Every competition": "所有赛事", "Every shot type": "所有进攻方式", "Fadeaway": "后仰跳投", "Floater": "抛投", "Games": "比赛", "Hook shot": "勾手", "Is this file the same video as the game’s YouTube replay? If yes, visitors can jump from each clip to that moment on YouTube.": "这个文件和比赛的 YouTube 录像是同一段影片吗？如果是，访客可以从每个片段直接跳到 YouTube 的该时刻。", "Layup": "上篮", "Loading scouting…": "正在载入球探数据…", "No": "不是", "No games have been scouted yet.": "还没有比赛的球探数据。", "No games match.": "没有符合的比赛。", "None": "未选", "Not on HoopStatsMY yet": "尚未保存到 HoopStatsMY", "On this computer": "在这台电脑", "Only the HoopStatsMY admin account can save scouting.": "只有 HoopStatsMY 管理员账号可以保存球探数据。", "Opened the scouting saved on HoopStatsMY": "已打开保存在 HoopStatsMY 的球探数据", "Opponents": "对手", "Plays tagged by hand from game film: play types, shot types, contest and a hand-charted shot map. Pick every game together or one game.": "从比赛录像逐一标记的回合：战术、进攻方式、干扰程度和亲手记录的投篮图。可看全部比赛合计，或单场比赛。", "Pull-up": "急停跳投", "Reverse layup": "反手上篮", "Save to HoopStatsMY": "保存到 HoopStatsMY", "Saved to HoopStatsMY {0}": "已保存到 HoopStatsMY {0}", "Saved to HoopStatsMY. It is on the Scouting page now.": "已保存到 HoopStatsMY，现在可在球探报告页面查看。", "Saving…": "正在保存…", "Scouted": "已有球探数据", "Scouting reports": "球探报告", "Search a team": "搜索球队", "Shot type": "进攻方式", "Sign-in was cancelled or blocked. Allow pop-ups and try again.": "登录已取消或被阻止。请允许弹出窗口后再试。", "Step-back": "后撤步", "Tagging for the whole team": "正在为全队标记", "Tap a mark to see the shot": "点击标记查看该次投篮", "Teams, logos, rosters and player photos come from the game’s HoopStatsMY box score.": "球队、队徽、名单和球员头像都来自该场比赛在 HoopStatsMY 的技术统计。", "That game is not on HoopStatsMY.": "HoopStatsMY 上没有这场比赛。", "These come from HoopStatsMY for this game. Change them only if the box score is wrong.": "这些资料来自 HoopStatsMY 的该场比赛。只有技术统计有误时才需要修改。", "Tip-in": "点补", "Turnaround": "转身跳投", "Watch on YouTube": "在 YouTube 观看", "Yes, same video": "是，同一段影片", "{0} games": "{0} 场比赛", "1 game": "1 场比赛"};
+let LANG = 'en';
+try { LANG = localStorage.getItem('hsmy-scout-lang') || ((navigator.language || '').toLowerCase().startsWith('zh') ? 'zh' : 'en'); } catch(e) {}
+function T(str, ...a){ let r = (LANG === 'zh' && ZH[str]) || str; a.forEach((v, i) => { r = r.split('{' + i + '}').join(v); }); return r; }
+function applyStatic(){
+  document.documentElement.lang = LANG === 'zh' ? 'zh-Hans' : 'en';
+  $$('[data-i]').forEach(el => el.textContent = T(el.dataset.i));
+  $$('[data-it]').forEach(el => el.title = T(el.dataset.it));
+  $$('[data-ia]').forEach(el => el.setAttribute('aria-label', T(el.dataset.ia)));
+  $('#lane-empty').innerHTML = T('Press {0} at the start of a play and {1} at the end, or just tag it and the window is set for you.', '<kbd>I</kbd>', '<kbd>O</kbd>');
+  $('#drop-note').textContent = S.video ? T('Last session used {0}. Open it again to carry on.', S.video) : '';
+}
+
+/* ------------------------------------------------------------------ catalogue */
+const PLAYS = [
+  {g:'Offense', items:['Pick & roll – handler','Pick & roll – roller','Pick & pop','Isolation','Post-up','Spot-up','Off screen','Handoff','Cut','Transition','Putback','Drive & kick']},
+  {g:'Defense', items:['Steal','Block','Deflection','Charge taken','Help rotation','Breakdown','Box-out']},
+  {g:'Situation', items:['After timeout','Sideline out','Baseline out','Press break','Zone offense','End of quarter']},
+];
+const RES = [
+  {k:'M2', t:'Made 2', pts:2, shot:2, made:1, cls:'res-good'},
+  {k:'M3', t:'Made 3', pts:3, shot:3, made:1, cls:'res-good'},
+  {k:'X2', t:'Missed 2', pts:0, shot:2, made:0, cls:'res-bad'},
+  {k:'X3', t:'Missed 3', pts:0, shot:3, made:0, cls:'res-bad'},
+  {k:'FT', t:'Free throws', pts:0, ft:1},
+  {k:'TO', t:'Turnover', pts:0, cls:'res-bad'},
+  {k:'FD', t:'Foul drawn', pts:0},
+  {k:'ST', t:'Stop', pts:0, cls:'res-good'},
+  {k:'NA', t:'No result', pts:0},
+];
+const RESK = Object.fromEntries(RES.map(r => [r.k, r]));
+const PERIODS = ['Q1','Q2','Q3','Q4','OT'];
+const DIFF = [
+  {k:'open', t:'Wide open', d:'No defender within reach'},
+  {k:'cont', t:'Contested', d:'Hand up, defender closing'},
+  {k:'heavy', t:'Heavily contested', d:'Body or hand in the face'},
+];
+const DIFFK = Object.fromEntries(DIFF.map(x => [x.k, x]));
+// how the shot was taken (单选). Kept on the clip and on its shot
+const STYPES = [
+  {k:'cs', t:'Catch & shoot'}, {k:'pu', t:'Pull-up'}, {k:'sb', t:'Step-back'}, {k:'fa', t:'Fadeaway'}, {k:'tu', t:'Turnaround'},
+  {k:'ly', t:'Layup'}, {k:'rl', t:'Reverse layup'}, {k:'eu', t:'Euro step'}, {k:'fl', t:'Floater'}, {k:'dk', t:'Dunk'},
+  {k:'ao', t:'Alley-oop'}, {k:'hk', t:'Hook shot'}, {k:'tp', t:'Tip-in'}, {k:'bk', t:'Bank shot'},
+];
+const STYPEK = Object.fromEntries(STYPES.map(x => [x.k, x]));
+
+/* ------------------------------------------------------------------ court geometry (FIBA, metres; matches the site's shot map) */
+const RIM = 1.575, W = 15, D = 11.5;
+function isThree(x, d){ const r = Math.hypot(x, d - RIM); return (Math.abs(x) >= 6.6 && d <= 2.99) || (d > 2.99 && r >= 6.75); }
+function zoneOf(x, d){
+  if (isThree(x, d)) return (Math.abs(x) >= 6.6 && d <= 2.99) ? 'Corner 3' : 'Above-break 3';
+  if (Math.abs(x) <= 2.45 && d <= 5.8) return Math.hypot(x, d - RIM) <= 1.25 ? 'Restricted area' : 'Paint';
+  return 'Mid-range';
+}
+const ZONES = ['Restricted area','Paint','Mid-range','Corner 3','Above-break 3'];
+const SX = 10, PAD = 3;   // svg units: 10 per metre
+const cx = x => (x + W / 2) * SX + PAD, cy = d => d * SX + PAD;
+/* ------------------------------------------------------------------ HoopStatsMY host
+   Opened from the site (Tools > Scout room), this page sits in a frame of the HoopStatsMY app and reads
+   its data directly: the games, the box-score rosters, the crests and the portraits. It saves a game's
+   tagging to the site's Firebase (admin only) through the app's own account backend. Opened on its own,
+   it is the same tool with teams typed in by hand. */
+const HOST = (() => { try { const p = window.parent; return p && p !== window && p.DB && typeof p.getBox === 'function' ? p : null; } catch(e) { return null; } })();
+const QS = new URLSearchParams(location.search);
+const VIEW = !!HOST && QS.has('view');
+const _px = (() => { try { const c = document.createElement('canvas'); c.width = c.height = 1; return c.getContext('2d', {willReadFrequently:true}); } catch(e) { return null; } })();
+function rgbOf(col){
+  if (!_px) return [120, 130, 150];
+  _px.clearRect(0, 0, 1, 1); _px.fillStyle = '#7a8699'; _px.fillStyle = col; _px.fillRect(0, 0, 1, 1);
+  const d = _px.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2]];
+}
+const hexOf = col => '#' + rgbOf(col).map(v => v.toString(16).padStart(2, '0')).join('');
+// text that stays readable on a team's colour, whatever colour the club wears
+function inkOn(col){
+  const lin = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); };
+  const [r, g, b] = rgbOf(col), L = .2126 * lin(r) + .7152 * lin(g) + .0722 * lin(b);
+  return (1.05 / (L + .05)) >= ((L + .05) / .0533) ? '#ffffff' : '#0b0f1a';
+}
+function H(fn, ...a){ try { return HOST && typeof HOST[fn] === 'function' ? HOST[fn](...a) : null; } catch(e) { return null; } }
+function hostTeam(name){ return {name, code:H('teamCode', name) || String(name).slice(0, 3).toUpperCase(), color:hexOf(H('teamColor', name) || '#7a8699'), logo:H('teamLogo', name) || ''}; }
+function hostPhoto(pid){ const D = HOST && HOST.DB || {}; return pid ? ((D.avatars || {})[pid] || (D.photos || {})[pid] || '') : ''; }
+function hostGame(mid){ if (!HOST) return null; for (const c of HOST.DB.comps) { const g = (c.games || []).find(x => x.mid === mid); if (g) return {c, g}; } return null; }
+function hostRoster(mid, name){
+  const b = H('getBox', mid); if (!b) return null;
+  const seen = new Set();
+  return b.p.filter(p => p.team === name && p.pid).map((p, i) => ({n:String(p.num != null && p.num !== '' ? p.num : '-' + (i + 1)), name:H('personName', p.pid) || p.name || '', pid:p.pid}))
+    .filter(p => !seen.has(p.n) && seen.add(p.n)).sort((a, b) => (parseInt(a.n, 10) || 999) - (parseInt(b.n, 10) || 999));
+}
+function hostStream(mid){ const s = HOST && HOST.DB && HOST.DB.streams; return (s && s[mid]) || ''; }
+const backend = () => H('scoutBackend');   // app4zg_scout.js hands over the app's accB() (a const there, so not on window)
+// scouting is admin-only: the Firestore rules let only the signed-in admin read it, so reads go through the signed-in SDK
+async function pubGet(col, id){ const B = backend(); if (!B) throw new Error('offline'); return B.get(col, id); }
+function ytAt(url, t){
+  // the site keeps bare video ids (DB.streams); a pasted link works too
+  const u = String(url || '').trim(), m = u.match(/(?:youtu\.be\/|youtube\.com\/(?:live\/|watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{6,})/);
+  const id = m ? m[1] : /^[A-Za-z0-9_-]{11}$/.test(u) ? u : '';
+  return id ? `https://www.youtube.com/watch?v=${id}&t=${Math.max(0, Math.floor(t))}s` : '';
+}
+
+/* ------------------------------------------------------------------ state */
+const KEY = 'hsmy-scout-v1';
+const blank = () => ({
+  v:2, video:'', mid:'', cid:'', comp:'', date:'', score:null, yt:'', ytSync:false, savedAt:0, dirtyAt:0,
+  teams:{ home:{name:'Home', code:'HOM', color:'#c8262f'}, away:{name:'Away', code:'AWY', color:'#1f4fa3'} },
+  roster:{ home:[], away:[] },
+  clips:[], shots:[], example:false,
+  prefs:{ lead:8, after:2, autoShot:true },
+});
+function example(){
+  const s = blank();
+  s.example = true; s.title = 'Example: Johor vs PDRM';
+  s.teams = { home:{name:'Johor', code:'JHR', color:'#c8262f'}, away:{name:'PDRM', code:'PDR', color:'#1f4fa3'} };
+  s.roster = { home:['0','3','5','7','8','10','11','13','21','23'].map(n => ({n, name:''})),
+               away:['1','2','4','6','9','12','14','15','22','33'].map(n => ({n, name:''})) };
+  const C = [
+    [72,'home','7',['Pick & roll – handler'],'M2','Q1',[-1.2,4.2],'cont'],
+    [118,'away','12',['Spot-up'],'X3','Q1',[-6.9,1.1],'open'],
+    [161,'home','23',['Post-up'],'M2','Q1',[1.4,2.3],'heavy'],
+    [209,'away','4',['Transition'],'M2','Q1',[0.3,1.8],'open'],
+    [254,'home','10',['Spot-up','Drive & kick'],'M3','Q1',[6.95,1.2],'open'],
+    [301,'away','12',['Pick & roll – handler'],'TO','Q1',null],
+    [348,'home','7',['Pick & roll – handler'],'X2','Q1',[2.6,5.9],'heavy'],
+    [399,'away','33',['Post-up'],'FD','Q1',null],
+    [450,'home','5',['Steal','Transition'],'M2','Q1',[-0.4,1.6],'open'],
+    [512,'away','9',['Off screen'],'M3','Q1',[-3.9,7.6],'cont'],
+    [566,'home','7',['Isolation'],'X3','Q1',[2.2,8.1],'heavy'],
+    [613,'away','4',['Cut'],'M2','Q1',[0.6,1.5],'open'],
+    [688,'home','23',['Pick & roll – roller'],'M2','Q2',[-0.8,2.0],'cont'],
+    [741,'away','12',['Pick & roll – handler'],'M2','Q2',[-2.2,5.1],'cont'],
+    [795,'home','10',['Spot-up'],'X3','Q2',[-5.0,6.9],'cont'],
+    [850,'away','14',['After timeout','Baseline out'],'M3','Q2',[6.9,0.9],'open'],
+    [902,'home','11',['Help rotation','Block'],'ST','Q2',null],
+    [958,'away','12',['Isolation'],'X2','Q2',[-3.5,3.2],'heavy'],
+  ];
+  s.clips = C.map(([t, team, p, plays, res, q, xy, diff], i) => {
+    const id = 'ex' + i, c = {id, t0:t - 8, t1:t + 2, team, player:p, plays, res, and1:false, q, note:'', diff:diff || null};
+    if (xy){ const sh = {id:'xs' + i, t, team, player:p, x:xy[0], d:xy[1], made:RESK[res].made, diff:diff || null, clip:id};
+      sh.pts = isThree(sh.x, sh.d) ? 3 : 2; s.shots.push(sh); c.shot = sh.id; }
+    return c;
+  });
+  return s;
+}
+const lsGet = k => { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : null; } catch(e) { return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} };
+let S = VIEW ? null : lsGet(KEY);
+if (!S || !S.teams) S = HOST ? blank() : example();
+if (HOST && S.example) S = blank();
+S = Object.assign(blank(), S);
+S.prefs = Object.assign({lead:8, after:2, autoShot:true}, S.prefs || {});
+let saveT;
+function save(touched){
+  if (VIEW) return;
+  if (touched !== false) S.dirtyAt = Date.now();
+  clearTimeout(saveT); saveT = setTimeout(() => { lsSet(KEY, S); if (S.mid) lsSet(KEY + ':' + S.mid, S); }, 250);
+  if (typeof renderSaveState === 'function') renderSaveState();
+}
+
+/* UI state (not persisted) */
+const U = {
+  view:'tag', team:'home', player:null, plays:new Set(), res:null, and1:false, q:'Q1', note:'',
+  inT:null, outT:null, editing:null, sel:null,
+  diff:null, stype:null, shotMade:1, shotDiff:null, shotSt:null, shotStF:'all', shotDiffF:'all', recShots:true, pendingShot:null, shotTeam:'all', shotPlayer:'all', focusShot:null, newShot:null,
+  reel:null, reelI:0, previewEnd:null,
+  fTeam:'all', fPlay:'all', fRes:'all', repTeam:'home',
+};
+// which button groups are open (remembered); the result is open the first time
+const OPEN = new Set(lsGet('hsmy-scout-open') || ['res']);
+const saveOpen = () => lsSet('hsmy-scout-open', [...OPEN]);
+
+/* ------------------------------------------------------------------ time */
+const vid = $('#vid');
+let hasVideo = false;
+const fmt = (t, tenths) => {
+  if (t == null || isNaN(t)) return '—';
+  t = Math.max(0, t); const h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60;
+  const ss = tenths ? s.toFixed(1).padStart(4, '0') : String(Math.floor(s)).padStart(2, '0');
+  return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + ss;
+};
+const now = () => hasVideo ? vid.currentTime : (U.fakeT || 0);
+function duration(){
+  if (hasVideo && isFinite(vid.duration) && vid.duration > 0) return vid.duration;
+  const m = Math.max(600, ...S.clips.map(c => c.t1), ...S.shots.map(s => s.t));
+  return Math.ceil((m + 60) / 60) * 60;
+}
+function seek(t){
+  t = clamp(t, 0, duration());
+  if (hasVideo) vid.currentTime = t; else U.fakeT = t;
+  paintHead();
+}
+
+function courtSVG(){
+  const a3 = Math.asin(6.6 / 6.75), y3 = RIM + 6.75 * Math.cos(a3);
+  const arc = (r, a0, a1, cyy) => { const p = []; for (let k = 0; k <= 48; k++){ const a = a0 + (a1 - a0) * k / 48; p.push(`${cx(r * Math.sin(a)).toFixed(2)},${cy(cyy + r * Math.cos(a)).toFixed(2)}`); } return p.join(' '); };
+  const w = W * SX + PAD * 2, h = D * SX + PAD * 2;
+  return `<svg class="court" id="court" viewBox="0 0 ${w} ${h}" role="img" aria-label="Half court shot map">
+    <rect class="floor" x="0" y="0" width="${w}" height="${h}"/>
+    <rect class="paint" x="${cx(-2.45)}" y="${cy(0)}" width="${4.9 * SX}" height="${5.8 * SX}"/>
+    <rect class="ln" x="${cx(-7.5)}" y="${cy(0)}" width="${W * SX}" height="${D * SX}"/>
+    <rect class="ln" x="${cx(-2.45)}" y="${cy(0)}" width="${4.9 * SX}" height="${5.8 * SX}"/>
+    <polyline class="ln" points="${arc(1.8, -Math.PI / 2, Math.PI / 2, 5.8)}"/>
+    <polyline class="ln" points="${arc(1.25, -Math.PI / 2, Math.PI / 2, RIM)}"/>
+    <polyline class="ln" points="${cx(-6.6)},${cy(0)} ${cx(-6.6)},${cy(y3)} ${arc(6.75, -a3, a3, RIM)} ${cx(6.6)},${cy(y3)} ${cx(6.6)},${cy(0)}"/>
+    <line class="ln" x1="${cx(-0.9)}" y1="${cy(1.2)}" x2="${cx(0.9)}" y2="${cy(1.2)}" style="stroke-width:1"/>
+    <circle class="ln" cx="${cx(0)}" cy="${cy(RIM)}" r="${0.23 * SX}"/>
+    <g id="g-shots"></g>
+    <circle class="ghost" id="ghost" r="3" cx="0" cy="0"/>
+  </svg>`;
+}
+
+/* ------------------------------------------------------------------ helpers */
+const team = k => S.teams[k];
+const crest = (k, sz = 26) => team(k).logo
+  ? `<span class="crest img" style="width:${sz}px;height:${sz}px"><img src="${esc(team(k).logo)}" alt=""></span>`
+  : `<span class="crest" style="background:${esc(team(k).color)};color:${inkOn(team(k).color)};width:${sz}px;height:${sz}px;font-size:${Math.round(sz * .4)}px">${esc(team(k).code)}</span>`;
+const photoOf = r => r && (r.photo || (HOST && hostPhoto(r.pid))) || '';
+const pname = (k, n) => { if (!n) return T('Team'); const r = S.roster[k].find(p => p.n === n); return '#' + (r && r.num != null ? r.num : n) + (r && r.name ? ' ' + r.name : ''); };
+function clipPts(c){ const r = RESK[c.res]; let p = r ? r.pts : 0; if (c.and1) p += 1; if (c.res === 'FT') p += (c.ftm || 0); return p; }
+function toast(msg){ const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 2200); }
+function applyTeamVars(){ document.documentElement.style.setProperty('--home', team('home').color); document.documentElement.style.setProperty('--away', team('away').color); }
+
+/* ------------------------------------------------------------------ header */
+function renderHead(){
+  applyTeamVars();
+  document.body.classList.toggle('view', VIEW);
+  document.body.classList.toggle('embedded', !!HOST);
+  if (VIEW) return renderViewBar();
+  const sc = S.score, win = sc ? (sc[0] > sc[1] ? 'home' : sc[1] > sc[0] ? 'away' : '') : '';
+  const side = k => `<div class="mb-team ${win === k ? 'win' : ''}">${crest(k, 40)}<div><b>${esc(team(k).name)}</b>${sc ? `<small>${sc[k === 'home' ? 0 : 1]}</small>` : ''}</div></div>`;
+  const meta = [S.comp, S.date ? fmtDay(S.date) : ''].filter(Boolean).map(esc).join(' · ');
+  $('#matchbar').innerHTML = `<div class="mb-teams">${side('home')}<span class="vs">vs</span>${side('away')}</div>
+    <div class="mb-act">
+      ${meta ? `<span class="mb-meta">${meta}</span>` : ''}
+      ${S.example ? `<span class="badge">${T('Example session')}</span>` : ''}
+      ${HOST ? `<button class="btn" id="b-pick">${T(S.mid ? 'Change game' : 'Choose a HoopStatsMY game')}</button>
+        ${S.mid ? `<button class="btn accent" id="b-save">${T('Save to HoopStatsMY')}</button><span class="mb-state" id="mb-state"></span>` : ''}` : ''}
+    </div>`;
+  $('#exbar').hidden = !S.example;
+  renderSaveState();
+}
+function fmtDay(iso){
+  const d = new Date(iso + 'T00:00:00'); if (isNaN(d)) return iso;
+  return LANG === 'zh' ? `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日` : d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+}
+function renderSaveState(){
+  const el = $('#mb-state'); if (!el) return;
+  const st = !S.savedAt ? 'none' : S.dirtyAt > S.savedAt ? 'dirty' : 'ok';
+  el.className = 'mb-state ' + st;
+  el.innerHTML = '<i></i>' + (st === 'none' ? T('Not on HoopStatsMY yet') : st === 'dirty' ? T('Changes not saved to HoopStatsMY') : T('Saved to HoopStatsMY {0}', new Date(S.savedAt).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})));
+}
+
+/* ------------------------------------------------------------------ views */
+const views = {
+  tag(){
+    const tc = team(U.team).color, ti = inkOn(tc);
+    const ros = S.roster[U.team];
+    const rkeys = '123456789';
+    const fold = (id, label, sum, body) => `<div class="fold ${OPEN.has(id) ? 'open' : ''}" data-fold="${id}">
+      <button class="fold-h" data-fh="${id}" aria-expanded="${OPEN.has(id)}"><span class="lbl">${label}</span><span class="fold-sum ${sum ? '' : 'none'}">${sum || T('None')}</span><span class="fold-car" aria-hidden="true"></span></button>
+      <div class="fold-b"><div class="fold-in"><div>${body}</div></div></div></div>`;
+    const sel = ros.find(p => p.n === U.player);
+    const resSum = U.res ? T(RESK[U.res].t) + (U.and1 ? ' ' + T('+ and-1') : '') + (U.res === 'FT' ? ' · ' + T('{0} made', U.ftm || 0) : '') : '';
+    return `<div class="view" style="--tc:${esc(tc)};--ti:${ti}">
+      ${U.editing ? `<div class="edit-note"><span>${T('Editing clip at {0}', fmt(clipById(U.editing)?.t0))}</span><button class="btn ghost" id="x-cancel" style="height:26px">${T('New clip instead')}</button></div>` : ''}
+      <div class="sect">
+        <div class="seg team" id="v-team">
+          ${['home','away'].map(k => `<button data-t="${k}" class="${U.team === k ? 'on' : ''}" style="--tc:${esc(team(k).color)};--ti:${inkOn(team(k).color)}">${team(k).logo ? `<img src="${esc(team(k).logo)}" alt="">` : `<span class="sw" style="background:${esc(team(k).color)}"></span>`}${esc(team(k).name)}</button>`).join('')}
+        </div>
+      </div>
+      <div class="sect">
+        <div class="chips" id="v-player">
+          <button class="chip jersey ${U.player == null ? 'on' : ''}" data-p="">${T('Team')}</button>
+          ${ros.map(p => { const ph = photoOf(p); return `<button class="chip jersey ${ph ? 'ph' : ''} ${U.player === p.n ? 'on' : ''}" data-p="${esc(p.n)}" title="${esc(p.name || '#' + p.n)}">${ph ? `<img src="${esc(ph)}" alt="">` : ''}${esc(p.num != null ? p.num : p.n)}</button>`; }).join('')}
+          ${ros.length ? '' : `<button class="chip" id="v-addros">${T('+ Add roster')}</button>`}
+        </div>
+        <div class="pick">${U.player == null ? T('Tagging for the whole team') : `<b>${esc(pname(U.team, U.player))}</b>`}</div>
+      </div>
+      <div class="folds">
+        ${PLAYS.map((g, gi) => fold('g' + gi, T(g.g), g.items.filter(p => U.plays.has(p)).map(p => T(p)).join(' · '),
+          `<div class="chips">${g.items.map(p => `<button class="chip ${U.plays.has(p) ? 'on' : ''}" data-play="${esc(p)}">${esc(T(p))}</button>`).join('')}</div>`)).join('')}
+        ${fold('res', T('Result'), resSum, `<div class="chips" id="v-res">
+          ${RES.map((r, i) => `<button class="chip ${r.cls || ''} ${U.res === r.k ? 'on' : ''}" data-res="${r.k}"><i class="rd"></i>${T(r.t)}<kbd>${rkeys[i]}</kbd></button>`).join('')}
+          <button class="chip res-good ${U.and1 ? 'on' : ''}" id="v-and1" title="${T('Fouled on the make: adds 1 point')}">${T('+ And-1')}</button></div>
+          ${U.res === 'FT' ? `<div class="prow"><span class="lbl">${T('FT made')}</span><div class="chips">${[0,1,2,3].map(n => `<button class="chip ${(U.ftm||0) === n ? 'on' : ''}" data-ftm="${n}">${n}</button>`).join('')}</div></div>` : ''}`)}
+        ${fold('st', T('Shot type'), U.stype ? T(STYPEK[U.stype].t) : '', `<div class="chips">${STYPES.map(x => `<button class="chip ${U.stype === x.k ? 'on' : ''}" data-stype="${x.k}">${T(x.t)}</button>`).join('')}</div>`)}
+        ${fold('ct', T('Contest'), U.diff ? T(DIFFK[U.diff].t) : '', `<div class="chips" id="v-diff">${DIFF.map(x => `<button class="chip diff-${x.k} ${U.diff === x.k ? 'on' : ''}" data-diff="${x.k}" title="${T(x.d)}">${diffIcon(x.k)}${T(x.t)}</button>`).join('')}</div>`)}
+      </div>
+      <div class="prow"><span class="lbl">${T('Period')}</span><div class="chips">${PERIODS.map(q => `<button class="chip ${U.q === q ? 'on' : ''}" data-q="${q}">${q}</button>`).join('')}</div></div>
+      <div class="sect">
+        <div class="win">
+          <div class="field"><span class="lbl">${T('Start')}</span><span class="tval ${U.inT == null ? 'unset' : ''}">${U.inT == null ? T('auto −{0}s', S.prefs.lead) : fmt(U.inT, 1)}</span></div>
+          <div class="field"><span class="lbl">${T('End')}</span><span class="tval ${U.outT == null ? 'unset' : ''}">${U.outT == null ? T('auto +{0}s', S.prefs.after) : fmt(U.outT, 1)}</span></div>
+          <button class="btn ghost" id="v-clrwin" ${U.inT == null && U.outT == null ? 'disabled' : ''}>${T('Reset')}</button>
+        </div>
+        <input class="inp" id="v-note" placeholder="${T('Note: e.g. rejects the screen, goes baseline')}" value="${esc(U.note)}" maxlength="140">
+        <label class="toggle"><input type="checkbox" id="v-auto" ${S.prefs.autoShot ? 'checked' : ''}>${T('After saving a shot, ask me to place it on the shot map')}</label>
+      </div>
+      <div class="savebar">
+        <button class="btn primary" id="v-save">${T(U.editing ? 'Update clip' : 'Save clip')} <kbd style="background:transparent;color:inherit;border-color:currentColor;opacity:.7">Enter</kbd></button>
+      </div>
+    </div>`;
+  },
+  shots(){
+    const list = filteredShots();
+    const z = zoneTable(list);
+    const rf = U.team, rp = U.player;
+    return `<div class="view">
+      ${VIEW ? '' : `<div class="sect-h">
+        <label class="toggle"><input type="checkbox" id="s-rec" ${U.recShots ? 'checked' : ''}>${T('Record shots by tapping the court')}</label>
+      </div>`}
+      ${U.recShots && !VIEW ? `<div class="sect">
+        <div class="recfor">${T('Recording for')} ${crest(rf, 20)} <b>${esc(team(rf).name)} · ${esc(pname(rf, rp))}</b> ${T('at')} <b>${fmt(now())}</b> <button class="btn ghost" id="s-who" style="height:26px">${T('Change')}</button></div>
+        <div class="seg" id="s-made"><button data-m="1" class="${U.shotMade ? 'on' : ''}">● ${T('Made')} <kbd>M</kbd></button><button data-m="0" class="${!U.shotMade ? 'on' : ''}">✕ ${T('Missed')} <kbd>X</kbd></button></div>
+        <div class="chips" id="s-diff"><span class="lbl" style="align-self:center;margin-right:2px">${T('Contest')}</span>${DIFF.map(x => `<button class="chip diff-${x.k} ${U.shotDiff === x.k ? 'on' : ''}" data-sd="${x.k}" title="${T(x.d)}">${diffIcon(x.k)}${T(x.t)}</button>`).join('')}</div>
+        <select class="inp sm" id="s-st"><option value="">${T('Shot type')}: ${T('Not set')}</option>${STYPES.map(x => `<option value="${x.k}" ${U.shotSt === x.k ? 'selected' : ''}>${T(x.t)}</option>`).join('')}</select>
+      </div>` : ''}
+      <div class="court-wrap">${courtSVG()}
+        ${U.pendingShot ? `<div class="prompt"><i></i>${T('Tap where {0} shot from', esc(pname(clipById(U.pendingShot)?.team || 'home', clipById(U.pendingShot)?.player)))} <button id="s-skip">${T('Skip')}</button></div>` : ''}
+      </div>
+      <div class="legend">
+        <span><svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="var(--text-muted)"/></svg>${T('Made')}</span>
+        <span><svg viewBox="0 0 12 12"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="var(--text-muted)" stroke-width="1.8"/></svg>${T('Missed')}</span>
+        <span>${T(VIEW ? 'Tap a mark to see the shot' : 'Tap a mark to jump to that moment')}</span>
+      </div>
+      <div class="sect">
+        <div class="seg" id="s-team">${[['all',T('Both')],['home',team('home').name],['away',team('away').name]].map(([k,t]) => `<button data-t="${k}" class="${U.shotTeam === k ? 'on' : ''}">${esc(t)}</button>`).join('')}</div>
+        ${U.shotTeam !== 'all' ? `<select class="inp sm" id="s-player"><option value="all">${T('Every player')}</option>${S.roster[U.shotTeam].map(p => `<option value="${esc(p.n)}" ${U.shotPlayer === p.n ? 'selected' : ''}>${esc(pname(U.shotTeam, p.n))}</option>`).join('')}</select>` : ''}
+      </div>
+      <div class="chips" id="s-dfilter"><span class="lbl" style="align-self:center;margin-right:2px">${T('Show')}</span>${[['all',T('All shots')], ...DIFF.map(x => [x.k, T(x.t)])].map(([k, t]) => `<button class="chip chip-sm ${U.shotDiffF === k ? 'on' : ''}" data-df="${k}">${k === 'all' ? '' : diffIcon(k)}${t}</button>`).join('')}</div>
+      <select class="inp sm" id="s-stf"><option value="all">${T('Every shot type')}</option>${STYPES.filter(x => S.shots.some(s => s.stype === x.k)).map(x => `<option value="${x.k}" ${U.shotStF === x.k ? 'selected' : ''}>${T(x.t)}</option>`).join('')}</select>
+      <table class="zt"><thead><tr><th>${T('Zone')}</th><th>${T('FGM–A')}</th><th>${T('FG%')}</th><th>${T('Share')}</th></tr></thead><tbody>
+        ${z.map(r => `<tr><td>${T(r.z)}</td><td>${r.m}–${r.a}</td><td>${r.a ? `<span class="pct" style="${pctStyle(r)}">${Math.round(100 * r.m / r.a)}%</span>` : '—'}</td><td>${r.share}</td></tr>`).join('')}
+      </tbody></table>
+      ${diffTable(filteredShots(true))}
+      ${stypeTable(filteredShots(true, true))}
+      <div class="note">${T('Shot value comes from where you tap: outside the arc (or in the corner beyond 6.6 m) counts as a three, using FIBA court lines.')}</div>
+    </div>`;
+  },
+  report(){
+    const k = U.repTeam, cs = S.clips.filter(c => c.team === k);
+    const nG = VIEW && VS.scope === 'all' ? VS.games().length : 0;
+    const pts = cs.reduce((a, c) => a + clipPts(c), 0);
+    const off = cs.filter(c => !['ST'].includes(c.res));
+    const fga = cs.filter(c => RESK[c.res]?.shot).length, fgm = cs.filter(c => RESK[c.res]?.made).length;
+    const to = cs.filter(c => c.res === 'TO').length;
+    const byPlay = {};
+    cs.forEach(c => (c.plays.length ? c.plays : [T('Untagged')]).forEach(p => { (byPlay[p] = byPlay[p] || {n:0, pts:0}); byPlay[p].n++; byPlay[p].pts += clipPts(c); }));
+    const pr = Object.entries(byPlay).sort((a, b) => b[1].n - a[1].n);
+    const maxN = Math.max(1, ...pr.map(r => r[1].n));
+    const byP = {};
+    cs.forEach(c => { const n = c.player || ''; (byP[n] = byP[n] || {n:0, pts:0, fga:0, fgm:0}); byP[n].n++; byP[n].pts += clipPts(c); if (RESK[c.res]?.shot){ byP[n].fga++; byP[n].fgm += RESK[c.res].made; } });
+    const pl = Object.entries(byP).sort((a, b) => b[1].pts - a[1].pts || b[1].n - a[1].n);
+    const maxP = Math.max(1, ...pl.map(r => r[1].pts));
+    return `<div class="view" style="--tc:${esc(team(k).color)}">
+      <div class="seg team" id="r-team">${['home','away'].map(t => `<button data-t="${t}" class="${k === t ? 'on' : ''}" style="--tc:${esc(team(t).color)}"><span class="sw" style="background:${esc(team(t).color)}"></span>${esc(team(t).name)}</button>`).join('')}</div>
+      <div class="kpis">
+        <div class="kpi"><b>${cs.length}</b><span>${T('Plays')}${nG ? ' · ' + nGames(nG) : ''}</span></div>
+        <div class="kpi"><b>${off.length ? (pts / off.length).toFixed(2) : '—'}</b><span>${T('Pts / play')}</span></div>
+        <div class="kpi"><b>${fga ? Math.round(100 * fgm / fga) + '%' : '—'}</b><span>${T('FG')} ${fgm}–${fga}</span></div>
+        <div class="kpi"><b>${off.length ? Math.round(100 * to / off.length) + '%' : '—'}</b><span>${T('TO rate')}</span></div>
+      </div>
+      <div class="sect"><div class="sect-h"><span class="lbl">${T('Play types · frequency and points per play')}</span></div>
+        ${pr.length ? `<div class="bars">${pr.map(([p, r]) => `<div class="bar-row"><span class="nm" title="${esc(T(p))}">${esc(T(p))}</span><span class="bar-track"><span class="bar-fill" style="width:${(100 * r.n / maxN).toFixed(1)}%"></span></span><span class="v"><b>${r.n}</b> · ${(r.pts / r.n).toFixed(2)} PPP</span></div>`).join('')}</div>` : `<div class="empty">${T('No plays tagged for {0} yet.', esc(team(k).name))}</div>`}
+      </div>
+      ${cs.some(c => RESK[c.res]?.shot) ? diffTable(cs.filter(c => RESK[c.res]?.shot).map(c => ({made:RESK[c.res].made, diff:c.diff})), T('Shooting by contest')) : ''}
+      ${cs.some(c => RESK[c.res]?.shot && c.stype) ? stypeTable(cs.filter(c => RESK[c.res]?.shot).map(c => ({made:RESK[c.res].made, stype:c.stype}))) : ''}
+      <div class="sect"><div class="sect-h"><span class="lbl">${T('Players · points from tagged plays')}</span></div>
+        ${pl.length ? `<div class="bars">${pl.map(([n, r]) => `<div class="bar-row"><span class="nm">${esc(pname(k, n))}</span><span class="bar-track"><span class="bar-fill" style="width:${(100 * r.pts / maxP).toFixed(1)}%"></span></span><span class="v"><b>${r.pts}</b> ${T('pts')} · ${r.fgm}–${r.fga}</span></div>`).join('')}</div>` : `<div class="empty">${T('Nothing yet.')}</div>`}
+      </div>
+      <div class="note">${T('Figures count only the plays you have tagged, so they describe your sample of the film, not the full box score.')}</div>
+    </div>`;
+  },
+};
+function renderView(){
+  $('#views').innerHTML = views[U.view]();
+  $$('#tabs .tab').forEach(b => b.classList.toggle('on', b.dataset.v === U.view));
+  movePill();
+  if (U.view === 'shots') drawShots();
+}
+function movePill(){
+  const b = $(`#tabs .tab[data-v="${U.view}"]`), p = $('#tab-pill');
+  if (!b) return; p.style.left = b.offsetLeft + 'px'; p.style.width = b.offsetWidth + 'px';
+}
+function setView(v){ U.view = v; renderView(); }
+
+/* ------------------------------------------------------------------ shots */
+function filteredShots(ignoreDiff, ignoreSt){
+  return S.shots.filter(s => (U.shotTeam === 'all' || s.team === U.shotTeam) && (U.shotTeam === 'all' || U.shotPlayer === 'all' || s.player === U.shotPlayer) &&
+    (ignoreDiff || U.shotDiffF === 'all' || s.diff === U.shotDiffF) && (ignoreSt || U.shotStF === 'all' || s.stype === U.shotStF));
+}
+function diffIcon(k){
+  // one hand up for contested, two for heavily contested, an open ring for wide open
+  const p = {open:'<circle cx="7" cy="7" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/>',
+    cont:'<circle cx="7" cy="7" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 2.8v8.4" stroke="currentColor" stroke-width="1.6"/>',
+    heavy:'<circle cx="7" cy="7" r="4.2" fill="currentColor"/>'}[k] || '';
+  return `<svg width="13" height="13" viewBox="0 0 14 14" aria-hidden="true" style="flex:none">${p}</svg>`;
+}
+function diffTable(list, title){
+  const rows = [...DIFF.map(x => ({k:x.k, t:x.t, m:0, a:0})), {k:null, t:'Not set', m:0, a:0}];
+  list.forEach(s => { const r = rows.find(o => o.k === (s.diff || null)); r.a++; r.m += s.made; });
+  const shown = rows.filter(r => r.k || r.a);
+  const max = Math.max(1, ...shown.map(r => r.a));
+  return `<div class="sect"><span class="lbl">${title || T('By shot difficulty')}</span><div class="dt">
+    ${shown.map(r => `<div class="dt-row ${r.k ? 'diff-' + r.k : ''}"><span class="dt-n">${r.k ? diffIcon(r.k) : ''}${T(r.t)}</span>
+      <span class="dt-bar"><i style="width:${(100 * r.a / max).toFixed(1)}%"></i><b style="width:${(100 * r.m / max).toFixed(1)}%"></b></span>
+      <span class="dt-v">${r.m}–${r.a}</span><span class="dt-p">${r.a ? Math.round(100 * r.m / r.a) + '%' : '—'}</span></div>`).join('')}
+  </div></div>`;
+}
+function stypeTable(list){
+  const rows = STYPES.map(x => ({k:x.k, t:x.t, m:0, a:0}));
+  list.forEach(s => { const r = rows.find(o => o.k === s.stype); if (r){ r.a++; r.m += s.made; } });
+  const shown = rows.filter(r => r.a).sort((a, b) => b.a - a.a);
+  if (!shown.length) return '';
+  const max = Math.max(1, ...shown.map(r => r.a));
+  return `<div class="sect"><span class="lbl">${T('By shot type')}</span><div class="dt">
+    ${shown.map(r => `<div class="dt-row"><span class="dt-n">${T(r.t)}</span>
+      <span class="dt-bar"><i style="width:${(100 * r.a / max).toFixed(1)}%"></i><b style="width:${(100 * r.m / max).toFixed(1)}%"></b></span>
+      <span class="dt-v">${r.m}–${r.a}</span><span class="dt-p">${Math.round(100 * r.m / r.a)}%</span></div>`).join('')}
+  </div></div>`;
+}
+function zoneTable(list){
+  const rows = ZONES.map(z => ({z, m:0, a:0}));
+  list.forEach(s => { const r = rows[ZONES.indexOf(zoneOf(s.x, s.d))]; r.a++; r.m += s.made; });
+  const tot = {z:'All shots', m:rows.reduce((a, r) => a + r.m, 0), a:list.length};
+  rows.forEach(r => r.share = list.length ? Math.round(100 * r.a / list.length) + '%' : '—');
+  tot.share = list.length ? '100%' : '—';
+  return [...rows, tot];
+}
+// blue (cold) → slate → red (hot), the site's own scale, centred on a typical make rate per zone
+const ZBASE = {'Restricted area':.58,'Paint':.42,'Mid-range':.38,'Corner 3':.36,'Above-break 3':.32,'All shots':.44};
+const STOPS = [[-0.20,[31,143,255]],[-0.09,[75,134,200]],[0,[108,116,134]],[0.09,[194,80,122]],[0.20,[255,46,88]]];
+function heat(v){ v = clamp(v, -.2, .2); let k = 0; while (k < STOPS.length - 2 && v > STOPS[k + 1][0]) k++;
+  const [v0, c0] = STOPS[k], [v1, c1] = STOPS[k + 1], t = (v - v0) / (v1 - v0); return c0.map((x, i) => Math.round(x + (c1[i] - x) * t)); }
+function pctStyle(r){ if (r.a < 2) return 'background:var(--surface-alt)'; const c = heat(r.m / r.a - ZBASE[r.z]); return `background:rgb(${c});color:#fff`; }
+function drawShots(){
+  const g = $('#g-shots'); if (!g) return;
+  const vis = new Set(filteredShots().map(s => s.id));
+  g.innerHTML = S.shots.map(s => {
+    const c = team(s.team).color, X = cx(s.x), Y = cy(s.d);
+    const mark = s.made ? `<circle class="g m" cx="${X}" cy="${Y}" r="2.2" fill="${esc(c)}"/>`
+      : `<g class="g"><path class="x" d="M${X - 1.7} ${Y - 1.7}L${X + 1.7} ${Y + 1.7}M${X + 1.7} ${Y - 1.7}L${X - 1.7} ${Y + 1.7}" stroke="${esc(c)}"/></g>`;
+    const ring = U.newShot === s.id ? `<circle class="ring" cx="${X}" cy="${Y}" r="2.4" fill="none" stroke="${esc(c)}" stroke-width=".6"/>` : '';
+    return `<g class="shot ${vis.has(s.id) ? '' : 'dim'} ${U.newShot === s.id ? 'new' : ''} ${U.focusShot === s.id ? 'focus' : ''}" data-s="${s.id}">${ring}${mark}<circle class="hit" cx="${X}" cy="${Y}" r="4"/></g>`;
+  }).join('');
+  U.newShot = null;
+  const court = $('#court'); court.classList.toggle('rec', U.recShots || !!U.pendingShot);
+}
+function svgPoint(ev){
+  const svg = $('#court'), r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal;
+  const px = (ev.clientX - r.left) / r.width * vb.width, py = (ev.clientY - r.top) / r.height * vb.height;
+  return {x:clamp((px - PAD) / SX - W / 2, -7.5, 7.5), d:clamp((py - PAD) / SX, 0, D)};
+}
+function placeShot(p){
+  let s;
+  if (U.pendingShot){
+    const c = clipById(U.pendingShot); U.pendingShot = null;
+    if (!c) return renderView();
+    s = {id:uid(), t:(c.t0 + c.t1) / 2 + (c.t1 - c.t0) * .3, team:c.team, player:c.player, x:p.x, d:p.d, made:RESK[c.res]?.made || 0, diff:c.diff || null, stype:c.stype || null, clip:c.id};
+    s.pts = isThree(s.x, s.d) ? 3 : 2;
+    if (c.shot) S.shots = S.shots.filter(o => o.id !== c.shot);
+    c.shot = s.id;
+    const want = (s.made ? 'M' : 'X') + s.pts;
+    if (RESK[c.res]?.shot && c.res !== want){ c.res = want; toast(T('Location is a {0}-pointer, so the result is now {1}', s.pts, T(RESK[want].t))); }
+    else toast(T('Shot placed'));
+  } else {
+    s = {id:uid(), t:now(), team:U.team, player:U.player, x:p.x, d:p.d, made:U.shotMade, diff:U.shotDiff, stype:U.shotSt, clip:null};
+    s.pts = isThree(s.x, s.d) ? 3 : 2;
+    toast(`${T(s.made ? 'Made' : 'Missed')} ${s.pts} · ${pname(s.team, s.player)} · ${T(zoneOf(s.x, s.d))}${s.diff ? ' · ' + T(DIFFK[s.diff].t) : ''}${s.stype ? ' · ' + T(STYPEK[s.stype].t) : ''}`);
+  }
+  S.shots.push(s); U.newShot = s.id; markExampleTouched(); save();
+  renderView(); renderLog(); renderTimeline();
+}
+function shotPopup(id, ev){
+  const s = S.shots.find(o => o.id === id); if (!s) return;
+  closePop();
+  const wrap = $('.court-wrap'), r = wrap.getBoundingClientRect();
+  const el = document.createElement('div'); el.className = 'shotpop'; el.id = 'shotpop';
+  el.innerHTML = `<b>${T(s.made ? 'Made' : 'Missed')} ${s.pts}</b> · ${esc(team(s.team).name)} ${esc(pname(s.team, s.player))}<br><span style="opacity:.7">${T(zoneOf(s.x, s.d))} · ${s.diff ? T(DIFFK[s.diff].t) : T('Contest not set')}${s.stype ? ' · ' + T(STYPEK[s.stype].t) : ''} · ${fmt(s.t)}${s.gm && VS.idx[s.gm] ? '<br>' + esc(vGameLabel(s.gm)) : ''}</span>
+    ${VIEW ? (() => { const u = shotYt(s); return u ? `<div class="r"><a class="vbtn" style="height:28px;font-size:12px" href="${esc(u)}" target="_blank" rel="noopener">▶ YouTube</a></div>` : ''; })() : `<div class="r"><button data-a="go">${T('Watch')}</button><button data-a="flip">${T(s.made ? 'Mark missed' : 'Mark made')}</button><button data-a="diff">${T(s.diff ? 'Change contest' : 'Set contest')}</button><button data-a="del">${T('Delete')}</button></div>`}`;
+  wrap.appendChild(el);
+  const x = ev.clientX - r.left, y = ev.clientY - r.top;
+  el.style.left = clamp(x - 90, 6, r.width - el.offsetWidth - 6) + 'px';
+  el.style.top = (y > r.height * .55 ? y - el.offsetHeight - 10 : y + 12) + 'px';
+  U.focusShot = id; drawShots();
+  el.onclick = e => {
+    const a = e.target.dataset.a; if (!a) return;
+    if (a === 'go'){ const c = s.clip && clipById(s.clip); seek(c ? c.t0 : s.t - 4); if (hasVideo) vid.play(); }
+    if (a === 'diff'){ const ks = [...DIFF.map(x => x.k), null], n = ks[(ks.indexOf(s.diff || null) + 1) % ks.length]; s.diff = n; const c = s.clip && clipById(s.clip); if (c) c.diff = n; save(); renderLog(); toast(n ? T(DIFFK[n].t) : T('Contest cleared')); }
+    if (a === 'flip'){ s.made = s.made ? 0 : 1; const c = s.clip && clipById(s.clip); if (c && RESK[c.res]?.shot) c.res = (s.made ? 'M' : 'X') + s.pts; save(); renderLog(); }
+    if (a === 'del'){ S.shots = S.shots.filter(o => o.id !== id); S.clips.forEach(c => { if (c.shot === id) delete c.shot; }); save(); renderLog(); renderTimeline(); toast(T('Shot deleted')); }
+    closePop(); renderView();
+  };
+}
+function closePop(){ $('#shotpop')?.remove(); if (U.focusShot){ U.focusShot = null; } }
+
+/* ------------------------------------------------------------------ clips */
+const clipById = id => S.clips.find(c => c.id === id);
+function currentWindow(){
+  const t = now(), D0 = duration();
+  let a = U.inT, b = U.outT;
+  if (a == null && b == null){ a = t - S.prefs.lead; b = t + S.prefs.after; }
+  else if (a == null) a = b - S.prefs.lead - S.prefs.after;
+  else if (b == null) b = Math.max(t, a + 1) + (t > a ? S.prefs.after : 0);
+  if (b < a) [a, b] = [b, a];
+  return [clamp(a, 0, D0), clamp(Math.max(b, a + 0.5), 0, D0)];
+}
+function saveClip(){
+  const [t0, t1] = currentWindow();
+  const data = {t0, t1, team:U.team, player:U.player, plays:[...U.plays], res:U.res || 'NA', and1:U.and1, ftm:U.res === 'FT' ? (U.ftm || 0) : 0, diff:U.diff, stype:U.stype, q:U.q, note:U.note.trim()};
+  let c;
+  if (U.editing && (c = clipById(U.editing))){
+    Object.assign(c, data);
+    if (c.shot){ const s = S.shots.find(o => o.id === c.shot); if (s){ if (!RESK[c.res]?.shot){ S.shots = S.shots.filter(o => o.id !== s.id); delete c.shot; } else { s.made = RESK[c.res].made; s.team = c.team; s.player = c.player; s.diff = c.diff; s.stype = c.stype; } } }
+    toast(T('Clip updated'));
+  } else {
+    c = Object.assign({id:uid()}, data); S.clips.push(c);
+    toast(`${T('Saved')} · ${fmt(t0)}–${fmt(t1)} · ${T(RESK[c.res].t)}`);
+  }
+  S.clips.sort((a, b) => a.t0 - b.t0);
+  markExampleTouched();
+  const wantsShot = RESK[c.res]?.shot && S.prefs.autoShot && !c.shot;
+  U.sel = c.id; U.editing = null; U.inT = U.outT = null; U.plays.clear(); U.res = null; U.and1 = false; U.ftm = 0; U.diff = null; U.stype = null; U.note = '';
+  save(); renderLog(); renderTimeline(); paintLane();
+  if (wantsShot){ U.pendingShot = c.id; U.recShots = true; setView('shots'); const ct = $('#court'); if (ct && ct.getBoundingClientRect().top < 70) ct.scrollIntoView({block:'center', behavior:'smooth'}); } else renderView();
+}
+function loadClipIntoPanel(c){
+  U.editing = c.id; U.sel = c.id; U.team = c.team; U.player = c.player; U.plays = new Set(c.plays); U.res = c.res === 'NA' ? null : c.res;
+  U.and1 = !!c.and1; U.ftm = c.ftm || 0; U.diff = c.diff || null; U.stype = c.stype || null; U.q = c.q || U.q; U.note = c.note || ''; U.inT = c.t0; U.outT = c.t1;
+}
+function deleteClip(id){
+  const c = clipById(id); if (!c) return;
+  S.clips = S.clips.filter(o => o.id !== id);
+  if (c.shot) S.shots = S.shots.filter(s => s.id !== c.shot);
+  if (U.editing === id){ U.editing = null; U.inT = U.outT = null; }
+  if (U.sel === id) U.sel = null;
+  save(); renderAll();
+  toast(T('Clip deleted'));
+}
+function filteredClips(){
+  return S.clips.filter(c => (U.fTeam === 'all' || c.team === U.fTeam) && (U.fPlay === 'all' || c.plays.includes(U.fPlay)) &&
+    (U.fRes === 'all' || (U.fRes === 'scored' ? clipPts(c) > 0 : U.fRes === 'shots' ? !!RESK[c.res]?.shot : c.res === U.fRes)));
+}
+function renderFilters(){
+  const used = [...new Set(S.clips.flatMap(c => c.plays))];
+  $('#fl-team').innerHTML = [['all',T('Both teams')],['home',team('home').name],['away',team('away').name]].map(([k,t]) => `<option value="${k}" ${U.fTeam === k ? 'selected' : ''}>${esc(t)}</option>`).join('');
+  $('#fl-play').innerHTML = `<option value="all">${T('Every play type')}</option>` + used.map(p => `<option value="${esc(p)}" ${U.fPlay === p ? 'selected' : ''}>${esc(T(p))}</option>`).join('');
+  $('#fl-res').innerHTML = [['all',T('Every result')],['scored',T('Scored')],['shots',T('Shots')],...RES.map(r => [r.k, T(r.t)])].map(([k,t]) => `<option value="${k}" ${U.fRes === k ? 'selected' : ''}>${esc(t)}</option>`).join('');
+}
+const IC = {
+  play:'<svg viewBox="0 0 24 24"><path d="M7 4v16l13-8Z"/></svg>',
+  edit:'<svg viewBox="0 0 24 24"><path d="M3 17.3V21h3.7L17.8 9.9l-3.7-3.7ZM20.7 7a1 1 0 0 0 0-1.4l-2.3-2.3a1 1 0 0 0-1.4 0l-1.8 1.8 3.7 3.7Z"/></svg>',
+  save:'<svg viewBox="0 0 24 24"><path d="M12 16 7 11h3.5V4h3v7H17ZM5 18h14v2H5Z"/></svg>',
+  del:'<svg viewBox="0 0 24 24"><path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14Z"/></svg>',
+};
+function renderLog(){
+  renderFilters();
+  const list = filteredClips();
+  $('#c-count').textContent = list.length === S.clips.length ? S.clips.length : T('{0} of {1}', list.length, S.clips.length);
+  $('#b-reel').disabled = !list.length;
+  if (!S.clips.length){ $('#rows').innerHTML = `<div class="empty" style="padding:22px 16px">${T('No clips yet. Play the film, pick the team, player and play type on the right, then press {0}.', '<kbd>Enter</kbd>')}</div>`; return; }
+  if (!list.length){ $('#rows').innerHTML = `<div class="empty" style="padding:22px 16px">${T('No clips match these filters.')}</div>`; return; }
+  const playingId = U.reel ? U.reel[U.reelI] : null;
+  $('#rows').innerHTML = list.map(c => {
+    const r = RESK[c.res] || RESK.NA, pts = clipPts(c);
+    const cls = r.cls === 'res-good' ? 'good' : r.cls === 'res-bad' ? 'bad' : '';
+    return `<div class="crow ${U.sel === c.id ? 'sel' : ''} ${playingId === c.id ? 'playing' : ''}" data-c="${c.id}">
+      <span class="stripe" style="background:${esc(team(c.team).color)}"></span>
+      <span class="ctime">${fmt(c.t0)}<small>${(c.t1 - c.t0).toFixed(1)}s · ${esc(c.q || '')}</small></span>
+      <div class="cmain">
+        <div class="ctitle">${esc(team(c.team).code)} ${esc(pname(c.team, c.player))}<span class="tag ${cls}">${T(r.t)}${c.and1 ? ' ' + T('+ and-1') : ''}${c.res === 'FT' ? ' ' + T('{0} made', c.ftm || 0) : ''}${pts ? ` · ${pts} ${T('pts')}` : ''}</span>${c.stype ? `<span class="tag">${T(STYPEK[c.stype].t)}</span>` : ''}${c.diff ? `<span class="tag diff-${c.diff}">${diffIcon(c.diff)}${T(DIFFK[c.diff].t)}</span>` : ''}${c.shot ? `<span class="tag q" title="${T('On the shot map')}">${T('◎ charted')}</span>` : ''}</div>
+        <div class="ctags">${c.plays.map(p => `<span class="tag">${esc(T(p))}</span>`).join('')}</div>
+        ${c.note ? `<div class="cnote">${esc(c.note)}</div>` : ''}
+        ${c.gm && VS.idx[c.gm] ? `<div class="vgame">${esc(vGameLabel(c.gm))}</div>` : ''}
+      </div>
+      <div class="cact">
+        ${VIEW ? (() => { const u = clipYt(c); return u ? `<a class="ib yt" href="${esc(u)}" target="_blank" rel="noopener" title="${T('Watch on YouTube')}" aria-label="${T('Watch on YouTube')}">${IC.play}</a>` : ''; })() : ''}
+        <button class="ib" data-a="play" title="${T('Play clip')}" aria-label="${T('Play clip')}">${IC.play}</button>
+        <button class="ib" data-a="edit" title="${T('Edit tags and trim')}" aria-label="${T('Edit clip')}">${IC.edit}</button>
+        <button class="ib" data-a="rec" title="${T('Save this clip as a video file')}" aria-label="${T('Save clip as video')}">${IC.save}</button>
+        <button class="ib del" data-a="del" title="${T('Delete clip')}" aria-label="${T('Delete clip')}">${IC.del}</button>
+      </div></div>`;
+  }).join('');
+}
+
+/* ------------------------------------------------------------------ timeline + trim lane */
+function renderTimeline(){
+  const D0 = duration();
+  const step = D0 > 5400 ? 900 : D0 > 1800 ? 600 : D0 > 600 ? 300 : 60;
+  let t = '';
+  for (let s = step; s < D0; s += step){ const p = 100 * s / D0; t += `<i style="left:${p}%"></i><b style="left:${p}%">${fmt(s)}</b>`; }
+  $('#tl-ticks').innerHTML = t;
+  $('#tl-clips').innerHTML = S.clips.map(c => `<span class="tl-clip ${U.sel === c.id ? 'sel' : ''}" data-c="${c.id}" style="left:${100 * c.t0 / D0}%;width:${100 * (c.t1 - c.t0) / D0}%;background:${esc(team(c.team).color)}" title="${esc(team(c.team).code + ' ' + pname(c.team, c.player) + ' · ' + T(RESK[c.res]?.t || ''))}"></span>`).join('') +
+    S.shots.map(s => `<span class="tl-shot ${s.made ? '' : 'miss'}" style="left:${100 * s.t / D0}%;background:${esc(team(s.team).color)};border-color:${esc(team(s.team).color)}"></span>`).join('');
+  paintSel(); paintHead();
+}
+function paintSel(){
+  const el = $('#tl-sel'), D0 = duration();
+  const has = U.inT != null || U.outT != null;
+  el.hidden = !has;
+  if (has){ const [a, b] = currentWindow(); el.style.left = 100 * a / D0 + '%'; el.style.width = 100 * (b - a) / D0 + '%'; }
+}
+function laneRange(){
+  const [a, b] = currentWindow(), len = b - a, pad = Math.max(6, len * .6);
+  return [Math.max(0, a - pad), Math.min(duration(), b + pad)];
+}
+function paintLane(){
+  const has = U.inT != null || U.outT != null;
+  $('#lane-empty').hidden = has;
+  ['#lane-win', '#h-in', '#h-out'].forEach(s => $(s).hidden = !has);
+  const [a, b] = currentWindow();
+  $('#trim-len').textContent = has ? `${fmt(a, 1)} → ${fmt(b, 1)} · ${(b - a).toFixed(1)}s` : '—';
+  if (!has){ $('#lane-head').hidden = true; return; }
+  const [l0, l1] = laneRange(), P = t => 100 * (t - l0) / (l1 - l0);
+  $('#lane').style.setProperty('--sec', `${100 / (l1 - l0)}%`);
+  $('#lane-win').style.left = P(a) + '%'; $('#lane-win').style.width = (P(b) - P(a)) + '%';
+  $('#h-in').style.left = P(a) + '%'; $('#h-out').style.left = P(b) + '%';
+  const t = now(); $('#lane-head').hidden = t < l0 || t > l1; $('#lane-head').style.left = P(t) + '%';
+  paintSel();
+}
+function paintHead(){
+  const t = now(), D0 = duration();
+  $('#tl-head').style.left = 100 * t / D0 + '%';
+  $('#t-tc').firstChild.nodeValue = fmt(t, 1);
+  $('#t-dur').textContent = '/ ' + fmt(D0);
+  if (U.inT != null || U.outT != null){ const [l0, l1] = laneRange(); const h = $('#lane-head'); h.hidden = t < l0 || t > l1; h.style.left = 100 * (t - l0) / (l1 - l0) + '%'; }
+  const rf = $('.recfor b + b'); if (rf) rf.textContent = fmt(t);
+}
+function renderMarks(){ $('#t-in').classList.toggle('set', U.inT != null); $('#t-out').classList.toggle('set', U.outT != null); paintLane(); if (U.view === 'tag') renderView(); }
+
+/* drag on main timeline: seek */
+(() => {
+  const bar = $('#tl'), hov = $('#tl-hover');
+  const tAt = e => { const r = bar.getBoundingClientRect(); return clamp((e.clientX - r.left) / r.width, 0, 1) * duration(); };
+  let drag = false;
+  bar.addEventListener('pointerdown', e => {
+    const cl = e.target.closest('.tl-clip');
+    if (cl){ const c = clipById(cl.dataset.c); if (c){ selectClip(c.id, true); return; } }
+    drag = true; bar.setPointerCapture(e.pointerId); seek(tAt(e));
+  });
+  bar.addEventListener('pointermove', e => {
+    const r = bar.getBoundingClientRect(); hov.style.left = (e.clientX - r.left + 12) + 'px'; hov.textContent = fmt(tAt(e));
+    if (drag) seek(tAt(e));
+  });
+  bar.addEventListener('pointerup', () => drag = false);
+})();
+/* trim lane handles */
+(() => {
+  const lane = $('#lane');
+  const tAt = e => { const [l0, l1] = laneRange(), r = lane.getBoundingClientRect(); return l0 + clamp((e.clientX - r.left) / r.width, 0, 1) * (l1 - l0); };
+  let which = null, frozen = null;
+  const down = w => e => { e.stopPropagation(); which = w; const [a, b] = currentWindow(); U.inT = a; U.outT = b; frozen = laneRange();
+    e.currentTarget.classList.add('drag'); e.currentTarget.setPointerCapture(e.pointerId); };
+  const lr = () => frozen || laneRange();
+  const move = e => { if (!which) return; const [l0, l1] = lr(), r = lane.getBoundingClientRect(); const t = l0 + clamp((e.clientX - r.left) / r.width, 0, 1) * (l1 - l0);
+    if (which === 'in') U.inT = Math.min(t, U.outT - .3); else U.outT = Math.max(t, U.inT + .3);
+    seek(which === 'in' ? U.inT : U.outT); paintLaneFrozen(); };
+  const up = e => { if (!which) return; e.currentTarget.classList.remove('drag'); which = null; frozen = null; renderMarks(); syncEdit(); };
+  function paintLaneFrozen(){
+    const [l0, l1] = frozen, P = t => 100 * (t - l0) / (l1 - l0), a = U.inT, b = U.outT;
+    $('#lane-win').style.left = P(a) + '%'; $('#lane-win').style.width = (P(b) - P(a)) + '%';
+    $('#h-in').style.left = P(a) + '%'; $('#h-out').style.left = P(b) + '%';
+    $('#trim-len').textContent = `${fmt(a, 1)} → ${fmt(b, 1)} · ${(b - a).toFixed(1)}s`; paintSel();
+  }
+  [['#h-in','in'],['#h-out','out']].forEach(([s, w]) => { const h = $(s); h.addEventListener('pointerdown', down(w)); h.addEventListener('pointermove', move); h.addEventListener('pointerup', up);
+    h.addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight'){ e.preventDefault(); e.stopPropagation(); nudge(w, e.key === 'ArrowLeft' ? -.1 : .1); } }); });
+  lane.addEventListener('pointerdown', e => { if (e.target.closest('.handle')) return; if (U.inT == null && U.outT == null) return; seek(tAt(e)); });
+})();
+function nudge(w, d){
+  const [a, b] = currentWindow(); U.inT = a; U.outT = b;
+  if (w === 'in') U.inT = clamp(a + d, 0, b - .3); else U.outT = clamp(b + d, a + .3, duration());
+  seek(w === 'in' ? U.inT : U.outT); renderMarks(); syncEdit();
+}
+function syncEdit(){ const c = U.editing && clipById(U.editing); if (c){ c.t0 = U.inT; c.t1 = U.outT; S.clips.sort((x, y) => x.t0 - y.t0); save(); renderTimeline(); renderLog(); } }
+
+function selectClip(id, play){
+  const c = clipById(id); if (!c) return;
+  loadClipIntoPanel(c); stopReel();
+  seek(c.t0); renderAll();
+  if (U.view !== 'tag') setView('tag');
+  if (play && hasVideo){ U.previewEnd = c.t1; vid.play(); }
+}
+
+/* ------------------------------------------------------------------ playback */
+function togglePlay(){ if (!hasVideo) return toast(T('Open a replay first')); vid.paused ? vid.play() : vid.pause(); }
+function step(d){ if (!hasVideo) return seek(now() + d); vid.pause(); seek(vid.currentTime + d); }
+function setIcon(){ $('#i-play').innerHTML = vid.paused ? '<path d="M7 4v16l13-8Z"/>' : '<path d="M6 4h4v16H6Zm8 0h4v16h-4Z"/>'; $('#t-play').setAttribute('aria-label', T(vid.paused ? 'Play' : 'Pause')); }
+vid.addEventListener('play', setIcon); vid.addEventListener('pause', setIcon);
+function tick(){
+  if (hasVideo){
+    paintHead();
+    if (U.previewEnd != null && vid.currentTime >= U.previewEnd){ vid.pause(); U.previewEnd = null; }
+    if (U.reel){ const c = clipById(U.reel[U.reelI]); if (!c) stopReel(); else if (vid.currentTime >= c.t1 || vid.currentTime < c.t0 - 1){ nextReel(); } }
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+function playReel(){
+  if (!hasVideo) return toast(T('Open the replay to play the reel'));
+  const list = filteredClips(); if (!list.length) return;
+  U.reel = list.map(c => c.id); U.reelI = 0; $('#hud-reel').hidden = false;
+  const c = list[0]; seek(c.t0); vid.play(); updateReelHud(); renderLog();
+}
+function nextReel(){
+  U.reelI++;
+  if (U.reelI >= U.reel.length){ stopReel(); vid.pause(); toast(T('Reel finished')); return; }
+  const c = clipById(U.reel[U.reelI]); vid.currentTime = c.t0; updateReelHud(); renderLog();
+}
+function updateReelHud(){ $('#hud-reel').textContent = T('Reel {0} / {1}', U.reelI + 1, U.reel.length); }
+function stopReel(){ if (!U.reel) return; U.reel = null; $('#hud-reel').hidden = true; renderLog(); }
+
+/* load a video */
+function openVideo(src, name){
+  vid.src = src; vid.hidden = false; $('#drop').hidden = true; $('#hud').hidden = false; hasVideo = true;
+  vid.addEventListener('loadedmetadata', () => { renderTimeline(); paintLane(); }, {once:true});
+  vid.addEventListener('error', () => { hasVideo = false; vid.hidden = true; $('#drop').hidden = false; $('#drop-note').textContent = T('That video could not be played here. MP4 (H.264) works in every browser; for a link, it must point straight to the video file.'); }, {once:true});
+  if (name){ S.video = name; save(); }
+  if (S.yt && !S.ytSync) setTimeout(() => ytAsk(), 600);
+  toast(name ? T('Opened {0}', name) : T('Video opened'));
+}
+$('#f-video').addEventListener('change', e => { const f = e.target.files[0]; if (f) openVideo(URL.createObjectURL(f), f.name); });
+(() => { const d = $('#drop'), sc = $('#screen');
+  sc.addEventListener('dragover', e => { e.preventDefault(); d.classList.add('over'); });
+  sc.addEventListener('dragleave', () => d.classList.remove('over'));
+  sc.addEventListener('drop', e => { e.preventDefault(); d.classList.remove('over'); const f = e.dataTransfer.files[0]; if (f && f.type.startsWith('video')) openVideo(URL.createObjectURL(f), f.name); });
+})();
+
+$('#b-url').onclick = () => sheet(T('Use a video link'), `<div class="field"><span class="lbl">${T('Direct link to an MP4 or WebM file')}</span><input class="inp" id="u-url" placeholder="https://…/game.mp4"></div>
+  <div class="note">${T('YouTube and Facebook pages cannot be played here. Download the replay and open the file instead, which is also faster to scrub.')}</div>
+  <div style="display:flex;justify-content:flex-end"><button class="btn primary" id="u-go">${T('Open')}</button></div>`, el => {
+  el.querySelector('#u-go').onclick = () => { const u = el.querySelector('#u-url').value.trim(); if (!/^https?:\/\//.test(u)) return toast(T('Paste a full https:// link')); closeSheet(); openVideo(u, u.split('/').pop().split('?')[0]); };
+});
+
+/* ------------------------------------------------------------------ save a clip as a video file (records the original playback) */
+async function recordClip(c){
+  if (!hasVideo) return toast(T('Open the replay first'));
+  if (!vid.captureStream && !vid.mozCaptureStream) return toast(T('This browser cannot record clips. Use the ffmpeg commands in Export.'));
+  const dl = await getDownloads();
+  if (!dl) return toast(T('Saving files is not available in this view. Use the ffmpeg commands in Export.'));
+  stopReel(); vid.pause(); vid.currentTime = c.t0;
+  await new Promise(r => vid.addEventListener('seeked', r, {once:true}));
+  let stream; try { stream = (vid.captureStream || vid.mozCaptureStream).call(vid); } catch(e) { return toast(T('This video cannot be recorded (it comes from another site).')); }
+  const mime = ['video/mp4;codecs=avc1,mp4a','video/mp4','video/webm;codecs=vp9,opus','video/webm'].find(m => window.MediaRecorder && MediaRecorder.isTypeSupported(m));
+  if (!mime) return toast(T('This browser cannot record clips.'));
+  const ext = mime.startsWith('video/mp4') ? 'mp4' : 'webm';
+  const rec = new MediaRecorder(stream, {mimeType:mime, videoBitsPerSecond:10e6}), parts = [];
+  rec.ondataavailable = e => e.data.size && parts.push(e.data);
+  const done = new Promise(r => rec.onstop = r);
+  $('#hud-rec').hidden = false; rec.start(250); vid.play();
+  await new Promise(r => { const f = () => { if (vid.currentTime >= c.t1 || vid.paused || vid.ended){ r(); } else requestAnimationFrame(f); }; f(); });
+  vid.pause(); rec.stop(); await done; $('#hud-rec').hidden = true;
+  const name = `${team(c.team).code}_${(c.player ? c.player + '_' : '')}${(c.plays[0] || RESK[c.res]?.t || 'clip').replace(/[^A-Za-z0-9]+/g, '-')}_${fmt(c.t0).replace(/:/g, '-')}.${ext}`;
+  try { await dl.save({filename:name, data:new Blob(parts, {type:mime})}); toast(T('Clip saved')); }
+  catch(e){ if (e && e.code !== 'declined') toast(T('The clip could not be saved here.')); }
+}
+
+/* ------------------------------------------------------------------ downloads capability */
+let dlNS;
+async function getDownloads(){
+  if (dlNS !== undefined) return dlNS;
+  try { if (window.claude && window.claude.use){ const d = await window.claude.use('downloads'); if (d) return (dlNS = d); } } catch(e) {}
+  return (dlNS = { async save({filename, data}){
+    const blob = data instanceof Blob ? data : new Blob([data], {type:'application/octet-stream'});
+    const a = document.createElement('a'), url = URL.createObjectURL(blob);
+    a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    return {status:'saved'};
+  } });
+}
+async function saveFile(filename, data){
+  const dl = await getDownloads();
+  if (!dl){ toast(T('Saving files is not available in this view. Use Copy instead.')); return false; }
+  try { await dl.save({filename, data}); toast(T('Saved {0}', filename)); return true; }
+  catch(e){ if (e && e.code === 'declined') return false; toast(T('That file could not be saved here.')); return false; }
+}
+
+/* ------------------------------------------------------------------ export builders */
+const slug = s => String(s).replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'game';
+function csv(){
+  const head = ['start','end','length_s','period','team','jersey','player','play_types','result','points','shot_type','shot_difficulty','shot_zone','shot_x_m','shot_from_baseline_m','note'];
+  const q = v => /[",\n]/.test(v) ? `"${String(v).replace(/"/g, '""')}"` : v;
+  const rows = S.clips.map(c => { const s = c.shot && S.shots.find(o => o.id === c.shot), r = S.roster[c.team].find(p => p.n === c.player);
+    return [fmt(c.t0, 1), fmt(c.t1, 1), (c.t1 - c.t0).toFixed(1), c.q || '', team(c.team).name, c.player || '', r?.name || '', c.plays.map(p => T(p)).join('; '), T(RESK[c.res]?.t || '') + (c.and1 ? ' ' + T('+ and-1') : ''), clipPts(c), c.stype ? T(STYPEK[c.stype].t) : '', c.diff ? T(DIFFK[c.diff].t) : '',
+      s ? T(zoneOf(s.x, s.d)) : '', s ? s.x.toFixed(2) : '', s ? s.d.toFixed(2) : '', c.note || ''].map(v => q(String(v))).join(','); });
+  return [head.join(','), ...rows].join('\n');
+}
+function shotsCsv(){
+  const rows = S.shots.map(s => [fmt(s.t, 1), team(s.team).name, s.player || '', T(s.made ? 'Made' : 'Missed'), s.pts, s.stype ? T(STYPEK[s.stype].t) : '', s.diff ? T(DIFFK[s.diff].t) : '', T(zoneOf(s.x, s.d)), s.x.toFixed(2), s.d.toFixed(2)].join(','));
+  return ['time,team,jersey,result,value,shot_type,difficulty,zone,x_m,from_baseline_m', ...rows].join('\n');
+}
+function ffmpeg(exact){
+  const src = S.video || 'game.mp4', list = filteredClips();
+  const lines = list.map((c, i) => {
+    const out = `${String(i + 1).padStart(3, '0')}_${team(c.team).code}_${c.player ? '#' + c.player + '_' : ''}${slug(c.plays[0] || RESK[c.res]?.t || 'clip')}_${slug(RESK[c.res]?.t || '')}.mp4`.replace('#', 'no');
+    return exact
+      ? `ffmpeg -y -ss ${c.t0.toFixed(2)} -i "${src}" -t ${(c.t1 - c.t0).toFixed(2)} -c:v libx264 -crf 16 -preset veryfast -c:a aac -b:a 192k "clips/${out}"`
+      : `ffmpeg -y -ss ${c.t0.toFixed(2)} -i "${src}" -t ${(c.t1 - c.t0).toFixed(2)} -c copy -avoid_negative_ts make_zero "clips/${out}"`;
+  });
+  return ['# ' + T('{0} clips from {1}', list.length, src), '# ' + T('Run in the folder that holds the video.') + ' ' + T(exact ? 'Re-encodes: frame-exact cuts, near-original quality.' : 'Stream copy: original quality, instant, but each cut snaps to the nearest keyframe before the start.'), 'mkdir clips', ...lines].join('\n');
+}
+function shotSVGExport(){
+  const list = filteredShots(), w = W * SX + PAD * 2, h = D * SX + PAD * 2 + 16;
+  const lineCol = '#8a93a6', bg = '#ffffff', paint = '#eef1f6';
+  let svg = courtSVG().replace(/class="court" id="court" viewBox="[^"]*"/, `xmlns="http://www.w3.org/2000/svg" width="${w * 6}" height="${h * 6}" viewBox="0 0 ${w} ${h}"`)
+    .replace(/class="floor"/g, `fill="${bg}"`).replace(/class="paint"/g, `fill="${paint}"`).replace(/class="ln"/g, `fill="none" stroke="${lineCol}" stroke-width=".6"`)
+    .replace(/<circle class="ghost"[^>]*\/>/, '');
+  const marks = list.map(s => { const c = team(s.team).color, X = cx(s.x), Y = cy(s.d);
+    return s.made ? `<circle cx="${X}" cy="${Y}" r="2.2" fill="${c}" stroke="#fff" stroke-width=".45"/>` : `<path d="M${X - 1.7} ${Y - 1.7}L${X + 1.7} ${Y + 1.7}M${X + 1.7} ${Y - 1.7}L${X - 1.7} ${Y + 1.7}" stroke="${c}" stroke-width="1.15" stroke-linecap="round"/>`; }).join('');
+  const m = list.filter(s => s.made).length;
+  const label = `${U.shotTeam === 'all' ? `${team('home').name} vs ${team('away').name}` : team(U.shotTeam).name + (U.shotPlayer !== 'all' ? ' ' + pname(U.shotTeam, U.shotPlayer) : '')} · FG ${m}-${list.length}`;
+  svg = svg.replace('<g id="g-shots"></g>', `<g>${marks}</g><rect x="0" y="${h - 16}" width="${w}" height="16" fill="#0b0f1a"/><text x="${PAD + 2}" y="${h - 5.5}" font-family="Archivo Narrow, Arial, sans-serif" font-size="7" font-weight="700" fill="#fff">${esc(label)}</text><text x="${w - PAD - 2}" y="${h - 5.5}" text-anchor="end" font-family="Archivo Narrow, Arial, sans-serif" font-size="6" fill="#d9762a">HoopStatsMY</text>`);
+  return svg.replace(/class="[^"]*"/g, '');
+}
+async function shotPNG(){
+  const svg = shotSVGExport(), img = new Image();
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  await img.decode();
+  const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; c.getContext('2d').drawImage(img, 0, 0);
+  return await new Promise(r => c.toBlob(r, 'image/png'));
+}
+
+/* ------------------------------------------------------------------ sheets */
+function sheet(title, html, bind){
+  closeSheet();
+  const s = document.createElement('div'); s.className = 'scrim'; s.id = 'scrim';
+  s.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="sheet-h"><h3>${esc(title)}</h3><button class="btn ghost" id="sh-x" aria-label="${T('Close')}">${T('Close')}</button></div><div class="sheet-b">${html}</div></div>`;
+  (fsEl() || document.body).appendChild(s);
+  s.addEventListener('click', e => { if (e.target === s) closeSheet(); });
+  s.querySelector('#sh-x').onclick = closeSheet;
+  bind && bind(s);
+  s.querySelector('input,textarea,button.primary')?.focus();
+}
+function closeSheet(){ $('#scrim')?.remove(); }
+
+$('#b-match').onclick = () => {
+  const tf = k => `<div class="teamform"><span class="lbl">${T(k === 'home' ? 'Home' : 'Away')}</span>
+    <div class="r"><input class="inp" id="tn-${k}" value="${esc(team(k).name)}" placeholder="${T('Team name')}"><input class="inp" id="tc-${k}" value="${esc(team(k).code)}" maxlength="4" placeholder="${T('Code')}"><input type="color" id="tk-${k}" value="${esc(hexOf(team(k).color))}" aria-label="${T('Team colour')}"></div>
+    <span class="lbl">${T('Roster · one player per line: number, then name')}</span>
+    <textarea class="inp" id="tr-${k}" placeholder="7 Ahmad Faiz&#10;10 Lee Wei&#10;23">${esc(S.roster[k].map(p => (p.n + ' ' + (p.name || '')).trim()).join('\n'))}</textarea></div>`;
+  sheet(T('Teams and rosters'), `${S.mid ? `<div class="note">${T('These come from HoopStatsMY for this game. Change them only if the box score is wrong.')}</div>` : ''}
+    <div class="two">${tf('home')}${tf('away')}</div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap"><button class="btn" id="t-swap">${T('Swap home and away')}</button><button class="btn primary" id="t-ok">${T('Save teams')}</button></div>`, el => {
+    el.querySelector('#t-swap').onclick = () => { ['n','c','k','r'].forEach(f => { const a = el.querySelector(`#t${f}-home`), b = el.querySelector(`#t${f}-away`); [a.value, b.value] = [b.value, a.value]; }); };
+    el.querySelector('#t-ok').onclick = () => {
+      ['home','away'].forEach(k => {
+        const old = S.teams[k], nm = el.querySelector('#tn-' + k).value.trim() || (k === 'home' ? 'Home' : 'Away');
+        S.teams[k] = {name:nm, code:(el.querySelector('#tc-' + k).value.trim() || nm.slice(0, 3) || k).toUpperCase().slice(0, 4), color:el.querySelector('#tk-' + k).value, logo:nm === old.name ? (old.logo || '') : (H('teamLogo', nm) || '')};
+        const seen = new Set(), prev = Object.fromEntries(S.roster[k].map(p => [p.n, p]));
+        S.roster[k] = el.querySelector('#tr-' + k).value.split('\n').map(l => l.trim()).filter(Boolean).map(l => { const m = l.match(/^#?(\d{1,2})\s*[-.,:]?\s*(.*)$/); return m ? Object.assign({}, prev[m[1]] || {}, {n:m[1], name:m[2].trim()}) : null; })
+          .filter(p => p && !seen.has(p.n) && seen.add(p.n)).sort((a, b) => +a.n - +b.n);
+      });
+      markExampleTouched(); save(); closeSheet(); renderAll(); toast(T('Teams saved'));
+    };
+  });
+};
+$('#b-export').onclick = () => {
+  sheet(T('Export and import'), `
+    <div class="sect"><span class="lbl">${T('Cut the clips from your original file')}</span>
+      <div class="note">${T('Clips are cut by ffmpeg straight from the full-game file, so they keep the original resolution and audio. The commands follow the clip log filters ({0} clips now).', filteredClips().length)}</div>
+      <div class="seg" id="x-mode"><button data-m="0" class="on">${T('Original quality, instant')}</button><button data-m="1">${T('Frame-exact (re-encode)')}</button></div>
+      <pre class="code" id="x-ff"></pre>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="x-copy">${T('Copy commands')}</button><button class="btn" id="x-saveff">${T('Save as .txt')}</button></div>
+    </div>
+    <div class="sect"><span class="lbl">${T('Files')}</span><div class="exp">
+      <button class="expi" data-x="json"><b>${T('Session file')}</b><span>${T('Everything: teams, clips, shots. Open it again later.')}</span></button>
+      <button class="expi" data-x="csv"><b>${T('Clip log (CSV)')}</b><span>${T('One row per play, for Excel or Sheets.')}</span></button>
+      <button class="expi" data-x="shots"><b>${T('Shot chart (CSV)')}</b><span>${T('Every charted shot with court position in metres.')}</span></button>
+      <button class="expi" data-x="png"><b>${T('Shot map image')}</b><span>${T('PNG of the shot map as filtered now.')}</span></button>
+    </div></div>
+    <div class="sect"><span class="lbl">${T('Open a session')}</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><button class="btn" id="x-import">${T('Open session file…')}</button><button class="btn danger" id="x-new">${T('Start a blank session')}</button><span class="note" id="x-confirm"></span></div>
+    </div>`, el => {
+    let exact = false;
+    const show = () => el.querySelector('#x-ff').textContent = ffmpeg(exact);
+    show();
+    el.querySelector('#x-mode').onclick = e => { const b = e.target.closest('button'); if (!b) return; exact = b.dataset.m === '1'; el.querySelectorAll('#x-mode button').forEach(x => x.classList.toggle('on', x === b)); show(); };
+    el.querySelector('#x-copy').onclick = () => { const t = ffmpeg(exact); navigator.clipboard?.writeText(t).then(() => toast(T('Commands copied'))).catch(() => { const r = document.createRange(); r.selectNodeContents(el.querySelector('#x-ff')); getSelection().removeAllRanges(); getSelection().addRange(r); toast(T('Selected: press Ctrl+C to copy')); }); };
+    el.querySelector('#x-saveff').onclick = () => saveFile(`${slug(S.title || 'game')}_cut-clips.txt`, ffmpeg(exact));
+    el.querySelectorAll('.expi').forEach(b => b.onclick = async () => {
+      const n = slug(S.title || `${team('home').code}-vs-${team('away').code}`);
+      if (b.dataset.x === 'json') saveFile(`${n}_scout.json`, JSON.stringify(S, null, 1));
+      if (b.dataset.x === 'csv') saveFile(`${n}_clips.csv`, csv());
+      if (b.dataset.x === 'shots') saveFile(`${n}_shots.csv`, shotsCsv());
+      if (b.dataset.x === 'png') saveFile(`${n}_shot-map.png`, await shotPNG());
+    });
+    el.querySelector('#x-import').onclick = () => $('#f-json').click();
+    let armed = false;
+    el.querySelector('#x-new').onclick = e => {
+      if (!armed){ armed = true; e.currentTarget.textContent = T('Click again to clear everything'); el.querySelector('#x-confirm').textContent = T('Save the session file first if you want to keep it.'); return; }
+      S = blank(); resetUI(); save(); closeSheet(); renderAll(); toast(T('Blank session ready')); if (HOST) openPicker();
+    };
+  });
+};
+$('#f-json').addEventListener('change', async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try { const d = JSON.parse(await f.text()); if (!d.teams || !Array.isArray(d.clips)) throw 0;
+    S = Object.assign(blank(), d); if (HOST && S.mid) lsSet(KEY + ':' + S.mid, S); resetUI(); save(); closeSheet(); renderAll(); toast(T('Opened {0} clips and {1} shots', S.clips.length, S.shots.length));
+  } catch(_) { toast(T('That file is not a Scout room session.')); }
+  e.target.value = '';
+});
+$('#b-keys').onclick = () => sheet(T('Keyboard shortcuts'), `<div class="keys">
+  ${[['Play / pause',T('Space')],['Back / forward 5 s','J  /  L'],['Back / forward 1 s','←  /  →'],['Previous / next frame',',  /  .'],['Mark clip start','I'],['Mark clip end','O'],
+     ['Play clip window','P'],['Save clip','Enter'],['Result','1 – 9'],['Home / away team','H  /  A'],['Shot made / missed','M  /  X'],['Film full screen','F'],['Close a sheet','Esc']]
+     .map(([a, b]) => `<div><span>${T(a)}</span><kbd>${b}</kbd></div>`).join('')}</div>
+  <div class="note">${T('Shortcuts pause while you type in a text box.')}</div>`);
+function resetUI(){ Object.assign(U, {team:'home', player:null, plays:new Set(), res:null, and1:false, diff:null, stype:null, shotStF:'all', shotDiffF:'all', repTeam:'home', note:'', inT:null, outT:null, editing:null, sel:null, pendingShot:null, reel:null, fTeam:'all', fPlay:'all', fRes:'all', shotTeam:'all', shotPlayer:'all'}); }
+function ytAsk(){
+  if (!$('.ytask') && S.yt) {
+    const d = document.createElement('div'); d.className = 'edit-note ytask'; d.style.margin = '0 0 12px';
+    d.innerHTML = `<span>${T('Is this file the same video as the game’s YouTube replay? If yes, visitors can jump from each clip to that moment on YouTube.')}</span><span style="display:flex;gap:6px"><button class="btn" data-yt="1" style="height:28px">${T('Yes, same video')}</button><button class="btn ghost" data-yt="0" style="height:28px">${T('No')}</button></span>`;
+    d.onclick = e => { const b = e.target.closest('[data-yt]'); if (!b) return; S.ytSync = b.dataset.yt === '1'; save(); d.remove(); toast(S.ytSync ? T('Clips will link to the YouTube replay.') : T('Clips will not link to YouTube.')); };
+    $('#matchbar').after(d);
+  }
+}
+function markExampleTouched(){ /* an example session stays labelled until it is cleared */ }
+$('#b-clearex').onclick = () => { const keep = {video:S.video}; S = blank(); S.video = keep.video; resetUI(); save(); renderAll(); toast(T('Example cleared. Set your teams to start.')); $('#b-match').click(); };
+
+/* ------------------------------------------------------------------ full screen: the whole tool, or the film with its controls */
+const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement || null;
+async function toggleFS(el){
+  try {
+    if (fsEl()){ const same = fsEl() === el; await (document.exitFullscreen || document.webkitExitFullscreen).call(document); if (same) return; }
+    const req = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (!req) throw 0;
+    await req.call(el);
+  } catch(e) { toast(T('Full screen is not available here. Try the browser menu or F11.')); }
+}
+function onFS(){
+  const f = fsEl();
+  // the toast and any open sheet must live inside whatever is full screen, or they stay hidden behind it
+  const host = f && f !== document.documentElement ? f : document.body;
+  [$('#toast'), $('#scrim')].forEach(n => { if (n && n.parentNode !== host) host.appendChild(n); });
+  const on = '<path d="M8 3v5H3v-2h3V3Zm8 0h2v3h3v2h-5ZM3 16h5v5H6v-3H3Zm13 0h5v2h-3v3h-2Z"/>', off = '<path d="M4 4h6v2H6v4H4Zm10 0h6v6h-2V6h-4ZM4 14h2v4h4v2H4Zm14 0h2v6h-6v-2h4Z"/>';
+  const app = f === document.documentElement, film = f === $('#stage');
+  $('#i-fs').innerHTML = app ? on : off;
+  $('#b-fs').dataset.it = $('#b-fs').dataset.ia = app ? 'Exit full screen' : 'Full screen';
+  $('#t-fsfilm svg').innerHTML = film ? on : off;
+  $('#t-fsfilm').dataset.it = film ? 'Exit full screen (F)' : 'Film full screen (F)';
+  applyStatic(); setTimeout(movePill, 60);
+}
+document.addEventListener('fullscreenchange', onFS); document.addEventListener('webkitfullscreenchange', onFS);
+$('#b-fs').onclick = () => toggleFS(document.documentElement);
+$('#t-fsfilm').onclick = () => toggleFS($('#stage'));
+$('#stage').addEventListener('dblclick', e => { if (e.target.closest('#screen') && hasVideo) toggleFS($('#stage')); });
+
+/* ------------------------------------------------------------------ HoopStatsMY: choose a game, save it, read it back */
+$('#matchbar').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.id === 'b-pick') openPicker();
+  if (b.id === 'b-save') saveOnline(b);
+});
+let IDX = null;   // the site's index of scouted games (public)
+async function loadIndex(force){
+  if (IDX && !force) return IDX;
+  try { const d = await pubGet('scoutIndex', 'all'); IDX = (d && d.games) || {}; } catch(e) { IDX = IDX || {}; }
+  return IDX;
+}
+function openPicker(){
+  if (!HOST) return;
+  const all = [];
+  HOST.DB.comps.forEach(c => (c.games || []).forEach(g => { if (g.st === 'COMPLETE' && g.box) all.push({c, g}); }));
+  all.sort((a, b) => (b.g.date || '').localeCompare(a.g.date || '') || b.g.mid.localeCompare(a.g.mid));
+  const comps = HOST.DB.comps.filter(c => (c.games || []).some(g => g.st === 'COMPLETE' && g.box)).sort((a, b) => (b.end || '').localeCompare(a.end || ''));
+  sheet(T('Choose a HoopStatsMY game'), `<div class="gp-tools">
+      <input class="inp" id="gp-q" placeholder="${T('Search a team')}" autocomplete="off">
+      <select class="inp" id="gp-c"><option value="">${T('Every competition')}</option>${comps.map(c => `<option value="${esc(c.id)}">${esc(c.label || c.name)}</option>`).join('')}</select>
+    </div>
+    <div class="gp-list" id="gp-list"></div>
+    <div class="note">${T('Teams, logos, rosters and player photos come from the game’s HoopStatsMY box score.')}</div>`, el => {
+    const draw = () => {
+      const q = el.querySelector('#gp-q').value.trim().toLowerCase(), cid = el.querySelector('#gp-c').value;
+      const rows = all.filter(({c, g}) => (!cid || c.id === cid) && (!q || (g.h + ' ' + g.a).toLowerCase().includes(q))).slice(0, 120);
+      el.querySelector('#gp-list').innerHTML = rows.length ? rows.map(({c, g}) => {
+        const lg = n => { const u = H('teamLogo', n); return u ? `<img src="${esc(u)}" alt="" style="width:20px;height:20px;object-fit:contain">` : `<span class="crest" style="width:20px;height:20px;font-size:8px;background:${esc(hexOf(H('teamColor', n) || '#789'))};color:${inkOn(H('teamColor', n) || '#789')}">${esc(H('teamCode', n) || '')}</span>`; };
+        return `<button class="gp-row" data-mid="${esc(g.mid)}"><span class="gp-d"><b>${esc(fmtDay(g.date))}</b>${esc(g.time || '')}</span>
+          <span class="gp-m"><span class="gp-t">${lg(g.h)}<span>${esc(g.h)}</span><em>${g.hs ?? ''}</em></span><span class="gp-t">${lg(g.a)}<span>${esc(g.a)}</span><em>${g.as ?? ''}</em></span><span class="gp-c">${esc(c.label || c.name)}</span></span>
+          ${IDX && IDX[g.mid] ? `<span class="gp-tag">${T('Scouted')}</span>` : (lsGet(KEY + ':' + g.mid) ? `<span class="gp-tag" style="color:var(--accent-2-ink);background:var(--accent-2-soft)">${T('On this computer')}</span>` : '<span></span>')}</button>`;
+      }).join('') : `<div class="empty" style="padding:16px">${T('No games match.')}</div>`;
+    };
+    el.querySelector('#gp-q').addEventListener('input', draw);
+    el.querySelector('#gp-c').addEventListener('change', draw);
+    el.querySelector('#gp-list').addEventListener('click', e => { const r = e.target.closest('.gp-row'); if (r){ closeSheet(); linkGame(r.dataset.mid); } });
+    draw(); loadIndex().then(draw);
+  });
+}
+async function linkGame(mid){
+  const hg = hostGame(mid); if (!hg) return toast(T('That game is not on HoopStatsMY.'));
+  if (S.mid && S.mid !== mid) lsSet(KEY + ':' + S.mid, S);
+  let next = lsGet(KEY + ':' + mid);
+  if (!next){ try { const d = await pubGet('scout', mid); if (d && d.clips) { next = d; toast(T('Opened the scouting saved on HoopStatsMY')); } } catch(e) {} }
+  next = Object.assign(blank(), next || {});
+  const {c, g} = hg;
+  Object.assign(next, {mid, cid:c.id, comp:c.label || c.name, date:g.date || '', score:[g.hs, g.as], example:false});
+  next.teams = {home:hostTeam(g.h), away:hostTeam(g.a)};
+  for (let i = 0; i < 40; i++){ if (H('getBox', mid)) break; await new Promise(r => setTimeout(r, 250)); }
+  ['home', 'away'].forEach(k => {
+    const r = hostRoster(mid, next.teams[k].name);
+    if (r && r.length){ const had = Object.fromEntries((next.roster[k] || []).map(p => [p.n, p])); next.roster[k] = r.map(p => Object.assign({}, had[p.n] || {}, p)); }
+  });
+  if (!next.yt) next.yt = hostStream(mid);
+  S = next; resetUI(); lsSet(KEY, S); applyStatic(); renderAll();
+  if (!hasVideo) $('#drop-note').textContent = next.video ? T('Last session used {0}. Open it again to carry on.', next.video) : '';
+}
+function toDoc(){
+  const strip = o => JSON.parse(JSON.stringify(o));
+  return strip({v:2, mid:S.mid, cid:S.cid, comp:S.comp, date:S.date, score:S.score ? {h:S.score[0], a:S.score[1]} : null,
+    video:S.video || '', yt:S.yt || '', ytSync:!!S.ytSync,
+    teams:{home:{name:team('home').name, code:team('home').code, color:team('home').color}, away:{name:team('away').name, code:team('away').code, color:team('away').color}},
+    roster:{home:S.roster.home.map(p => ({n:p.n, name:p.name || '', pid:p.pid || ''})), away:S.roster.away.map(p => ({n:p.n, name:p.name || '', pid:p.pid || ''}))},
+    clips:S.clips.map(c => ({id:c.id, t0:+c.t0.toFixed(2), t1:+c.t1.toFixed(2), team:c.team, player:c.player || '', plays:c.plays, res:c.res, and1:!!c.and1, ftm:c.ftm || 0, diff:c.diff || '', stype:c.stype || '', q:c.q || '', note:c.note || '', shot:c.shot || ''})),
+    shots:S.shots.map(x => ({id:x.id, t:+x.t.toFixed(2), team:x.team, player:x.player || '', x:+x.x.toFixed(2), d:+x.d.toFixed(2), made:x.made ? 1 : 0, pts:x.pts, diff:x.diff || '', stype:x.stype || '', clip:x.clip || ''})),
+    savedAt:Date.now()});
+}
+let saving = false;
+async function saveOnline(btn){
+  if (saving) return;
+  const B = backend(); if (!B || !S.mid) return;
+  saving = true; btn.disabled = true; btn.textContent = T('Saving…');
+  const isAdmin = () => B.get('meta', 'admin').then(() => true, () => false);
+  try {
+    H('accInit');
+    let ok = await isAdmin();
+    if (!ok){ await new Promise(r => setTimeout(r, 900)); ok = await isAdmin(); }   // a returning admin's sign-in is still being restored
+    if (!ok){ await B.signIn(); ok = await isAdmin(); }
+    if (!ok) throw {code:'permission-denied'};
+    const doc = toDoc();
+    const sum = {h:doc.teams.home.name, a:doc.teams.away.name, date:doc.date, comp:doc.comp, cid:doc.cid, n:doc.clips.length, s:doc.shots.length, at:doc.savedAt};
+    await B.batch([{op:'set', col:'scout', id:S.mid, data:doc}, {op:'set', col:'scoutIndex', id:'all', data:{games:{[S.mid]:sum}}, merge:true}]);
+    S.savedAt = doc.savedAt; S.dirtyAt = Math.min(S.dirtyAt, S.savedAt); save(false); if (IDX) IDX[S.mid] = sum;
+    toast(T('Saved to HoopStatsMY. It is on the Scouting page now.'));
+  } catch(e) {
+    const c = String((e && (e.code || e.message)) || '');
+    toast(/permission|insufficient/i.test(c) ? T('Only the HoopStatsMY admin account can save scouting.') : /popup/i.test(c) ? T('Sign-in was cancelled or blocked. Allow pop-ups and try again.') : T('Could not reach HoopStatsMY. Check your connection and try again.'));
+  }
+  saving = false; renderHead();
+}
+
+/* ------------------------------------------------------------------ Scouting page (read only): every game, or one */
+const VS = {idx:{}, docs:{}, scope:'all', team:'', games(){ return Object.keys(this.idx).filter(m => this.scope === 'all' ? (!this.team || [this.idx[m].h, this.idx[m].a].includes(this.team)) : m === this.scope); }};
+const nGames = n => n === 1 ? T('1 game') : T('{0} games', n);
+function vGameLabel(mid){ const g = VS.idx[mid]; if (!g) return ''; return `${fmtDay(g.date)} · ${g.h} vs ${g.a}`; }
+const clipYt = c => { const d = VS.docs[c.gm]; return d && d.yt && d.ytSync ? ytAt(d.yt, c.t0) : ''; };
+const shotYt = s => { const d = VS.docs[s.gm]; return d && d.yt && d.ytSync ? ytAt(d.yt, s.t - 6) : ''; };
+function renderViewBar(){
+  const ids = Object.keys(VS.idx).sort((a, b) => (VS.idx[b].date || '').localeCompare(VS.idx[a].date || ''));
+  const teams = [...new Set(ids.flatMap(m => [VS.idx[m].h, VS.idx[m].a]))].sort();
+  const n = VS.games().length;
+  $('#matchbar').className = 'vbar';
+  $('#matchbar').innerHTML = `<div><h1>${T('Scouting reports')}</h1><p>${T('Plays tagged by hand from game film: play types, shot types, contest and a hand-charted shot map. Pick every game together or one game.')}</p></div>
+    <div class="vsel">
+      ${ids.length ? `<select id="v-scope" aria-label="${T('Games')}"><option value="all">${T('All games')} (${ids.length})</option>${ids.map(m => `<option value="${esc(m)}" ${VS.scope === m ? 'selected' : ''}>${esc(vGameLabel(m))}</option>`).join('')}</select>` : ''}
+      ${!ids.length ? '' : VS.scope === 'all' ? `<select id="v-team" aria-label="${T('Team')}">${teams.map(t => `<option ${VS.team === t ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>` : ''}
+      ${ids.length ? `<span class="mb-state ok"><i></i>${nGames(n)}</span>` : ''}
+    </div>`;
+}
+async function viewInit(){
+  $('#rows').innerHTML = `<div class="empty" style="padding:22px 16px">${T('Loading scouting…')}</div>`;
+  U.view = 'report'; U.recShots = false;
+  try { await loadIndex(true); } catch(e) {}
+  VS.idx = IDX || {};
+  if (!Object.keys(VS.idx).length){ S = blank(); document.body.classList.add('vempty'); renderAll(); $('#rows').innerHTML = `<div class="empty" style="padding:22px 16px">${T('No games have been scouted yet.')}</div>`; return; }
+  const q = QS.get('mid');
+  VS.scope = q && VS.idx[q] ? q : 'all';
+  const teams = [...new Set(Object.values(VS.idx).flatMap(g => [g.h, g.a]))].sort();
+  VS.team = QS.get('team') && teams.includes(QS.get('team')) ? QS.get('team') : teams[0];
+  await viewBuild();
+}
+async function viewBuild(){
+  const mids = VS.games();
+  await Promise.all(mids.filter(m => !VS.docs[m]).map(m => pubGet('scout', m).then(d => { if (d) VS.docs[m] = d; }).catch(() => {})));
+  S = blank(); S.example = false;
+  const key = (d, side, n) => { const r = (d.roster[side] || []).find(p => p.n === n); return r && r.pid ? 'p' + r.pid : d.mid + '#' + n; };
+  const addPlayer = (side, d, k0, n) => {
+    if (!n) return '';
+    const k = key(d, k0, n);
+    if (!S.roster[side].some(p => p.n === k)){ const r = (d.roster[k0] || []).find(p => p.n === n) || {}; S.roster[side].push({n:k, num:n, name:r.pid ? (H('personName', r.pid) || r.name) : r.name || '', pid:r.pid || ''}); }
+    return k;
+  };
+  let sideOf;
+  if (VS.scope === 'all'){
+    S.teams.home = hostTeam(VS.team); S.teams.away = {name:T('Opponents'), code:'OPP', color:'#8a93a6', logo:''};
+    sideOf = d => d.teams.home.name === VS.team ? {home:'home', away:'away'} : {home:'away', away:'home'};
+  } else {
+    const d = VS.docs[VS.scope];
+    if (d){ S.teams.home = hostTeam(d.teams.home.name); S.teams.away = hostTeam(d.teams.away.name); S.score = d.score ? [d.score.h, d.score.a] : null; }
+    sideOf = () => ({home:'home', away:'away'});
+  }
+  mids.forEach(m => {
+    const d = VS.docs[m]; if (!d) return;
+    const sd = sideOf(d);
+    (d.clips || []).forEach(c => S.clips.push(Object.assign({}, c, {id:m + ':' + c.id, gm:m, team:sd[c.team], player:addPlayer(sd[c.team], d, c.team, c.player) || null, shot:c.shot ? m + ':' + c.shot : null, diff:c.diff || null, stype:c.stype || null})));
+    (d.shots || []).forEach(x => S.shots.push(Object.assign({}, x, {id:m + ':' + x.id, gm:m, team:sd[x.team], player:addPlayer(sd[x.team], d, x.team, x.player) || null, clip:x.clip ? m + ':' + x.clip : null, diff:x.diff || null, stype:x.stype || null})));
+  });
+  ['home', 'away'].forEach(k => S.roster[k].sort((a, b) => (a.name || '').localeCompare(b.name || '')));
+  S.clips.sort((a, b) => (VS.idx[b.gm]?.date || '').localeCompare(VS.idx[a.gm]?.date || '') || a.t0 - b.t0);
+  U.repTeam = 'home'; U.shotTeam = 'all'; U.shotPlayer = 'all'; U.fTeam = 'all'; U.fPlay = 'all'; U.fRes = 'all';
+  renderAll();
+}
+if (VIEW){
+  document.addEventListener('change', e => {
+    if (e.target.id === 'v-scope'){ VS.scope = e.target.value; viewBuild(); }
+    if (e.target.id === 'v-team' && e.target.closest('#matchbar')){ VS.team = e.target.value; viewBuild(); }
+  });
+  // the frame grows with the page, so the site scrolls it like any other page
+  try { const fe = window.frameElement; if (fe){ const fit = () => { fe.style.height = Math.max(600, document.documentElement.scrollHeight) + 'px'; }; new ResizeObserver(fit).observe(document.body); fit(); } } catch(e) {}
+}
+
+/* language */
+function setLang(l){
+  LANG = l; try { localStorage.setItem('hsmy-scout-lang', l); } catch(e) {}
+  closeSheet(); applyStatic(); renderAll(); if (U.reel) updateReelHud(); setIcon();
+  requestAnimationFrame(movePill);
+  toast(l === 'zh' ? '已切换为中文' : 'Switched to English');
+}
+$('#b-lang').onclick = () => setLang(LANG === 'zh' ? 'en' : 'zh');
+
+/* theme */
+$('#b-theme').onclick = () => {
+  const r = document.documentElement, dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme = dark ? 'light' : 'dark'; try { localStorage.setItem('hsmy-theme', r.dataset.theme); } catch(e) {}
+};
+try { const t = localStorage.getItem('hsmy-theme'); if (t) document.documentElement.dataset.theme = t; } catch(e) {}
+
+/* ------------------------------------------------------------------ event wiring */
+$('#tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if (b) setView(b.dataset.v); });
+$('#views').addEventListener('click', e => {
+  const b = e.target.closest('button,[data-s]');
+  if (U.view === 'shots'){
+    if (e.target.closest('#shotpop')) return;
+    const sh = e.target.closest('.shot');
+    if (sh){ shotPopup(sh.dataset.s, e); return; }
+    if (e.target.closest('#court')){ closePop(); if (U.recShots || U.pendingShot) placeShot(svgPoint(e)); return; }
+    closePop();
+  }
+  if (!b) return;
+  const d = b.dataset;
+  if (d.fh){ const f = b.closest('.fold'), on = !f.classList.contains('open'); f.classList.toggle('open', on); b.setAttribute('aria-expanded', on); on ? OPEN.add(d.fh) : OPEN.delete(d.fh); saveOpen(); return; }
+  if (d.t && b.closest('#v-team')){ U.team = d.t; U.player = null; }
+  else if (d.p !== undefined && b.closest('#v-player')){ U.player = d.p || null; }
+  else if (b.id === 'v-addros'){ $('#b-match').click(); return; }
+  else if (d.play){ U.plays.has(d.play) ? U.plays.delete(d.play) : U.plays.add(d.play); }
+  else if (d.res){ U.res = U.res === d.res ? null : d.res; if (!['M2','M3'].includes(U.res)) U.and1 = false; }
+  else if (b.id === 'v-and1'){ U.and1 = !U.and1; if (U.and1 && !['M2','M3'].includes(U.res)) U.res = 'M2'; }
+  else if (d.ftm !== undefined){ U.ftm = +d.ftm; }
+  else if (d.q){ U.q = d.q; $('#hud-q').textContent = d.q; }
+  else if (b.id === 'v-clrwin'){ U.inT = U.outT = null; renderMarks(); return; }
+  else if (b.id === 'v-save'){ saveClip(); return; }
+  else if (b.id === 'x-cancel'){ U.editing = null; U.inT = U.outT = null; U.plays.clear(); U.res = null; U.note = ''; U.and1 = false; renderMarks(); renderLog(); renderTimeline(); return; }
+  else if (d.diff){ U.diff = U.diff === d.diff ? null : d.diff; }
+  else if (d.stype){ U.stype = U.stype === d.stype ? null : d.stype; }
+  else if (d.sd){ U.shotDiff = U.shotDiff === d.sd ? null : d.sd; }
+  else if (d.df){ U.shotDiffF = d.df; }
+  else if (d.m !== undefined && b.closest('#s-made')){ U.shotMade = +d.m; }
+  else if (d.t && b.closest('#s-team')){ U.shotTeam = d.t; U.shotPlayer = 'all'; }
+  else if (b.id === 's-who'){ setView('tag'); return; }
+  else if (b.id === 's-skip'){ U.pendingShot = null; }
+  else if (d.t && b.closest('#r-team')){ U.repTeam = d.t; }
+  else return;
+  renderView();
+});
+$('#views').addEventListener('change', e => {
+  if (e.target.id === 'v-auto'){ S.prefs.autoShot = e.target.checked; save(); }
+  if (e.target.id === 's-rec'){ U.recShots = e.target.checked; renderView(); }
+  if (e.target.id === 's-player'){ U.shotPlayer = e.target.value; renderView(); }
+  if (e.target.id === 's-st'){ U.shotSt = e.target.value || null; }
+  if (e.target.id === 's-stf'){ U.shotStF = e.target.value; renderView(); }
+});
+$('#views').addEventListener('input', e => { if (e.target.id === 'v-note') U.note = e.target.value; });
+$('#views').addEventListener('pointermove', e => {
+  const g = $('#ghost'); if (!g || !(U.recShots || U.pendingShot)) return;
+  if (!e.target.closest('#court') || e.target.closest('.shot')){ g.style.opacity = 0; return; }
+  const p = svgPoint(e); g.setAttribute('cx', cx(p.x)); g.setAttribute('cy', cy(p.d)); g.style.opacity = 1;
+});
+$('#rows').addEventListener('click', e => {
+  const row = e.target.closest('.crow'); if (!row || VIEW) return;
+  const id = row.dataset.c, a = e.target.closest('[data-a]')?.dataset.a, c = clipById(id);
+  if (a === 'del') return deleteClip(id);
+  if (a === 'rec') return recordClip(c);
+  if (a === 'edit') return selectClip(id, false);
+  if (a === 'play') return selectClip(id, true);
+  selectClip(id, false);
+});
+['fl-team','fl-play','fl-res'].forEach(id => $('#' + id).addEventListener('change', e => { U[{'fl-team':'fTeam','fl-play':'fPlay','fl-res':'fRes'}[id]] = e.target.value; renderLog(); }));
+$('#b-reel').onclick = () => U.reel ? (stopReel(), vid.pause()) : playReel();
+$('#t-play').onclick = togglePlay;
+$('#t-back5').onclick = () => seek(now() - 5); $('#t-fwd5').onclick = () => seek(now() + 5);
+$('#t-frb').onclick = () => step(-1 / 30); $('#t-frf').onclick = () => step(1 / 30);
+$('#t-speed').onclick = e => { const b = e.target.closest('button'); if (!b) return; vid.playbackRate = +b.dataset.r; $$('#t-speed button').forEach(x => x.classList.toggle('on', x === b)); };
+$('#t-in').onclick = () => { U.inT = now(); if (U.outT != null && U.outT <= U.inT) U.outT = null; renderMarks(); syncEdit(); };
+$('#t-out').onclick = () => { U.outT = now(); if (U.inT != null && U.inT >= U.outT) U.inT = null; renderMarks(); syncEdit(); };
+$('#t-preview').onclick = () => { if (!hasVideo) return toast(T('Open the replay first')); const [a, b] = currentWindow(); seek(a); U.previewEnd = b; vid.play(); };
+$$('[data-n]').forEach(b => b.onclick = () => { const [w, d] = b.dataset.n.split(':'); nudge(w, +d); });
+addEventListener('resize', movePill);
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape'){ closeSheet(); closePop(); return; }
+  if (VIEW || $('#scrim') || e.target.matches('input,textarea,select') || e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = e.key.toLowerCase();
+  const map = {
+    ' ': togglePlay, j:() => seek(now() - 5), l:() => seek(now() + 5), arrowleft:() => seek(now() - 1), arrowright:() => seek(now() + 1),
+    ',':() => step(-1 / 30), '.':() => step(1 / 30), i:() => $('#t-in').click(), o:() => $('#t-out').click(), p:() => $('#t-preview').click(),
+    enter:() => saveClip(), f:() => toggleFS($('#stage')), h:() => { U.team = 'home'; U.player = null; renderView(); }, a:() => { U.team = 'away'; U.player = null; renderView(); },
+    m:() => { U.shotMade = 1; if (U.view === 'shots') renderView(); toast(T('Next shot: made')); }, x:() => { U.shotMade = 0; if (U.view === 'shots') renderView(); toast(T('Next shot: missed')); },
+  };
+  if (/^[1-9]$/.test(k)){ const r = RES[+k - 1]; if (r){ U.res = U.res === r.k ? null : r.k; if (!['M2','M3'].includes(U.res)) U.and1 = false; if (U.view !== 'tag') setView('tag'); else renderView(); } e.preventDefault(); return; }
+  if (map[k]){ e.preventDefault(); map[k](); }
+});
+
+function renderAll(){ renderHead(); renderView(); renderLog(); renderTimeline(); renderMarks(); }
+applyStatic();
+renderAll();
+if (VIEW) viewInit();
+else if (HOST){
+  const q = QS.get('mid');
+  if (q && q !== S.mid) linkGame(q);
+  else if (!S.mid) setTimeout(openPicker, 300);
+  loadIndex();
+}
+requestAnimationFrame(movePill);
+document.fonts?.ready.then(movePill);
+})();
+</script>
+
+</body>
+</html>

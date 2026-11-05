@@ -762,6 +762,7 @@ const STATS = (function () {
       <span class="st-menu-sep" role="separator"></span>
       <a href="#/compare"${cur === 'cmp-players' ? ' aria-current="page"' : ''}>Compare players<small>Two players, inside a competition they both played</small></a>
       <a href="#/compare/lineups"${cur === 'cmp-lineups' ? ' aria-current="page"' : ''}>Compare lineups<small>Two teams' fives against each other in one competition</small></a>
+      ${typeof scoutMenu === 'function' ? scoutMenu(cur) : ''}
     </div>`;
   return { put, render, afterRender, navButton, navMenu, LU, CL, DATA, page: () => PAGE };
 })();

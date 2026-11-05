@@ -5,7 +5,7 @@ function navShell(links, sub) {
   // which page of the Tools menu is open, so the menu can mark it
   const h = HS.hash();
   const statsPage = /^#\/stats/.test(h) ? (/^#\/stats\/clutch/.test(h) ? 'clutch' : 'lineups')
-    : /^#\/compare\/lineups/.test(h) ? 'cmp-lineups' : /^#\/compare/.test(h) ? 'cmp-players' : /^#\/wowy/.test(h) ? 'wowy' : /^#\/shift/.test(h) ? 'shift' : '';
+    : /^#\/compare\/lineups/.test(h) ? 'cmp-lineups' : /^#\/compare/.test(h) ? 'cmp-players' : /^#\/wowy/.test(h) ? 'wowy' : /^#\/shift/.test(h) ? 'shift' : /^#\/scouting/.test(h) ? 'scouting' : '';
   return `
   <a class="skip-link" href="#main" data-skip>Skip to content</a>
   <nav class="nav" aria-label="Site">
@@ -38,7 +38,7 @@ function siteLinks(state) {
           ['#/teams', 'Teams', state === 'teams-hub' || state === 'team-global'],
           ['#/milestones', 'Milestones', state === 'milestones'],
           ['#/records', 'Records & Honours', state === 'records'],
-          ['stats', 'Tools', state === 'stats' || state === 'compare' || state === 'wowy' || state === 'shift'],   // a button: it opens the Tools menu (Lineups, Clutch, Compare)
+          ['stats', 'Tools', state === 'stats' || state === 'compare' || state === 'wowy' || state === 'shift' || state === 'scouting'],   // a button: it opens the Tools menu (Lineups, Clutch, Compare)
           ['#/formulas', 'Formulas', state === 'formulas']]
     .map(([h, t, a]) => h === 'stats' ? (typeof STATS !== 'undefined' ? STATS.navButton(a) : '')
       : `<a href="${h}" class="nav-link ${a ? 'active' : ''}">${esc(t)}</a>`).join('');
@@ -51,9 +51,9 @@ function renderNav(state, cid, tab) {
   if (!cid || state === 'hub' || state === 'global-players' || state === 'player' || state === 'compare'
       || state === 'formulas' || state === 'notfound'
       || state === 'teams-hub' || state === 'team-global' || state === 'cfam'
-      || state === 'home' || state === 'live' || state === 'me' || state === 'stats' || state === 'milestones' || state === 'records' || state === 'wowy' || state === 'shift') {
+      || state === 'home' || state === 'live' || state === 'me' || state === 'stats' || state === 'milestones' || state === 'records' || state === 'wowy' || state === 'shift' || state === 'scouting') {
     const links = siteLinks(state);
-    const label = state === 'stats' || state === 'compare' || state === 'wowy' || state === 'shift' ? 'Tools' : state === 'formulas' ? 'Formulas'
+    const label = state === 'stats' || state === 'compare' || state === 'wowy' || state === 'shift' || state === 'scouting' ? 'Tools' : state === 'formulas' ? 'Formulas'
       : (state === 'teams-hub' || state === 'team-global') ? 'Teams'
       : (state === 'global-players' || state === 'player') ? 'Players' : 'Competitions';
     const crumb = state === 'stats'
@@ -64,6 +64,8 @@ function renderNav(state, cid, tab) {
       ? '<span class="subnav-crumb">what every abbreviation means, and where the number comes from</span>'
       : state === 'wowy'
       ? '<span class="subnav-crumb">WOWY · every on/off mix of up to five players, men’s Agong Cup and MBL</span>'
+      : state === 'scouting'
+      ? '<span class="subnav-crumb">Scouting reports · plays tagged by hand from game film</span>'
       : state === 'shift'
       ? '<span class="subnav-crumb">Stat Line Shift · one player’s line with and without his teammates, men’s Agong Cup and MBL</span>'
       : `<span class="subnav-crumb">Malaysia basketball database · ${COMPS.length} competitions</span>`;
@@ -137,6 +139,16 @@ function route() {
     state = 'home'; body = renderHome();
   } else if (parts[0] === 'live' && parts[1]) {
     state = 'live'; body = renderLiveGame(parts[1]);
+  } else if (parts[0] === 'scout' && scoutAdmin()) {
+    // Tools › Scout room (admin only): the film-tagging tool fills the window (app4zg_scout.js)
+    if (!scoutFrameKept(scoutSrc(false, parts[1]))) app.innerHTML = renderScoutRoom(parts[1]);
+    if (typeof hsApplyMeta === 'function') hsApplyMeta(HS.hash());
+    return;
+  } else if (parts[0] === 'scout' || parts[0] === 'scouting') {
+    // Tools › Scouting reports (admin only): every scouted game, or one (app4zg_scout.js)
+    if (scoutAdmin() && parts[0] === 'scouting' && scoutFrameKept(scoutSrc(true, parts[1]))) return;
+    state = 'scouting';
+    body = !scoutAdmin() ? scoutGate(parts[0] === 'scout' ? 'Scout room' : 'Scouting reports') : renderScouting(parts[1]);
   } else if (parts[0] === 'watch' && parts[1]) {
     // the Watch page fills the screen: the video and the game's numbers, no site bar or footer
     app.innerHTML = renderWatch(parts[1]);
