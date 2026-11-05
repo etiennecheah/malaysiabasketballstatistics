@@ -103,7 +103,7 @@ html:fullscreen{ overflow:auto; }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .theme .moon{ display:inline; } :root:not([data-theme="light"]) .theme .sun{ display:none; } }
 
 /* ---- page ---- */
-.page{ max-width:1440px; margin:0 auto; padding-block:20px 64px;
+.page{ max-width:2200px; margin:0 auto; padding-block:16px 48px;
   padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px)); }
 .head{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:16px; }
 .title{ font-family:var(--display); font-weight:700; font-size:30px; line-height:1.08; letter-spacing:.005em; }
@@ -113,6 +113,8 @@ html:fullscreen{ overflow:auto; }
   font-family:var(--display); font-weight:600; font-size:13px; box-shadow:var(--shadow); }
 .crest.img{ background:transparent !important; }
 .crest.img img{ width:100%; height:100%; object-fit:contain; display:block; }
+.crest.img.pl-dark{ background:#141a26 !important; padding:2px; } .crest.img.pl-light{ background:#fff !important; padding:2px; }
+.crest.img.flag img{ border-radius:3px; }
 .crest{ width:26px; height:26px; border-radius:7px; display:inline-flex; align-items:center; justify-content:center; color:#fff;
   font-family:var(--display); font-weight:700; font-size:10.5px; letter-spacing:.02em; flex:none; }
 .vs{ font-family:var(--display); color:var(--text-faint); font-size:12px; }
@@ -170,7 +172,8 @@ body.vempty .grid{ grid-template-columns:minmax(0,1fr); }
 .btn.danger:hover{ border-color:var(--negative); color:var(--negative); }
 .btn[disabled]{ opacity:.45; pointer-events:none; }
 
-.grid{ display:grid; grid-template-columns:minmax(0,1fr) 420px; gap:18px; align-items:start; }
+.grid{ display:grid; grid-template-columns:minmax(0,1fr) 390px; gap:14px; align-items:start; }
+@media (min-width: 1800px){ .grid{ grid-template-columns:minmax(0,1fr) 430px; } }
 .col{ display:flex; flex-direction:column; gap:14px; min-width:0; }
 
 /* ---- the stage ---- */
@@ -245,6 +248,16 @@ body.vempty .grid{ grid-template-columns:minmax(0,1fr); }
 .trim-top .lblv b{ color:#fff; letter-spacing:0; text-transform:none; font-size:13px; margin-left:6px; }
 .nudge{ display:inline-flex; gap:3px; align-items:center; }
 .nudge .tbtn{ height:26px; min-width:26px; font-size:11.5px; border:1px solid rgba(255,255,255,.12); }
+.trimbtn{ background:#d9762a !important; border-color:#d9762a !important; color:#fff !important; }
+.trimbtn:hover{ filter:brightness(1.08); }
+.tr-bar{ height:8px; border-radius:4px; background:var(--surface-alt); overflow:hidden; }
+.tr-bar i{ display:block; height:100%; width:0; background:var(--accent-2); transition:width .3s var(--ease); }
+.tr-opt{ display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border:1px solid var(--border); border-radius:10px; cursor:pointer; }
+.tr-opt input{ margin-top:3px; } .tr-opt b{ display:block; font-size:13.5px; } .tr-opt span{ font-size:12px; color:var(--text-muted); }
+.tr-opt.off{ opacity:.5; cursor:not-allowed; }
+.tr-times{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; }
+.tr-times div{ border:1px solid var(--hair); border-radius:8px; padding:8px 10px; background:var(--surface-alt); }
+.tr-times b{ display:block; font-family:var(--display); font-size:18px; }
 .nudge em{ font-style:normal; font-family:var(--display); font-size:11px; color:var(--ink-text-dim); margin:0 4px 0 8px; }
 .lane{ position:relative; height:54px; border-radius:8px; background:repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 100%); background-size:var(--sec,20px) 100%;
   background-color:rgba(255,255,255,.03); overflow:hidden; touch-action:none; cursor:pointer; }
@@ -545,6 +558,7 @@ pre.code{ margin:0; max-height:220px; overflow:auto; background:var(--void); col
               <em data-i="Start">Start</em><button class="tbtn" data-n="in:-0.5">−½s</button><button class="tbtn" data-n="in:0.5">+½s</button>
               <em data-i="End">End</em><button class="tbtn" data-n="out:-0.5">−½s</button><button class="tbtn" data-n="out:0.5">+½s</button>
               <button class="tbtn" id="t-preview" title="Play the clip window (P)" data-it="Play the clip window (P)" data-i="▶ Clip">▶ Clip</button>
+              <button class="tbtn trimbtn" id="t-trim" title="Save this stretch of the film as a video file" data-it="Save this stretch of the film as a video file"><svg viewBox="0 0 24 24"><path d="M9.6 7.6A3.5 3.5 0 1 0 6 10a3.4 3.4 0 0 0 1.6-.4L10 12l-2.4 2.4A3.5 3.5 0 1 0 9.6 16.4L12 14l7 7h3v-1L9.6 7.6ZM6 8a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0 11a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3ZM19 3l-6 6 2 2 7-7V3h-3Z"/></svg><span data-i="Trim">Trim</span></button>
             </div>
           </div>
           <div class="lane" id="lane">
@@ -598,7 +612,7 @@ const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
 /* ------------------------------------------------------------------ language: English and Mandarin (Simplified) */
 const STANDALONE = false;
-const ZH = {"+ Add roster": "+ 添加名单", "+ And-1": "+ 加罚", "+ and-1": "+ 加罚", "Above-break 3": "非底角三分", "After saving a shot, ask me to place it on the shot map": "保存投篮后，提示我在投篮图上标出位置", "After timeout": "暂停后战术", "All shots": "全部投篮", "Back / forward 1 s": "后退 / 前进 1 秒", "Back / forward 5 s": "后退 / 前进 5 秒", "Back 5 s (J)": "后退 5 秒 (J)", "Baseline out": "底线发球", "Blank session ready": "已准备好空白记录", "Block": "盖帽", "Body or hand in the face": "贴身或手在面前", "Both": "双方", "Both teams": "双方球队", "Box-out": "卡位", "Breakdown": "防守失位", "By shot difficulty": "按投篮难度", "Change": "更改", "Change contest": "更改干扰程度", "Charge taken": "制造进攻犯规", "Choose video file": "选择影片文件", "Clear example": "清除示例", "Click again to clear everything": "再按一次清除全部", "Clip deleted": "片段已删除", "Clip end": "片段结束", "Clip log": "片段记录", "Clip log (CSV)": "片段记录 (CSV)", "Clip saved": "片段已保存", "Clip start": "片段开始", "Clip updated": "片段已更新", "Clip window": "片段范围", "Clips are cut by ffmpeg straight from the full-game file, so they keep the original resolution and audio. The commands follow the clip log filters ({0} clips now).": "片段由 ffmpeg 直接从全场影片剪出，保留原始分辨率和声音。命令按片段记录的筛选生成（目前 {0} 个片段）。", "Close": "关闭", "Close a sheet": "关闭窗口", "Code": "简称", "Commands copied": "命令已复制", "Contest": "干扰程度", "Contest cleared": "已清除干扰程度", "Contest not set": "未设定干扰程度", "Contested": "有干扰", "Copy commands": "复制命令", "Corner 3": "底角三分", "Cut": "空切", "Cut the clips from your original file": "从原始影片剪出片段", "Cut the full-game replay into plays, tag each one, and chart every shot by hand. Your film never leaves this computer.": "把全场比赛录像剪成一个个回合，逐一标记，并亲手记录每一次投篮。影片不会离开这台电脑。", "Defense": "防守", "Deflection": "破坏传球", "Delete": "删除", "Delete clip": "删除片段", "Direct link to an MP4 or WebM file": "MP4 或 WebM 文件的直接链接", "Drive & kick": "突破分球", "Drop an MP4, MOV or WebM file here. It plays straight from your disk, so a two-hour game opens instantly and nothing is uploaded.": "把 MP4、MOV 或 WebM 文件拖到这里。影片直接从你的硬盘播放，两小时的比赛也能立即打开，不会上传任何内容。", "Edit clip": "编辑片段", "Edit tags and trim": "编辑标记与剪辑", "Editing clip at {0}": "正在编辑 {0} 的片段", "End": "结束", "End of quarter": "节末战术", "Every charted shot with court position in metres.": "每一次已标记的投篮及其球场位置（米）。", "Every play type": "所有战术", "Every player": "所有球员", "Every result": "所有结果", "Everything: teams, clips, shots. Open it again later.": "全部内容：球队、片段、投篮，之后可再次打开。", "Example cleared. Set your teams to start.": "示例已清除。请先设定球队。", "Example session": "示例", "Example: {0} vs {1}": "示例：{0} vs {1}", "Exit full screen": "退出全屏", "Exit full screen (F)": "退出全屏 (F)", "Export": "导出", "Export and import": "导出与导入", "FG": "投篮", "FG%": "命中率", "FGM–A": "命中–出手", "FT made": "罚中", "Figures count only the plays you have tagged, so they describe your sample of the film, not the full box score.": "数据只统计你已标记的回合，反映的是你看过的录像样本，而不是完整的技术统计。", "Files": "文件", "Film full screen": "影片全屏", "Film full screen (F)": "影片全屏 (F)", "Forward 5 s (L)": "前进 5 秒 (L)", "Foul drawn": "造成犯规", "Fouled on the make: adds 1 point": "投中并被犯规：加 1 分", "Frame-exact (re-encode)": "逐帧精准（重新编码）", "Free throws": "罚球", "Full screen": "全屏", "Full screen is not available here. Try the browser menu or F11.": "这里无法全屏。请试试浏览器菜单或 F11。", "Game timeline": "比赛时间轴", "Game title": "比赛名称", "Hand up, defender closing": "防守者举手扑防", "Handoff": "手递手", "Heavily contested": "严重干扰", "Help rotation": "协防轮转", "Home / away team": "主队 / 客队", "Home": "主队", "Away": "客队", "Isolation": "单打", "Keyboard shortcuts": "快捷键", "Last session used {0}. Open it again to carry on.": "上次使用的是 {0}，重新打开即可继续。", "Light or dark": "浅色 / 深色", "Location is a {0}-pointer, so the result is now {1}": "出手位置是 {0} 分区，结果已改为「{1}」", "Made": "命中", "Made 2": "两分命中", "Made 3": "三分命中", "Mark clip end": "标记片段结束", "Mark clip start": "标记片段开始", "Mark end (O)": "标记结束 (O)", "Mark made": "改为命中", "Mark missed": "改为不中", "Mark start (I)": "标记开始 (I)", "Mid-range": "中距离", "Missed": "不中", "Missed 2": "两分不中", "Missed 3": "三分不中", "New clip instead": "改为新增片段", "Next frame (.)": "下一帧 (.)", "Next shot: made": "下一投：命中", "Next shot: missed": "下一投：不中", "No clips match these filters.": "没有符合筛选的片段。", "No clips yet. Play the film, pick the team, player and play type on the right, then press {0}.": "还没有片段。播放影片，在右侧选择球队、球员和战术，然后按 {0}。", "No defender within reach": "附近没有防守者", "No plays tagged for {0} yet.": "{0} 还没有标记任何回合。", "No result": "无结果", "Not set": "未设定", "Note: e.g. rejects the screen, goes baseline": "备注：例如 拒绝掩护，走底线", "Nothing yet.": "暂无。", "Off screen": "绕掩护", "Offense": "进攻", "On the shot map": "已在投篮图上", "One row per play, for Excel or Sheets.": "每个回合一行，可用 Excel 或 Sheets 打开。", "Open": "打开", "Open a replay first": "请先打开录像", "Open a session": "打开记录", "Open session file…": "打开记录文件…", "Open the full-game replay": "打开全场比赛录像", "Open the replay first": "请先打开录像", "Open the replay to play the reel": "打开录像后才能连续播放", "Opened {0}": "已打开 {0}", "Opened {0} clips and {1} shots": "已打开 {0} 个片段和 {1} 次投篮", "Original quality, instant": "原画质，即时完成", "Out ]": "出点 ]", "PNG of the shot map as filtered now.": "当前筛选下的投篮图 PNG。", "Paint": "油漆区", "Paste a full https:// link": "请粘贴完整的 https:// 链接", "Pause": "暂停", "Period": "节次", "Pick & pop": "挡拆外弹", "Pick & roll – handler": "挡拆 – 持球人", "Pick & roll – roller": "挡拆 – 顺下", "Play": "播放", "Play / pause": "播放 / 暂停", "Play / pause (Space)": "播放 / 暂停 (空格)", "Play as reel": "连续播放", "Play clip": "播放片段", "Play clip window": "播放片段范围", "Play the clip window (P)": "播放片段范围 (P)", "Play type filter": "战术筛选", "Play types · frequency and points per play": "战术类型 · 次数与每回合得分", "Player": "球员", "Players · points from tagged plays": "球员 · 已标记回合的得分", "Plays": "回合", "Post-up": "背身单打", "Press break": "破紧逼", "Press {0} at the start of a play and {1} at the end, or just tag it and the window is set for you.": "回合开始时按 {0}，结束时按 {1}；或直接标记，系统会自动设定范围。", "Previous / next frame": "上一帧 / 下一帧", "Previous frame (,)": "上一帧 (,)", "Pts / play": "每回合得分", "Putback": "补篮", "Re-encodes: frame-exact cuts, near-original quality.": "重新编码：逐帧精准剪辑，画质接近原片。", "Record shots by tapping the court": "点击球场记录投篮", "Recording for": "记录", "Reel finished": "连续播放结束", "Reel {0} / {1}": "连播 {0} / {1}", "Report": "报告", "Reset": "重置", "Restricted area": "合理冲撞区", "Result": "结果", "Result filter": "结果筛选", "Roster · one player per line: number, then name": "名单 · 每行一名球员：号码，然后姓名", "Run in the folder that holds the video.": "请在存放影片的文件夹中运行。", "Save as .txt": "存为 .txt", "Save clip": "保存片段", "Save clip as video": "存为影片", "Save teams": "保存球队", "Save the session file first if you want to keep it.": "如需保留，请先保存记录文件。", "Save this clip as a video file": "把片段存为影片文件", "Saved": "已保存", "Saved {0}": "已保存 {0}", "Saving files is not available in this view. Use Copy instead.": "此处无法保存文件，请改用复制。", "Saving files is not available in this view. Use the ffmpeg commands in Export.": "此处无法保存文件，请使用导出中的 ffmpeg 命令。", "Scored": "得分", "Scout room": "球探室", "Selected: press Ctrl+C to copy": "已选取：按 Ctrl+C 复制", "Session file": "记录文件", "Set contest": "设定干扰程度", "Share": "占比", "Shooting by contest": "按干扰程度的投篮", "Shortcuts pause while you type in a text box.": "在文本框输入时，快捷键会暂停。", "Shot chart (CSV)": "投篮数据 (CSV)", "Shot deleted": "投篮已删除", "Shot made / missed": "投篮命中 / 不中", "Shot map": "投篮图", "Shot map image": "投篮图图片", "Shot placed": "已标出投篮", "Shot value comes from where you tap: outside the arc (or in the corner beyond 6.6 m) counts as a three, using FIBA court lines.": "投篮分值按点击位置判定：依 FIBA 球场线，三分线外（或底角距中线 6.6 米以外）算三分。", "Shots": "投篮", "Show": "显示", "Sideline out": "边线发球", "Situation": "情境", "Skip": "跳过", "Space": "空格", "Spot-up": "定点投篮", "Start": "开始", "Start a blank session": "开始新的空白记录", "Steal": "抢断", "Stop": "防守成功", "Stream copy: original quality, instant, but each cut snaps to the nearest keyframe before the start.": "直接复制：原画质、即时完成，但每段会从开始点之前最近的关键帧切入。", "Swap home and away": "交换主客队", "Switch theme": "切换主题", "TO rate": "失误率", "Tag play": "标记回合", "Tap a mark to jump to that moment": "点击标记可跳到该时刻", "Tap where {0} shot from": "点击 {0} 的出手位置", "Team": "全队", "Team colour": "球队颜色", "Team filter": "球队筛选", "Team name": "球队名称", "Teams": "球队", "Teams and rosters": "球队与名单", "Teams saved": "球队已保存", "That file could not be saved here.": "无法在此保存该文件。", "That file is not a Scout room session.": "这不是球探室的记录文件。", "That video could not be played here. MP4 (H.264) works in every browser; for a link, it must point straight to the video file.": "无法在此播放该影片。MP4 (H.264) 适用于所有浏览器；链接必须直接指向影片文件。", "The clip could not be saved here.": "无法在此保存片段。", "These clips and shots are an example session. Open your own replay and start tagging.": "这些片段和投篮是示例数据。打开你自己的录像开始标记吧。", "This browser cannot record clips.": "这个浏览器无法录制片段。", "This browser cannot record clips. Use the ffmpeg commands in Export.": "这个浏览器无法录制片段，请使用导出中的 ffmpeg 命令。", "This video cannot be recorded (it comes from another site).": "这个影片无法录制（来自其他网站）。", "Transition": "快攻", "Turnover": "失误", "Untagged": "未标记", "Update clip": "更新片段", "Use a video link": "使用影片链接", "Video opened": "影片已打开", "Watch": "观看", "Wide open": "完全空位", "Work is saved in this browser automatically; use Export → Session file to back it up.": "进度会自动保存在这个浏览器；可用「导出 → 记录文件」备份。", "YouTube and Facebook pages cannot be played here. Download the replay and open the file instead, which is also faster to scrub.": "无法在此播放 YouTube 和 Facebook 页面。请下载录像后打开文件，拖动进度也更快。", "Zone": "区域", "Zone offense": "破区域联防", "[ In": "[ 入点", "at": "时间", "auto +{0}s": "自动 +{0} 秒", "auto −{0}s": "自动 −{0} 秒", "e.g. Agong Cup 2026 Final": "例如：2026 Agong Cup 决赛", "pts": "分", "{0} clips from {1}": "{0} 个片段，来源 {1}", "{0} made": "罚中 {0}", "{0} of {1}": "{0} / {1}", "▶ Clip": "▶ 片段", "◎ charted": "◎ 已上图", "● Recording clip": "● 正在录制片段", "All games": "全部比赛", "Alley-oop": "空中接力", "Bank shot": "擦板", "By shot type": "按进攻方式", "Catch & shoot": "接球投篮", "Change game": "更换比赛", "Changes not saved to HoopStatsMY": "有改动尚未保存到 HoopStatsMY", "Choose a HoopStatsMY game": "选择 HoopStatsMY 比赛", "Clips will link to the YouTube replay.": "片段会链接到 YouTube 录像。", "Clips will not link to YouTube.": "片段不会链接到 YouTube。", "Could not reach HoopStatsMY. Check your connection and try again.": "无法连接 HoopStatsMY，请检查网络后再试。", "Dunk": "扣篮", "Euro step": "欧洲步", "Every competition": "所有赛事", "Every shot type": "所有进攻方式", "Fadeaway": "后仰跳投", "Floater": "抛投", "Games": "比赛", "Hook shot": "勾手", "Is this file the same video as the game’s YouTube replay? If yes, visitors can jump from each clip to that moment on YouTube.": "这个文件和比赛的 YouTube 录像是同一段影片吗？如果是，访客可以从每个片段直接跳到 YouTube 的该时刻。", "Layup": "上篮", "Loading scouting…": "正在载入球探数据…", "No": "不是", "No games have been scouted yet.": "还没有比赛的球探数据。", "No games match.": "没有符合的比赛。", "None": "未选", "Not on HoopStatsMY yet": "尚未保存到 HoopStatsMY", "On this computer": "在这台电脑", "Only the HoopStatsMY admin account can save scouting.": "只有 HoopStatsMY 管理员账号可以保存球探数据。", "Opened the scouting saved on HoopStatsMY": "已打开保存在 HoopStatsMY 的球探数据", "Opponents": "对手", "Plays tagged by hand from game film: play types, shot types, contest and a hand-charted shot map. Pick every game together or one game.": "从比赛录像逐一标记的回合：战术、进攻方式、干扰程度和亲手记录的投篮图。可看全部比赛合计，或单场比赛。", "Pull-up": "急停跳投", "Reverse layup": "反手上篮", "Save to HoopStatsMY": "保存到 HoopStatsMY", "Saved to HoopStatsMY {0}": "已保存到 HoopStatsMY {0}", "Saved to HoopStatsMY. It is on the Scouting page now.": "已保存到 HoopStatsMY，现在可在球探报告页面查看。", "Saving…": "正在保存…", "Scouted": "已有球探数据", "Scouting reports": "球探报告", "Search a team": "搜索球队", "Shot type": "进攻方式", "Sign-in was cancelled or blocked. Allow pop-ups and try again.": "登录已取消或被阻止。请允许弹出窗口后再试。", "Step-back": "后撤步", "Tagging for the whole team": "正在为全队标记", "Tap a mark to see the shot": "点击标记查看该次投篮", "Teams, logos, rosters and player photos come from the game’s HoopStatsMY box score.": "球队、队徽、名单和球员头像都来自该场比赛在 HoopStatsMY 的技术统计。", "That game is not on HoopStatsMY.": "HoopStatsMY 上没有这场比赛。", "These come from HoopStatsMY for this game. Change them only if the box score is wrong.": "这些资料来自 HoopStatsMY 的该场比赛。只有技术统计有误时才需要修改。", "Tip-in": "点补", "Turnaround": "转身跳投", "Watch on YouTube": "在 YouTube 观看", "Yes, same video": "是，同一段影片", "{0} games": "{0} 场比赛", "1 game": "1 场比赛"};
+const ZH = {"+ Add roster": "+ 添加名单", "+ And-1": "+ 加罚", "+ and-1": "+ 加罚", "Above-break 3": "非底角三分", "After saving a shot, ask me to place it on the shot map": "保存投篮后，提示我在投篮图上标出位置", "After timeout": "暂停后战术", "All shots": "全部投篮", "Back / forward 1 s": "后退 / 前进 1 秒", "Back / forward 5 s": "后退 / 前进 5 秒", "Back 5 s (J)": "后退 5 秒 (J)", "Baseline out": "底线发球", "Blank session ready": "已准备好空白记录", "Block": "盖帽", "Body or hand in the face": "贴身或手在面前", "Both": "双方", "Both teams": "双方球队", "Box-out": "卡位", "Breakdown": "防守失位", "By shot difficulty": "按投篮难度", "Change": "更改", "Change contest": "更改干扰程度", "Charge taken": "制造进攻犯规", "Choose video file": "选择影片文件", "Clear example": "清除示例", "Click again to clear everything": "再按一次清除全部", "Clip deleted": "片段已删除", "Clip end": "片段结束", "Clip log": "片段记录", "Clip log (CSV)": "片段记录 (CSV)", "Clip saved": "片段已保存", "Clip start": "片段开始", "Clip updated": "片段已更新", "Clip window": "片段范围", "Clips are cut by ffmpeg straight from the full-game file, so they keep the original resolution and audio. The commands follow the clip log filters ({0} clips now).": "片段由 ffmpeg 直接从全场影片剪出，保留原始分辨率和声音。命令按片段记录的筛选生成（目前 {0} 个片段）。", "Close": "关闭", "Close a sheet": "关闭窗口", "Code": "简称", "Commands copied": "命令已复制", "Contest": "干扰程度", "Contest cleared": "已清除干扰程度", "Contest not set": "未设定干扰程度", "Contested": "有干扰", "Copy commands": "复制命令", "Corner 3": "底角三分", "Cut": "空切", "Cut the clips from your original file": "从原始影片剪出片段", "Cut the full-game replay into plays, tag each one, and chart every shot by hand. Your film never leaves this computer.": "把全场比赛录像剪成一个个回合，逐一标记，并亲手记录每一次投篮。影片不会离开这台电脑。", "Defense": "防守", "Deflection": "破坏传球", "Delete": "删除", "Delete clip": "删除片段", "Direct link to an MP4 or WebM file": "MP4 或 WebM 文件的直接链接", "Drive & kick": "突破分球", "Drop an MP4, MOV or WebM file here. It plays straight from your disk, so a two-hour game opens instantly and nothing is uploaded.": "把 MP4、MOV 或 WebM 文件拖到这里。影片直接从你的硬盘播放，两小时的比赛也能立即打开，不会上传任何内容。", "Edit clip": "编辑片段", "Edit tags and trim": "编辑标记与剪辑", "Editing clip at {0}": "正在编辑 {0} 的片段", "End": "结束", "End of quarter": "节末战术", "Every charted shot with court position in metres.": "每一次已标记的投篮及其球场位置（米）。", "Every play type": "所有战术", "Every player": "所有球员", "Every result": "所有结果", "Everything: teams, clips, shots. Open it again later.": "全部内容：球队、片段、投篮，之后可再次打开。", "Example cleared. Set your teams to start.": "示例已清除。请先设定球队。", "Example session": "示例", "Example: {0} vs {1}": "示例：{0} vs {1}", "Exit full screen": "退出全屏", "Exit full screen (F)": "退出全屏 (F)", "Export": "导出", "Export and import": "导出与导入", "FG": "投篮", "FG%": "命中率", "FGM–A": "命中–出手", "FT made": "罚中", "Figures count only the plays you have tagged, so they describe your sample of the film, not the full box score.": "数据只统计你已标记的回合，反映的是你看过的录像样本，而不是完整的技术统计。", "Files": "文件", "Film full screen": "影片全屏", "Film full screen (F)": "影片全屏 (F)", "Forward 5 s (L)": "前进 5 秒 (L)", "Foul drawn": "造成犯规", "Fouled on the make: adds 1 point": "投中并被犯规：加 1 分", "Frame-exact (re-encode)": "逐帧精准（重新编码）", "Free throws": "罚球", "Full screen": "全屏", "Full screen is not available here. Try the browser menu or F11.": "这里无法全屏。请试试浏览器菜单或 F11。", "Game timeline": "比赛时间轴", "Game title": "比赛名称", "Hand up, defender closing": "防守者举手扑防", "Handoff": "手递手", "Heavily contested": "严重干扰", "Help rotation": "协防轮转", "Home / away team": "主队 / 客队", "Home": "主队", "Away": "客队", "Isolation": "单打", "Keyboard shortcuts": "快捷键", "Last session used {0}. Open it again to carry on.": "上次使用的是 {0}，重新打开即可继续。", "Light or dark": "浅色 / 深色", "Location is a {0}-pointer, so the result is now {1}": "出手位置是 {0} 分区，结果已改为「{1}」", "Made": "命中", "Made 2": "两分命中", "Made 3": "三分命中", "Mark clip end": "标记片段结束", "Mark clip start": "标记片段开始", "Mark end (O)": "标记结束 (O)", "Mark made": "改为命中", "Mark missed": "改为不中", "Mark start (I)": "标记开始 (I)", "Mid-range": "中距离", "Missed": "不中", "Missed 2": "两分不中", "Missed 3": "三分不中", "New clip instead": "改为新增片段", "Next frame (.)": "下一帧 (.)", "Next shot: made": "下一投：命中", "Next shot: missed": "下一投：不中", "No clips match these filters.": "没有符合筛选的片段。", "No clips yet. Play the film, pick the team, player and play type on the right, then press {0}.": "还没有片段。播放影片，在右侧选择球队、球员和战术，然后按 {0}。", "No defender within reach": "附近没有防守者", "No plays tagged for {0} yet.": "{0} 还没有标记任何回合。", "No result": "无结果", "Not set": "未设定", "Note: e.g. rejects the screen, goes baseline": "备注：例如 拒绝掩护，走底线", "Nothing yet.": "暂无。", "Off screen": "绕掩护", "Offense": "进攻", "On the shot map": "已在投篮图上", "One row per play, for Excel or Sheets.": "每个回合一行，可用 Excel 或 Sheets 打开。", "Open": "打开", "Open a replay first": "请先打开录像", "Open a session": "打开记录", "Open session file…": "打开记录文件…", "Open the full-game replay": "打开全场比赛录像", "Open the replay first": "请先打开录像", "Open the replay to play the reel": "打开录像后才能连续播放", "Opened {0}": "已打开 {0}", "Opened {0} clips and {1} shots": "已打开 {0} 个片段和 {1} 次投篮", "Original quality, instant": "原画质，即时完成", "Out ]": "出点 ]", "PNG of the shot map as filtered now.": "当前筛选下的投篮图 PNG。", "Paint": "油漆区", "Paste a full https:// link": "请粘贴完整的 https:// 链接", "Pause": "暂停", "Period": "节次", "Pick & pop": "挡拆外弹", "Pick & roll – handler": "挡拆 – 持球人", "Pick & roll – roller": "挡拆 – 顺下", "Play": "播放", "Play / pause": "播放 / 暂停", "Play / pause (Space)": "播放 / 暂停 (空格)", "Play as reel": "连续播放", "Play clip": "播放片段", "Play clip window": "播放片段范围", "Play the clip window (P)": "播放片段范围 (P)", "Play type filter": "战术筛选", "Play types · frequency and points per play": "战术类型 · 次数与每回合得分", "Player": "球员", "Players · points from tagged plays": "球员 · 已标记回合的得分", "Plays": "回合", "Post-up": "背身单打", "Press break": "破紧逼", "Press {0} at the start of a play and {1} at the end, or just tag it and the window is set for you.": "回合开始时按 {0}，结束时按 {1}；或直接标记，系统会自动设定范围。", "Previous / next frame": "上一帧 / 下一帧", "Previous frame (,)": "上一帧 (,)", "Pts / play": "每回合得分", "Putback": "补篮", "Re-encodes: frame-exact cuts, near-original quality.": "重新编码：逐帧精准剪辑，画质接近原片。", "Record shots by tapping the court": "点击球场记录投篮", "Recording for": "记录", "Reel finished": "连续播放结束", "Reel {0} / {1}": "连播 {0} / {1}", "Report": "报告", "Reset": "重置", "Restricted area": "合理冲撞区", "Result": "结果", "Result filter": "结果筛选", "Roster · one player per line: number, then name": "名单 · 每行一名球员：号码，然后姓名", "Run in the folder that holds the video.": "请在存放影片的文件夹中运行。", "Save as .txt": "存为 .txt", "Save clip": "保存片段", "Save clip as video": "存为影片", "Save teams": "保存球队", "Save the session file first if you want to keep it.": "如需保留，请先保存记录文件。", "Save this clip as a video file": "把片段存为影片文件", "Saved": "已保存", "Saved {0}": "已保存 {0}", "Saving files is not available in this view. Use Copy instead.": "此处无法保存文件，请改用复制。", "Saving files is not available in this view. Use the ffmpeg commands in Export.": "此处无法保存文件，请使用导出中的 ffmpeg 命令。", "Scored": "得分", "Scout room": "球探室", "Selected: press Ctrl+C to copy": "已选取：按 Ctrl+C 复制", "Session file": "记录文件", "Set contest": "设定干扰程度", "Share": "占比", "Shooting by contest": "按干扰程度的投篮", "Shortcuts pause while you type in a text box.": "在文本框输入时，快捷键会暂停。", "Shot chart (CSV)": "投篮数据 (CSV)", "Shot deleted": "投篮已删除", "Shot made / missed": "投篮命中 / 不中", "Shot map": "投篮图", "Shot map image": "投篮图图片", "Shot placed": "已标出投篮", "Shot value comes from where you tap: outside the arc (or in the corner beyond 6.6 m) counts as a three, using FIBA court lines.": "投篮分值按点击位置判定：依 FIBA 球场线，三分线外（或底角距中线 6.6 米以外）算三分。", "Shots": "投篮", "Show": "显示", "Sideline out": "边线发球", "Situation": "情境", "Skip": "跳过", "Space": "空格", "Spot-up": "定点投篮", "Start": "开始", "Start a blank session": "开始新的空白记录", "Steal": "抢断", "Stop": "防守成功", "Stream copy: original quality, instant, but each cut snaps to the nearest keyframe before the start.": "直接复制：原画质、即时完成，但每段会从开始点之前最近的关键帧切入。", "Swap home and away": "交换主客队", "Switch theme": "切换主题", "TO rate": "失误率", "Tag play": "标记回合", "Tap a mark to jump to that moment": "点击标记可跳到该时刻", "Tap where {0} shot from": "点击 {0} 的出手位置", "Team": "全队", "Team colour": "球队颜色", "Team filter": "球队筛选", "Team name": "球队名称", "Teams": "球队", "Teams and rosters": "球队与名单", "Teams saved": "球队已保存", "That file could not be saved here.": "无法在此保存该文件。", "That file is not a Scout room session.": "这不是球探室的记录文件。", "That video could not be played here. MP4 (H.264) works in every browser; for a link, it must point straight to the video file.": "无法在此播放该影片。MP4 (H.264) 适用于所有浏览器；链接必须直接指向影片文件。", "The clip could not be saved here.": "无法在此保存片段。", "These clips and shots are an example session. Open your own replay and start tagging.": "这些片段和投篮是示例数据。打开你自己的录像开始标记吧。", "This browser cannot record clips.": "这个浏览器无法录制片段。", "This browser cannot record clips. Use the ffmpeg commands in Export.": "这个浏览器无法录制片段，请使用导出中的 ffmpeg 命令。", "This video cannot be recorded (it comes from another site).": "这个影片无法录制（来自其他网站）。", "Transition": "快攻", "Turnover": "失误", "Untagged": "未标记", "Update clip": "更新片段", "Use a video link": "使用影片链接", "Video opened": "影片已打开", "Watch": "观看", "Wide open": "完全空位", "Work is saved in this browser automatically; use Export → Session file to back it up.": "进度会自动保存在这个浏览器；可用「导出 → 记录文件」备份。", "YouTube and Facebook pages cannot be played here. Download the replay and open the file instead, which is also faster to scrub.": "无法在此播放 YouTube 和 Facebook 页面。请下载录像后打开文件，拖动进度也更快。", "Zone": "区域", "Zone offense": "破区域联防", "[ In": "[ 入点", "at": "时间", "auto +{0}s": "自动 +{0} 秒", "auto −{0}s": "自动 −{0} 秒", "e.g. Agong Cup 2026 Final": "例如：2026 Agong Cup 决赛", "pts": "分", "{0} clips from {1}": "{0} 个片段，来源 {1}", "{0} made": "罚中 {0}", "{0} of {1}": "{0} / {1}", "▶ Clip": "▶ 片段", "◎ charted": "◎ 已上图", "● Recording clip": "● 正在录制片段", "All games": "全部比赛", "Alley-oop": "空中接力", "Bank shot": "擦板", "By shot type": "按进攻方式", "Catch & shoot": "接球投篮", "Change game": "更换比赛", "Changes not saved to HoopStatsMY": "有改动尚未保存到 HoopStatsMY", "Choose a HoopStatsMY game": "选择 HoopStatsMY 比赛", "Clips will link to the YouTube replay.": "片段会链接到 YouTube 录像。", "Clips will not link to YouTube.": "片段不会链接到 YouTube。", "Could not reach HoopStatsMY. Check your connection and try again.": "无法连接 HoopStatsMY，请检查网络后再试。", "Dunk": "扣篮", "Euro step": "欧洲步", "Every competition": "所有赛事", "Every shot type": "所有进攻方式", "Fadeaway": "后仰跳投", "Floater": "抛投", "Games": "比赛", "Hook shot": "勾手", "Is this file the same video as the game’s YouTube replay? If yes, visitors can jump from each clip to that moment on YouTube.": "这个文件和比赛的 YouTube 录像是同一段影片吗？如果是，访客可以从每个片段直接跳到 YouTube 的该时刻。", "Layup": "上篮", "Loading scouting…": "正在载入球探数据…", "No": "不是", "No games have been scouted yet.": "还没有比赛的球探数据。", "No games match.": "没有符合的比赛。", "None": "未选", "Not on HoopStatsMY yet": "尚未保存到 HoopStatsMY", "On this computer": "在这台电脑", "Only the HoopStatsMY admin account can save scouting.": "只有 HoopStatsMY 管理员账号可以保存球探数据。", "Opened the scouting saved on HoopStatsMY": "已打开保存在 HoopStatsMY 的球探数据", "Opponents": "对手", "Plays tagged by hand from game film: play types, shot types, contest and a hand-charted shot map. Pick every game together or one game.": "从比赛录像逐一标记的回合：战术、进攻方式、干扰程度和亲手记录的投篮图。可看全部比赛合计，或单场比赛。", "Pull-up": "急停跳投", "Reverse layup": "反手上篮", "Save to HoopStatsMY": "保存到 HoopStatsMY", "Saved to HoopStatsMY {0}": "已保存到 HoopStatsMY {0}", "Saved to HoopStatsMY. It is on the Scouting page now.": "已保存到 HoopStatsMY，现在可在球探报告页面查看。", "Saving…": "正在保存…", "Scouted": "已有球探数据", "Scouting reports": "球探报告", "Search a team": "搜索球队", "Shot type": "进攻方式", "Sign-in was cancelled or blocked. Allow pop-ups and try again.": "登录已取消或被阻止。请允许弹出窗口后再试。", "Step-back": "后撤步", "Tagging for the whole team": "正在为全队标记", "Tap a mark to see the shot": "点击标记查看该次投篮", "Teams, logos, rosters and player photos come from the game’s HoopStatsMY box score.": "球队、队徽、名单和球员头像都来自该场比赛在 HoopStatsMY 的技术统计。", "That game is not on HoopStatsMY.": "HoopStatsMY 上没有这场比赛。", "These come from HoopStatsMY for this game. Change them only if the box score is wrong.": "这些资料来自 HoopStatsMY 的该场比赛。只有技术统计有误时才需要修改。", "Tip-in": "点补", "Turnaround": "转身跳投", "Watch on YouTube": "在 YouTube 观看", "Yes, same video": "是，同一段影片", "{0} games": "{0} 场比赛", "1 game": "1 场比赛", "Trim": "剪辑", "Trim video": "剪辑影片", "Save this stretch of the film as a video file": "把这段影片存成视频文件", "Length": "长度", "No start and end marked, so this is the stretch around the playhead. Mark them with I and O (or drag the handles) for any length.": "还没标记开始和结束，所以这是播放位置附近的一段。用 I 和 O 标记（或拖动把手）可选任意长度。", "Original quality, fast": "原画质，快速", "Copies the film without re-encoding: same picture and sound, a minute takes seconds. Starts at the nearest keyframe, up to a second or two early.": "不重新编码，直接复制：画面和声音与原片相同，一分钟只需几秒。会从最近的关键帧开始，可能提早一两秒。", "About {0}.": "约 {0}。", "This stretch is too long to cut in the browser (about {0}). Pick a shorter one, or use the ffmpeg commands in Export.": "这段太长，浏览器里无法剪（约 {0}）。请选短一点，或使用导出中的 ffmpeg 命令。", "Works on HoopStatsMY with a film opened from your computer.": "在 HoopStatsMY 网站上、用电脑里的影片文件时可用。", "Record while it plays": "边播放边录制", "Plays the stretch once and records it: starts on the exact frame, takes as long as the stretch, slightly lower quality.": "把这段播放一次并录下来：从准确的那一帧开始，所需时间等于片段长度，画质稍低。", "Save trimmed video": "保存剪辑后的影片", "Loading the video cutter (about 30 MB, only the first time)…": "正在载入剪辑工具（约 30 MB，只在第一次）…", "Cutting…": "正在剪辑…", "The fast cut did not work on this file. Choose “Record while it plays”, or use the ffmpeg commands in Export.": "这个文件无法快速剪辑。请选择「边播放边录制」，或使用导出中的 ffmpeg 命令。", "Recording… keep this tab open until it finishes.": "正在录制…完成前请不要关闭此页面。"};
 let LANG = 'en';
 try { LANG = localStorage.getItem('hsmy-scout-lang') || ((navigator.language || '').toLowerCase().startsWith('zh') ? 'zh' : 'en'); } catch(e) {}
 function T(str, ...a){ let r = (LANG === 'zh' && ZH[str]) || str; a.forEach((v, i) => { r = r.split('{' + i + '}').join(v); }); return r; }
@@ -677,7 +691,10 @@ function inkOn(col){
   return (1.05 / (L + .05)) >= ((L + .05) / .0533) ? '#ffffff' : '#0b0f1a';
 }
 function H(fn, ...a){ try { return HOST && typeof HOST[fn] === 'function' ? HOST[fn](...a) : null; } catch(e) { return null; } }
-function hostTeam(name){ return {name, code:H('teamCode', name) || String(name).slice(0, 3).toUpperCase(), color:hexOf(H('teamColor', name) || '#7a8699'), logo:H('teamLogo', name) || ''}; }
+// the crest the site shows for a team in that competition: its club logo (an edition's own where one exists),
+// else its state or national flag (app4zg_scout.js scoutCrest); older sites only have teamLogo
+function hostCrest(name, cid){ return H('scoutCrest', name, cid || '') || (H('teamLogo', name) ? {src:H('teamLogo', name)} : null); }
+function hostTeam(name, cid){ const cr = hostCrest(name, cid) || {}; return {name, code:H('teamCode', name) || String(name).slice(0, 3).toUpperCase(), color:hexOf(H('teamColor', name) || '#7a8699'), logo:cr.src || '', plate:cr.plate || '', flag:!!cr.flag}; }
 function hostPhoto(pid){ const D = HOST && HOST.DB || {}; return pid ? ((D.avatars || {})[pid] || (D.photos || {})[pid] || '') : ''; }
 function hostGame(mid){ if (!HOST) return null; for (const c of HOST.DB.comps) { const g = (c.games || []).find(x => x.mid === mid); if (g) return {c, g}; } return null; }
 function hostRoster(mid, name){
@@ -769,7 +786,7 @@ const saveOpen = () => lsSet('hsmy-scout-open', [...OPEN]);
 
 /* ------------------------------------------------------------------ time */
 const vid = $('#vid');
-let hasVideo = false;
+let hasVideo = false, CUR_FILE = null;   // the File the film came from (the trimmer reads it directly)
 const fmt = (t, tenths) => {
   if (t == null || isNaN(t)) return '—';
   t = Math.max(0, t); const h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60;
@@ -810,7 +827,7 @@ function courtSVG(){
 /* ------------------------------------------------------------------ helpers */
 const team = k => S.teams[k];
 const crest = (k, sz = 26) => team(k).logo
-  ? `<span class="crest img" style="width:${sz}px;height:${sz}px"><img src="${esc(team(k).logo)}" alt=""></span>`
+  ? `<span class="crest img ${team(k).plate ? 'pl-' + team(k).plate : ''} ${team(k).flag ? 'flag' : ''}" style="width:${sz}px;height:${sz}px"><img src="${esc(team(k).logo)}" alt=""></span>`
   : `<span class="crest" style="background:${esc(team(k).color)};color:${inkOn(team(k).color)};width:${sz}px;height:${sz}px;font-size:${Math.round(sz * .4)}px">${esc(team(k).code)}</span>`;
 const photoOf = r => r && (r.photo || (HOST && hostPhoto(r.pid))) || '';
 const pname = (k, n) => { if (!n) return T('Team'); const r = S.roster[k].find(p => p.n === n); return '#' + (r && r.num != null ? r.num : n) + (r && r.name ? ' ' + r.name : ''); };
@@ -863,7 +880,7 @@ const views = {
       ${U.editing ? `<div class="edit-note"><span>${T('Editing clip at {0}', fmt(clipById(U.editing)?.t0))}</span><button class="btn ghost" id="x-cancel" style="height:26px">${T('New clip instead')}</button></div>` : ''}
       <div class="sect">
         <div class="seg team" id="v-team">
-          ${['home','away'].map(k => `<button data-t="${k}" class="${U.team === k ? 'on' : ''}" style="--tc:${esc(team(k).color)};--ti:${inkOn(team(k).color)}">${team(k).logo ? `<img src="${esc(team(k).logo)}" alt="">` : `<span class="sw" style="background:${esc(team(k).color)}"></span>`}${esc(team(k).name)}</button>`).join('')}
+          ${['home','away'].map(k => `<button data-t="${k}" class="${U.team === k ? 'on' : ''}" style="--tc:${esc(team(k).color)};--ti:${inkOn(team(k).color)}">${team(k).logo ? `<img src="${esc(team(k).logo)}" alt="" style="${team(k).plate === 'dark' ? 'background:#141a26;border-radius:4px;padding:1px' : team(k).plate === 'light' ? 'background:#fff;border-radius:4px;padding:1px' : ''}">` : `<span class="sw" style="background:${esc(team(k).color)}"></span>`}${esc(team(k).name)}</button>`).join('')}
         </div>
       </div>
       <div class="sect">
@@ -1316,26 +1333,30 @@ function openVideo(src, name){
   if (S.yt && !S.ytSync) setTimeout(() => ytAsk(), 600);
   toast(name ? T('Opened {0}', name) : T('Video opened'));
 }
-$('#f-video').addEventListener('change', e => { const f = e.target.files[0]; if (f) openVideo(URL.createObjectURL(f), f.name); });
+$('#f-video').addEventListener('change', e => { const f = e.target.files[0]; if (f){ CUR_FILE = f; openVideo(URL.createObjectURL(f), f.name); } });
 (() => { const d = $('#drop'), sc = $('#screen');
   sc.addEventListener('dragover', e => { e.preventDefault(); d.classList.add('over'); });
   sc.addEventListener('dragleave', () => d.classList.remove('over'));
-  sc.addEventListener('drop', e => { e.preventDefault(); d.classList.remove('over'); const f = e.dataTransfer.files[0]; if (f && f.type.startsWith('video')) openVideo(URL.createObjectURL(f), f.name); });
+  sc.addEventListener('drop', e => { e.preventDefault(); d.classList.remove('over'); const f = e.dataTransfer.files[0]; if (f && f.type.startsWith('video')){ CUR_FILE = f; openVideo(URL.createObjectURL(f), f.name); } });
 })();
 
 $('#b-url').onclick = () => sheet(T('Use a video link'), `<div class="field"><span class="lbl">${T('Direct link to an MP4 or WebM file')}</span><input class="inp" id="u-url" placeholder="https://…/game.mp4"></div>
   <div class="note">${T('YouTube and Facebook pages cannot be played here. Download the replay and open the file instead, which is also faster to scrub.')}</div>
   <div style="display:flex;justify-content:flex-end"><button class="btn primary" id="u-go">${T('Open')}</button></div>`, el => {
-  el.querySelector('#u-go').onclick = () => { const u = el.querySelector('#u-url').value.trim(); if (!/^https?:\/\//.test(u)) return toast(T('Paste a full https:// link')); closeSheet(); openVideo(u, u.split('/').pop().split('?')[0]); };
+  el.querySelector('#u-go').onclick = () => { const u = el.querySelector('#u-url').value.trim(); if (!/^https?:\/\//.test(u)) return toast(T('Paste a full https:// link')); closeSheet(); CUR_FILE = null; openVideo(u, u.split('/').pop().split('?')[0]); };
 });
 
 /* ------------------------------------------------------------------ save a clip as a video file (records the original playback) */
 async function recordClip(c){
+  const name = `${team(c.team).code}_${(c.player ? c.player + '_' : '')}${(c.plays[0] || RESK[c.res]?.t || 'clip').replace(/[^A-Za-z0-9]+/g, '-')}_${fmt(c.t0).replace(/:/g, '-')}`;
+  return recordRange(c.t0, c.t1, name);
+}
+async function recordRange(t0, t1, base, onProgress){
   if (!hasVideo) return toast(T('Open the replay first'));
   if (!vid.captureStream && !vid.mozCaptureStream) return toast(T('This browser cannot record clips. Use the ffmpeg commands in Export.'));
   const dl = await getDownloads();
   if (!dl) return toast(T('Saving files is not available in this view. Use the ffmpeg commands in Export.'));
-  stopReel(); vid.pause(); vid.currentTime = c.t0;
+  stopReel(); vid.pause(); vid.currentTime = t0;
   await new Promise(r => vid.addEventListener('seeked', r, {once:true}));
   let stream; try { stream = (vid.captureStream || vid.mozCaptureStream).call(vid); } catch(e) { return toast(T('This video cannot be recorded (it comes from another site).')); }
   const mime = ['video/mp4;codecs=avc1,mp4a','video/mp4','video/webm;codecs=vp9,opus','video/webm'].find(m => window.MediaRecorder && MediaRecorder.isTypeSupported(m));
@@ -1345,12 +1366,93 @@ async function recordClip(c){
   rec.ondataavailable = e => e.data.size && parts.push(e.data);
   const done = new Promise(r => rec.onstop = r);
   $('#hud-rec').hidden = false; rec.start(250); vid.play();
-  await new Promise(r => { const f = () => { if (vid.currentTime >= c.t1 || vid.paused || vid.ended){ r(); } else requestAnimationFrame(f); }; f(); });
+  await new Promise(r => { const f = () => { if (onProgress) onProgress((vid.currentTime - t0) / (t1 - t0)); if (vid.currentTime >= t1 || vid.paused || vid.ended){ r(); } else requestAnimationFrame(f); }; f(); });
   vid.pause(); rec.stop(); await done; $('#hud-rec').hidden = true;
-  const name = `${team(c.team).code}_${(c.player ? c.player + '_' : '')}${(c.plays[0] || RESK[c.res]?.t || 'clip').replace(/[^A-Za-z0-9]+/g, '-')}_${fmt(c.t0).replace(/:/g, '-')}.${ext}`;
-  try { await dl.save({filename:name, data:new Blob(parts, {type:mime})}); toast(T('Clip saved')); }
-  catch(e){ if (e && e.code !== 'declined') toast(T('The clip could not be saved here.')); }
+  const name = base + '.' + ext;
+  try { await dl.save({filename:name, data:new Blob(parts, {type:mime})}); toast(T('Clip saved')); return true; }
+  catch(e){ if (e && e.code !== 'declined') toast(T('The clip could not be saved here.')); return false; }
 }
+
+/* ------------------------------------------------------------------ simple trim: one stretch of the film, saved as its own video file
+   Fast: ffmpeg.wasm (vendor/ffmpeg-0.12, served by HoopStatsMY next to this page) copies the stream without
+   re-encoding, reading the film straight from the disk (WORKERFS), so the original picture and sound are kept
+   and a minute takes seconds. The cut starts at the keyframe just before the start. Without it (the claude.ai
+   copy, a page opened from disk, a film from a link) the browser plays the stretch through once and records it. */
+const FF_BASE = (() => { try { return new URL('vendor/ffmpeg-0.12/', location.href).href; } catch(e) { return ''; } })();
+const ffPossible = () => !!CUR_FILE && /^https?:$/.test(location.protocol) && !(window.claude && window.claude.use) && typeof WebAssembly === 'object';
+let FF = null, FF_LOAD = null;
+function loadScript(src){ return new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = no; document.head.appendChild(sc); }); }
+function getFF(){
+  if (FF) return Promise.resolve(FF);
+  return FF_LOAD || (FF_LOAD = (async () => {
+    if (!window.FFmpegWASM) await loadScript(FF_BASE + 'ffmpeg.js');
+    const ff = new window.FFmpegWASM.FFmpeg();
+    await ff.load({coreURL:FF_BASE + 'ffmpeg-core.js', wasmURL:FF_BASE + 'ffmpeg-core.wasm'});
+    return (FF = ff);
+  })().catch(e => { FF_LOAD = null; throw e; }));
+}
+async function ffTrim(file, t0, t1, onProgress){
+  const ff = await getFF();
+  const ext = ((file.name.match(/\.([A-Za-z0-9]+)$/) || [, 'mp4'])[1]).toLowerCase();
+  const outExt = ext === 'webm' || ext === 'mkv' ? ext : 'mp4';
+  const out = 'trim.' + outExt, dur = t1 - t0;
+  const onLog = ({message}) => { const m = /time=(\d+):(\d+):([\d.]+)/.exec(message || ''); if (m && onProgress) onProgress(Math.min(1, (+m[1] * 3600 + +m[2] * 60 + +m[3]) / dur)); };
+  try { await ff.createDir('/in'); } catch(e) {}
+  await ff.mount('WORKERFS', {files:[file]}, '/in');
+  ff.on('log', onLog);
+  try {
+    const rc = await ff.exec(['-ss', t0.toFixed(3), '-i', '/in/' + file.name, '-t', dur.toFixed(3), '-c', 'copy', '-avoid_negative_ts', 'make_zero', out]);
+    const data = await ff.readFile(out);
+    try { await ff.deleteFile(out); } catch(e) {}
+    if (rc !== 0 || !data || !data.length) throw new Error('ffmpeg ' + rc);
+    return new Blob([data.buffer], {type:outExt === 'mp4' ? 'video/mp4' : 'video/' + outExt});
+  } finally {
+    ff.off('log', onLog);
+    try { await ff.unmount('/in'); } catch(e) {}
+  }
+}
+function openTrim(){
+  if (!hasVideo) return toast(T('Open the replay first'));
+  vid.pause();
+  const [t0, t1] = currentWindow(), dur = t1 - t0;
+  const set = U.inT != null && U.outT != null;
+  const total = isFinite(vid.duration) ? vid.duration : 0;
+  const est = CUR_FILE && total ? CUR_FILE.size * dur / total : 0;
+  const tooBig = est > 1.4e9;
+  const fast = ffPossible() && !tooBig;
+  const mb = b => b >= 1e9 ? (b / 1e9).toFixed(1) + ' GB' : Math.max(1, Math.round(b / 1e6)) + ' MB';
+  sheet(T('Trim video'), `
+    ${set ? '' : `<div class="edit-note"><span>${T('No start and end marked, so this is the stretch around the playhead. Mark them with I and O (or drag the handles) for any length.')}</span></div>`}
+    <div class="tr-times"><div><span class="lbl">${T('Start')}</span><b>${fmt(t0, 1)}</b></div><div><span class="lbl">${T('End')}</span><b>${fmt(t1, 1)}</b></div><div><span class="lbl">${T('Length')}</span><b>${fmt(dur, 1)}</b></div></div>
+    <label class="tr-opt ${fast ? '' : 'off'}"><input type="radio" name="trm" value="fast" ${fast ? 'checked' : 'disabled'}><span><b>${T('Original quality, fast')}</b><span>${fast ? T('Copies the film without re-encoding: same picture and sound, a minute takes seconds. Starts at the nearest keyframe, up to a second or two early.') + (est ? ' ' + T('About {0}.', mb(est)) : '') : tooBig ? T('This stretch is too long to cut in the browser (about {0}). Pick a shorter one, or use the ffmpeg commands in Export.', mb(est)) : T('Works on HoopStatsMY with a film opened from your computer.')}</span></span></label>
+    <label class="tr-opt"><input type="radio" name="trm" value="rec" ${fast ? '' : 'checked'}><span><b>${T('Record while it plays')}</b><span>${T('Plays the stretch once and records it: starts on the exact frame, takes as long as the stretch, slightly lower quality.')}</span></span></label>
+    <div class="tr-bar" id="tr-bar" hidden><i></i></div><div class="note" id="tr-msg"></div>
+    <div style="display:flex;justify-content:flex-end;gap:8px"><button class="btn primary" id="tr-go">${T('Save trimmed video')}</button></div>`, el => {
+    el.querySelector('#tr-go').onclick = async () => {
+      const how = (el.querySelector('input[name=trm]:checked') || {}).value;
+      const go = el.querySelector('#tr-go'), bar = el.querySelector('#tr-bar'), msg = el.querySelector('#tr-msg');
+      const base = slug((S.video || 'game').replace(/\.[^.]+$/, '')) + '_' + fmt(t0).replace(/:/g, '-') + '_to_' + fmt(t1).replace(/:/g, '-');
+      const prog = p => { bar.firstElementChild.style.width = Math.round(100 * Math.max(0, Math.min(1, p))) + '%'; };
+      go.disabled = true; bar.hidden = false; prog(0);
+      if (how === 'fast'){
+        try {
+          if (!FF){ msg.textContent = T('Loading the video cutter (about 30 MB, only the first time)…'); }
+          await getFF(); msg.textContent = T('Cutting…');
+          const blob = await ffTrim(CUR_FILE, t0, t1, prog); prog(1);
+          const ext = blob.type === 'video/mp4' ? 'mp4' : blob.type.split('/')[1];
+          await saveFile(base + '.' + ext, blob); msg.textContent = T('Saved {0}', base + '.' + ext); go.disabled = false;
+        } catch(e) {
+          msg.textContent = T('The fast cut did not work on this file. Choose “Record while it plays”, or use the ffmpeg commands in Export.'); go.disabled = false;
+        }
+      } else {
+        msg.textContent = T('Recording… keep this tab open until it finishes.');
+        const ok = await recordRange(t0, t1, base, prog);
+        msg.textContent = ok ? T('Saved {0}', base) : ''; go.disabled = false;
+      }
+    };
+  });
+}
+$('#t-trim').onclick = openTrim;
 
 /* ------------------------------------------------------------------ downloads capability */
 let dlNS;
@@ -1498,7 +1600,7 @@ $('#f-json').addEventListener('change', async e => {
 });
 $('#b-keys').onclick = () => sheet(T('Keyboard shortcuts'), `<div class="keys">
   ${[['Play / pause',T('Space')],['Back / forward 5 s','J  /  L'],['Back / forward 1 s','←  /  →'],['Previous / next frame',',  /  .'],['Mark clip start','I'],['Mark clip end','O'],
-     ['Play clip window','P'],['Save clip','Enter'],['Result','1 – 9'],['Home / away team','H  /  A'],['Shot made / missed','M  /  X'],['Film full screen','F'],['Close a sheet','Esc']]
+     ['Play clip window','P'],['Trim video','T'],['Save clip','Enter'],['Result','1 – 9'],['Home / away team','H  /  A'],['Shot made / missed','M  /  X'],['Film full screen','F'],['Close a sheet','Esc']]
      .map(([a, b]) => `<div><span>${T(a)}</span><kbd>${b}</kbd></div>`).join('')}</div>
   <div class="note">${T('Shortcuts pause while you type in a text box.')}</div>`);
 function resetUI(){ Object.assign(U, {team:'home', player:null, plays:new Set(), res:null, and1:false, diff:null, stype:null, shotStF:'all', shotDiffF:'all', repTeam:'home', note:'', inT:null, outT:null, editing:null, sel:null, pendingShot:null, reel:null, fTeam:'all', fPlay:'all', fRes:'all', shotTeam:'all', shotPlayer:'all'}); }
@@ -1569,9 +1671,9 @@ function openPicker(){
       const q = el.querySelector('#gp-q').value.trim().toLowerCase(), cid = el.querySelector('#gp-c').value;
       const rows = all.filter(({c, g}) => (!cid || c.id === cid) && (!q || (g.h + ' ' + g.a).toLowerCase().includes(q))).slice(0, 120);
       el.querySelector('#gp-list').innerHTML = rows.length ? rows.map(({c, g}) => {
-        const lg = n => { const u = H('teamLogo', n); return u ? `<img src="${esc(u)}" alt="" style="width:20px;height:20px;object-fit:contain">` : `<span class="crest" style="width:20px;height:20px;font-size:8px;background:${esc(hexOf(H('teamColor', n) || '#789'))};color:${inkOn(H('teamColor', n) || '#789')}">${esc(H('teamCode', n) || '')}</span>`; };
+        const lg = (n, cid) => { const cr = hostCrest(n, cid), u = cr && cr.src; return u ? `<img src="${esc(u)}" alt="" style="width:20px;height:20px;object-fit:contain;border-radius:3px;${cr.plate === 'dark' ? 'background:#141a26;' : cr.plate === 'light' ? 'background:#fff;' : ''}">` : `<span class="crest" style="width:20px;height:20px;font-size:8px;background:${esc(hexOf(H('teamColor', n) || '#789'))};color:${inkOn(H('teamColor', n) || '#789')}">${esc(H('teamCode', n) || '')}</span>`; };
         return `<button class="gp-row" data-mid="${esc(g.mid)}"><span class="gp-d"><b>${esc(fmtDay(g.date))}</b>${esc(g.time || '')}</span>
-          <span class="gp-m"><span class="gp-t">${lg(g.h)}<span>${esc(g.h)}</span><em>${g.hs ?? ''}</em></span><span class="gp-t">${lg(g.a)}<span>${esc(g.a)}</span><em>${g.as ?? ''}</em></span><span class="gp-c">${esc(c.label || c.name)}</span></span>
+          <span class="gp-m"><span class="gp-t">${lg(g.h, c.id)}<span>${esc(g.h)}</span><em>${g.hs ?? ''}</em></span><span class="gp-t">${lg(g.a, c.id)}<span>${esc(g.a)}</span><em>${g.as ?? ''}</em></span><span class="gp-c">${esc(c.label || c.name)}</span></span>
           ${IDX && IDX[g.mid] ? `<span class="gp-tag">${T('Scouted')}</span>` : (lsGet(KEY + ':' + g.mid) ? `<span class="gp-tag" style="color:var(--accent-2-ink);background:var(--accent-2-soft)">${T('On this computer')}</span>` : '<span></span>')}</button>`;
       }).join('') : `<div class="empty" style="padding:16px">${T('No games match.')}</div>`;
     };
@@ -1589,7 +1691,7 @@ async function linkGame(mid){
   next = Object.assign(blank(), next || {});
   const {c, g} = hg;
   Object.assign(next, {mid, cid:c.id, comp:c.label || c.name, date:g.date || '', score:[g.hs, g.as], example:false});
-  next.teams = {home:hostTeam(g.h), away:hostTeam(g.a)};
+  next.teams = {home:hostTeam(g.h, c.id), away:hostTeam(g.a, c.id)};
   for (let i = 0; i < 40; i++){ if (H('getBox', mid)) break; await new Promise(r => setTimeout(r, 250)); }
   ['home', 'away'].forEach(k => {
     const r = hostRoster(mid, next.teams[k].name);
@@ -1676,11 +1778,11 @@ async function viewBuild(){
   };
   let sideOf;
   if (VS.scope === 'all'){
-    S.teams.home = hostTeam(VS.team); S.teams.away = {name:T('Opponents'), code:'OPP', color:'#8a93a6', logo:''};
+    S.teams.home = hostTeam(VS.team, (Object.values(VS.idx).find(g => g.h === VS.team || g.a === VS.team) || {}).cid); S.teams.away = {name:T('Opponents'), code:'OPP', color:'#8a93a6', logo:''};
     sideOf = d => d.teams.home.name === VS.team ? {home:'home', away:'away'} : {home:'away', away:'home'};
   } else {
     const d = VS.docs[VS.scope];
-    if (d){ S.teams.home = hostTeam(d.teams.home.name); S.teams.away = hostTeam(d.teams.away.name); S.score = d.score ? [d.score.h, d.score.a] : null; }
+    if (d){ S.teams.home = hostTeam(d.teams.home.name, d.cid); S.teams.away = hostTeam(d.teams.away.name, d.cid); S.score = d.score ? [d.score.h, d.score.a] : null; }
     sideOf = () => ({home:'home', away:'away'});
   }
   mids.forEach(m => {
@@ -1797,7 +1899,7 @@ document.addEventListener('keydown', e => {
   const map = {
     ' ': togglePlay, j:() => seek(now() - 5), l:() => seek(now() + 5), arrowleft:() => seek(now() - 1), arrowright:() => seek(now() + 1),
     ',':() => step(-1 / 30), '.':() => step(1 / 30), i:() => $('#t-in').click(), o:() => $('#t-out').click(), p:() => $('#t-preview').click(),
-    enter:() => saveClip(), f:() => toggleFS($('#stage')), h:() => { U.team = 'home'; U.player = null; renderView(); }, a:() => { U.team = 'away'; U.player = null; renderView(); },
+    enter:() => saveClip(), t:() => openTrim(), f:() => toggleFS($('#stage')), h:() => { U.team = 'home'; U.player = null; renderView(); }, a:() => { U.team = 'away'; U.player = null; renderView(); },
     m:() => { U.shotMade = 1; if (U.view === 'shots') renderView(); toast(T('Next shot: made')); }, x:() => { U.shotMade = 0; if (U.view === 'shots') renderView(); toast(T('Next shot: missed')); },
   };
   if (/^[1-9]$/.test(k)){ const r = RES[+k - 1]; if (r){ U.res = U.res === r.k ? null : r.k; if (!['M2','M3'].includes(U.res)) U.and1 = false; if (U.view !== 'tag') setView('tag'); else renderView(); } e.preventDefault(); return; }
@@ -1810,6 +1912,8 @@ renderAll();
 if (VIEW) viewInit();
 else if (HOST){
   const q = QS.get('mid');
+  // a session kept from before: refresh its crests from the site (they can be added after it was saved)
+  if (S.mid && hostGame(S.mid)){ const hg = hostGame(S.mid); ['home', 'away'].forEach(k => { const t = hostTeam(S.teams[k].name, hg.c.id); Object.assign(S.teams[k], {logo:t.logo, plate:t.plate, flag:t.flag}); }); renderAll(); }
   if (q && q !== S.mid) linkGame(q);
   else if (!S.mid) setTimeout(openPicker, 300);
   loadIndex();

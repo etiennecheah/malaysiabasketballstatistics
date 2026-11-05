@@ -38,6 +38,18 @@ function scoutFrameKept(src) {
 function scoutBackend() {
   return typeof accB === 'function' ? accB() : null;
 }
+// a team's crest as the site draws it inside a competition: the club logo (an edition's own, via
+// CREST_CID), else the state or national flag. The frame cannot set CREST_CID itself (a let).
+function scoutCrest(name, cid) {
+  const keep = CREST_CID;
+  CREST_CID = cid || null;
+  try {
+    const k = teamLogoKey(name);
+    if (k) return { src: LOGOS[k], plate: TEAM_LOGO_DARK[k] ? 'dark' : TEAM_LOGO_LIGHT[k] ? 'light' : '' };
+    const fl = flagOf(name);
+    return fl ? { src: FLAGS[fl], flag: true } : null;
+  } finally { CREST_CID = keep; }
+}
 function renderScoutRoom(mid) {
   return `<div class="sc-full"><iframe class="sc-frame" src="${esc(scoutSrc(false, mid))}" title="Scout room" allow="fullscreen; clipboard-write"></iframe></div>`;
 }
