@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1793891510.3221414,
-  "fp": "717607b27393d5918eb8"
+  "at": 1793893838.244479,
+  "fp": "ea46e075e0b7e0ac02a7"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -37,7 +37,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-02 04:06  FAILED 49965 (4): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:10  FAILED 49965 (5): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:15  FAILED 49965 (6): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:16  FAILED 48654 (27): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
@@ -76,7 +75,8 @@
   "2026-11-05 08:22  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
   "2026-11-05 22:35  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 DREAMINDER 69-79 HORNBILLS  [2944618: final 69-79 read from the live feed (the schedule page does not show it as final yet); 2944618: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 69 (DREAMINDER))]",
   "2026-11-05 22:45  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 DREAMINDER 69-79 HORNBILLS  [2944618: the source's box score replaces the one from the live feed]",
-  "2026-11-05 23:11  sync: Major Basketball League \u2014 fixtures, standings or season lines updated"
+  "2026-11-05 23:11  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
+  "2026-11-05 23:50  sync: shot charts of 1 game in 1 competition  [886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -95,7 +95,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1793889345.8051484,
+  "21375": 1793893660.9215496,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
@@ -167,7 +167,7 @@
   "48103": 1792147425.7033217,
   "48105": 1792147425.7033217,
   "48653": 1792144911.6393926,
-  "48654": 1793889345.8051484,
+  "48654": 1793893660.9215496,
   "48926": 1792145848.872564,
   "48931": 1792144911.6393926,
   "48932": 1792144911.6393926,
