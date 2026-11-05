@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1793878303.7257822,
-  "fp": "ef3a80ec8fc7759f4971"
+  "at": 1793889310.6976657,
+  "fp": "66cc350bded0cb67e45b"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -35,7 +35,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-02 04:01  FAILED 49965 (2): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:03  FAILED 49965 (3): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:06  FAILED 48654 (26): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:06  FAILED 49965 (4): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
@@ -74,13 +73,21 @@
   "2026-11-02 06:55  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 HORNBILLS 90-81 DREAMINDER; shot charts of 1 game  [2944613: the source's box score replaces the one from the live feed; 1 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-11-03 10:16  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated",
   "2026-11-04 07:17  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
-  "2026-11-05 08:22  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated"
+  "2026-11-05 08:22  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
+  "2026-11-05 22:35  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 DREAMINDER 69-79 HORNBILLS  [2944618: final 69-79 read from the live feed (the schedule page does not show it as final yet); 2944618: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 69 (DREAMINDER))]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
   "50247": 1791743461.92955
  },
- "pending": {},
+ "pending": {
+  "2944618": {
+   "cid": "48654",
+   "kind": "box",
+   "next": 1793889741.394063,
+   "since": 1793889141.394063
+  }
+ },
  "rechecked": {
   "1312929": "25340",
   "1312947": "25341",
@@ -93,7 +100,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1793856245.9448156,
+  "21375": 1793882685.0982337,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
