@@ -3,7 +3,7 @@
    database holds; a new season counts the day its games are in.
    - Totals: every 50 points, rebounds, assists, steals, blocks and games, over the
      MBL career or with one team, with the game each was reached in.
-   - Next up: active players (in the latest MBL season) within two games of their
+   - Next up: active players (on the latest MBL season's roster or in its games) within two games of their
      next one, at their per-game rate of that season.
    - Single game: triple- and double-doubles, 30 points, 15 rebounds, 10 assists,
      5 steals, 5 blocks; the closest game where nobody has one yet.
@@ -58,7 +58,7 @@ function msModel() {
     });
   }));
   const latest = comps.length ? comps[comps.length - 1].id : null;
-  const car = {}, team = {}, ach = [], act = {};
+  const car = {}, team = {}, ach = [], act = {}, last = {};
   const add = (T, x) => { T.gp = (T.gp || 0) + 1; ['pts', 'reb', 'ast', 'stl', 'blk'].forEach(k => { T[k] = (T[k] || 0) + x[k]; }); };
   rows.forEach(x => {
     [['c', car, x.pid], ['t', team, x.pid + '|' + x.t]].forEach(([sc, M, key]) => {
@@ -68,7 +68,18 @@ function msModel() {
       MS_K.forEach(([k]) => { for (let th = (Math.floor(before[k] / MS_STEP) + 1) * MS_STEP; th <= T[k]; th += MS_STEP) ach.push({sc, pid: x.pid, t: x.t, k, th, d: x.d, mid: x.mid, cid: x.cid, o: x.o, y: x.y}); });
     });
     if (x.cid === latest) { const a = act[x.pid] = act[x.pid] || {t: x.t, g: 0, pts: 0, reb: 0, ast: 0, stl: 0, blk: 0}; a.t = x.t; a.g++; ['pts', 'reb', 'ast', 'stl', 'blk'].forEach(k => { a[k] += x[k]; }); }
+    // each player's most recent season he played, for his pace before the new season's first game
+    const L = last[x.pid] && last[x.pid].cid === x.cid ? last[x.pid] : (last[x.pid] = {cid: x.cid, g: 0, pts: 0, reb: 0, ast: 0, stl: 0, blk: 0});
+    L.g++; ['pts', 'reb', 'ast', 'stl', 'blk'].forEach(k => { L[k] += x[k]; });
   });
+  // Active = on the latest season's roster, or played in it. Before a new season's first game nobody has
+  // played in it yet, so its roster says who is active (with his new team) and his pace comes from his
+  // last season played until he has games in the new one.
+  const lc = comps[comps.length - 1];
+  if (lc) Object.entries(lc.roster || {}).forEach(([tid, rs]) => (rs || []).forEach(r => {
+    if (!r.pid || act[r.pid] || !last[r.pid]) return;
+    act[r.pid] = Object.assign({}, last[r.pid], {t: TEAMS[tid] || tid});
+  }));
   const next = [];
   Object.entries(act).forEach(([pid, a]) => [['c', car[pid]], ['t', team[pid + '|' + a.t]]].forEach(([sc, T]) => {
     if (!T) return;
