@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1793891337.215954,
-  "fp": "9fa33df4459926881ea6"
+  "at": 1793891510.3221414,
+  "fp": "717607b27393d5918eb8"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -21,7 +21,8 @@
   "48654": "2026-11-05",
   "49965": "2026-11-05",
   "50247": "2026-10-21",
-  "50248": "2026-10-21"
+  "50248": "2026-10-21",
+  "50458": "2026-11-05"
  },
  "fail": {},
  "full": {
@@ -31,11 +32,11 @@
   "48654": 1793573525.4894218,
   "49965": 1793573444.3163853,
   "50247": 1792360197.0091074,
-  "50248": 1792360741.928966
+  "50248": 1792360741.928966,
+  "50458": 1793891362.5960033
  },
  "lines_retry": {},
  "log": [
-  "2026-11-02 04:06  FAILED 48654 (26): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:06  FAILED 49965 (4): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:10  FAILED 49965 (5): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:15  FAILED 49965 (6): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
@@ -74,7 +75,8 @@
   "2026-11-04 07:17  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
   "2026-11-05 08:22  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
   "2026-11-05 22:35  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 DREAMINDER 69-79 HORNBILLS  [2944618: final 69-79 read from the live feed (the schedule page does not show it as final yet); 2944618: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 69 (DREAMINDER))]",
-  "2026-11-05 22:45  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 DREAMINDER 69-79 HORNBILLS  [2944618: the source's box score replaces the one from the live feed]"
+  "2026-11-05 22:45  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 DREAMINDER 69-79 HORNBILLS  [2944618: the source's box score replaces the one from the live feed]",
+  "2026-11-05 23:11  sync: Major Basketball League \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
