@@ -446,7 +446,7 @@ TEAM_RENAME = {
     'Putrajaya Harimau': 'Harimau',                       # the source's own newer name (D-League 2026 U23)
     'Johore': 'Johor',                                    # the old spelling on the 2018 source pages
 }
-SKIP_RENAME = {'photos', 'logos', 'flags', 'complogos', 'persons', 'palias'}
+SKIP_RENAME = {'photos', 'logos', 'flags', 'complogos', 'natflags', 'persons', 'palias'}
 
 
 def rename_teams(out):
@@ -954,7 +954,9 @@ def main():
            'pkeys': ['pid', 'team'] + PF_KEYS, 'bkeys': BOX_KEYS, 'photos': photos,
            # merged-away person ids, so a link minted before the merge still lands
            'palias': pidmap,
-           'logos': logos, 'flags': flags, 'complogos': complogos}
+           'logos': logos, 'flags': flags, 'complogos': complogos,
+           # national flags keyed on the IOC code the rosters use (flag-icons, MIT; data/natflags)
+           'natflags': _img_dir('natflags')}
     # one club, one name: the source keeps a team's old and alternate names, and
     # the user has said which ones are the same club (see TEAM_RENAME)
     renamed = rename_teams(out)

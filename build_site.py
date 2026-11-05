@@ -9,7 +9,7 @@ D = os.path.join(R, 'data')
 PARTS = ['app0_router.js', 'app1_core.js', 'app2_nav.js', 'app3_comp.js', 'app3b_family.js', 'app4_players.js',
          'app4b_profile.js', 'app4c_impact.js', 'app4d_radar.js', 'app4e_compare.js',
          'app4f_bpm.js', 'app4g_formulas.js', 'app4i_games.js',
-         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app4u_shots.js', 'app4w_shot3d.js', 'app4x_cmpshots.js', 'app4y_cmplineups.js', 'app4z_gameshots.js', 'app4za_milestones.js', 'app4zb_records.js', 'app4zc_postgame.js', 'app4zd_wowy.js', 'app4ze_shift.js', 'app4zf_companion.js', 'app4v_report.js', 'app4zg_scout.js', 'app5_rest.js']
+         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app4u_shots.js', 'app4w_shot3d.js', 'app4x_cmpshots.js', 'app4y_cmplineups.js', 'app4z_gameshots.js', 'app4za_milestones.js', 'app4zb_records.js', 'app4zc_postgame.js', 'app4zd_wowy.js', 'app4ze_shift.js', 'app4zf_companion.js', 'app4v_report.js', 'app4zg_scout.js', 'app4zh_mbl.js', 'app5_rest.js']
 
 NEWS_TYPES = ('signing', 'transfer', 'departure', 'injury', 'return', 'retirement', 'national', 'other')
 
@@ -280,7 +280,7 @@ def main():
 # them and a new build is never mixed with an old one.
 CONFIG = os.path.join(D, 'site_config.json')
 MORE_KEYS = ('bpm', 'bpmMeta', 'adv', 'onoff', 'onoffMeta', 'pbpPer')   # loaded after the first page is drawn
-IMG_KEYS = ('logos', 'photos', 'avatars', 'complogos', 'flags')
+IMG_KEYS = ('logos', 'photos', 'avatars', 'complogos', 'flags', 'natflags')
 MIME_EXT = {'image/webp': 'webp', 'image/png': 'png', 'image/jpeg': 'jpg', 'image/svg+xml': 'svg', 'image/gif': 'gif'}
 
 

@@ -1,0 +1,1 @@
+Flag images from flag-icons by Panayiotis Lipiridis (https://github.com/lipis/flag-icons), MIT License. File names are IOC country codes as the source rosters use them.

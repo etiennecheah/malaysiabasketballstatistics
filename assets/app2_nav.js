@@ -33,6 +33,7 @@ function subnav(label, crumb, links) {
 
 function siteLinks(state) {
   return [['#/', 'Home', state === 'home' || state === 'live'],
+          ['mbl', typeof MB !== 'undefined' ? MB.tabLabel() : 'MBL', state === 'mbl'],
           ['#/players', 'Players', state === 'global-players' || state === 'player'],
           ['#/competitions', 'Competitions', state === 'hub' || state === 'notfound' || state === 'comp' || state === 'cfam'],
           ['#/teams', 'Teams', state === 'teams-hub' || state === 'team-global'],
@@ -41,6 +42,8 @@ function siteLinks(state) {
           ['stats', 'Tools', state === 'stats' || state === 'compare' || state === 'wowy' || state === 'shift' || state === 'scouting'],   // a button: it opens the Tools menu (Lineups, Clutch, Compare)
           ['#/formulas', 'Formulas', state === 'formulas']]
     .map(([h, t, a]) => h === 'stats' ? (typeof STATS !== 'undefined' ? STATS.navButton(a) : '')
+      // the current MBL season, with a small pulsing dot
+      : h === 'mbl' ? `<a href="#/mbl" class="nav-link nav-mbl ${a ? 'active' : ''}"><i aria-hidden="true"></i>${esc(t)}</a>`
       : `<a href="${h}" class="nav-link ${a ? 'active' : ''}">${esc(t)}</a>`).join('');
 }
 
@@ -51,7 +54,7 @@ function renderNav(state, cid, tab) {
   if (!cid || state === 'hub' || state === 'global-players' || state === 'player' || state === 'compare'
       || state === 'formulas' || state === 'notfound'
       || state === 'teams-hub' || state === 'team-global' || state === 'cfam'
-      || state === 'home' || state === 'live' || state === 'me' || state === 'stats' || state === 'milestones' || state === 'records' || state === 'wowy' || state === 'shift' || state === 'scouting') {
+      || state === 'home' || state === 'live' || state === 'me' || state === 'stats' || state === 'milestones' || state === 'records' || state === 'wowy' || state === 'shift' || state === 'scouting' || state === 'mbl') {
     const links = siteLinks(state);
     const label = state === 'stats' || state === 'compare' || state === 'wowy' || state === 'shift' || state === 'scouting' ? 'Tools' : state === 'formulas' ? 'Formulas'
       : (state === 'teams-hub' || state === 'team-global') ? 'Teams'
@@ -70,7 +73,7 @@ function renderNav(state, cid, tab) {
       ? '<span class="subnav-crumb">Stat Line Shift · one player’s line with and without his teammates, men’s Agong Cup and MBL</span>'
       : `<span class="subnav-crumb">Malaysia basketball database · ${COMPS.length} competitions</span>`;
     // a player's page opens straight into its own full-width hero
-    return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' || state === 'milestones' || state === 'records' ? '' : subnav(label, crumb, []));
+    return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' || state === 'milestones' || state === 'records' || state === 'mbl' ? '' : subnav(label, crumb, []));
   }
   // Competition-scoped pages: the site bar, with Competitions lit. The sections of
   // the competition are tabs in the page's own header (compHeader); a team or a
@@ -101,7 +104,7 @@ function pvKeepScroll(y) {
   const natural = pg.getBoundingClientRect().top + window.scrollY, stick = parseFloat(getComputedStyle(nav).top) || 0;
   window.scrollTo(0, Math.min(y, Math.max(0, natural - stick)));
 }
-const ROUTE_NO_BOX = /^(|home|players|competitions|teams|live|me|admin|privacy)$/;
+const ROUTE_NO_BOX = /^(|home|mbl|players|competitions|teams|live|me|admin|privacy)$/;
 let ROUTE_DRAWN = false;
 function route() {
   const hash = HS.hash().replace(/^#/, '') || '/';
@@ -182,6 +185,9 @@ function route() {
     state = 'wowy'; body = renderWowy();
   } else if (parts[0] === 'records') {
     state = 'records'; body = renderRecords();
+  } else if (parts[0] === 'mbl') {
+    // the current MBL season on one page (app4zh_mbl.js)
+    state = 'mbl'; body = renderMbl();
   } else if (parts[0] === 'milestones') {
     state = 'milestones'; body = renderMilestones();
   } else if (parts[0] === 'formulas') {

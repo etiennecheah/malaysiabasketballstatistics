@@ -32,10 +32,11 @@
    "canonical": "2786676",
    "aliases": [
     "2301997",
-    "2830459"
+    "2830459",
+    "2861125"
    ],
    "name": "Jun Kai, John Tang",
-   "note": "Jun Kai, Tang John is the same player with the surname misplaced | 2026-10-12: + 2830459 (Jun Kai, John Tang, Johor)"
+   "note": "Jun Kai, Tang John is the same player with the surname misplaced | 2026-10-12: + 2830459 (Jun Kai, John Tang, Johor); 2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint (2861125)"
   },
   {
    "canonical": "2096646",
@@ -55,9 +56,10 @@
   {
    "canonical": "1957810",
    "aliases": [
-    "1959975"
+    "1959975",
+    "2861127"
    ],
-   "note": "Khai Chiek, John Wong / Khai Chiek Wong - dob 9/27/96, 187cm, Johor Southern Tigers on both"
+   "note": "Khai Chiek, John Wong / Khai Chiek Wong - dob 9/27/96, 187cm, Johor Southern Tigers on both; 2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint (2861127)"
   },
   {
    "canonical": "2568810",
@@ -97,10 +99,11 @@
     "2501956",
     "2688491",
     "2778736",
-    "2084357"
+    "2084357",
+    "2861089"
    ],
    "name": "Keshmendip Singh Gill",
-   "note": "one player under six registrations (Keshmendip Gill / ... Azbeel Singh Gill / Azbeel Singh Gill Keshmendip / A/L Azbeel Singh Gill) - confirmed by the user 2026-09-29; competitions disjoint | 2026-10-12: + 2084357 (Keshmendip Singh Gill (2018-19 record \"Singh Gill Keshmendip\", Pulau Pinang))"
+   "note": "one player under six registrations (Keshmendip Gill / ... Azbeel Singh Gill / Azbeel Singh Gill Keshmendip / A/L Azbeel Singh Gill) - confirmed by the user 2026-09-29; competitions disjoint | 2026-10-12: + 2084357 (Keshmendip Singh Gill (2018-19 record \"Singh Gill Keshmendip\", Pulau Pinang)); 2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint (2861089)"
   },
   {
    "canonical": "2092911",
@@ -1238,16 +1241,19 @@
    "canonical": "2092916",
    "aliases": [
     "2831956",
-    "1125623"
+    "1125623",
+    "2861118",
+    "1885854"
    ],
-   "note": "2026-10-12 duplicate check: Sharwhin (A/L) Siva Ragu: NS, ATM 2026, MABA Selection 2018"
+   "note": "2026-10-12 duplicate check: Sharwhin (A/L) Siva Ragu: NS, ATM 2026, MABA Selection 2018; 2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint (2861118); 2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint (1885854)"
   },
   {
    "canonical": "2786658",
    "aliases": [
-    "2830456"
+    "2830456",
+    "2861123"
    ],
-   "note": "2026-10-12 duplicate check: Chong Kee, Damian Ghai, Johor"
+   "note": "2026-10-12 duplicate check: Chong Kee, Damian Ghai, Johor; 2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint (2861123)"
   },
   {
    "canonical": "2688492",
@@ -1337,9 +1343,10 @@
   {
    "canonical": "2304381",
    "aliases": [
-    "2778735"
+    "2778735",
+    "2861104"
    ],
-   "note": "2026-10-12 duplicate check: Nik Muhammad Hafizudin (Bin) Nik Hamzah, ATM"
+   "note": "2026-10-12 duplicate check: Nik Muhammad Hafizudin (Bin) Nik Hamzah, ATM; 2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint (2861104)"
   },
   {
    "canonical": "2084312",
@@ -1584,6 +1591,97 @@
     "2755317"
    ],
    "note": "2026-10-15 MSSM U18 import: Tan Yu Yeong, Claudia - Melaka U15 and U17"
+  },
+  {
+   "canonical": "2568804",
+   "aliases": [
+    "2253448"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
+  },
+  {
+   "canonical": "2786743",
+   "aliases": [
+    "2861095"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
+  },
+  {
+   "canonical": "2379688",
+   "aliases": [
+    "2861097"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
+  },
+  {
+   "canonical": "1974719",
+   "aliases": [
+    "2861098"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
+  },
+  {
+   "canonical": "2125928",
+   "aliases": [
+    "2861100"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
+  },
+  {
+   "canonical": "2252605",
+   "aliases": [
+    "2861110"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
+  },
+  {
+   "canonical": "2371556",
+   "aliases": [
+    "2861112"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
+  },
+  {
+   "canonical": "1885900",
+   "aliases": [
+    "2861124"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
+  },
+  {
+   "canonical": "2797840",
+   "aliases": [
+    "2861129"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
+  },
+  {
+   "canonical": "2615574",
+   "aliases": [
+    "2861103"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
+  },
+  {
+   "canonical": "1900639",
+   "aliases": [
+    "2861105"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
+  },
+  {
+   "canonical": "2318312",
+   "aliases": [
+    "2861106"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
+  },
+  {
+   "canonical": "1958899",
+   "aliases": [
+    "2861108"
+   ],
+   "note": "2026-11-05: MBL 2026 roster record (or older duplicate) of the same player - same date of birth, same name in another order/spelling, competitions disjoint"
   }
  ]
 }
