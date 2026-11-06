@@ -71,6 +71,22 @@ function cpnClock(p) { return String(p.clock || '').replace(/^0(\d:)/, '$1').rep
 function cpnFace(pid) { return pid && ((DB.avatars || {})[pid] || PHOTOS[pid]) || ''; }
 function cpnInit(name) { return initials(watchShort(name).replace(/\./g, ' ')); }
 function cpnSgn(v) { return (v > 0 ? '+' : '') + v; }
+/* the name shown: the full name ("John Wong Khai Chiek" when the record has an English name after a comma);
+   an import player by first and last name only ("Frederick Lee Jones Lish" → "Frederick Lish") */
+let CPN_LOCAL = null;
+function cpnLocal(pid) {
+  if (!pid) return false;
+  if (!CPN_LOCAL) CPN_LOCAL = typeof msLocalTest === 'function' ? msLocalTest() : (() => false);
+  return CPN_LOCAL(pid);
+}
+function cpnFullName(pid, fallback) {
+  let n = String(pid && PERSONS[pid] ? PERSONS[pid] : fallback || '').trim();
+  if (!n) return '';
+  if (n.indexOf(',') > 0) { const [a, b] = n.split(','); n = b.trim() + ' ' + a.trim(); }
+  if (pid && cpnLocal(pid)) return n;
+  const w = n.split(/\s+/).filter(x => !/^(jr|sr|ii|iii|iv)\.?$/i.test(x));
+  return w.length > 2 ? w[0] + ' ' + w[w.length - 1] : w.join(' ');
+}
 function cpnMmss(s) { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); }
 
 /* A team's colour, taken from its own logo (the most common strong colour), lightened so it
@@ -168,7 +184,7 @@ function cpnLoop() {
     else CPN.instant = false;
     CPN.cur = snap; CPN.target = n; changed = true;
   }
-  if (CPN.cur && CPN.shown < CPN.target && now - CPN.lastStep >= CPN_STEP) {
+  if (CPN.cur && CPN.shown < CPN.target && now - CPN.lastStep >= CPN_STEP && now >= (CPN.holdUntil || 0)) {
     CPN.shown++; CPN.lastStep = now; CPN.instant = false; changed = true;
   }
   if (changed) cpnRender(false);
@@ -278,14 +294,15 @@ function cpnModel(g, d, k) {
     })),
     tot: Object.assign(watchSum(t.pl || []), t.tot || {}),
   }));
-  teams.forEach(t => t.pl.forEach(p => { p.short = watchShort(p.name) || p.name; }));
+  teams.forEach(t => t.pl.forEach(p => { p.short = watchShort(p.name) || p.name; p.full = cpnFullName(p.pid, p.name) || p.short; }));
 
   // the play-by-play, newest first
   const shot = p => p.type === '2pt' || p.type === '3pt' || p.type === 'freethrow';
   const feed = vis.map((p, i) => ({ p, i })).filter(x => x.p.type !== 'substitution' && x.p.type !== 'foulon' && x.p.type !== 'period')
     .reverse().map(({ p, i }) => {
       const side = p.team === 1 || p.team === 2 ? p.team : 0, txt = livePlayText(p);
-      return { i, side, per: cpnPer(p), clock: cpnClock(p), name: p.name || '', short: p.name ? watchShort(p.name) : '',
+      const fpid = side ? pidOf(side, p.no) : null;
+      return { i, side, per: cpnPer(p), clock: cpnClock(p), name: p.name || '', short: p.name ? cpnFullName(fpid, p.name) : '',
         pid: side ? pidOf(side, p.no) : null, text: p.name ? txt : livePlayCap(txt),
         score: p.score ? p.score[0] + '–' + p.score[1] : '', scoring: !!(p.scoring && p.made && shot(p)), team: side ? T[side - 1] : null };
     });
@@ -301,13 +318,17 @@ function cpnModel(g, d, k) {
       let kicker = tm.name;
       if (runNow && runNow.side === side && runNow.to === ls) kicker = tm.code + ' ' + runNow.pts + '–0 run';
       else if (prevRun && prevRun.side !== side && scores[scores.length - 2] === prevRun.to) kicker = 'Ends ' + (/^(8|11|18)$/.test(String(prevRun.pts)) ? 'an ' : 'a ') + prevRun.pts + '–0 run';
-      moment = { kind: 'score', side, pid, kicker, who: watchShort(lastP.name) || tm.name, what: livePlayText(lastP),
+      moment = { kind: 'score', side, pid, kicker, who: cpnFullName(pid, lastP.name) || tm.name, what: livePlayText(lastP),
         big: '+' + ls.pts, line: pl ? pl.pts + ' PTS' + (pl.fga ? ' · ' + pl.fgm + '/' + pl.fga + ' FG' : '') : '' };
     } else if (lastP.type === 'timeout' && side) {
       moment = { kind: 'timeout', side, pid: null, kicker: tm.code, who: 'Timeout, ' + tm.name, what: score[side - 1] - score[2 - side] >= 0 ? 'Up ' + (score[side - 1] - score[2 - side]) : 'Down ' + (score[2 - side] - score[side - 1]),
         big: String(timeouts[side - 1].left), line: 'left' };
     } else if (lastP.type === 'foul' && side && foulsBy >= 5) {
-      moment = { kind: 'out', side, pid, kicker: 'Fouled out', who: watchShort(lastP.name), what: 'Personal foul, his fifth', big: '5', line: 'fouls' };
+      moment = { kind: 'out', side, pid, kicker: 'Fouled out', who: cpnFullName(pid, lastP.name), what: 'Personal foul, his fifth · out of the game', big: '5', line: 'fouls' };
+    } else if (lastP.type === 'foul' && side && lastP.no) {
+      const tf = fouls[side - 1];
+      moment = { kind: 'foul', side, pid, kicker: 'Personal foul' + (tf >= 4 ? ' · in the bonus' : ''), who: cpnFullName(pid, lastP.name),
+        what: (foulsBy === 4 ? 'Four fouls, one from fouling out' : 'Foul ' + foulsBy + ' for him') + (tf != null ? ' · ' + tm.code + ' team fouls ' + tf : ''), big: String(foulsBy), line: 'fouls', warn: foulsBy >= 4 };
     }
   }
 
@@ -483,7 +504,8 @@ function renderCompanion(mid) {
   if (CPN.mid !== mid) {
     Object.assign(CPN, { mid, snaps: [], cur: null, shown: 0, target: 0, fetchedFinal: false, noFeed: false, prevStats: {}, prevScore: null,
       prevPlays: 0, sel: null, away: false, seen: 0, hov: null, sortBy: null, filter: 'all', shots: null, shotSrc: null, shotAt: 0, shotBusy: false,
-      sTeam: 0, sPer: 0, sRes: 'all', sMode: 'dots', sPid: null, hs: null, unseen: 0, lastLatest: -1, view: cpnLs('hs-cpn-view') || 'box' });
+      sTeam: 0, sPer: 0, sRes: 'all', sMode: 'dots', sPid: null, hs: null, unseen: 0, lastLatest: -1, view: cpnLs('hs-cpn-view') || 'box',
+      fold: { ts: cpnLs('hs-cpn-fold-ts') === '1', pb: cpnLs('hs-cpn-fold-pb') === '1' }, holdUntil: 0, heroKey: null, car: null });
   }
   if (g.st !== 'COMPLETE' && g.st !== 'NOT_PLAYED' && !LIVE.games[mid]) {
     LIVE.games[mid] = { g, state: 'pending', data: null, at: 0 };
@@ -511,18 +533,24 @@ function renderCompanion(mid) {
       </div>
       <div class="cn-flow" id="cn-flow"></div>
       <div id="cn-lt"></div>
+      <div id="cn-hero"></div>
     </section>
     <div class="cn-main">
       <main class="cn-body">
         <div class="cn-tabsrow"><div class="cn-tabs" role="tablist" aria-label="Game views" id="cn-tabs"></div><span class="cn-tabnote" id="cn-tabnote"></span></div>
         <div class="cn-pane" id="cn-pane"></div>
       </main>
-      <aside class="cn-rail">
-        <section class="cn-compare" id="cn-compare" aria-label="Team stats"></section>
-        <section class="cn-plays" aria-label="Play-by-play">
-          <div class="cn-ph"><h2>Play-by-play</h2><span class="cn-chips" role="group" aria-label="Show" id="cn-filters"></span></div>
-          <div id="cn-run"></div>
-          <div class="cn-feedwrap"><div id="cn-newpill"></div><ol class="cn-feed cn-scroll" id="cn-feed"></ol></div>
+      <aside class="cn-rail" id="cn-rail">
+        <section class="cn-acc cn-acc-ts" id="cn-acc-ts" aria-label="Team stats">
+          <button type="button" class="cn-acch" data-cn="acc" data-v="ts" aria-expanded="true" aria-controls="cn-compare"><svg class="cn-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg><h2>Team stats</h2><span class="cn-peek cn-num" id="cn-peek-ts"></span><span class="cn-acccrests" id="cn-crests"></span></button>
+          <div class="cn-accb cn-compare cn-scroll" id="cn-compare"></div>
+        </section>
+        <section class="cn-acc cn-plays" id="cn-acc-pb" aria-label="Play-by-play">
+          <div class="cn-acch cn-acch-pb"><button type="button" data-cn="acc" data-v="pb" aria-expanded="true" aria-controls="cn-pbbody"><svg class="cn-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg><h2>Play-by-play</h2><span class="cn-peek" id="cn-peek-pb"></span></button><span class="cn-chips" role="group" aria-label="Show" id="cn-filters"></span></div>
+          <div class="cn-accb cn-pbbody" id="cn-pbbody">
+            <div id="cn-run"></div>
+            <div class="cn-feedwrap"><div id="cn-newpill"></div><ol class="cn-feed cn-scroll" id="cn-feed" aria-label="Plays, newest first"></ol></div>
+          </div>
         </section>
       </aside>
     </div>
@@ -593,6 +621,7 @@ function cpnClick(e) {
   if (a === 'lteam') { CPN.lteam = +v; cpnRender(true); return; }
   if (a === 'sel') { if (!v) return; CPN.sel = v; CPN.view = 'adv'; if (b.dataset.side) CPN.lteam = +b.dataset.side - 1; cpnRender(true); return; }
   if (a === 'follow') { CPN.follow = CPN.follow === v ? null : v; cpnLs('hs-cpn-follow', CPN.follow); cpnRender(true); return; }
+  if (a === 'acc') { CPN.fold[v] = !CPN.fold[v]; cpnLs('hs-cpn-fold-' + v, CPN.fold[v] ? '1' : null); cpnPaintFolds(); return; }
   if (a === 'newplays') { const f = document.getElementById('cn-feed'); if (f) f.scrollTo({ top: 0, behavior: 'smooth' }); CPN.away = false; cpnPaintPill(); return; }
   if (a === 'sTeam') { CPN.sTeam = +v; CPN.hs = null; cpnRender(true); return; }
   if (a === 'sPer') { CPN.sPer = +v; CPN.hs = null; cpnRender(true); return; }
@@ -627,7 +656,11 @@ function cpnRender(force) {
   CPN.shotsCount = (CPN.shots || []).length;
   cpnPaintScore(m, stepped, par);
   cpnPaintFlow();
-  cpnPaintMoment(m, stepped, par);
+  CPN_MS = cpnMilestones(m);
+  const heroNow = stepped && CPN_MS.length && CPN_MS[CPN_MS.length - 1].i === m.vis.length - 1 ? CPN_MS[CPN_MS.length - 1] : null;
+  if (heroNow) cpnPaintHero(m, heroNow, par);
+  cpnPaintMoment(m, stepped && !heroNow, par);
+  cpnPaintFolds(m);
   cpnPaintTabs(m);
   const pane = document.getElementById('cn-pane'), was = pane.dataset.view;
   if (CPN.view === 'adv') pane.innerHTML = cpnAdvHtml(m);
@@ -749,17 +782,132 @@ function cpnPaintScore(m, stepped, par) {
     <div class="cn-q cn-num" role="table" aria-label="Score by quarter" style="--n:${qn}"><span></span>${Array.from({ length: qn }, (_, i) => `<span class="cn-qh">${ql(i)}</span>`).join('')}<span class="cn-qh">T</span>${qrow(h)}${qrow(a)}</div>`;
 }
 
-/* the lower third: the play that just happened, once */
+/* the play card: born at the clock, it grows, glides out to the acting team's half and sits over its name */
 function cpnPaintMoment(m, stepped, par) {
   const el = document.getElementById('cn-lt'), mo = m.moment;
-  if (!stepped) { if (!mo) el.innerHTML = ''; return; }
-  if (!mo) { el.innerHTML = ''; return; }
-  const t = m.teams[mo.side - 1], face = cpnFace(mo.pid), fol = mo.pid && CPN.follow === mo.pid;
-  el.innerHTML = `<div class="cn-lt cn-lt-${par}" style="--tc:${t.color}">
-    <div class="cn-ltph">${face ? `<img class="cn-ltp-${par}" src="${face}" alt="">` : crest(t.name, 40)}</div>
+  if (!stepped || !mo) { if (!mo) el.innerHTML = ''; return; }
+  const t = m.teams[mo.side - 1], face = cpnFace(mo.pid), fol = mo.pid && CPN.follow === mo.pid, side = mo.side === 2 ? 'r' : 'l';
+  el.innerHTML = `<div class="cn-lt cn-pop${side}-${par}" style="--tc:${t.color}">
+    <div class="cn-ltph">${face ? `<img class="cn-ltp-${par}" src="${face}" alt="">` : crest(t.name, 44)}</div>
     <div class="cn-ltx"><span class="cn-ltk">${fol ? 'Following · ' : ''}${esc(mo.kicker)}</span><b>${esc(mo.who)}</b><span>${esc(mo.what)}</span></div>
-    <div class="cn-ltn"><b class="cn-num">${esc(mo.big)}</b><span class="cn-num">${esc(mo.line)}</span></div>
+    <div class="cn-ltn"><b class="cn-num${mo.warn ? ' warn' : ''}">${esc(mo.big)}</b><span class="cn-num">${esc(mo.line)}</span></div>
     <i class="cn-ltb-${par}"></i></div>`;
+  [0, 1].forEach(i => {
+    const info = document.getElementById('cn-info-' + i);
+    info.classList.remove('cn-hush-0', 'cn-hush-1');
+    if (i === mo.side - 1) { void info.offsetWidth; info.classList.add('cn-hush-' + par); }
+  });
+}
+
+/* ---------------------------- MBL milestones ----------------------------
+   The same rule as the Milestones page (app4za_milestones.js): local players, every 50 career MBL
+   points, rebounds, assists, steals and blocks (men's MBL). Career totals come from the box scores of the
+   MBL games before this one; this game's part is counted from its plays, so the mark lands on the play
+   that makes it. */
+let CPN_MS = [];
+const CPN_MSK = { pts: 'points', reb: 'rebounds', ast: 'assists', stl: 'steals', blk: 'blocks' };
+function cpnCareer(g) {
+  if (CPN.car && CPN.car.mid === g.mid) return CPN.car;
+  const comps = COMPS.filter(c => c.series === CPN_SERIES && c.gender !== 'Women');
+  const key = x => (x.date || '') + ' ' + ('0' + (x.time || '')).slice(-5) + ' ' + x.mid;
+  const me = key(g), games = [];
+  comps.forEach(c => (c.games || []).forEach(x => { if (x.st === 'COMPLETE' && x.mid !== g.mid && key(x) < me) games.push(x); }));
+  games.sort((a, b) => key(a).localeCompare(key(b)));
+  const tot = {}, n = v => +v || 0;
+  games.forEach(x => {
+    const b = getBox(x.mid); if (!b) return;
+    b.p.forEach(r => {
+      if (!r.pid || !cpnLocal(r.pid)) return;
+      const v = { pts: n(r.pts), reb: n(r.oreb) + n(r.dreb), ast: n(r.ast), stl: n(r.stl), blk: n(r.blk) };
+      if (!(minsToNum(r.min) > 0) && !(v.pts || v.reb || v.ast || v.stl || v.blk || n(r.fga) || n(r.fta) || n(r.tov) || n(r.pf))) return;
+      const T = tot[r.pid] = tot[r.pid] || { g: 0, pts: 0, reb: 0, ast: 0, stl: 0, blk: 0 };
+      T.g++; Object.keys(v).forEach(k => { T[k] += v[k]; });
+    });
+  });
+  CPN.car = { mid: g.mid, tot };
+  return CPN.car;
+}
+function cpnOrdinal(n) { const v = n % 100; return n + (v >= 11 && v <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th'); }
+/* every mark passed in the plays shown so far: [{i (play index), pid, side, k, value}] */
+function cpnMilestones(m) {
+  if (!m.vis.length || !COMP_BY_ID[m.g.cid]) return [];
+  const car = cpnCareer(m.g).tot, run = {}, out = [];
+  const pidOf = (side, no) => livePid(m.g.cid, m.d.teams[side - 1] ? m.d.teams[side - 1].name : '', no) || null;
+  m.vis.forEach((p, i) => {
+    if (!(p.team === 1 || p.team === 2) || !p.no) return;
+    let k = null, add = 0;
+    if (p.made && (p.type === '2pt' || p.type === '3pt' || p.type === 'freethrow')) { k = 'pts'; add = p.type === '3pt' ? 3 : p.type === '2pt' ? 2 : 1; }
+    else if (p.type === 'rebound') { k = 'reb'; add = 1; }
+    else if (p.type === 'assist' || p.type === 'steal' || p.type === 'block') { k = { assist: 'ast', steal: 'stl', block: 'blk' }[p.type]; add = 1; }
+    if (!k) return;
+    const pid = pidOf(p.team, p.no);
+    if (!pid || !car[pid]) return;
+    const R = run[pid] = run[pid] || {};
+    const a = car[pid][k] + (R[k] || 0), b = a + add;
+    R[k] = (R[k] || 0) + add;
+    if (Math.floor(b / 50) > Math.floor(a / 50)) out.push({ i, pid, side: p.team, k, value: Math.floor(b / 50) * 50 });
+  });
+  return out;
+}
+/* who got there first: local players whose career passed the mark before this game */
+function cpnMsFact(g, ms) {
+  const car = cpnCareer(g).tot, before = Object.keys(car).filter(pid => pid !== ms.pid && car[pid][ms.k] >= ms.value);
+  const rank = before.length + 1;
+  let after = '';
+  if (before.length && before.length <= 3) {
+    const names = before.sort((a, b) => car[b][ms.k] - car[a][ms.k]).map(pid => cpnFullName(pid));
+    after = 'After ' + (names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : names[0]);
+  } else if (before.length) after = before.length + ' local players got there before him';
+  else after = 'No local player had reached it before';
+  return { rank: cpnOrdinal(rank), text: 'local player to ' + ms.value + ' MBL ' + CPN_MSK[ms.k], after, games: (car[ms.pid].g || 0) + 1 };
+}
+/* the hero: a line draws across the scoreboard, opens into a panel, the number rolls up to the mark */
+function cpnPaintHero(m, ms, par) {
+  const key = m.g.mid + '|' + ms.pid + '|' + ms.k + '|' + ms.value;
+  if (CPN.heroKey === key) return;
+  CPN.heroKey = key;
+  CPN.holdUntil = Date.now() + 6800;
+  const t = m.teams[ms.side - 1], gold = ms.value % 100 === 0, acc = gold ? '#F5C451' : t.color, fact = cpnMsFact(m.g, ms);
+  const p = m.vis[ms.i], face = cpnFace(ms.pid);
+  let from = String(ms.value - 50); const to = String(ms.value);
+  while (from.length < to.length) from = '0' + from;
+  const col = '<span class="cn-hbd">' + '01234567890123456789'.split('').map(d => '<span>' + d + '</span>').join('') + '</span>';
+  const digits = to.split('').map((d, i) => { const a = +from[i], b = +d, end = b > a ? b : b + 10;
+    return `<span class="cn-hbdg" style="--a:-${a}em;--b:-${end}em;--d:${(1 + .22 * i).toFixed(2)}s">${col}</span>`; }).join('');
+  const name = cpnFullName(ms.pid), what = livePlayText(p) + ', ' + cpnPer(p) + ' ' + cpnClock(p);
+  document.getElementById('cn-hero').innerHTML = `<div class="cn-hb cn-hb-${par}${gold ? ' gold' : ''}" role="status" style="--acc:${acc};--tc:${t.color}">
+    <div class="cn-hbback"></div><i class="cn-hbline"></i>
+    <div class="cn-hbpanel">
+      <div class="cn-hbph">${face ? `<img class="cn-hbup0" src="${face}" alt="">` : crest(t.name, 72)}<i></i></div>
+      <div class="cn-hbmain"><span class="cn-hbk cn-hbup" style="--dl:.6s">MBL milestone</span>
+        <div class="cn-hbrow"><span class="cn-hbnum cn-num" aria-hidden="true">${digits}<i class="cn-hbring"></i><i class="cn-hbring two"></i></span>
+          <span class="cn-hbtx"><span class="cn-hbup" style="--dl:1.55s">Career ${CPN_MSK[ms.k]}</span><b class="cn-hbup" style="--dl:1.7s">${esc(name)}</b>
+            <span class="cn-hbup" style="--dl:1.85s">${esc(t.name)} · ${cpnOrdinal(fact.games)} MBL game · ${esc(what)}</span></span></div></div>
+      <div class="cn-hbfact cn-hbup" style="--dl:2s"><b class="cn-num">${fact.rank}</b><span>${esc(fact.text)}</span><span class="cn-dim">${esc(fact.after)}</span></div>
+      <i class="cn-hbshine" aria-hidden="true"></i>
+    </div>
+    <span class="cn-sr">${esc(name)} reaches ${ms.value} career MBL ${CPN_MSK[ms.k]}. ${esc(fact.rank + ' ' + fact.text)}.</span></div>`;
+  const say = document.getElementById('cn-say');
+  if (say) setTimeout(() => { say.textContent = name + ' reaches ' + ms.value + ' career MBL ' + CPN_MSK[ms.k] + '. ' + fact.rank + ' ' + fact.text + '.'; }, 50);
+}
+
+/* the rail: Team stats and Play-by-play each fold; when only one is open it takes the whole rail */
+function cpnPaintFolds(m) {
+  const rail = document.getElementById('cn-rail');
+  if (!rail) return;
+  ['ts', 'pb'].forEach(k => {
+    const sec = document.getElementById('cn-acc-' + k), closed = !!CPN.fold[k];
+    sec.classList.toggle('closed', closed);
+    sec.querySelector('[data-cn="acc"]').setAttribute('aria-expanded', String(!closed));
+  });
+  rail.classList.toggle('pb-closed', !!CPN.fold.pb);
+  m = m || CPN_LAST;
+  if (!m || m.pre) return;
+  const [h, a] = m.teams, pc = (x, y) => y ? Math.round(100 * x / y) + '%' : '–';
+  document.getElementById('cn-crests').innerHTML = crest(h.name, 16) + crest(a.name, 16);
+  document.getElementById('cn-peek-ts').textContent = h.tot ? 'FG ' + h.code + ' ' + pc(h.tot.fgm, h.tot.fga) + ' · ' + a.code + ' ' + pc(a.tot.fgm, a.tot.fga) : '';
+  const f = m.feed[0];
+  document.getElementById('cn-peek-pb').textContent = f ? f.per + ' ' + f.clock + ' · ' + (f.short ? f.short + ', ' : '') + f.text : '';
 }
 
 function cpnPaintFlow() {
@@ -842,7 +990,7 @@ function cpnBoxHtml(m, stepped, par) {
         const cell = (v, k, extra) => `<span class="cn-num${v === 0 || v === '0/0' ? ' z' : ''}${extra || ''}${k ? hot(k) : ''}">${v}</span>`;
         return `<div class="cn-brow${p.played ? '' : ' dnp'}${fol ? ' fol' : ''}">
           <span class="cn-num cn-no"><i class="${p.on ? 'on' : ''}"></i>${esc(p.no)}</span>
-          <span class="cn-who">${cpnFaceHtml(p.pid, p.name, 22)}<button type="button" class="cn-name" data-cn="sel" data-v="${esc(p.pid || '')}" data-side="${i + 1}" title="${esc(p.pid && PERSONS[p.pid] ? PERSONS[p.pid] : p.name)}"${p.pid ? '' : ' disabled'}>${esc(p.short)}</button>
+          <span class="cn-who">${cpnFaceHtml(p.pid, p.name, 28)}<button type="button" class="cn-name" data-cn="sel" data-v="${esc(p.pid || '')}" data-side="${i + 1}" title="Open in Advanced"${p.pid ? '' : ' disabled'}>${esc(p.full)}</button>
             ${fol ? '<svg class="cn-star" width="11" height="11" viewBox="0 0 24 24" role="img" aria-label="Following"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg>' : ''}
             ${p.pf >= 5 ? '<span class="cn-out">FOULED OUT</span>' : ''}</span>
           ${cell(p.pts, 'pts', ' b')}${cell(p.reb, 'reb')}${cell(p.ast, 'ast')}${cell(p.stl, 'stl')}${cell(p.blk, 'blk')}
@@ -1035,7 +1183,7 @@ function cpnCompareHtml(m) {
     ['Free throws', pc(H.ftm, H.fta), pc(A.ftm, A.fta), `${H.ftm}/${H.fta}  ${pc(H.ftm, H.fta)}%`, `${pc(A.ftm, A.fta)}%  ${A.ftm}/${A.fta}`],
     ['Rebounds', H.reb, A.reb], ['Assists', H.ast, A.ast], ['Steals', H.stl, A.stl], ['Turnovers', H.tov, A.tov, null, null, true]];
   [['In the paint', 'paint'], ['Fast break', 'fast'], ['Bench', 'bench']].forEach(([l, k]) => { if (H[k] != null && A[k] != null) rows.push([l, +H[k], +A[k]]); });
-  return `<div class="cn-cmph">${crest(h.name, 16)}<h2>Team stats</h2>${crest(a.name, 16)}</div>${rows.map(([l, x, y, dx, dy, low]) => {
+  return `${rows.map(([l, x, y, dx, dy, low]) => {
     const hw = low ? x < y : x > y, aw = low ? y < x : y > x, tot = (x + y) || 1;
     return `<div class="cn-cmp"><div><span class="cn-num${hw ? ' w' : ''}">${esc(String(dx != null ? dx : x))}</span><span class="cn-dim">${l}</span><span class="cn-num r${aw ? ' w' : ''}">${esc(String(dy != null ? dy : y))}</span></div>
       <div class="cn-cbar"><i style="width:${(x / tot * 100).toFixed(1)}%;background:${h.color};opacity:${hw || x === y ? 1 : .35}"></i><i style="width:${(y / tot * 100).toFixed(1)}%;background:${a.color};opacity:${aw || x === y ? 1 : .35}"></i></div></div>`;
@@ -1064,7 +1212,14 @@ function cpnPaintFeed(m, stepped, par) {
   else if (CPN.filter === 'h' || CPN.filter === 'a') feed = feed.filter(x => x.side === (CPN.filter === 'h' ? 1 : 2));
   let prevPer = null;
   const ol = document.getElementById('cn-feed'), top = ol.scrollTop;
+  const msAt = {};
+  CPN_MS.forEach(x => { (msAt[x.i] = msAt[x.i] || []).push(x); });
   ol.innerHTML = feed.length ? feed.slice(0, 400).map((x, j) => {
+    const msRows = CPN.filter === 'scoring' || CPN.filter === 'all' || (CPN.filter === 'h' ? x.side === 1 : x.side === 2) ? (msAt[x.i] || []).map(ms => {
+      const t = m.teams[ms.side - 1];
+      return `<li class="cn-play cn-msrow${stepped && ms.i === m.vis.length - 1 ? ' cn-in-' + par : ''}"><span class="cn-num cn-pt">${esc(x.clock)}</span>${cpnFaceHtml(ms.pid, cpnFullName(ms.pid), 28)}
+        <span class="cn-ptx"><b><i></i>${esc(cpnFullName(ms.pid))}</b><span>MBL milestone · ${ms.value} career ${CPN_MSK[ms.k]}</span></span><span class="cn-num cn-ps">${esc(x.score)}</span></li>`;
+    }).join('') : '';
     const div = x.per !== prevPer ? `<li class="cn-per-row">${esc(x.per)}</li>` : '';
     prevPer = x.per;
     const col = x.team ? m.teams[x.side - 1].color : '#5E636E', fol = x.pid && CPN.follow === x.pid;
@@ -1073,7 +1228,7 @@ function cpnPaintFeed(m, stepped, par) {
       : `<b><i style="background:${col}"></i>${esc(x.team ? x.team.name : x.text)}</b>`;
     return div + `<li class="cn-play${x.scoring ? ' sc' : ''}${fol ? ' fol' : ''}${stepped && j === 0 && CPN.filter === 'all' ? ' cn-in-' + par : ''}">
       <span class="cn-num cn-pt">${esc(x.clock)}</span>${face}<span class="cn-ptx">${who}${x.name || x.team ? `<span>${esc(x.text)}</span>` : ''}</span>
-      <span class="cn-num cn-ps">${esc(x.score)}</span></li>`;
+      <span class="cn-num cn-ps">${esc(x.score)}</span></li>`.replace(/^/, msRows);
   }).join('') : '<li class="cn-empty">No plays yet.</li>';
   if (top) ol.scrollTop = top;
   cpnPaintPill();
