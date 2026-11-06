@@ -26,10 +26,10 @@
  },
  "fail": {
   "48654": {
-   "last": 1793978310.6442513,
+   "last": 1793979234.5091896,
    "msg": "games we hold as final are no longer final on the source: 2944618",
-   "n": 7,
-   "next": 0
+   "n": 8,
+   "next": 1794000834.5091896
   }
  },
  "full": {
@@ -44,7 +44,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-02 04:46  FAILED 49965 (10): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:47  FAILED 48654 (30): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:56  FAILED 49965 (11): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:57  FAILED 48654 (31): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
@@ -83,7 +82,8 @@
   "2026-11-06 19:48  FAILED 48654 (5): games we hold as final are no longer final on the source: 2944618",
   "2026-11-06 21:51  sync: Major Basketball League \u2014 NS Matrix Deers 85-71 Selangor Hornbills; shot charts of 1 game  [2951454: final 85-71 read from the live feed (the schedule page does not show it as final yet); season lines not read for 17 player(s): tried again next time]",
   "2026-11-06 22:29  FAILED 48654 (6): games we hold as final are no longer final on the source: 2944618",
-  "2026-11-06 23:18  FAILED 48654 (7): games we hold as final are no longer final on the source: 2944618"
+  "2026-11-06 23:18  FAILED 48654 (7): games we hold as final are no longer final on the source: 2944618",
+  "2026-11-06 23:34  FAILED 48654 (8): games we hold as final are no longer final on the source: 2944618"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
