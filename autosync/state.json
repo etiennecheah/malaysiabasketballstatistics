@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1793957256.3219123,
-  "fp": "9258cf79e841f8b29565"
+  "at": 1793973113.7031102,
+  "fp": "9c8ca3e6fd6c23d145e2"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -26,10 +26,10 @@
  },
  "fail": {
   "48654": {
-   "last": 1793915834.19549,
+   "last": 1793965730.8188784,
    "msg": "games we hold as final are no longer final on the source: 2944618",
-   "n": 1,
-   "next": 0
+   "n": 5,
+   "next": 1793975330.8188784
   }
  },
  "full": {
@@ -42,13 +42,32 @@
   "50248": 1792360741.928966,
   "50458": 1793891362.5960033
  },
- "lines_retry": {},
+ "lines_retry": {
+  "50458": {
+   "n": 1,
+   "next": 1793973555.2866006,
+   "pids": [
+    "1572393",
+    "2092917",
+    "2252562",
+    "2302680",
+    "2371569",
+    "2371570",
+    "2371573",
+    "2861101",
+    "2861102",
+    "2861103",
+    "2861106",
+    "2861107",
+    "2861108",
+    "2861109",
+    "2861115",
+    "2861117",
+    "2861119"
+   ]
+  }
+ },
  "log": [
-  "2026-11-02 04:15  FAILED 49965 (6): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
-  "2026-11-02 04:16  FAILED 48654 (27): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 04:21  FAILED 49965 (7): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
-  "2026-11-02 04:26  FAILED 48654 (28): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 04:29  FAILED 49965 (8): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:36  FAILED 48654 (29): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:37  FAILED 49965 (9): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 04:46  FAILED 49965 (10): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/teams: HTTP Error 503: Service Unavailable",
@@ -83,7 +102,12 @@
   "2026-11-05 22:45  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 DREAMINDER 69-79 HORNBILLS  [2944618: the source's box score replaces the one from the live feed]",
   "2026-11-05 23:11  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
   "2026-11-05 23:50  sync: shot charts of 1 game in 1 competition  [886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept]",
-  "2026-11-06 05:57  FAILED 48654 (1): games we hold as final are no longer final on the source: 2944618"
+  "2026-11-06 05:57  FAILED 48654 (1): games we hold as final are no longer final on the source: 2944618",
+  "2026-11-06 17:28  FAILED 48654 (2): games we hold as final are no longer final on the source: 2944618",
+  "2026-11-06 17:48  FAILED 48654 (3): games we hold as final are no longer final on the source: 2944618",
+  "2026-11-06 18:28  FAILED 48654 (4): games we hold as final are no longer final on the source: 2944618",
+  "2026-11-06 19:48  FAILED 48654 (5): games we hold as final are no longer final on the source: 2944618",
+  "2026-11-06 21:51  sync: Major Basketball League \u2014 NS Matrix Deers 85-71 Selangor Hornbills; shot charts of 1 game  [2951454: final 85-71 read from the live feed (the schedule page does not show it as final yet); season lines not read for 17 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -102,7 +126,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1793915834.19549,
+  "21375": 1793968147.7118518,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
