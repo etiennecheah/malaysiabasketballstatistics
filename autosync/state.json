@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1793979896.42544,
-  "fp": "3e49deecf69bb2b8721f"
+  "at": 1794003848.1503003,
+  "fp": "c556149d04d9921bbbf2"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -19,17 +19,17 @@
   "35136": "2026-10-10",
   "38575": "2026-10-16",
   "48654": "2026-11-05",
-  "49965": "2026-11-06",
+  "49965": "2026-11-07",
   "50247": "2026-10-21",
   "50248": "2026-10-21",
-  "50458": "2026-11-06"
+  "50458": "2026-11-07"
  },
  "fail": {
   "48654": {
-   "last": 1793979926.9945273,
+   "last": 1794003703.8642974,
    "msg": "games we hold as final are no longer final on the source: 2944618",
-   "n": 9,
-   "next": 1794001526.9945273
+   "n": 10,
+   "next": 1794025303.8642974
   }
  },
  "full": {
@@ -40,12 +40,10 @@
   "49965": 1793573444.3163853,
   "50247": 1792360197.0091074,
   "50248": 1792360741.928966,
-  "50458": 1793891362.5960033
+  "50458": 1794003703.8642974
  },
  "lines_retry": {},
  "log": [
-  "2026-11-02 04:56  FAILED 49965 (11): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
-  "2026-11-02 04:57  FAILED 48654 (31): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 05:07  FAILED 49965 (12): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 05:07  FAILED 48654 (32): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 05:17  FAILED 49965 (13): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
@@ -83,7 +81,9 @@
   "2026-11-06 22:29  FAILED 48654 (6): games we hold as final are no longer final on the source: 2944618",
   "2026-11-06 23:18  FAILED 48654 (7): games we hold as final are no longer final on the source: 2944618",
   "2026-11-06 23:34  FAILED 48654 (8): games we hold as final are no longer final on the source: 2944618",
-  "2026-11-06 23:45  FAILED 48654 (9): games we hold as final are no longer final on the source: 2944618"
+  "2026-11-06 23:45  FAILED 48654 (9): games we hold as final are no longer final on the source: 2944618",
+  "2026-11-07 06:21  FAILED 48654 (10): games we hold as final are no longer final on the source: 2944618",
+  "2026-11-07 06:24  sync: Major Basketball League \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
