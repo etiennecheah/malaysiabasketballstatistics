@@ -5521,3 +5521,10 @@ a.box-link.row-link{ color:var(--accent); }
 
 .hm > .mhx-mini:not(.show){ display:none; }
 .mhx [hidden]{ display:none !important; }
+
+/* ---- Scout room and Scouting reports (app4zg_scout.js): scout.html in a frame ---- */
+.sc-full{ position:fixed; inset:0; z-index:30; background:var(--bg); }
+.sc-full .sc-frame{ height:100%; }
+.sc-frame{ display:block; width:100%; border:0; background:var(--bg); }
+.sc-view{ max-width:1440px; margin:0 auto; }
+.sc-view .sc-frame{ min-height:80vh; }

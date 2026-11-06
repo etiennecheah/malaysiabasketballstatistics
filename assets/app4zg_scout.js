@@ -18,6 +18,16 @@
    thing (scout/{mid} and scoutIndex/{id}: read and write by the admin only), so the
    data is not reachable around the page either (see claude/scout-room.md).
    ========================================================================= */
+// the frame's layout also ships here, so a style.css rebuilt without it (as on 2026-11-06) cannot
+// shrink the Scout room to a 300x150 box again
+(function scoutStyle() {
+  if (document.getElementById('sc-style')) return;
+  const st = document.createElement('style');
+  st.id = 'sc-style';
+  st.textContent = '.sc-full{position:fixed;inset:0;z-index:30;background:var(--bg)}.sc-full .sc-frame{height:100%}'
+    + '.sc-frame{display:block;width:100%;border:0;background:var(--bg)}.sc-view{max-width:1440px;margin:0 auto}.sc-view .sc-frame{min-height:80vh}';
+  document.head.appendChild(st);
+})();
 function scoutBase() {
   const m = document.querySelector('meta[name="hs-base"]');
   return (m && m.getAttribute('content')) || './';
