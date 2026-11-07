@@ -808,6 +808,8 @@ function renderPrivacy() {
     <ul><li><b>Only you and the HoopStatsMY admin:</b> your email, display name, favourites, saved comparisons, claims and requests.</li>
       <li><b>Everyone:</b> a verified player's bio, social links and corrected details, and only after the admin approves them.</li>
       <li>Your email is never shown on the site and is never sold or passed to anyone else.</li></ul>
+    <h2>Visitor counts</h2>
+    <p>We count visits with Cloudflare Web Analytics: which pages are opened, the site that sent you, and your country, browser and type of device. It sets no cookies, does not follow you to other sites and cannot tell who you are.</p>
     <h2>Where it is kept</h2>
     <p>Accounts and requests are stored with Google Firebase. The stats on the site come from the MABA / Genius Sports competition portal and are public competition records.</p>
     <h2>Profile rules</h2>
@@ -821,7 +823,7 @@ function renderPrivacy() {
     <ul><li><b>Bio and links:</b> remove them yourself on the edit page. They come down straight away.</li>
       <li><b>Your account:</b> My page → Delete my account. Everything listed above is deleted.</li>
       <li><b>Anything else,</b> including a player or parent who wants a profile looked at: message <a href="https://www.instagram.com/${ACC_IG}/" target="_blank" rel="noopener">@${ACC_IG}</a> on Instagram.</li></ul>
-    <p class="acc-fine">Last updated 2 October 2026.</p></article>`);
+    <p class="acc-fine">Last updated 7 November 2026.</p></article>`);
 }
 
 /* ---- events -------------------------------------------------------------- */
