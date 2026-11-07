@@ -421,6 +421,7 @@ SHELL = """<!doctype html>
 <script defer src="{js}"></script>
 {{{{PRELOAD}}}}
 {{{{LD}}}}
+<script>/* visitor counts: Cloudflare Web Analytics (no cookies), on the live site only */if(location.hostname==="etiennecheah.github.io"){{var cfb=document.createElement("script");cfb.defer=true;cfb.src="https://static.cloudflareinsights.com/beacon.min.js";cfb.setAttribute("data-cf-beacon",'{{"token":"f5e54919996d42ddbfee1b621ad9d5e5","spa":true}}');document.head.appendChild(cfb);}}</script>
 </head>
 <body>
 {gatebody}<div id="app">{{{{APP}}}}</div>
