@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794029934.8656266,
-  "fp": "473ab633c64b5d831803"
+  "at": 1794030087.54041,
+  "fp": "bb9da2f9390eee14aa59"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -46,38 +46,37 @@
  },
  "lines_retry": {
   "50457": {
-   "n": 1,
-   "next": 1794023618.9788496,
+   "n": 2,
+   "next": 1794031171.9059112,
    "pids": [
-    "2607697",
-    "2861274",
-    "2861276",
-    "2861277",
-    "2861281",
-    "2861282",
-    "2861283",
-    "2861286",
-    "2861288",
-    "2861289",
-    "2861291",
-    "2861294",
-    "2861296",
-    "2861304",
-    "2861306",
-    "2861307",
-    "2861308",
-    "2861310",
-    "2861313",
-    "2861315",
-    "2861316",
-    "2861319",
-    "2861320",
-    "2861325"
+    "2788873",
+    "2788926",
+    "2788971",
+    "2861250",
+    "2861251",
+    "2861254",
+    "2861255",
+    "2861256",
+    "2861257",
+    "2861258",
+    "2861259",
+    "2861260",
+    "2861262",
+    "2861264",
+    "2861269",
+    "2861270",
+    "2861271",
+    "2861273",
+    "2861275",
+    "2861279",
+    "2861280",
+    "2861285",
+    "2861290",
+    "2861295"
    ]
   }
  },
  "log": [
-  "2026-11-02 05:27  FAILED 49965 (14): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 05:28  FAILED 48654 (34): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 05:38  FAILED 49965 (15): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 05:38  FAILED 48654 (35): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
@@ -116,7 +115,8 @@
   "2026-11-07 11:13  FAILED 48654 (11): games we hold as final are no longer final on the source: 2944618",
   "2026-11-07 11:15  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 fixtures, standings or season lines updated",
   "2026-11-07 11:31  FAILED 48654 (12): games we hold as final are no longer final on the source: 2944618",
-  "2026-11-07 11:46  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Putrajaya 2 34-87 Kuala Lumpur 2; shot charts of 1 game  [2951436: final 34-87 read from the live feed (the schedule page does not show it as final yet); season lines not read for 24 player(s): tried again next time]"
+  "2026-11-07 11:46  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Putrajaya 2 34-87 Kuala Lumpur 2; shot charts of 1 game  [2951436: final 34-87 read from the live feed (the schedule page does not show it as final yet); season lines not read for 24 player(s): tried again next time]",
+  "2026-11-07 13:41  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Johor 2 68-31 Kedah 2; shot charts of 1 game  [2951428: final 68-31 read from the live feed (the schedule page does not show it as final yet); season lines not read for 24 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
