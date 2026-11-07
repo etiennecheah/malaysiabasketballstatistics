@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1794086712.3659806,
+  "at": 1794090265.1870801,
   "fp": "5669a27401fb057f3fe1"
  },
  "daily": {
@@ -27,10 +27,10 @@
  },
  "fail": {
   "48654": {
-   "last": 1794066282.8414233,
+   "last": 1794087891.8682134,
    "msg": "games we hold as final are no longer final on the source: 2944618",
-   "n": 16,
-   "next": 1794087882.8414233
+   "n": 17,
+   "next": 1794109491.8682134
   }
  },
  "full": {
@@ -46,8 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-05 23:11  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
-  "2026-11-05 23:50  sync: shot charts of 1 game in 1 competition  [886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept]",
   "2026-11-06 05:57  FAILED 48654 (1): games we hold as final are no longer final on the source: 2944618",
   "2026-11-06 17:28  FAILED 48654 (2): games we hold as final are no longer final on the source: 2944618",
   "2026-11-06 17:48  FAILED 48654 (3): games we hold as final are no longer final on the source: 2944618",
@@ -85,7 +83,9 @@
   "2026-11-08 04:06  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
   "2026-11-08 04:09  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 fixtures, standings or season lines updated",
   "2026-11-08 04:24  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
-  "2026-11-08 05:25  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
+  "2026-11-08 05:25  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
+  "2026-11-08 05:44  FAILED 48654 (17): games we hold as final are no longer final on the source: 2944618",
+  "2026-11-08 06:24  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -96,7 +96,7 @@
   "2896900": {
    "cid": "49965",
    "kind": "box",
-   "next": 1794090156.5144646,
+   "next": 1794093766.7458484,
    "since": 1794061173.6645193
   }
  },
@@ -112,7 +112,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1794085790.0845983,
+  "21375": 1794089407.1039605,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
@@ -195,7 +195,7 @@
   "49645": 1792147425.7033217,
   "49646": 1792147425.7033217,
   "49683": 1792147425.7033217,
-  "49965": 1794085790.0845983,
+  "49965": 1794089407.1039605,
   "50247": 1792317691.5245516,
   "50248": 1792147831.0700762
  }
