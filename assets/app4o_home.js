@@ -14,7 +14,9 @@ function hmCompleted() {
   if (HM.cache.done) return HM.cache.done;
   const rows = [];
   COMPS.forEach(c => c.games.forEach(g => { if (g.st === 'COMPLETE' && g.date) rows.push(g); }));
-  rows.sort((a, b) => (liveStart(b) || 0) - (liveStart(a) || 0));
+  // a game with no tip-off time (a FIBA sheet, an old fixture list) sorts by its date, as if at noon
+  const when = g => { const s = liveStart(g); if (s != null) return s; const [y, m, d] = g.date.split('-').map(Number); return Date.UTC(y, m - 1, d, 4) || 0; };
+  rows.sort((a, b) => when(b) - when(a));
   return (HM.cache.done = rows);
 }
 function hmUpcoming() {
