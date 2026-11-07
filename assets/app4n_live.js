@@ -27,8 +27,8 @@ const LIVE_FAST = 15e3;   // Home, a live game page and the Watch page, when the
    feed has them, with no more requests than a fixed clock would make. */
 const LIVE_AFTER_FEED = 0.8e3, LIVE_MIN_WAIT = 4e3, LIVE_MAX_WAIT = 31e3, LIVE_GROUP = 5e3;
 function liveFeedWait() {
-  const next = Object.values(LIVE.games).filter(x => x.state === 'live' && x.next != null)
-    .map(x => x.next * 1000 - (Date.now() - x.at)).sort((a, b) => a - b);
+  const next = Object.values(LIVE.games).filter(x => x.state === 'live' && x.nextAt)
+    .map(x => x.nextAt - Date.now()).sort((a, b) => a - b);
   if (!next.length) return null;
   // with several games, one request picks up every game whose new copy lands within 5 s of the first
   const t = next.filter(v => v <= next[0] + LIVE_GROUP).pop();
@@ -124,12 +124,14 @@ async function liveTick() {
     const prev = LIVE.games[g.mid] || { g, state: 'pending', data: null, at: 0 };
     prev.g = g;
     const r = got[g.mid] || { status: 0 };
-    if (r.status !== 200) prev.next = null;   // a stale feed time must never speed up the next request
+    prev.nextAt = r.status === 200 && r.next != null ? Date.now() + r.next * 1000 : 0;   // a stale feed time must never speed up the next request
     if (r.status === 404) { prev.state = prev.data ? prev.state : 'pending'; prev.err = 0; }
     else if (r.status !== 200 || !r.d || !Array.isArray(r.d.teams)) prev.err = Date.now();
     else {
-      const d = r.d;
-      prev.data = d; prev.at = Date.now(); prev.err = 0; prev.next = r.next != null ? r.next : null;
+      const d = r.d, d0 = prev.data, t = x => Date.parse((x && x.lastModified) || '') || 0;
+      // Genius Sports' CDN edges can disagree for a while: never swap the page back to an older copy
+      if (d0 && t(d) && t(d) < t(d0)) { prev.err = 0; keep[g.mid] = prev; return; }
+      prev.data = d; prev.at = Date.now(); prev.err = 0;
       prev.state = d.status === 'final' ? 'final' : d.status === 'live' ? 'live' : 'pending';
     }
     keep[g.mid] = prev;
