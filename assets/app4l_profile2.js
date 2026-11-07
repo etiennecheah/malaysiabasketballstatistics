@@ -333,7 +333,7 @@ function pvCaps(pid) {
     const avg = k => { const W = R.filter(c => c[k] != null && c.gp); const g = W.reduce((a, c) => a + c.gp, 0); return g ? pvF1(W.reduce((a, c) => a + c[k], 0) / g) : '—'; };
     const head = `<tr class="pv-tier static"><td class="left" colspan="3"><span class="tl">${lv === 'Senior' ? 'Senior national team' : 'Youth national teams'}</span><span class="ts2">${gp} cap${gp === 1 ? '' : 's'} · ${R.length} event${R.length === 1 ? '' : 's'}</span></td><td>${gp}</td>${K.map(k => `<td>${avg(k)}</td>`).join('')}</tr>`;
     return head + R.map(c => `<tr><td class="left">${c.y}</td>
-      <td class="left"><span class="pv-capev">${crest('FIBA', 18)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.short)}</a></span></td>
+      <td class="left"><span class="pv-capev">${crest('FIBA', 18)}${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.short)}</a>` : esc(c.short)}</span></td>
       <td class="left">${c.rank ? esc(c.rank) : '<span class="dim">—</span>'}</td>
       <td>${c.gp == null ? '—' : c.gp}</td>${K.map(k => `<td${c[k] != null ? ` data-imtip="${esc(k.toUpperCase() + ' total: ' + c[k])}"` : ''}>${pg(c[k], c.gp)}</td>`).join('')}</tr>`).join('');
   };

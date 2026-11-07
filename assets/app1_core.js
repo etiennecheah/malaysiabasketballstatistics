@@ -45,6 +45,7 @@ function getBox(mid) {
     o.team = (o.ti !== undefined && o.ti >= 0) ? raw.t[o.ti] : '';
     return o;
   }) };
+  if (raw.periods) out.periods = raw.periods;
   BOX_CACHE[mid] = out;
   return out;
 }

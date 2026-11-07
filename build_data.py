@@ -65,6 +65,9 @@ CHAMP_OVERRIDE = {'39599': 'Negeri Sembilan'}
 
 # competitions whose source name does not say which series they belong to: the 2019 Agong
 # Cup is published as "61st MABA/MATRIX National Basketball Championship For Men/Women"
+# A competition named for the year it qualifies for, played the year before: the season it
+# belongs to is the year its games were played.
+YEAR_OVERRIDE = {'fiba-wac-2027-seaba': 2026}
 SERIES_OVERRIDE = {'25502': 'Agong Cup', '25503': 'Agong Cup', '23322': 'Agong Cup', '23328': 'Agong Cup'}
 
 RECENT_STAND_DAYS = 21
@@ -290,6 +293,8 @@ def comp_meta(name, games, cid_hint=None):
         year = int(yrs.most_common(1)[0][0])
     else:
         year = None
+    if cid_hint in YEAR_OVERRIDE:
+        year = YEAR_OVERRIDE[cid_hint]
 
     if re.search(r'\bwomen|\bwanita|perempuan|\bgirls?\b|\(girls\)|women', low):
         gender = 'Women'
@@ -727,6 +732,9 @@ def main():
                 rows.append(row)
             if rows:
                 boxes[mid] = {'t': teams, 'p': rows}
+                # the score by quarter, where a hand-built box score carries it (FIBA sheets)
+                if b.get('periods'):
+                    boxes[mid]['periods'] = b['periods']
 
     team_reg = dict(bb['teamReg'])
     person_reg = dict(bb['personReg'])
@@ -910,7 +918,7 @@ def main():
         dates = sorted(g['date'] for g in games if g['date'])
         # Some competitions repeat the same name across seasons (e.g. four
         # "Major Basketball League" entries); give those a season-qualified label.
-        label = c['name'] if (year and str(year) in c['name']) or not year else '%s %d' % (c['name'], year)
+        label = c['name'] if (year and str(year) in c['name']) or not year or c['id'] in YEAR_OVERRIDE else '%s %d' % (c['name'], year)
         comps_out.append({
             'id': cid, 'name': c['name'], 'label': label, 'year': year, 'gender': gender, 'level': lvl,
             'series': series,
