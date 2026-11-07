@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1794070986.8518739,
+  "at": 1794071601.6902595,
   "fp": "f87528af03c913d3fc10"
  },
  "daily": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-02 06:30  FAILED 48654 (40): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 06:40  FAILED 49965 (21): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 06:41  FAILED 48654 (41): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 06:55  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 HORNBILLS 90-81 DREAMINDER; shot charts of 1 game  [2944613: the source's box score replaces the one from the live feed; 1 player page(s) not published by the source now: the lines we hold are kept]",
@@ -85,7 +84,8 @@
   "2026-11-07 22:15  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
   "2026-11-07 22:21  sync: Dream Ball Championship 2026 \u2014 YYC x MMU 67-77 Brayden x MG Living Sport  [2896900: final 67-77 read from the live feed (the schedule page does not show it as final yet); 2896900: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 67 (YYC x MMU))]",
   "2026-11-07 23:44  FAILED 48654 (16): games we hold as final are no longer final on the source: 2944618",
-  "2026-11-08 01:03  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
+  "2026-11-08 01:03  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
+  "2026-11-08 01:13  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -96,7 +96,7 @@
   "2896900": {
    "cid": "49965",
    "kind": "box",
-   "next": 1794071459.2253134,
+   "next": 1794072072.4132423,
    "since": 1794061173.6645193
   }
  },
