@@ -46,31 +46,14 @@ function matchHead(cid, mid, tab) {
   const pbpOk = hasPbp(mid);
   const hasBox = !!(b && b.p && b.p.length);
   const periods = (b && b.periods && b.periods.length) ? b.periods : (DB.pbpPer && DB.pbpPer[mid]);
-  const perTable = (periods && periods.length) ? `<div class="table-scroll"><table class="mper">
-      <thead><tr><th class="left nosort">Team</th>${periods.map((p, i) => `<th class="nosort">${perLabel(String(i + 1))}</th>`).join('')}<th class="nosort" style="padding-right:20px;">Final</th></tr></thead>
-      <tbody>
-        <tr><td class="left"><div class="team">${crest(g.h)}${esc(g.h)}</div></td>${periods.map(p => `<td>${fmt0(p[0])}</td>`).join('')}<td style="padding-right:20px;font-weight:700;">${fmt0(g.hs)}</td></tr>
-        <tr><td class="left"><div class="team">${crest(g.a)}${esc(g.a)}</div></td>${periods.map(p => `<td>${fmt0(p[1])}</td>`).join('')}<td style="padding-right:20px;font-weight:700;">${fmt0(g.as)}</td></tr>
-      </tbody></table></div>` : '';
   const tabs = [['box', 'Box Score', hasBox], ['pbp', 'Play-by-play', pbpOk], ['manalysis', 'Team Analysis', hasBox]];
   // the Shot chart tab only where the game has a chart (app4z_gameshots.js)
   if (typeof hasGameShots === 'function' && hasGameShots(cid, mid)) tabs.push(['shots', 'Shot Chart', true]);
   // the Post Game Report wherever the game is final with a play-by-play (app4zc_postgame.js)
   if (typeof hasPostgame === 'function' && hasPostgame(cid, mid)) tabs.push(['postgame', 'Post Game Report', true]);
-  const tabbar = `<div class="msub">${tabs.map(([k, l, ok]) =>
-    `<a class="msub-t ${tab === k ? 'on' : ''} ${ok ? '' : 'msub-off'}" href="#/c/${cid}/${k}/${mid}">${l}</a>`).join('')}</div>`;
-  return `<div class="page">
-    <div class="crumb"><a href="#/c/${cid}/schedule">Games</a> / ${esc(g.h)} v ${esc(g.a)}</div>
-    <div class="card mmatch">
-      <h1 class="sr-only">${esc(g.h)}${g.hs != null ? ' ' + fmt0(g.hs) + ' – ' + fmt0(g.as) + ' ' : ' v '}${esc(g.a)}</h1>
-      <div class="matchup-head">
-        <div class="mside">${crest(g.h, 48)}<div><div class="m-name">${esc(g.h)}</div><div class="m-rec">${esc(fmtDate(g.date))}</div></div></div>
-        <div class="m-mid"><div class="m-score"><span class="h">${fmt0(g.hs)}</span><span class="d">–</span><span class="a">${fmt0(g.as)}</span></div><div class="m-status">${g.st === 'COMPLETE' ? (g.ff ? 'Forfeit · awarded 20–0' : g.hs == null ? 'Final · score not published' : g.sb ? 'Final · score from the box score' : 'Final') : g.st === 'NOT_PLAYED' ? 'Not played' : esc(g.st)}</div>${phaseLabel(c, mid) ? `<div class="m-round"><span class="po-tag">${esc(phaseLabel(c, mid))}</span></div>` : ''}${typeof watchLink === 'function' ? watchLink(mid, g.st === 'COMPLETE' ? 'Watch the game with stats' : 'Watch with live stats') : ''}${typeof scoutGameLinks === 'function' ? scoutGameLinks(mid, g) : ''}</div>
-        <div class="mside right">${crest(g.a, 48)}<div><div class="m-name">${esc(g.a)}</div><div class="m-rec">${esc(g.venue || '')}</div></div></div>
-      </div>
-      ${perTable}
-    </div>
-    ${tabbar}`;
+  const status = g.st === 'COMPLETE' ? (g.ff ? 'Forfeit · awarded 20–0' : g.hs == null ? 'Final · score not published' : g.sb ? 'Final · score from the box score' : 'Final') : g.st === 'NOT_PLAYED' ? 'Not played' : g.st;
+  // the header, line score, game flow and section tabs are drawn by app4zj_gamebox.js
+  return GBX.head({ cid, mid, g, tab, tabs, periods, status, round: phaseLabel(c, mid) });
 }
 
 /* -------------------- Play-by-play (FIBA-style) -------------------- */

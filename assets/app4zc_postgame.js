@@ -19,7 +19,7 @@ function ensurePostgame(mid) {
   PG_ST[mid] = 'loading';
   const s = document.createElement('script');
   s.src = HS.BASE + 'stats/pg/' + mid + '.js';
-  const done = ok => { PG_ST[mid] = ok && PG_DATA[mid] ? 'done' : 'error'; if (/\/postgame\/[^/]+$/.test(HS.hash())) softRoute(); };
+  const done = ok => { PG_ST[mid] = ok && PG_DATA[mid] ? 'done' : 'error'; if (/\/postgame\/[^/]+$/.test(HS.hash())) softRoute(); else if (typeof GBX !== 'undefined') GBX.flowReady(mid); };
   s.onload = () => done(true); s.onerror = () => done(false);
   document.head.appendChild(s);
 }

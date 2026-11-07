@@ -76,28 +76,6 @@ function boxCell(l, k) {
   if (k === 'pm') return fmtPM(l.pm);
   return fmt0(l[k]);
 }
-function boxTable(title, teamName, lines) {
-  if (!lines.length) return '';
-  const tot = {};
-  ['pts', 'fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta', 'oreb', 'dreb', 'ast', 'stl', 'blk', 'tov', 'pf', 'eff']
-    .forEach(k => { tot[k] = lines.reduce((a, l) => a + (has(l[k]) ? Number(l[k]) : 0), 0); });
-  return `<div class="card">
-    <div class="card-head">${crest(teamName, 22)} ${esc(teamName)}</div>
-    <div class="table-scroll sticky-first"><table>
-      <thead><tr><th class="left nosort">Player</th>${BOX_COLS.map(([k, l], i) => `<th class="nosort" ${i === BOX_COLS.length - 1 ? 'style="padding-right:20px;"' : ''}${gloss(l)}>${l}</th>`).join('')}</tr></thead>
-      <tbody>
-        ${lines.map(l => `<tr class="clickable" ${l.pid ? `data-href="#/p/${l.pid}"` : ''}>
-          <td class="left"><div class="player-cell">${has(l.num) && l.num !== '' ? `<span class="num-pill">#${esc(l.num)}</span>` : ''}<span class="p-name">${l.pid ? `<a class="row-link" href="#/p/${l.pid}">${esc(l.name || personName(l.pid))}</a>` : esc(l.name || '—')}</span>${l.starter ? '<span style="color:var(--accent);font-weight:700;font-size:10px;">★</span>' : ''}</div></td>
-          ${BOX_COLS.map(([k], i) => `<td class="${k === 'pts' ? 'lead' : ''} ${k === 'pm' && has(l.pm) ? (l.pm > 0 ? 'pm-pos' : (l.pm < 0 ? 'pm-neg' : '')) : ''}" ${i === BOX_COLS.length - 1 ? 'style="padding-right:20px;"' : ''}>${boxCell(l, k)}</td>`).join('')}
-        </tr>`).join('')}
-        <tr class="totals"><td class="left">Team totals</td>
-          ${BOX_COLS.map(([k], i) => `<td ${i === BOX_COLS.length - 1 ? 'style="padding-right:20px;"' : ''}>${k === 'min' || k === 'pm' ? '' : boxCell(tot, k)}</td>`).join('')}
-        </tr>
-      </tbody>
-    </table></div>
-  </div>`;
-}
-
 function renderBox(cid, mid) {
   const c = COMP_BY_ID[cid];
   const g = c && c.games.find(x => x.mid === mid);
@@ -108,15 +86,8 @@ function renderBox(cid, mid) {
   if (!b || !b.p || !b.p.length) {
     return head + `<div class="card"><div class="empty-row"><span class="empty-dot"></span>${g.box ? 'The source publishes a detailed statistics page for this game, but no per-player box score could be read from it.' : 'The source publishes no per-player box score for this game.'}</div></div></div>`;
   }
-  const homeLines = b.p.filter(l => l.team === g.h);
-  const awayLines = b.p.filter(l => l.team === g.a);
-  const other = b.p.filter(l => l.team !== g.h && l.team !== g.a);
-  return head +
-    boxTable('Home', g.h, homeLines) +
-    boxTable('Away', g.a, awayLines) +
-    (other.length ? boxTable('Other', other[0].team || '—', other) : '') +
-    `<div class="card"><div class="note" style="border-top:none;">Per-player box score exactly as published on this game's detailed statistics page. ★ marks a starter where the source flags one. Team totals are the sum of the published player lines. Click any player for their full career across every competition.</div></div>
-  </div>`;
+  // leaders and both teams' tables: app4zj_gamebox.js
+  return head + GBX.box(cid, mid, g, b) + '</div>';
 }
 
 /* ---------------------------- interactions ---------------------------- */
