@@ -210,12 +210,15 @@ def _secs(m):
 
 
 def box_season_lines(cid, c, games, raw_boxes, persons):
-    """Season lines rebuilt from the box scores, in the source's tab format, for the
-    two cases where the source's own line is wrong:
+    """Season lines rebuilt from the box scores, in the source's tab format, whenever
+    the box scores show more games for a player than the source's own line:
       * the player has box-score minutes but no statistics page line at all (the
         source's player page failed or came back empty when the line was read);
       * the player played for two clubs in the competition and the source's line
-        covers only one stint (a mid-season move, a loan for the playoffs).
+        covers only one stint (a mid-season move, a loan for the playoffs);
+      * the source's line is behind: its statistics pages are updated later than its
+        box scores (MBL 2026 the night of a game), or never for the last games
+        (Agong Cup 2026). Once the source catches up, its own line is used again.
     Counting stats are summed; shooting, game score, wins and losses are derived;
     rates that need the team's possessions are left blank. The line carries the
     club of the player's latest game. -> {pid: tab line}"""
@@ -236,7 +239,7 @@ def box_season_lines(cid, c, games, raw_boxes, persons):
         if raw is not None:
             vals = raw.split('\t')
             src_g = num(vals[1 + PF_KEYS.index('g')]) if len(vals) > 1 + PF_KEYS.index('g') else None
-            if len(teams) < 2 or (src_g or 0) >= len(apps):
+            if (src_g or 0) >= len(apps):
                 continue
         apps.sort(key=lambda x: (x[0]['date'] or '', clock_minutes(x[0]['time']), x[0]['mid']))
         t = {k: 0 for k in ('fga', 'fgm', 'pf', 'fta', 'ftm', 'dreb', 'oreb', 'tpa', 'tpm', 'tov',
