@@ -5844,3 +5844,105 @@ table.gb-bs td.gb-pl, table.gb-bs th.gb-pl{ position:sticky; left:0; background:
   .gb-roll, .gb-plays li.gb-new, .gb-bs tbody tr.gb-row, .gb-bs td.gb-flash, .gb-hero, .gb-ld, .gb-ring, .gb-pulse, .gb-ondot, .gb-flwait, .gb-xs{ animation:none !important; }
   .gb-ln{ animation:none; stroke-dashoffset:0; } .gb-ar{ animation:none; opacity:1; }
 }
+
+/* ---------------------------- Live ticker and live cards (update-89) ----------------------------
+   The band under the menu (app4n_live.js): every game on now, drifting left to right when there
+   are two or more. Home's Up next (app4o_home.js): one red card per live game. */
+.tk{ position:relative; display:flex; align-items:center; height:46px; background:var(--live-soft); border-bottom:1px solid var(--live-line); font-size:13px; overflow:hidden; }
+.tk-tag{ position:relative; z-index:2; display:flex; align-items:center; gap:8px; height:100%; padding:0 14px 0 max(16px, calc((100% - 1240px) / 2));
+  background:var(--live-soft); box-shadow:12px 0 14px -6px var(--live-soft); flex:none; }
+.tk-tag .lv-tag{ background:#c42d31; }
+.tk-tag b{ font:700 12px var(--display); color:var(--live-ink); letter-spacing:.06em; font-variant-numeric:tabular-nums; }
+.tk-vp{ position:relative; flex:1 1 auto; min-width:0; height:100%; overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent); mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent); }
+.tk.one .tk-vp{ -webkit-mask-image:none; mask-image:none; }
+.tk-track{ display:flex; align-items:center; height:100%; width:max-content; }
+.tk.go[data-fit] .tk-track{ animation:tkDrift var(--dur,30s) linear infinite; will-change:transform; }
+.tk.go:hover .tk-track, .tk.go:focus-within .tk-track{ animation-play-state:paused; }
+@keyframes tkDrift{ from{ transform:translateX(calc(var(--w) * -1px)); } to{ transform:translateX(0); } }
+.tk-set{ display:flex; align-items:center; height:100%; flex:none; }
+.tk-g{ position:relative; display:inline-flex; align-items:center; gap:9px; height:34px; padding:0 14px; margin:0 6px; border-radius:10px; text-decoration:none; color:var(--text); white-space:nowrap; transition:background .2s; }
+.tk-g:hover{ background:color-mix(in oklab, var(--live) 12%, transparent); text-decoration:none; }
+.tk-g:focus-visible{ outline:2px solid var(--live); outline-offset:-2px; }
+.tk-g.on{ background:color-mix(in oklab, var(--live) 16%, transparent); box-shadow:inset 0 0 0 1px color-mix(in oklab, var(--live) 45%, transparent); }
+.tk-g .comp-crest{ width:18px !important; height:18px !important; border-radius:5px; padding:2px; box-shadow:none; }
+.tk-g .crest-logo, .tk-g .crest-flag, .tk-g .swatch{ width:20px !important; height:20px !important; }
+.tk-t{ display:inline-flex; align-items:center; gap:7px; }
+.tk-t b{ font-weight:600; color:var(--text-muted); letter-spacing:.02em; }
+.tk-t strong{ font:700 16px var(--display); font-variant-numeric:tabular-nums; color:var(--text-muted); min-width:2ch; text-align:center; border-radius:5px; padding:0 2px; transition:color .3s; }
+.tk-t.lead b, .tk-t.lead strong{ color:var(--text); }
+.tk-t strong.bump{ animation:tkBump 1.6s ease-out; }
+@keyframes tkBump{ 0%{ background:oklch(82% 0.14 70/.7); transform:scale(1.18); } 30%{ transform:none; } 100%{ background:transparent; } }
+.tk-d{ color:var(--text-faint); }
+.tk-clk{ font:600 12.5px var(--display); letter-spacing:.06em; color:var(--live-ink); font-variant-numeric:tabular-nums; }
+.tk-sep{ width:4px; height:4px; border-radius:50%; background:var(--live-line); flex:none; }
+.tk-end{ position:relative; z-index:2; display:flex; align-items:center; gap:14px; height:100%; padding:0 max(16px, calc((100% - 1240px) / 2)) 0 14px; background:var(--live-soft);
+  box-shadow:-12px 0 14px -6px var(--live-soft); flex:none; color:var(--text-muted); font-size:12.5px; }
+.tk-end a{ font-weight:700; color:var(--live-ink); text-decoration:none; }
+@media (max-width:700px){
+  .tk{ height:44px; } .tk-w, .tk-end{ display:none; }
+  .tk-tag{ padding:0 8px 0 12px; gap:6px; }
+  .tk-tag b{ min-width:18px; height:18px; border-radius:9px; display:grid; place-items:center; background:#c42d31; color:#fff; font-size:11px; }
+  .tk-g{ padding:0 10px; gap:7px; margin:0 3px; } .tk-g .comp-crest{ display:none; }
+}
+@media (prefers-reduced-motion: reduce){
+  .tk.go[data-fit] .tk-track{ animation:none; }
+  .tk.go .tk-vp{ overflow-x:auto; scrollbar-width:none; -webkit-mask-image:none; mask-image:none; }
+  .tk.go .tk-set[aria-hidden="true"]{ display:none; }
+}
+
+/* Home: the stack of live games */
+.lvs{ display:grid; gap:10px; }
+.lvc{ position:relative; display:block; border-radius:16px; color:#fff; text-decoration:none; padding:14px 16px 16px; overflow:hidden; isolation:isolate;
+  background:linear-gradient(160deg, oklch(35% 0.09 25 / .55), rgba(255,255,255,.03)); border:1px solid oklch(60% 0.17 25 / .55);
+  transition:transform .2s cubic-bezier(.3,.7,.2,1), border-color .2s, box-shadow .2s; }
+.lvc.in{ animation:lvcIn .5s cubic-bezier(.2,.7,.2,1) both; }
+.lvc:hover{ transform:translateY(-2px); border-color:oklch(68% 0.19 25 / .9); box-shadow:0 14px 30px -18px oklch(55% 0.2 25 / .9); text-decoration:none; color:#fff; }
+.lvc:active{ transform:translateY(0) scale(.99); }
+.lvc:focus-visible{ outline:2px solid oklch(78% 0.13 55); outline-offset:3px; }
+@keyframes lvcIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
+.lvc::before{ content:""; position:absolute; inset:0; z-index:-1; background:radial-gradient(60% 120% at 50% 0%, oklch(60% 0.2 25 / .22), transparent 70%); opacity:0; transition:opacity .3s; }
+.lvc:hover::before{ opacity:1; }
+.lvc-k{ display:flex; align-items:center; gap:9px; font-size:12.5px; color:rgba(255,255,255,.6); min-width:0; }
+.lvc-k > span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.lvc-k .comp-crest{ border-radius:6px; padding:2px; box-shadow:none; }
+.lvc-k em{ margin-left:auto; flex:none; display:inline-flex; align-items:center; gap:6px; font-style:normal; font-weight:700; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:oklch(70% 0.2 25); }
+.lvc-k em i{ width:8px; height:8px; border-radius:50%; background:currentColor; animation:hmg-pulse 1.6s infinite; }
+.lvc-m{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:12px; margin:12px 0 10px; }
+.lvc-s{ display:flex; align-items:center; gap:11px; min-width:0; }
+.lvc-s.r{ flex-direction:row-reverse; text-align:right; }
+.lvc-s b{ font:700 16px/1.15 var(--display); color:rgba(255,255,255,.8); overflow-wrap:anywhere; }
+.lvc-s.lead b{ color:#fff; }
+.lvc-s .crest-logo, .lvc-s .crest-flag, .lvc-s .swatch{ width:40px !important; height:40px !important; flex:none; }
+.lvc-sc{ display:flex; align-items:center; gap:10px; font:700 34px/1 var(--display); font-variant-numeric:tabular-nums; }
+.lvc-sc > span{ min-width:2ch; text-align:center; color:rgba(255,255,255,.55); height:34px; overflow:hidden; display:inline-block; transition:color .4s; }
+.lvc-sc > span.lead{ color:#fff; }
+.lvc-sc i{ font-style:normal; font-weight:400; font-size:20px; color:rgba(255,255,255,.3); }
+.lvc-roll{ display:flex; flex-direction:column; animation:lvcRoll .7s cubic-bezier(.3,.8,.2,1) forwards; }
+.lvc-roll b{ display:block; height:34px; line-height:34px; font:inherit; }
+@keyframes lvcRoll{ to{ transform:translateY(-34px); } }
+.lvc-f{ display:flex; align-items:center; gap:12px; font-size:13px; color:rgba(255,255,255,.72); }
+.lvc-clk{ font:700 13px var(--display); letter-spacing:.06em; color:#ffb27a; font-variant-numeric:tabular-nums; }
+.lvc-tip{ color:rgba(255,255,255,.5); font-size:12.5px; }
+.lvc-go{ margin-left:auto; font-weight:600; color:oklch(78% 0.13 55); display:inline-flex; align-items:center; gap:6px; }
+.lvc-go::after{ content:"→"; transition:transform .2s; }
+.lvc:hover .lvc-go::after{ transform:translateX(3px); }
+.lvc-bar{ position:absolute; left:0; right:0; bottom:0; height:3px; background:rgba(255,255,255,.06); }
+.lvc-bar i{ display:block; position:relative; height:100%; width:calc(var(--p) * 100%); background:linear-gradient(90deg, oklch(62% 0.2 25 / .5), oklch(70% 0.2 25)); transition:width 1s linear; }
+.lvc-bar i::after{ content:""; position:absolute; top:-2px; right:-4px; width:7px; height:7px; border-radius:50%; background:oklch(75% 0.18 25); box-shadow:0 0 10px oklch(70% 0.2 25); }
+.lvc.fin{ background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border-color:rgba(255,255,255,.16); }
+.lvc.fin .lvc-k em{ color:rgba(255,255,255,.75); }
+.lvc.fin .lvc-clk{ color:rgba(255,255,255,.8); }
+#lv-hero-side:has(.lvs) + .hmg-scroll{ margin-top:12px; }
+.hmg-col-h em.lvn{ font-style:normal; color:oklch(72% 0.17 25); font-weight:700; letter-spacing:.04em; }
+@media (max-width:700px){
+  .lvc{ padding:12px 12px 14px; }
+  .lvc-m{ gap:8px; }
+  .lvc-s, .lvc-s.r{ flex-direction:column; text-align:center; gap:6px; }
+  .lvc-s b{ font-size:13.5px; }
+  .lvc-sc{ font-size:28px; gap:6px; } .lvc-sc > span{ height:28px; } .lvc-roll b{ height:28px; line-height:28px; }
+  .lvc-roll{ animation-name:lvcRollS; }
+  .lvc-tip{ display:none; }
+}
+@keyframes lvcRollS{ to{ transform:translateY(-28px); } }
+@media (prefers-reduced-motion: reduce){ .lvc.in, .lvc-roll, .lvc-k em i{ animation:none !important; } .lvc{ transition:none; } }

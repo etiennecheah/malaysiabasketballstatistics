@@ -90,8 +90,53 @@ function hmCdBoxes(ms) {
   const d = Math.floor(ms / HM_DAY), h = Math.floor(ms % HM_DAY / 3600e3), m = Math.floor(ms % 3600e3 / 60e3);
   return [[d, 'Days'], [h, 'Hrs'], [m, 'Min']].map(([v, l]) => `<span><b>${String(v).padStart(2, '0')}</b>${l}</span>`).join('');
 }
+/* Several games on at once (update-89): one red card each, in tip-off order, with a game
+   the feed has just finished beside them in grey. A score that changed since the last
+   poll rolls up; a card slides in only the first time it is drawn. */
+const HM_LV = { seen: new Set(), score: {} };
+const hmLiveGames = () => [...liveList('live'), ...liveList('final')].filter(x => x.data).sort((p, q) => (liveStart(p.g) || 0) - (liveStart(q.g) || 0));
+// how far the game has run, 0–1, from the period and the clock (ten-minute quarters)
+function hmLvProgress(d) {
+  if (d.status === 'final') return 1;
+  const m = String(d.clock || '').match(/(\d+):(\d{2})/), left = m ? +m[1] * 60 + +m[2] : 600;
+  const ot = /OVERTIME/i.test(d.periodType || '') || d.inOT;
+  return ot ? 1 : Math.max(0, Math.min(1, ((Math.min(d.period || 1, 4) - 1) * 600 + (600 - Math.min(600, left))) / 2400));
+}
+function hmLvScore(mid, i, v, at) {
+  const k = mid + ':' + i, o = HM_LV.score[k];
+  if (!o || o.at !== at) HM_LV.score[k] = { v, was: o ? o.v : null, at };
+  const s = HM_LV.score[k];
+  const roll = s.was != null && s.was !== v && at && Date.now() - at < 3000 && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  return roll ? `<span class="lvc-roll"><b>${s.was}</b><b>${v}</b></span>` : String(v);
+}
+function hmLiveCard(x, i) {
+  const d = x.data, [h, a] = d.teams, fin = d.status === 'final', c = COMP_BY_ID[x.g.cid], mid = x.g.mid;
+  const first = !HM_LV.seen.has(mid); HM_LV.seen.add(mid);
+  const hl = h.score > a.score, al = a.score > h.score;
+  const clk = fin ? 'Final' : liveClock(d);
+  return `<a class="lvc${fin ? ' fin' : ''}${first ? ' in' : ''}" href="#/live/${mid}" style="--p:${hmLvProgress(d).toFixed(3)};animation-delay:${i * 0.08}s">
+    <div class="lvc-k">${c ? compCrest(c, 22) : ''}<span>${esc(liveCompName(x.g.cid))}</span><em>${fin ? 'Final' : '<i></i>Live'}</em></div>
+    <div class="lvc-m">
+      <div class="lvc-s${hl ? ' lead' : ''}">${crest(h.name, 40)}<b>${esc(h.name)}</b></div>
+      <div class="lvc-sc"><span class="${hl ? 'lead' : ''}">${hmLvScore(mid, 0, h.score, x.at)}</span><i>–</i><span class="${al ? 'lead' : ''}">${hmLvScore(mid, 1, a.score, x.at)}</span></div>
+      <div class="lvc-s r${al ? ' lead' : ''}">${crest(a.name, 40)}<b>${esc(a.name)}</b></div>
+    </div>
+    <div class="lvc-f"><span class="lvc-clk">${esc(clk)}</span>${x.g.time ? `<span class="lvc-tip">Tip-off ${esc(x.g.time)}</span>` : ''}<span class="lvc-go">${fin ? 'Box score and plays' : 'Follow the game'}</span></div>
+    ${fin ? '' : '<span class="lvc-bar"><i></i></span>'}</a>`;
+}
+// "3 live · 7 fixtures"
+function hmUpCount(nLater, feat) {
+  const nLive = liveList('live').length, n = nLater + Math.max(nLive, feat ? 1 : 0);
+  return `${nLive > 1 ? `<em class="lvn">${nLive} live</em> · ` : ''}${n} fixture${n === 1 ? '' : 's'}`;
+}
+function hmUpCountNow() {
+  const feat = (liveList('live')[0] || liveList('final')[0] || {}).g || hmUpcoming()[0];
+  return hmUpCount(hmFixtures().filter(g => !feat || g.mid !== feat.mid).filter(g => !(LIVE.games[g.mid] && LIVE.games[g.mid].data)).length, feat);
+}
 // the featured card: a live game, a game the feed has just finished, else the next tip-off
 function hmHeroSide() {
+  const many = hmLiveGames();
+  if (many.length > 1) return `<div class="lvs">${many.map(hmLiveCard).join('')}</div>`;
   const on = liveList('live')[0] || liveList('final')[0];
   if (on && on.data) {
     const d = on.data, [h, a] = d.teams, fin = d.status === 'final', c = COMP_BY_ID[on.g.cid];
@@ -129,7 +174,7 @@ function hmGamesInner() {
       <div class="hmg-tabs" role="group" aria-label="Show"><button data-hmshow="up" aria-pressed="${B.show === 'up'}">Upcoming</button><button data-hmshow="res" aria-pressed="${B.show === 'res'}">Results</button></div></div>
     <div class="hmg-cols" data-show="${B.show}">
       <section class="hmg-up" aria-label="Upcoming games">
-        <div class="hmg-col-h"><h2>Up next</h2><span>${later.length + (feat ? 1 : 0)} fixture${later.length + (feat ? 1 : 0) === 1 ? '' : 's'}</span></div>
+        <div class="hmg-col-h"><h2>Up next</h2><span id="hm-upn">${hmUpCount(later.length, feat)}</span></div>
         <div id="lv-hero-side">${hmHeroSide()}</div>
         ${later.length ? `<div class="hmg-scroll${later.length > 3 ? ' more' : ''}" tabindex="0" aria-label="Later fixtures"><div class="hmg-list">${hmByDay(later, g => `<a class="hmg-row" href="#/c/${g.cid}/schedule">${hmTeams(g)}<span class="hmg-meta"><b>${esc(g.time || 'Time TBC')}</b>${logo(g.cid)}</span></a>`)}</div></div>` : ''}
       </section>

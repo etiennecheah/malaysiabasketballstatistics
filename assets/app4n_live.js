@@ -99,12 +99,13 @@ function liveErr() { const v = Object.values(LIVE.games); return v.length && v.e
 
 /* repaint only the live parts, so the reader keeps their scroll position */
 function liveRefresh() {
-  const bar = document.getElementById('live-bar');
-  if (bar) bar.innerHTML = liveBarInner();
+  liveBarPaint();
   const home = document.getElementById('live-home');
   if (home) home.innerHTML = liveHomeInner();
   const side = document.getElementById('lv-hero-side');
   if (side && typeof hmHeroSide === 'function') side.innerHTML = hmHeroSide();
+  const upn = document.getElementById('hm-upn');
+  if (upn && typeof hmUpCountNow === 'function') upn.innerHTML = hmUpCountNow();
   const page = document.getElementById('live-game');
   if (page) {
     const box = page.querySelector('.gb-plays'), top = box ? box.scrollTop : 0;
@@ -206,23 +207,77 @@ function liveTop(d, n, team) {
   return all.filter(x => x.p.min !== '0:00' || x.p.pts).sort((a, b) => b.p.pts - a.p.pts || b.p.reb - a.p.reb).slice(0, n);
 }
 
-/* ---------------------------- the live bar ---------------------------- */
-function liveBar() { return `<div id="live-bar">${liveBarInner()}</div>`; }
-function liveBarInner() {
-  const on = liveList('live');
-  if (!on.length) return '';
-  const x = on[0], d = x.data, [h, a] = d.teams;
-  const more = on.length > 1 ? `<span class="lvb-more">+${on.length - 1} more</span>` : '';
-  return `<a class="lvb" href="#/live/${x.g.mid}">
-    <span class="lv-tag"><span class="lv-dot"></span>LIVE NOW</span>
-    <span class="lvb-comp">${esc(liveCompName(x.g.cid))}</span>
-    <span class="lvb-score">${esc(h.name)} <b>${h.score}–${a.score}</b> ${esc(a.name)}</span>
-    <span class="lvb-clock">${esc(liveClock(d))}</span>${more}
-    <span class="lvb-grow"></span>
-    <span class="lvb-ago">Updated ${liveAgo(x.at)}</span>
-    <span class="lvb-go">Follow the game →</span>
-  </a>`;
+/* ---------------------------- the live bar ----------------------------
+   Every game on now, in one band under the menu (update-89). One game stands still;
+   two or more drift left to right in a loop (the set is copied until it fills the
+   band, then moved one set's width: liveTickFit). Hover or focus holds it; a tap
+   opens that game. A poll with the same games only changes the numbers in place, so
+   the drift never jumps; a game starting or ending redraws the band. */
+function liveBar() { setTimeout(liveTickFit, 0); return `<div id="live-bar">${liveBarInner()}</div>`; }
+const liveBarGames = () => liveList('live').sort((p, q) => (liveStart(p.g) || 0) - (liveStart(q.g) || 0));
+const liveNowMid = () => { const m = HS.hash().match(/^#\/(?:live|watch)\/([^/?]+)/); return m ? m[1] : null; };
+const liveTkClock = d => liveClock(d).replace(' · ', ' ');
+function liveTkChip(x) {
+  const d = x.data, [h, a] = d.teams, c = COMP_BY_ID[x.g.cid];
+  const side = (t, o, i) => `<span class="tk-t${t.score > o.score ? ' lead' : ''}" data-tkt="${x.g.mid}:${i}">${i ? '' : crest(t.name, 20)}${i ? `<strong data-tks="${x.g.mid}:${i}">${t.score}</strong>` : ''}<b>${esc(watchCode(t.name))}</b>${i ? crest(t.name, 20) : `<strong data-tks="${x.g.mid}:${i}">${t.score}</strong>`}</span>`;
+  return `<a class="tk-g${liveNowMid() === x.g.mid ? ' on' : ''}" href="#/live/${x.g.mid}" aria-label="${esc(h.name)} ${h.score}, ${esc(a.name)} ${a.score}, ${esc(liveClock(d))}">
+    ${c ? compCrest(c, 18) : ''}${side(h, a, 0)}<span class="tk-d">–</span>${side(a, h, 1)}<span class="tk-clk" data-tkc="${x.g.mid}">${esc(liveTkClock(d))}</span></a>`;
 }
+function liveBarSig() { return liveBarGames().map(x => x.g.mid).join(',') + '|' + liveNowMid(); }
+function liveBarInner() {
+  const on = liveBarGames();
+  if (!on.length) return '';
+  const one = on.length === 1, x = on[0];
+  const set = on.map(liveTkChip).join('<span class="tk-sep"></span>') + (one ? '' : '<span class="tk-sep"></span>');
+  return `<div class="tk ${one ? 'one' : 'go'}" role="region" aria-label="Live games" data-sig="${esc(liveBarSig())}">
+    <span class="tk-tag"><span class="lv-tag"><span class="lv-dot"></span>LIVE<span class="tk-w"> NOW</span></span>${one ? '' : `<b><span class="tk-n">${on.length}</span><span class="tk-w"> GAMES</span></b>`}</span>
+    <div class="tk-vp"><div class="tk-track"><div class="tk-set">${set}</div></div></div>
+    <span class="tk-end"><span class="tk-ago">Updated ${liveAgo(x.at)}</span>${one ? `<a href="#/live/${x.g.mid}">Follow the game →</a>` : ''}</span></div>`;
+}
+function liveTickFit() {
+  const tk = document.querySelector('#live-bar .tk.go');
+  if (!tk || tk.dataset.fit) return;
+  const vp = tk.querySelector('.tk-vp'), tr = tk.querySelector('.tk-track'), set = tr && tr.firstElementChild;
+  const w = set && set.offsetWidth;
+  if (!w) return;
+  const n = Math.max(2, Math.ceil(vp.offsetWidth / w) + 1);
+  for (let i = 1; i < n; i++) {
+    const c = set.cloneNode(true);
+    c.setAttribute('aria-hidden', 'true');
+    c.querySelectorAll('a').forEach(a => { a.tabIndex = -1; });
+    tr.appendChild(c);
+  }
+  tk.style.setProperty('--w', w);
+  tk.style.setProperty('--dur', (w / 38).toFixed(1) + 's');
+  tk.dataset.fit = '1';
+}
+// the same games as on screen: new numbers in place, a changed score pops
+function liveBarUpdate(bar) {
+  const quiet = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const on = liveBarGames();
+  on.forEach(x => {
+    const [h, a] = x.data.teams;
+    [h.score, a.score].forEach((v, i) => bar.querySelectorAll(`[data-tks="${x.g.mid}:${i}"]`).forEach(el => {
+      if (el.textContent === String(v)) return;
+      el.textContent = v;
+      if (!quiet) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+    }));
+    bar.querySelectorAll(`[data-tkt="${x.g.mid}:0"]`).forEach(el => el.classList.toggle('lead', h.score > a.score));
+    bar.querySelectorAll(`[data-tkt="${x.g.mid}:1"]`).forEach(el => el.classList.toggle('lead', a.score > h.score));
+    bar.querySelectorAll(`[data-tkc="${x.g.mid}"]`).forEach(el => { el.textContent = liveTkClock(x.data); });
+  });
+  const ago = bar.querySelector('.tk-ago');
+  if (ago && on[0]) ago.textContent = 'Updated ' + liveAgo(on[0].at);
+}
+function liveBarPaint() {
+  const bar = document.getElementById('live-bar');
+  if (!bar) return;
+  const tk = bar.querySelector('.tk');
+  if (tk && tk.dataset.sig === liveBarSig()) { liveBarUpdate(bar); return; }
+  bar.innerHTML = liveBarInner();
+  liveTickFit();
+}
+addEventListener('resize', () => { clearTimeout(LIVE.rz); LIVE.rz = setTimeout(() => { const b = document.getElementById('live-bar'); if (b) { b.innerHTML = liveBarInner(); liveTickFit(); } }, 250); });
 
 /* ---------------------------- Home's live part ---------------------------- */
 /* Home itself is app4o_home.js; this is the part that changes with the feed. */
