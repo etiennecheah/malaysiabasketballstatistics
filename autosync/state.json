@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1794072215.5728407,
+  "at": 1794075835.77129,
   "fp": "f87528af03c913d3fc10"
  },
  "daily": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-02 06:41  FAILED 48654 (41): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 06:55  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 HORNBILLS 90-81 DREAMINDER; shot charts of 1 game  [2944613: the source's box score replaces the one from the live feed; 1 player page(s) not published by the source now: the lines we hold are kept]",
   "2026-11-03 10:16  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated",
   "2026-11-04 07:17  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
@@ -85,7 +84,8 @@
   "2026-11-07 23:44  FAILED 48654 (16): games we hold as final are no longer final on the source: 2944618",
   "2026-11-08 01:03  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 01:13  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
-  "2026-11-08 01:23  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
+  "2026-11-08 01:23  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
+  "2026-11-08 02:23  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -96,7 +96,7 @@
   "2896900": {
    "cid": "49965",
    "kind": "box",
-   "next": 1794075683.6672993,
+   "next": 1794079308.1563017,
    "since": 1794061173.6645193
   }
  },
@@ -112,7 +112,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1794070825.7916498,
+  "21375": 1794074426.1349432,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
@@ -195,7 +195,7 @@
   "49645": 1792147425.7033217,
   "49646": 1792147425.7033217,
   "49683": 1792147425.7033217,
-  "49965": 1794070825.7916498,
+  "49965": 1794074426.1349432,
   "50247": 1792317691.5245516,
   "50248": 1792147831.0700762
  }
