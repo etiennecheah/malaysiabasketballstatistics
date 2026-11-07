@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794081783.920385,
-  "fp": "a674ace714b0920e7d3f"
+  "at": 1794081976.9517128,
+  "fp": "60d4055011ec31bfedb2"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -23,7 +23,7 @@
   "50247": "2026-10-21",
   "50248": "2026-10-21",
   "50457": "2026-11-07",
-  "50458": "2026-11-07"
+  "50458": "2026-11-08"
  },
  "fail": {
   "48654": {
@@ -42,11 +42,10 @@
   "50247": 1792360197.0091074,
   "50248": 1792360741.928966,
   "50457": 1794021193.805391,
-  "50458": 1794003703.8642974
+  "50458": 1794081812.596534
  },
  "lines_retry": {},
  "log": [
-  "2026-11-04 07:17  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
   "2026-11-05 08:22  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
   "2026-11-05 22:35  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 DREAMINDER 69-79 HORNBILLS  [2944618: final 69-79 read from the live feed (the schedule page does not show it as final yet); 2944618: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 69 (DREAMINDER))]",
   "2026-11-05 22:45  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 DREAMINDER 69-79 HORNBILLS  [2944618: the source's box score replaces the one from the live feed]",
@@ -85,7 +84,8 @@
   "2026-11-08 01:23  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 02:23  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 03:24  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
-  "2026-11-08 04:03  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 6 of 8 teams]"
+  "2026-11-08 04:03  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 6 of 8 teams]",
+  "2026-11-08 04:06  sync: Major Basketball League \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
