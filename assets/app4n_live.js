@@ -20,7 +20,20 @@
    ========================================================================= */
 
 const LIVE_RELAY = 'https://hoopstatsmy-live.etiennecheah26.workers.dev';
-const LIVE_FAST = 15e3;   // Home, a live game page and the Watch page (the relay keeps each game 10 s)
+const LIVE_FAST = 15e3;   // Home, a live game page and the Watch page, when the relay gives no timing
+/* Relay v3.1 says, for each game, how many seconds until Genius Sports' CDN can have a
+   newer copy (nextIn; the feed refreshes about every 30 s). On the fast pages the next
+   request goes out just after the soonest of those, so new stats show seconds after the
+   feed has them, with no more requests than a fixed clock would make. */
+const LIVE_AFTER_FEED = 0.8e3, LIVE_MIN_WAIT = 4e3, LIVE_MAX_WAIT = 31e3, LIVE_GROUP = 5e3;
+function liveFeedWait() {
+  const next = Object.values(LIVE.games).filter(x => x.state === 'live' && x.next != null)
+    .map(x => x.next * 1000 - (Date.now() - x.at)).sort((a, b) => a - b);
+  if (!next.length) return null;
+  // with several games, one request picks up every game whose new copy lands within 5 s of the first
+  const t = next.filter(v => v <= next[0] + LIVE_GROUP).pop();
+  return Math.max(LIVE_MIN_WAIT, Math.min(LIVE_MAX_WAIT, t + LIVE_AFTER_FEED));
+}
 const LIVE_BEFORE = 20 * 60e3, LIVE_AFTER = 3.5 * 3600e3;
 const LIVE = { games: {}, timer: null, last: 0, fails: 0, now: null, per: 'all', scoring: false, bt: 0 };
 /* the play-by-play filter on the live game page: a period, or scoring plays only */
@@ -66,6 +79,8 @@ function liveCandidates() {
   return out.sort((a, b) => liveStart(a) - liveStart(b));
 }
 
+// how the reader is told the page keeps itself current
+function liveCadence() { return LIVE.batch === false ? 'every 30 s' : liveFeedWait() != null ? 'seconds after the official feed' : 'every 15 s'; }
 function liveFast() { return /^#\/(home|live\/|watch\/)/.test(HS.hash()) || HS.hash() === '' || HS.hash() === '#/'; }
 
 /* One request for every game being followed (relay v3: /games?ids=…), so the count of
@@ -82,7 +97,7 @@ async function liveFetchAll(mids) {
         if (r.status === 404 || r.status === 400) { LIVE.batch = false; break; }
         if (!r.ok) throw new Error('relay ' + r.status);
         const j = await r.json();
-        part.forEach(m => { const d = (j.games || {})[m]; out[m] = !d ? { status: 502 } : d.error ? { status: d.status || 502 } : { status: 200, d }; });
+        part.forEach(m => { const d = (j.games || {})[m]; out[m] = !d ? { status: 502 } : d.error ? { status: d.status || 502 } : { status: 200, d, next: typeof d.nextIn === 'number' ? d.nextIn : null }; });
       }
       if (LIVE.batch !== false) return out;
     } catch (e) {
@@ -109,22 +124,24 @@ async function liveTick() {
     const prev = LIVE.games[g.mid] || { g, state: 'pending', data: null, at: 0 };
     prev.g = g;
     const r = got[g.mid] || { status: 0 };
+    if (r.status !== 200) prev.next = null;   // a stale feed time must never speed up the next request
     if (r.status === 404) { prev.state = prev.data ? prev.state : 'pending'; prev.err = 0; }
     else if (r.status !== 200 || !r.d || !Array.isArray(r.d.teams)) prev.err = Date.now();
     else {
       const d = r.d;
-      prev.data = d; prev.at = Date.now(); prev.err = 0;
+      prev.data = d; prev.at = Date.now(); prev.err = 0; prev.next = r.next != null ? r.next : null;
       prev.state = d.status === 'final' ? 'final' : d.status === 'live' ? 'live' : 'pending';
     }
     keep[g.mid] = prev;
   });
   LIVE.games = keep;
   LIVE.last = Date.now();
-  liveRefresh();
-  // nothing near tip-off: look again in 5 minutes, without any network request
-  // 15 s needs relay v3 (one request for every game, each kept 10 s); an older relay keeps the old 30 s
-  const fast = LIVE.batch === false ? 30e3 : LIVE_FAST;
+  // when to ask again: just after the feed's next copy (relay v3.1), else every 15 s (v3) or 30 s (older
+  // relay) on the fast pages, every 60 s elsewhere, and every 5 minutes with nothing near tip-off
+  const fast = LIVE.batch === false ? 30e3 : (liveFeedWait() || LIVE_FAST);
   const wait = cands.length ? (liveFast() || document.getElementById('cn') ? fast : 60e3) : 5 * 60e3;
+  LIVE.wait = wait;
+  liveRefresh();
   LIVE.timer = setTimeout(liveTick, wait);
 }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) liveTick(); });
@@ -320,7 +337,7 @@ addEventListener('resize', () => { clearTimeout(LIVE.rz); LIVE.rz = setTimeout((
 function liveHomeInner() {
   const on = liveList('live'), done = liveList('final'), soon = liveList('pending');
   let html = '';
-  if (on.length) html += `<div class="lv-head"><h2 class="lv-h">Live now</h2><span class="lv-sub">Score, clock, players and plays · every ${LIVE.batch === false ? 30 : 15} s</span></div>` + on.map(liveCard).join('');
+  if (on.length) html += `<div class="lv-head"><h2 class="lv-h">Live now</h2><span class="lv-sub">Score, clock, players and plays · ${liveCadence()}</span></div>` + on.map(liveCard).join('');
   else if (soon.length) html += `<div class="card lv-quiet"><span class="lv-dot lv-dot-idle"></span>${soon.map(x => `<b>${esc(x.g.h)}</b> vs <b>${esc(x.g.a)}</b>`).join(', ')} — tip-off ${esc(soon[0].g.time)}. The score shows here by itself once the game starts.</div>`;
   if (liveErr()) html += `<div class="card lv-quiet"><span class="lv-dot lv-dot-idle"></span>The live feed is not answering — the rest of the site is the saved data.</div>`;
   if (done.length) html += `<div class="lv-head"><h2 class="lv-h">Just finished</h2></div>` + done.map(liveCard).join('');
