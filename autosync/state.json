@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794060932.792554,
-  "fp": "9c0734a6a74445cf508a"
+  "at": 1794061307.6249824,
+  "fp": "1d7a626bb4c4758d0954"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-02 06:19  FAILED 49965 (19): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 06:20  FAILED 48654 (39): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
   "2026-11-02 06:30  FAILED 49965 (20): https://hosted.dcd.shared.geniussports.com/maba/en/competition/49965/schedule: HTTP Error 503: Service Unavailable",
   "2026-11-02 06:30  FAILED 48654 (40): https://hosted.dcd.shared.geniussports.com/maba/en/competition/48654/teams: HTTP Error 503: Service Unavailable",
@@ -85,14 +84,22 @@
   "2026-11-07 20:34  sync: Dream Ball Championship 2026 \u2014 Trapo 83-59 Ho Hotel x Pay Fong; shot charts of 1 game  [2896902: final 83-59 read from the live feed (the schedule page does not show it as final yet)]",
   "2026-11-07 21:02  sync: Major Basketball League \u2014 Johor Southern Tigers 96-72 Penang Sunrise Youngsters; shot charts of 1 game  [2951456: the source's box score replaces the one from the live feed]",
   "2026-11-07 22:05  sync: Major Basketball League \u2014 KL Titans 89-91 NS Matrix Deers; shot charts of 1 game  [2951458: final 89-91 read from the live feed (the schedule page does not show it as final yet); season lines not read for 11 player(s): tried again next time]",
-  "2026-11-07 22:15  sync: Major Basketball League \u2014 fixtures, standings or season lines updated"
+  "2026-11-07 22:15  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
+  "2026-11-07 22:21  sync: Dream Ball Championship 2026 \u2014 YYC x MMU 67-77 Brayden x MG Living Sport  [2896900: final 67-77 read from the live feed (the schedule page does not show it as final yet); 2896900: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 67 (YYC x MMU))]"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
-  "49965": 1794059672.8071094,
+  "49965": 1794061173.6645193,
   "50247": 1791743461.92955
  },
- "pending": {},
+ "pending": {
+  "2896900": {
+   "cid": "49965",
+   "kind": "box",
+   "next": 1794061773.6645193,
+   "since": 1794061173.6645193
+  }
+ },
  "rechecked": {
   "1312929": "25340",
   "1312947": "25341",
