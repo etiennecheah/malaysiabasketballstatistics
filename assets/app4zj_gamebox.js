@@ -272,10 +272,11 @@ const GBX = (() => {
     // the box score, one team at a time
     const bt = LIVE.bt === 1 ? 1 : 0, t = d.teams[bt];
     const rows = [], dnp = [];
-    t.pl.forEach(p => {
+    t.pl.forEach((p, k) => {
       const s = fromLive(p), pid = p.pid || (p.no != null && p.no !== '' ? livePid(g.cid, t.name, String(p.no)) : null);
       if (playedNothing(s) && !p.starter && !(p.on && !fin)) { dnp.push(p.name); return; }
-      rows.push({ id: (pid || 'n' + p.no) + '', pid, name: p.name, num: p.no, starter: !!p.starter, on: !!p.on && !fin, s });
+      // a row's key across polls: the person, else shirt and name (a feed can leave both blank, so the order too)
+      rows.push({ id: pid ? String(pid) : `n${bt}:${p.no || ''}:${p.name || ''}:${p.no || p.name ? '' : k}`, pid, name: p.name, num: p.no, starter: !!p.starter, on: !!p.on && !fin, s });
     });
     const tt = t.tot && (t.tot.teamReb || t.tot.teamTov) ? `incl. team ${t.tot.teamReb || 0} REB · ${t.tot.teamTov || 0} TO` : '';
     const box = `<section class="gb-card gb-boxc"><header><h2>${fin ? 'Box score' : 'Live box score'}</h2>

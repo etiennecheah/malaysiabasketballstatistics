@@ -90,11 +90,13 @@ function hmCdBoxes(ms) {
   const d = Math.floor(ms / HM_DAY), h = Math.floor(ms % HM_DAY / 3600e3), m = Math.floor(ms % 3600e3 / 60e3);
   return [[d, 'Days'], [h, 'Hrs'], [m, 'Min']].map(([v, l]) => `<span><b>${String(v).padStart(2, '0')}</b>${l}</span>`).join('');
 }
-/* Several games on at once (update-89): one red card each, in tip-off order, with a game
-   the feed has just finished beside them in grey. A score that changed since the last
+/* Several games on at once (update-89): one red card each, live games first in tip-off order, then
+   a game the feed has just finished in grey. A score that changed since the last
    poll rolls up; a card slides in only the first time it is drawn. */
 const HM_LV = { seen: new Set(), score: {} };
-const hmLiveGames = () => [...liveList('live'), ...liveList('final')].filter(x => x.data).sort((p, q) => (liveStart(p.g) || 0) - (liveStart(q.g) || 0));
+// games on now first (by tip-off), then the ones the feed has just finished
+const hmLiveGames = () => [...liveList('live'), ...liveList('final')].filter(x => x.data)
+  .sort((p, q) => (p.state === 'final') - (q.state === 'final') || (liveStart(p.g) || 0) - (liveStart(q.g) || 0));
 // how far the game has run, 0–1, from the period and the clock (ten-minute quarters)
 function hmLvProgress(d) {
   if (d.status === 'final') return 1;

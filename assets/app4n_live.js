@@ -135,7 +135,8 @@ function liveClock(d) {
     return /OVERTIME/i.test(d.periodType || '') ? 'End of ' + livePeriod(d)
       : d.period === 2 ? 'Half-time' : 'End of ' + livePeriod(d);
   }
-  const c = String(d.clock || '').replace(/^0(\d:)/, '$1');
+  // the feed writes the game clock with hundredths ("02:26:00"): minutes and seconds only
+  const c = String(d.clock || '').replace(/^(\d+:\d\d):\d\d$/, '$1').replace(/^0(\d:)/, '$1');
   return livePeriod(d) + ' · ' + c;
 }
 function liveAgo(t) {
@@ -348,10 +349,13 @@ function liveGameInner(mid) {
     return `<div class="card lv-quiet">This game has finished and is in the database —
       <a href="#/c/${g.cid}/box/${g.mid}">open its box score</a>.</div>`;
   }
-  if (!x || !x.data) {
+  // no feed yet, or the feed's warm-up record (teams listed, no plays): the game has not begun
+  if (!x || !x.data || (x.data.status === 'scheduled' && !(x.data.plays || []).length)) {
+    const t0 = liveStart(g), over = t0 != null && liveNow() > t0 + LIVE_AFTER;
     return `<div class="lv-crumb"><a href="#/">Home</a> › <a href="#/c/${g.cid}">${esc(liveCompName(g.cid))}</a></div>
       <div class="card lv-quiet"><span class="lv-dot lv-dot-idle"></span><b>${esc(g.h)}</b> vs <b>${esc(g.a)}</b> · ${esc(liveTip(g))}.
-      ${x && x.err ? 'The live feed is not answering right now — this page keeps trying.' : 'Waiting for the game to start — this page fills in by itself.'}</div>`;
+      ${over ? 'This game has finished. Its result and box score arrive with the next update of the database.'
+        : x && x.err ? 'The live feed is not answering right now — this page keeps trying.' : 'Waiting for the game to start — this page fills in by itself.'}</div>`;
   }
   // scoreboard, plays and box score: app4zj_gamebox.js
   return GBX.live(x);
