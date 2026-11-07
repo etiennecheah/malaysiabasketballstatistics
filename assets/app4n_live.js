@@ -12,12 +12,15 @@
    3.5 hours ago. Outside those windows the site never contacts the relay, and
    if the relay does not answer the page simply shows the saved data.
 
-   Requests: every 30 s on Home and on a live game page, every 60 s elsewhere,
-   and none while the tab is in the background (Cloudflare's free plan allows
-   100,000 a day; see claude/live-game-feed.md).
+   Requests: every 15 s on Home, a live game page and the Watch page, every 60 s
+   elsewhere, and none while the tab is in the background. Every game being
+   followed comes in one request (relay v3), so two or three games at once cost
+   no more than one (Cloudflare's free plan allows 100,000 a day; see
+   claude/live-game-feed.md and claude/live-relay-v3.md).
    ========================================================================= */
 
 const LIVE_RELAY = 'https://hoopstatsmy-live.etiennecheah26.workers.dev';
+const LIVE_FAST = 15e3;   // Home, a live game page and the Watch page (the relay keeps each game 10 s)
 const LIVE_BEFORE = 20 * 60e3, LIVE_AFTER = 3.5 * 3600e3;
 const LIVE = { games: {}, timer: null, last: 0, fails: 0, now: null, per: 'all', scoring: false, bt: 0 };
 /* the play-by-play filter on the live game page: a period, or scoring plays only */
@@ -65,31 +68,63 @@ function liveCandidates() {
 
 function liveFast() { return /^#\/(home|live\/|watch\/)/.test(HS.hash()) || HS.hash() === '' || HS.hash() === '#/'; }
 
+/* One request for every game being followed (relay v3: /games?ids=…), so the count of
+   requests does not grow with the number of games on at once. A relay that does not
+   know /games (v2) gets the old one-request-per-game instead, from then on. */
+async function liveFetchAll(mids) {
+  const ok = mids.filter(m => /^\d{5,9}$/.test(m)), out = {};
+  mids.forEach(m => { if (!ok.includes(m)) out[m] = { status: 404 }; });
+  if (LIVE.batch !== false && ok.length) {
+    try {
+      for (let i = 0; i < ok.length; i += 8) {
+        const part = ok.slice(i, i + 8);
+        const r = await fetch(LIVE_RELAY + '/games?ids=' + part.join(','));
+        if (r.status === 404 || r.status === 400) { LIVE.batch = false; break; }
+        if (!r.ok) throw new Error('relay ' + r.status);
+        const j = await r.json();
+        part.forEach(m => { const d = (j.games || {})[m]; out[m] = !d ? { status: 502 } : d.error ? { status: d.status || 502 } : { status: 200, d }; });
+      }
+      if (LIVE.batch !== false) return out;
+    } catch (e) {
+      ok.forEach(m => { out[m] = { status: 0 }; });
+      return out;
+    }
+  }
+  await Promise.all(ok.map(async m => {
+    try {
+      const r = await fetch(LIVE_RELAY + '/game/' + m);
+      out[m] = r.ok ? { status: 200, d: await r.json() } : { status: r.status };
+    } catch (e) { out[m] = { status: 0 }; }
+  }));
+  return out;
+}
+
 async function liveTick() {
   clearTimeout(LIVE.timer);
   if (document.hidden) return;                      // resumes on visibilitychange
   const cands = liveCandidates();
   const keep = {};
-  await Promise.all(cands.map(async g => {
+  const got = cands.length ? await liveFetchAll(cands.map(g => g.mid)) : {};
+  cands.forEach(g => {
     const prev = LIVE.games[g.mid] || { g, state: 'pending', data: null, at: 0 };
     prev.g = g;
-    try {
-      const r = await fetch(LIVE_RELAY + '/game/' + g.mid);
-      if (r.status === 404) { prev.state = prev.data ? prev.state : 'pending'; prev.err = 0; }
-      else if (!r.ok) throw new Error('relay ' + r.status);
-      else {
-        const d = await r.json();
-        prev.data = d; prev.at = Date.now(); prev.err = 0;
-        prev.state = d.status === 'final' ? 'final' : d.status === 'live' ? 'live' : 'pending';
-      }
-    } catch (e) { prev.err = Date.now(); }
+    const r = got[g.mid] || { status: 0 };
+    if (r.status === 404) { prev.state = prev.data ? prev.state : 'pending'; prev.err = 0; }
+    else if (r.status !== 200 || !r.d || !Array.isArray(r.d.teams)) prev.err = Date.now();
+    else {
+      const d = r.d;
+      prev.data = d; prev.at = Date.now(); prev.err = 0;
+      prev.state = d.status === 'final' ? 'final' : d.status === 'live' ? 'live' : 'pending';
+    }
     keep[g.mid] = prev;
-  }));
+  });
   LIVE.games = keep;
   LIVE.last = Date.now();
   liveRefresh();
   // nothing near tip-off: look again in 5 minutes, without any network request
-  const wait = document.getElementById('cn') && LIVE.games[(document.getElementById('cn') || {}).dataset.mid] ? 15e3 : cands.length ? (liveFast() ? 30e3 : 60e3) : 5 * 60e3;
+  // 15 s needs relay v3 (one request for every game, each kept 10 s); an older relay keeps the old 30 s
+  const fast = LIVE.batch === false ? 30e3 : LIVE_FAST;
+  const wait = cands.length ? (liveFast() || document.getElementById('cn') ? fast : 60e3) : 5 * 60e3;
   LIVE.timer = setTimeout(liveTick, wait);
 }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) liveTick(); });
@@ -285,7 +320,7 @@ addEventListener('resize', () => { clearTimeout(LIVE.rz); LIVE.rz = setTimeout((
 function liveHomeInner() {
   const on = liveList('live'), done = liveList('final'), soon = liveList('pending');
   let html = '';
-  if (on.length) html += `<div class="lv-head"><h2 class="lv-h">Live now</h2><span class="lv-sub">Score, clock, players and plays · every 30 s</span></div>` + on.map(liveCard).join('');
+  if (on.length) html += `<div class="lv-head"><h2 class="lv-h">Live now</h2><span class="lv-sub">Score, clock, players and plays · every ${LIVE.batch === false ? 30 : 15} s</span></div>` + on.map(liveCard).join('');
   else if (soon.length) html += `<div class="card lv-quiet"><span class="lv-dot lv-dot-idle"></span>${soon.map(x => `<b>${esc(x.g.h)}</b> vs <b>${esc(x.g.a)}</b>`).join(', ')} — tip-off ${esc(soon[0].g.time)}. The score shows here by itself once the game starts.</div>`;
   if (liveErr()) html += `<div class="card lv-quiet"><span class="lv-dot lv-dot-idle"></span>The live feed is not answering — the rest of the site is the saved data.</div>`;
   if (done.length) html += `<div class="lv-head"><h2 class="lv-h">Just finished</h2></div>` + done.map(liveCard).join('');

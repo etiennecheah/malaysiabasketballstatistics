@@ -239,7 +239,7 @@ const GBX = (() => {
         <div class="gb-tm r"><div><b>${esc(a.name)}</b><b class="gb-code">${esc(watchCode(a.name))}</b>${foul(a)}</div>${crest(a.name, 64)}</div>
       </div>
       <div class="gb-cmp">${bars}</div>
-      <div class="gb-upd"><span class="gb-ring${fin ? ' done' : ''}" style="animation-delay:-${Math.min(30, Math.max(0, (Date.now() - at) / 1000)).toFixed(1)}s" aria-hidden="true"></span>Score, clock, players and plays · updated <b data-gbago="${at}">${liveAgo(at)}</b><span class="gb-sp"></span>${fin ? 'Joins the season stats at the next database update' : 'Updates by itself every 30 s'}</div>
+      <div class="gb-upd"><span class="gb-ring${fin ? ' done' : ''}" style="animation-duration:${LIVE.batch === false ? 30 : 15}s;animation-delay:-${Math.min(LIVE.batch === false ? 30 : 15, Math.max(0, (Date.now() - at) / 1000)).toFixed(1)}s" aria-hidden="true"></span>Score, clock, players and plays · updated <b data-gbago="${at}">${liveAgo(at)}</b><span class="gb-sp"></span>${fin ? 'Joins the season stats at the next database update' : `Updates by itself every ${LIVE.batch === false ? 30 : 15} s`}</div>
     </section>`;
 
     // play-by-play, newest first
