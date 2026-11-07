@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794003848.1503003,
-  "fp": "c556149d04d9921bbbf2"
+  "at": 1794021159.250484,
+  "fp": "a286671128d8df94821c"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -29,7 +29,7 @@
    "last": 1794003703.8642974,
    "msg": "games we hold as final are no longer final on the source: 2944618",
    "n": 10,
-   "next": 1794025303.8642974
+   "next": 0
   }
  },
  "full": {
