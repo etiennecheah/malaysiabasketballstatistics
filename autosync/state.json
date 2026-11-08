@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794168226.1954336,
-  "fp": "c070ef122232883d725d"
+  "at": 1794168445.6631846,
+  "fp": "a48eaa1c68f6ea5d1154"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -22,7 +22,7 @@
   "49965": "2026-11-09",
   "50247": "2026-10-21",
   "50248": "2026-10-21",
-  "50457": "2026-11-08",
+  "50457": "2026-11-09",
   "50458": "2026-11-09"
  },
  "fail": {
@@ -41,12 +41,11 @@
   "49965": 1794081610.100675,
   "50247": 1792360197.0091074,
   "50248": 1792360741.928966,
-  "50457": 1794082007.473689,
+  "50457": 1794168263.8873305,
   "50458": 1794168010.9126065
  },
  "lines_retry": {},
  "log": [
-  "2026-11-08 11:45  FAILED 48654 (18): games we hold as final are no longer final on the source: 2944618",
   "2026-11-08 12:01  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Melaka 2 48-59 Johor 2  [2951429: final 48-59 read from the live feed (the schedule page does not show it as final yet); 2951429: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 48 (Melaka 2))]",
   "2026-11-08 12:03  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 12:11  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Melaka 2 48-59 Johor 2; shot charts of 1 game  [2951429: the source's box score replaces the one from the live feed]",
@@ -85,7 +84,8 @@
   "2026-11-09 03:30  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 03:53  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-09 03:55  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-09 04:03  sync: Major Basketball League \u2014 fixtures, standings or season lines updated"
+  "2026-11-09 04:03  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
+  "2026-11-09 04:07  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 6 teams]"
  ],
  "overdue_at": {
   "48654": 1794167727.373684,
