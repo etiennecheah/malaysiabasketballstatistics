@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1794174852.2829814,
+  "at": 1794178516.4010017,
   "fp": "a48eaa1c68f6ea5d1154"
  },
  "daily": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-08 18:58  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 20:34  sync: Major Basketball League \u2014 Penang Sunrise Youngsters 95-98 KL Titans  [2951460: final 95-98 read from the live feed (the schedule page does not show it as final yet); 2951460: box score taken from the live feed (the box score page failed)]",
   "2026-11-08 20:37  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 20:44  sync: Major Basketball League \u2014 Penang Sunrise Youngsters 95-98 KL Titans; shot charts of 1 game  [2951460: the source's box score replaces the one from the live feed]",
@@ -85,7 +84,8 @@
   "2026-11-09 05:54  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-09 06:02  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 06:27  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-09 06:52  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-09 06:52  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-09 06:55  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
  ],
  "overdue_at": {
   "48654": 1794178327.0457592,
@@ -96,7 +96,7 @@
   "2896900": {
    "cid": "49965",
    "kind": "box",
-   "next": 1794178304.5046608,
+   "next": 1794181965.27476,
    "since": 1794061173.6645193
   }
  },
