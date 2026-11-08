@@ -347,7 +347,7 @@ function finalCard(c) {
   });
   const medal = p => p === 1 ? 'gold' : p === 2 ? 'silver' : p === 3 ? 'bronze' : '';
   return `<div class="card final-card">
-    <div class="card-head">Final standings<span class="hint">${c.final.length} teams · decided by the knockout and classification games</span></div>
+    <div class="card-head">Final standings<span class="hint">${c.final.length} teams · ${esc(c.finalHint || 'decided by the knockout and classification games')}</span></div>
     <div class="table-scroll"><table>
       <thead><tr><th class="nosort">Place</th><th class="left nosort">Team</th><th class="nosort">W</th><th class="nosort">L</th><th class="nosort">For</th><th class="nosort">Agst</th><th class="nosort">Diff</th><th class="left nosort" style="padding-right:20px;">How</th></tr></thead>
       <tbody>${c.final.map(([p, t, how]) => { const r = rec[t] || { w: 0, l: 0, pf: 0, pa: 0 }; return `<tr class="${p === 1 ? 'cx-me' : ''}">

@@ -7,13 +7,18 @@ Malaysia's games, copied from the FIBA box score sheets (data/fiba_wac2027_seaba
 A game id is "fwac27-" + the sheet's Game No. (31509-A-A -> fwac27-31509AA).
 Add the next game's lines to the extract and re-run: this competition's rows are replaced,
 nothing else is touched.
+
+A two-game series between Malaysia and Thailand (Karisma Arena, 7-8 Nov 2026). Malaysia won
+both (71-59, 65-62) and qualified for the FIBA Women's Asia Cup 2027 Division B: the
+standings are the series table worked out from the results, 'final' the placings.
 """
 import collections, json, os
 
 D = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 CID = 'fiba-wac-2027-seaba'
 NAME = "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers"
-CAP_E, CAP_SHORT, CAP_Y, RANK = NAME, "FIBA Women's Asia Cup Div. B SEABA Qualifiers", 2026, ''
+CAP_E, CAP_SHORT, CAP_Y, RANK = NAME, "FIBA Women's Asia Cup Div. B SEABA Qualifiers", 2026, '1st'
+QUALIFIED = 'MAS'   # the series winner goes on to the FIBA Women's Asia Cup 2027 Division B
 TEAM_ID = {'MAS': 'fx-mas', 'THA': 'fx-tha', 'INA': 'fx-ina', 'PHI': 'fx-phi', 'SGP': 'fx-sgp', 'VIE': 'fx-vie', 'LAO': 'fx-lao'}
 # Malaysia players as the sheet prints them -> site profile
 MAS = {
@@ -130,10 +135,31 @@ def main():
         top = sorted(val, key=lambda p: (-val[p], p))[:10]
         lead.append([cat, [[p, '%.1f' % val[p] if avg else '%d' % val[p]] for p in top]])
 
-    M['comps'].append({
-        'id': CID, 'name': NAME, 'teams': teams, 'stand': [], 'games': rows, 'lead': lead, 'players': players,
+    # the series table, from the results: 2 points a win, 1 a loss
+    rec = collections.OrderedDict()
+    for mid, g in games.items():
+        h, a = g['sides']['1'], g['sides']['2']
+        for s, o in ((h, a), (a, h)):
+            r = rec.setdefault(s['team'], {'code': s['code'], 'w': 0, 'l': 0, 'pf': 0, 'pa': 0})
+            r['pf'] += int(s['score']); r['pa'] += int(o['score'])
+            r['w' if int(s['score']) > int(o['score']) else 'l'] += 1
+    order = sorted(rec, key=lambda t: (-rec[t]['w'], -(rec[t]['pf'] - rec[t]['pa'])))
+    stand = [['Qualifying series', ['Position', '', 'Team', 'GP', 'W', 'L', 'For', 'Agst', 'GD', '%won', 'Pts'],
+              [[str(i + 1), '', t, str(rec[t]['w'] + rec[t]['l']), str(rec[t]['w']), str(rec[t]['l']), str(rec[t]['pf']),
+                str(rec[t]['pa']), str(rec[t]['pf'] - rec[t]['pa']), str(round(100 * rec[t]['w'] / (rec[t]['w'] + rec[t]['l']))),
+                str(2 * rec[t]['w'] + rec[t]['l'])] for i, t in enumerate(order)]]]
+    n = len(games)
+    final = [[i + 1, t, ('Won the series %d–%d · qualified for the FIBA Women\'s Asia Cup 2027 Division B' if rec[t]['code'] == QUALIFIED
+                         else 'Lost the series %d–%d') % (rec[t]['w'], rec[t]['l'])] for i, t in enumerate(order)]
+    extra = {'final': final, 'finalHint': 'decided by the %d-game series' % n,
+             'standNote': ('A %d-game series at Karisma Arena, Seremban, 7–8 November 2026, worked out here from the results '
+                           '(2 points a win, 1 a loss). Malaysia won both games and qualified for the FIBA Women\'s Asia Cup '
+                           '2027 Division B.' % n)} if all(rec[t]['w'] + rec[t]['l'] == n for t in rec) else {}
+
+    M['comps'].append(dict({
+        'id': CID, 'name': NAME, 'teams': teams, 'stand': stand, 'games': rows, 'lead': lead, 'players': players,
         'roster': [['fx-mas', [[p, num[p], '', '', '', '', '', 'MAS'] for p in players]]],
-        'src': 'FIBA box score'})
+        'src': 'FIBA box score'}, **extra))
     json.dump(M, open(os.path.join(D, 'manual_comps.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(CID, len(rows), 'games,', len(players), 'Malaysia players')
     for p in players:

@@ -930,6 +930,7 @@ def main():
             # hand-built competitions (manual_comps.json) can carry the final placings the
             # organisers announced and a note on how their group tables were made
             **({'final': c['final']} if c.get('final') else {}),
+            **({'finalHint': c['finalHint']} if c.get('finalHint') else {}),
             **({'standNote': c['standNote']} if c.get('standNote') else {}),
             **({'open': oc['note'] if isinstance(oc, dict) else oc} if is_open else {}), 'games': games, 'roster': roster,
             **({'rosterSrc': roster_src[c['id']]} if c['id'] in roster_src else {}),

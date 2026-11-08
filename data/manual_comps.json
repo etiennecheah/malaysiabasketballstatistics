@@ -21855,7 +21855,52 @@
     "fx-tha",
     "fx-mas"
    ],
-   "stand": [],
+   "stand": [
+    [
+     "Qualifying series",
+     [
+      "Position",
+      "",
+      "Team",
+      "GP",
+      "W",
+      "L",
+      "For",
+      "Agst",
+      "GD",
+      "%won",
+      "Pts"
+     ],
+     [
+      [
+       "1",
+       "",
+       "Malaysia",
+       "2",
+       "2",
+       "0",
+       "136",
+       "121",
+       "15",
+       "100",
+       "4"
+      ],
+      [
+       "2",
+       "",
+       "Thailand",
+       "2",
+       "0",
+       "2",
+       "121",
+       "136",
+       "-15",
+       "0",
+       "2"
+      ]
+     ]
+    ]
+   ],
    "games": [
     [
      "fwac27-31509AA",
@@ -21867,6 +21912,17 @@
      "Malaysia",
      "71",
      1
+    ],
+    [
+     "fwac27-31509AB",
+     "COMPLETE",
+     "Nov 8, 2026",
+     "Karisma Arena, Seremban",
+     "Malaysia",
+     "65",
+     "Thailand",
+     "62",
+     1
     ]
    ],
    "lead": [
@@ -21875,43 +21931,43 @@
      [
       [
        "2304356",
-       "12.0"
+       "13.5"
       ],
       [
        "27500",
-       "12.0"
-      ],
-      [
-       "1091469",
-       "11.0"
-      ],
-      [
-       "1287260",
-       "7.0"
-      ],
-      [
-       "2786703",
-       "7.0"
+       "11.5"
       ],
       [
        "27497",
-       "6.0"
+       "9.5"
       ],
       [
-       "2786776",
-       "5.0"
+       "1091469",
+       "8.5"
       ],
       [
-       "2615636",
-       "4.0"
+       "1287260",
+       "8.0"
+      ],
+      [
+       "2786703",
+       "7.5"
       ],
       [
        "2786791",
-       "4.0"
+       "3.5"
+      ],
+      [
+       "2786776",
+       "2.5"
+      ],
+      [
+       "2615636",
+       "2.0"
       ],
       [
        "2615599",
-       "3.0"
+       "1.5"
       ]
      ]
     ],
@@ -21919,39 +21975,39 @@
      "Average total rebounds",
      [
       [
-       "2786791",
+       "27500",
        "7.0"
       ],
       [
-       "2304356",
-       "6.0"
-      ],
-      [
-       "2786703",
-       "6.0"
-      ],
-      [
        "1287260",
-       "5.0"
+       "6.0"
+      ],
+      [
+       "2786791",
+       "5.5"
       ],
       [
        "27497",
+       "4.5"
+      ],
+      [
+       "2786703",
+       "4.5"
+      ],
+      [
+       "2304356",
        "4.0"
       ],
       [
-       "2615636",
+       "2786776",
        "3.0"
       ],
       [
-       "27500",
-       "3.0"
+       "2615636",
+       "2.0"
       ],
       [
        "27708",
-       "3.0"
-      ],
-      [
-       "2786776",
        "2.0"
       ],
       [
@@ -21964,44 +22020,44 @@
      "Average assists",
      [
       [
-       "2304356",
+       "1287260",
        "3.0"
-      ],
-      [
-       "2615599",
-       "3.0"
-      ],
-      [
-       "2615636",
-       "2.0"
       ],
       [
        "27500",
-       "2.0"
-      ],
-      [
-       "2786791",
-       "2.0"
+       "3.0"
       ],
       [
        "1091469",
-       "1.0"
+       "2.0"
       ],
       [
-       "1287260",
-       "1.0"
+       "2304356",
+       "2.0"
+      ],
+      [
+       "2615599",
+       "1.5"
       ],
       [
        "27497",
-       "1.0"
+       "1.5"
       ],
       [
-       "27708",
+       "2615636",
        "1.0"
       ],
       [
        "2786703",
        "1.0"
+      ],
+      [
+       "2786791",
+       "1.0"
+      ],
+      [
+       "27708",
+       "0.5"
       ]
      ]
     ],
@@ -22009,44 +22065,44 @@
      "Efficiency",
      [
       [
-       "2304356",
-       "11"
-      ],
-      [
        "27500",
-       "10"
-      ],
-      [
-       "2786791",
-       "10"
-      ],
-      [
-       "2615636",
-       "8"
+       "30"
       ],
       [
        "27497",
-       "8"
-      ],
-      [
-       "1091469",
-       "7"
-      ],
-      [
-       "2615599",
-       "6"
-      ],
-      [
-       "2786703",
-       "5"
+       "19"
       ],
       [
        "1287260",
-       "3"
+       "18"
+      ],
+      [
+       "2304356",
+       "18"
+      ],
+      [
+       "2786791",
+       "13"
+      ],
+      [
+       "2786703",
+       "11"
+      ],
+      [
+       "1091469",
+       "10"
+      ],
+      [
+       "2615599",
+       "7"
+      ],
+      [
+       "2615636",
+       "4"
       ],
       [
        "2786776",
-       "3"
+       "2"
       ]
      ]
     ]
@@ -22192,7 +22248,21 @@
      ]
     ]
    ],
-   "src": "FIBA box score"
+   "src": "FIBA box score",
+   "final": [
+    [
+     1,
+     "Malaysia",
+     "Won the series 2–0 · qualified for the FIBA Women's Asia Cup 2027 Division B"
+    ],
+    [
+     2,
+     "Thailand",
+     "Lost the series 0–2"
+    ]
+   ],
+   "finalHint": "decided by the 2-game series",
+   "standNote": "A 2-game series at Karisma Arena, Seremban, 7–8 November 2026, worked out here from the results (2 points a win, 1 a loss). Malaysia won both games and qualified for the FIBA Women's Asia Cup 2027 Division B."
   }
  ],
  "persons": {
@@ -22589,18 +22659,18 @@
   "fiba-u18-seaba-2026:2568859": "Malaysia\t\t\t\t42\t15\t\t6\t\t22\t15\t4\t2\t\t113:59\t\t\t\t\t36\t\t1\t\t\t33\t14\t51.7\t57.1\t11\t\t9\t1\t2\t-6\t4\t59\t8\t37\t7\t13\t79",
   "fiba-u18-seaba-2026:2786714": "Malaysia\t\t\t\t20\t4\t\t2\t\t0\t0\t3\t2\t\t37:54\t\t\t\t\t3\t\t2\t\t\t17\t2\t20\t25\t1\t\t3\t2\t1\t14\t3\t10\t1\t5\t5\t0\t4",
   "fiba-u18-seaba-2026:2249324": "Malaysia\t\t\t\t5\t3\t\t6\t\t4\t1\t2\t1\t\t35:37\t\t\t\t\t4\t\t2\t\t\t0\t0\t6.8\t51.8\t2\t\t5\t3\t2\t-50\t3\t7\t0\t6\t0\t1\t7",
-  "fiba-wac-2027-seaba:2615636": "Malaysia\t\t\t\t3\t2\t\t1\t\t0\t0\t1\t0\t\t13:39\t\t\t\t\t1\t\t2\t\t\t1\t0\t3\t66.7\t1\t\t2\t2\t1\t5\t1\t4\t2\t3\t1\t0\t8",
-  "fiba-wac-2027-seaba:2786703": "Malaysia\t\t\t\t8\t2\t\t2\t\t4\t3\t1\t0\t\t20:16\t\t\t\t\t5\t\t1\t\t\t4\t0\t9.8\t35.9\t2\t\t4\t2\t1\t4\t1\t7\t1\t6\t0\t0\t5",
-  "fiba-wac-2027-seaba:2304356": "Malaysia\t\t\t\t12\t4\t\t1\t\t0\t0\t1\t0\t\t21:39\t\t\t\t\t6\t\t0\t\t\t8\t4\t12\t50\t3\t\t4\t0\t1\t16\t1\t12\t3\t6\t1\t0\t11",
-  "fiba-wac-2027-seaba:2786791": "Malaysia\t\t\t\t4\t1\t\t1\t\t2\t2\t0\t0\t\t16:04\t\t\t\t\t4\t\t3\t\t\t1\t0\t4.9\t41\t0\t\t3\t1\t1\t4\t1\t4\t2\t7\t0\t0\t10",
+  "fiba-wac-2027-seaba:2615636": "Malaysia\t\t\t\t8\t2\t\t3\t\t0\t0\t2\t0\t\t29:00\t\t\t\t\t2\t\t2\t\t\t3\t0\t8\t25\t3\t\t5\t2\t2\t-3\t2\t4\t2\t4\t2\t1\t4",
+  "fiba-wac-2027-seaba:2786703": "Malaysia\t\t\t\t14\t4\t\t3\t\t6\t5\t2\t0\t\t38:52\t\t\t\t\t7\t\t2\t\t\t9\t2\t16.6\t45.1\t5\t\t5\t2\t2\t6\t2\t15\t2\t9\t1\t0\t11",
+  "fiba-wac-2027-seaba:2304356": "Malaysia\t\t\t\t26\t10\t\t2\t\t1\t0\t2\t0\t\t47:44\t\t\t\t\t8\t\t0\t\t\t19\t7\t26.4\t51.1\t5\t\t7\t3\t2\t11\t2\t27\t4\t8\t1\t0\t18",
+  "fiba-wac-2027-seaba:2786791": "Malaysia\t\t\t\t6\t1\t\t2\t\t6\t5\t0\t0\t\t29:08\t\t\t\t\t5\t\t6\t\t\t1\t0\t8.6\t40.5\t1\t\t5\t1\t2\t4\t2\t7\t2\t11\t0\t0\t13",
   "fiba-wac-2027-seaba:1845670": "Malaysia\t\t\t\t0\t0\t\t0\t\t0\t0\t0\t0\t\t5:12\t\t\t\t\t0\t\t0\t\t\t0\t0\t0\t\t0\t\t0\t0\t1\t-2\t1\t0\t0\t0\t0\t0\t0",
-  "fiba-wac-2027-seaba:27708": "Malaysia\t\t\t\t3\t0\t\t1\t\t0\t0\t0\t0\t\t13:07\t\t\t\t\t1\t\t2\t\t\t1\t0\t3\t0\t1\t\t2\t0\t1\t5\t1\t0\t1\t3\t0\t1\t1",
-  "fiba-wac-2027-seaba:1287260": "Malaysia\t\t\t\t9\t3\t\t1\t\t2\t0\t1\t0\t\t30:18\t\t\t\t\t5\t\t0\t\t\t2\t1\t9.9\t35.4\t3\t\t7\t2\t1\t3\t1\t7\t1\t5\t1\t0\t3",
-  "fiba-wac-2027-seaba:27497": "Malaysia\t\t\t\t4\t2\t\t0\t\t2\t2\t0\t0\t\t16:40\t\t\t\t\t3\t\t1\t\t\t1\t0\t4.9\t61.5\t3\t\t3\t2\t1\t7\t1\t6\t1\t4\t2\t0\t8",
-  "fiba-wac-2027-seaba:1091469": "Malaysia\t\t\t\t9\t4\t\t2\t\t0\t0\t0\t0\t\t19:54\t\t\t\t\t1\t\t0\t\t\t6\t3\t9\t61.1\t1\t\t3\t1\t1\t8\t1\t11\t1\t1\t0\t0\t7",
-  "fiba-wac-2027-seaba:2615599": "Malaysia\t\t\t\t2\t1\t\t1\t\t0\t0\t0\t0\t\t9:38\t\t\t\t\t1\t\t0\t\t\t2\t1\t2\t75\t1\t\t0\t0\t1\t0\t1\t3\t3\t1\t1\t0\t6",
-  "fiba-wac-2027-seaba:27500": "Malaysia\t\t\t\t7\t4\t\t5\t\t3\t3\t1\t0\t\t19:13\t\t\t\t\t3\t\t0\t\t\t3\t1\t8.3\t72.1\t4\t\t4\t3\t1\t13\t1\t12\t2\t3\t0\t0\t10",
-  "fiba-wac-2027-seaba:2786776": "Malaysia\t\t\t\t5\t2\t\t2\t\t2\t1\t0\t0\t\t14:21\t\t\t\t\t2\t\t0\t\t\t3\t0\t5.9\t42.5\t2\t\t2\t2\t1\t-3\t1\t5\t0\t2\t2\t0\t3"
+  "fiba-wac-2027-seaba:27708": "Malaysia\t\t\t\t5\t0\t\t1\t\t0\t0\t0\t0\t\t18:00\t\t\t\t\t2\t\t2\t\t\t1\t0\t5\t0\t1\t\t4\t0\t2\t4\t2\t0\t1\t4\t0\t1\t0",
+  "fiba-wac-2027-seaba:1287260": "Malaysia\t\t\t\t18\t7\t\t5\t\t2\t0\t2\t0\t\t59:36\t\t\t\t\t10\t\t2\t\t\t6\t2\t18.9\t42.4\t5\t\t12\t5\t2\t11\t2\t16\t6\t12\t2\t0\t18",
+  "fiba-wac-2027-seaba:27497": "Malaysia\t\t\t\t13\t4\t\t1\t\t13\t11\t0\t0\t\t38:58\t\t\t\t\t7\t\t2\t\t\t4\t0\t18.7\t50.7\t4\t\t9\t4\t2\t13\t2\t19\t3\t9\t3\t0\t19",
+  "fiba-wac-2027-seaba:1091469": "Malaysia\t\t\t\t16\t6\t\t2\t\t4\t2\t0\t0\t\t40:56\t\t\t\t\t2\t\t0\t\t\t10\t3\t17.8\t47.9\t2\t\t6\t3\t2\t14\t2\t17\t4\t2\t1\t0\t10",
+  "fiba-wac-2027-seaba:2615599": "Malaysia\t\t\t\t2\t1\t\t2\t\t0\t0\t0\t0\t\t15:14\t\t\t\t\t1\t\t0\t\t\t2\t1\t2\t75\t2\t\t0\t0\t2\t1\t2\t3\t3\t1\t3\t0\t7",
+  "fiba-wac-2027-seaba:27500": "Malaysia\t\t\t\t15\t7\t\t6\t\t8\t7\t2\t0\t\t51:58\t\t\t\t\t12\t\t2\t\t\t6\t2\t18.5\t62.1\t6\t\t9\t5\t2\t12\t2\t23\t6\t14\t2\t0\t30",
+  "fiba-wac-2027-seaba:2786776": "Malaysia\t\t\t\t13\t2\t\t2\t\t2\t1\t0\t0\t\t25:24\t\t\t\t\t4\t\t2\t\t\t6\t0\t13.9\t18\t3\t\t7\t2\t2\t4\t2\t5\t0\t6\t6\t0\t2"
  },
  "boxes": {
   "2457644": {
@@ -164500,6 +164570,616 @@
      20
     ]
    ]
+  },
+  "fwac27-31509AB": {
+   "p": [
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "5",
+     "twopm": "0",
+     "twopa": "3",
+     "tpm": "0",
+     "tpa": "2",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "1",
+     "ast": "0",
+     "pf": "2",
+     "tov": "2",
+     "stl": "1",
+     "blk": "1",
+     "pm": "-8",
+     "pid": "2615636",
+     "team": "Malaysia",
+     "num": "1",
+     "min": "15:21",
+     "eff": "-4.0"
+    },
+    {
+     "pts": "8",
+     "fgm": "2",
+     "fga": "6",
+     "twopm": "0",
+     "twopa": "1",
+     "tpm": "2",
+     "tpa": "5",
+     "ftm": "2",
+     "fta": "2",
+     "oreb": "1",
+     "dreb": "2",
+     "ast": "1",
+     "pf": "1",
+     "tov": "3",
+     "stl": "1",
+     "blk": "0",
+     "pm": "2",
+     "pid": "2786703",
+     "team": "Malaysia",
+     "num": "3",
+     "min": "18:36",
+     "eff": "6.0"
+    },
+    {
+     "pts": "15",
+     "fgm": "6",
+     "fga": "14",
+     "twopm": "3",
+     "twopa": "3",
+     "tpm": "3",
+     "tpa": "11",
+     "ftm": "0",
+     "fta": "1",
+     "oreb": "0",
+     "dreb": "2",
+     "ast": "1",
+     "pf": "1",
+     "tov": "2",
+     "stl": "0",
+     "blk": "0",
+     "pm": "-5",
+     "pid": "2304356",
+     "team": "Malaysia",
+     "num": "8",
+     "min": "26:05",
+     "eff": "7.0"
+    },
+    {
+     "pts": "3",
+     "fgm": "0",
+     "fga": "2",
+     "twopm": "0",
+     "twopa": "2",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "3",
+     "fta": "4",
+     "oreb": "3",
+     "dreb": "1",
+     "ast": "0",
+     "pf": "1",
+     "tov": "1",
+     "stl": "0",
+     "blk": "0",
+     "pm": "0",
+     "pid": "2786791",
+     "team": "Malaysia",
+     "num": "19",
+     "min": "13:04",
+     "eff": "3.0"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "0",
+     "twopm": "0",
+     "twopa": "0",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "0",
+     "ast": "0",
+     "pf": "0",
+     "tov": "0",
+     "stl": "0",
+     "blk": "0",
+     "pm": "0",
+     "pid": "1845670",
+     "team": "Malaysia",
+     "num": "21",
+     "min": "0:00",
+     "eff": "0.0"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "2",
+     "twopm": "0",
+     "twopa": "2",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "1",
+     "ast": "0",
+     "pf": "0",
+     "tov": "0",
+     "stl": "0",
+     "blk": "0",
+     "pm": "-1",
+     "pid": "27708",
+     "team": "Malaysia",
+     "num": "22",
+     "min": "4:53",
+     "eff": "-1.0"
+    },
+    {
+     "pts": "9",
+     "fgm": "4",
+     "fga": "9",
+     "twopm": "3",
+     "twopa": "5",
+     "tpm": "1",
+     "tpa": "4",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "2",
+     "dreb": "5",
+     "ast": "5",
+     "pf": "4",
+     "tov": "2",
+     "stl": "1",
+     "blk": "0",
+     "pm": "8",
+     "pid": "1287260",
+     "team": "Malaysia",
+     "num": "24",
+     "min": "29:18",
+     "eff": "15.0"
+    },
+    {
+     "pts": "13",
+     "fgm": "2",
+     "fga": "9",
+     "twopm": "2",
+     "twopa": "6",
+     "tpm": "0",
+     "tpa": "3",
+     "ftm": "9",
+     "fta": "11",
+     "oreb": "1",
+     "dreb": "4",
+     "ast": "2",
+     "pf": "1",
+     "tov": "1",
+     "stl": "1",
+     "blk": "0",
+     "pm": "6",
+     "pid": "27497",
+     "team": "Malaysia",
+     "num": "25",
+     "min": "22:18",
+     "eff": "11.0"
+    },
+    {
+     "pts": "6",
+     "fgm": "2",
+     "fga": "7",
+     "twopm": "2",
+     "twopa": "3",
+     "tpm": "0",
+     "tpa": "4",
+     "ftm": "2",
+     "fta": "4",
+     "oreb": "0",
+     "dreb": "1",
+     "ast": "3",
+     "pf": "0",
+     "tov": "1",
+     "stl": "1",
+     "blk": "0",
+     "pm": "6",
+     "pid": "1091469",
+     "team": "Malaysia",
+     "num": "28",
+     "min": "21:02",
+     "eff": "3.0"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "0",
+     "twopm": "0",
+     "twopa": "0",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "0",
+     "ast": "0",
+     "pf": "1",
+     "tov": "1",
+     "stl": "2",
+     "blk": "0",
+     "pm": "1",
+     "pid": "2615599",
+     "team": "Malaysia",
+     "num": "30",
+     "min": "5:36",
+     "eff": "1.0"
+    },
+    {
+     "pts": "11",
+     "fgm": "3",
+     "fga": "8",
+     "twopm": "2",
+     "twopa": "5",
+     "tpm": "1",
+     "tpa": "3",
+     "ftm": "4",
+     "fta": "5",
+     "oreb": "2",
+     "dreb": "9",
+     "ast": "4",
+     "pf": "1",
+     "tov": "2",
+     "stl": "2",
+     "blk": "0",
+     "pm": "-1",
+     "pid": "27500",
+     "team": "Malaysia",
+     "num": "35",
+     "min": "32:45",
+     "eff": "20.0"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "8",
+     "twopm": "0",
+     "twopa": "5",
+     "tpm": "0",
+     "tpa": "3",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "2",
+     "dreb": "2",
+     "ast": "0",
+     "pf": "0",
+     "tov": "1",
+     "stl": "4",
+     "blk": "0",
+     "pm": "7",
+     "pid": "2786776",
+     "team": "Malaysia",
+     "num": "77",
+     "min": "11:03",
+     "eff": "-1.0"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "4",
+     "twopm": "0",
+     "twopa": "2",
+     "tpm": "0",
+     "tpa": "2",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "2",
+     "dreb": "5",
+     "ast": "1",
+     "pf": "2",
+     "tov": "2",
+     "stl": "3",
+     "blk": "0",
+     "pm": "-10",
+     "pid": "",
+     "team": "Thailand",
+     "num": "1",
+     "min": "24:42",
+     "eff": "5.0",
+     "name": "Pattanamon Patthanauckkaranon"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "3",
+     "twopm": "0",
+     "twopa": "1",
+     "tpm": "0",
+     "tpa": "2",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "0",
+     "ast": "0",
+     "pf": "1",
+     "tov": "0",
+     "stl": "1",
+     "blk": "0",
+     "pm": "-6",
+     "pid": "",
+     "team": "Thailand",
+     "num": "5",
+     "min": "3:45",
+     "eff": "-2.0",
+     "name": "Wishayapon Ratnatilaka Na Bhuket"
+    },
+    {
+     "pts": "13",
+     "fgm": "4",
+     "fga": "12",
+     "twopm": "2",
+     "twopa": "6",
+     "tpm": "2",
+     "tpa": "6",
+     "ftm": "3",
+     "fta": "3",
+     "oreb": "3",
+     "dreb": "8",
+     "ast": "4",
+     "pf": "1",
+     "tov": "3",
+     "stl": "3",
+     "blk": "0",
+     "pm": "-1",
+     "pid": "",
+     "team": "Thailand",
+     "num": "8",
+     "min": "26:14",
+     "eff": "20.0",
+     "name": "Kwanjira Panted"
+    },
+    {
+     "pts": "5",
+     "fgm": "2",
+     "fga": "11",
+     "twopm": "1",
+     "twopa": "4",
+     "tpm": "1",
+     "tpa": "7",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "5",
+     "ast": "3",
+     "pf": "1",
+     "tov": "5",
+     "stl": "2",
+     "blk": "1",
+     "pm": "-3",
+     "pid": "",
+     "team": "Thailand",
+     "num": "10",
+     "min": "30:49",
+     "eff": "2.0",
+     "name": "Sroifa Phetnin"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "2",
+     "twopm": "0",
+     "twopa": "1",
+     "tpm": "0",
+     "tpa": "1",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "1",
+     "dreb": "1",
+     "ast": "0",
+     "pf": "2",
+     "tov": "1",
+     "stl": "0",
+     "blk": "0",
+     "pm": "8",
+     "pid": "",
+     "team": "Thailand",
+     "num": "24",
+     "min": "8:58",
+     "eff": "-1.0",
+     "name": "Apichaya Khamkaew"
+    },
+    {
+     "pts": "15",
+     "fgm": "5",
+     "fga": "18",
+     "twopm": "5",
+     "twopa": "16",
+     "tpm": "0",
+     "tpa": "2",
+     "ftm": "5",
+     "fta": "5",
+     "oreb": "1",
+     "dreb": "4",
+     "ast": "3",
+     "pf": "2",
+     "tov": "3",
+     "stl": "3",
+     "blk": "0",
+     "pm": "9",
+     "pid": "",
+     "team": "Thailand",
+     "num": "25",
+     "min": "32:29",
+     "eff": "10.0",
+     "name": "Sasiporn Wongtapha"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "0",
+     "twopm": "0",
+     "twopa": "0",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "0",
+     "ast": "0",
+     "pf": "0",
+     "tov": "0",
+     "stl": "0",
+     "blk": "0",
+     "pm": "0",
+     "pid": "",
+     "team": "Thailand",
+     "num": "35",
+     "min": "0:00",
+     "eff": "0.0",
+     "name": "Sarah Elisabeth Tuukkanen"
+    },
+    {
+     "pts": "8",
+     "fgm": "4",
+     "fga": "11",
+     "twopm": "4",
+     "twopa": "7",
+     "tpm": "0",
+     "tpa": "4",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "7",
+     "ast": "1",
+     "pf": "2",
+     "tov": "2",
+     "stl": "1",
+     "blk": "0",
+     "pm": "-4",
+     "pid": "",
+     "team": "Thailand",
+     "num": "39",
+     "min": "30:58",
+     "eff": "8.0",
+     "name": "Kanokwan Prajuapsook"
+    },
+    {
+     "pts": "7",
+     "fgm": "3",
+     "fga": "4",
+     "twopm": "3",
+     "twopa": "3",
+     "tpm": "0",
+     "tpa": "1",
+     "ftm": "1",
+     "fta": "2",
+     "oreb": "1",
+     "dreb": "0",
+     "ast": "0",
+     "pf": "2",
+     "tov": "1",
+     "stl": "1",
+     "blk": "1",
+     "pm": "-6",
+     "pid": "",
+     "team": "Thailand",
+     "num": "63",
+     "min": "9:26",
+     "eff": "7.0",
+     "name": "Mathurot Dangdee"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "1",
+     "twopm": "0",
+     "twopa": "1",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "0",
+     "ast": "0",
+     "pf": "0",
+     "tov": "1",
+     "stl": "0",
+     "blk": "0",
+     "pm": "-4",
+     "pid": "",
+     "team": "Thailand",
+     "num": "77",
+     "min": "1:41",
+     "eff": "-2.0",
+     "name": "Hatthaya Kueakun"
+    },
+    {
+     "pts": "12",
+     "fgm": "4",
+     "fga": "6",
+     "twopm": "4",
+     "twopa": "6",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "4",
+     "fta": "6",
+     "oreb": "5",
+     "dreb": "2",
+     "ast": "0",
+     "pf": "2",
+     "tov": "1",
+     "stl": "0",
+     "blk": "1",
+     "pm": "9",
+     "pid": "",
+     "team": "Thailand",
+     "num": "88",
+     "min": "21:32",
+     "eff": "15.0",
+     "name": "Laksamee Hewchaiyaphum"
+    },
+    {
+     "pts": "2",
+     "fgm": "1",
+     "fga": "1",
+     "twopm": "1",
+     "twopa": "1",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "2",
+     "dreb": "1",
+     "ast": "0",
+     "pf": "2",
+     "tov": "0",
+     "stl": "0",
+     "blk": "0",
+     "pm": "-7",
+     "pid": "",
+     "team": "Thailand",
+     "num": "99",
+     "min": "9:25",
+     "eff": "5.0",
+     "name": "Priscilla Langkilde Jensen"
+    }
+   ],
+   "periods": [
+    [
+     14,
+     19
+    ],
+    [
+     12,
+     10
+    ],
+    [
+     21,
+     18
+    ],
+    [
+     18,
+     15
+    ]
+   ]
   }
  },
  "caps": {
@@ -165111,14 +165791,14 @@
     "e": "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers",
     "short": "FIBA Women's Asia Cup Div. B SEABA Qualifiers",
     "lv": "Senior",
-    "rank": "",
-    "gp": 1,
+    "rank": "1st",
+    "gp": 2,
     "pts": 4,
-    "reb": 3,
+    "reb": 4,
     "ast": 2,
-    "stl": 1,
-    "blk": 0,
-    "min": 13,
+    "stl": 2,
+    "blk": 1,
+    "min": 29,
     "url": ""
    }
   ],
@@ -165128,14 +165808,14 @@
     "e": "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers",
     "short": "FIBA Women's Asia Cup Div. B SEABA Qualifiers",
     "lv": "Senior",
-    "rank": "",
-    "gp": 1,
-    "pts": 7,
-    "reb": 6,
-    "ast": 1,
-    "stl": 0,
+    "rank": "1st",
+    "gp": 2,
+    "pts": 15,
+    "reb": 9,
+    "ast": 2,
+    "stl": 1,
     "blk": 0,
-    "min": 20,
+    "min": 38,
     "url": ""
    }
   ],
@@ -165145,14 +165825,14 @@
     "e": "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers",
     "short": "FIBA Women's Asia Cup Div. B SEABA Qualifiers",
     "lv": "Senior",
-    "rank": "",
-    "gp": 1,
-    "pts": 12,
-    "reb": 6,
-    "ast": 3,
+    "rank": "1st",
+    "gp": 2,
+    "pts": 27,
+    "reb": 8,
+    "ast": 4,
     "stl": 1,
     "blk": 0,
-    "min": 21,
+    "min": 47,
     "url": ""
    }
   ],
@@ -165162,14 +165842,14 @@
     "e": "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers",
     "short": "FIBA Women's Asia Cup Div. B SEABA Qualifiers",
     "lv": "Senior",
-    "rank": "",
-    "gp": 1,
-    "pts": 4,
-    "reb": 7,
+    "rank": "1st",
+    "gp": 2,
+    "pts": 7,
+    "reb": 11,
     "ast": 2,
     "stl": 0,
     "blk": 0,
-    "min": 16,
+    "min": 29,
     "url": ""
    }
   ],
@@ -165179,7 +165859,7 @@
     "e": "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers",
     "short": "FIBA Women's Asia Cup Div. B SEABA Qualifiers",
     "lv": "Senior",
-    "rank": "",
+    "rank": "1st",
     "gp": 1,
     "pts": 0,
     "reb": 0,
@@ -165196,14 +165876,14 @@
     "e": "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers",
     "short": "FIBA Women's Asia Cup Div. B SEABA Qualifiers",
     "lv": "Senior",
-    "rank": "",
-    "gp": 1,
+    "rank": "1st",
+    "gp": 2,
     "pts": 0,
-    "reb": 3,
+    "reb": 4,
     "ast": 1,
     "stl": 0,
     "blk": 1,
-    "min": 13,
+    "min": 18,
     "url": ""
    }
   ],
@@ -165213,14 +165893,14 @@
     "e": "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers",
     "short": "FIBA Women's Asia Cup Div. B SEABA Qualifiers",
     "lv": "Senior",
-    "rank": "",
-    "gp": 1,
-    "pts": 7,
-    "reb": 5,
-    "ast": 1,
-    "stl": 1,
+    "rank": "1st",
+    "gp": 2,
+    "pts": 16,
+    "reb": 12,
+    "ast": 6,
+    "stl": 2,
     "blk": 0,
-    "min": 30,
+    "min": 59,
     "url": ""
    }
   ],
@@ -165230,14 +165910,14 @@
     "e": "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers",
     "short": "FIBA Women's Asia Cup Div. B SEABA Qualifiers",
     "lv": "Senior",
-    "rank": "",
-    "gp": 1,
-    "pts": 6,
-    "reb": 4,
-    "ast": 1,
-    "stl": 2,
+    "rank": "1st",
+    "gp": 2,
+    "pts": 19,
+    "reb": 9,
+    "ast": 3,
+    "stl": 3,
     "blk": 0,
-    "min": 16,
+    "min": 38,
     "url": ""
    }
   ],
@@ -165247,14 +165927,14 @@
     "e": "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers",
     "short": "FIBA Women's Asia Cup Div. B SEABA Qualifiers",
     "lv": "Senior",
-    "rank": "",
-    "gp": 1,
-    "pts": 11,
-    "reb": 1,
-    "ast": 1,
-    "stl": 0,
+    "rank": "1st",
+    "gp": 2,
+    "pts": 17,
+    "reb": 2,
+    "ast": 4,
+    "stl": 1,
     "blk": 0,
-    "min": 19,
+    "min": 40,
     "url": ""
    }
   ],
@@ -165264,14 +165944,14 @@
     "e": "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers",
     "short": "FIBA Women's Asia Cup Div. B SEABA Qualifiers",
     "lv": "Senior",
-    "rank": "",
-    "gp": 1,
+    "rank": "1st",
+    "gp": 2,
     "pts": 3,
     "reb": 1,
     "ast": 3,
-    "stl": 1,
+    "stl": 3,
     "blk": 0,
-    "min": 9,
+    "min": 15,
     "url": ""
    }
   ],
@@ -165281,14 +165961,14 @@
     "e": "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers",
     "short": "FIBA Women's Asia Cup Div. B SEABA Qualifiers",
     "lv": "Senior",
-    "rank": "",
-    "gp": 1,
-    "pts": 12,
-    "reb": 3,
-    "ast": 2,
-    "stl": 0,
+    "rank": "1st",
+    "gp": 2,
+    "pts": 23,
+    "reb": 14,
+    "ast": 6,
+    "stl": 2,
     "blk": 0,
-    "min": 19,
+    "min": 51,
     "url": ""
    }
   ],
@@ -165298,14 +165978,14 @@
     "e": "FIBA Women's Asia Cup 2027 Division B SEABA Qualifiers",
     "short": "FIBA Women's Asia Cup Div. B SEABA Qualifiers",
     "lv": "Senior",
-    "rank": "",
-    "gp": 1,
+    "rank": "1st",
+    "gp": 2,
     "pts": 5,
-    "reb": 2,
+    "reb": 6,
     "ast": 0,
-    "stl": 2,
+    "stl": 6,
     "blk": 0,
-    "min": 14,
+    "min": 25,
     "url": ""
    }
   ]
