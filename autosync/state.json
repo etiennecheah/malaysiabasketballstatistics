@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794167606.218247,
-  "fp": "87586880828efc6fa132"
+  "at": 1794168226.1954336,
+  "fp": "c070ef122232883d725d"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -19,11 +19,11 @@
   "35136": "2026-10-10",
   "38575": "2026-10-16",
   "48654": "2026-11-08",
-  "49965": "2026-11-08",
+  "49965": "2026-11-09",
   "50247": "2026-10-21",
   "50248": "2026-10-21",
   "50457": "2026-11-08",
-  "50458": "2026-11-08"
+  "50458": "2026-11-09"
  },
  "fail": {
   "48654": {
@@ -42,11 +42,10 @@
   "50247": 1792360197.0091074,
   "50248": 1792360741.928966,
   "50457": 1794082007.473689,
-  "50458": 1794081812.596534
+  "50458": 1794168010.9126065
  },
  "lines_retry": {},
  "log": [
-  "2026-11-08 10:25  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 11:45  FAILED 48654 (18): games we hold as final are no longer final on the source: 2944618",
   "2026-11-08 12:01  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Melaka 2 48-59 Johor 2  [2951429: final 48-59 read from the live feed (the schedule page does not show it as final yet); 2951429: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 48 (Melaka 2))]",
   "2026-11-08 12:03  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
@@ -85,7 +84,8 @@
   "2026-11-09 03:05  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 03:30  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 03:53  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
-  "2026-11-09 03:55  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-09 03:55  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-09 04:03  sync: Major Basketball League \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1794167727.373684,
