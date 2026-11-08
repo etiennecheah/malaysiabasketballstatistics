@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1794097547.4153118,
+  "at": 1794101113.8454258,
   "fp": "5669a27401fb057f3fe1"
  },
  "daily": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-06 17:48  FAILED 48654 (3): games we hold as final are no longer final on the source: 2944618",
   "2026-11-06 18:28  FAILED 48654 (4): games we hold as final are no longer final on the source: 2944618",
   "2026-11-06 19:48  FAILED 48654 (5): games we hold as final are no longer final on the source: 2944618",
   "2026-11-06 21:51  sync: Major Basketball League \u2014 NS Matrix Deers 85-71 Selangor Hornbills; shot charts of 1 game  [2951454: final 85-71 read from the live feed (the schedule page does not show it as final yet); season lines not read for 17 player(s): tried again next time]",
@@ -85,7 +84,8 @@
   "2026-11-08 05:44  FAILED 48654 (17): games we hold as final are no longer final on the source: 2944618",
   "2026-11-08 06:24  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 07:25  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
-  "2026-11-08 08:25  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
+  "2026-11-08 08:25  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
+  "2026-11-08 09:25  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -96,7 +96,7 @@
   "2896900": {
    "cid": "49965",
    "kind": "box",
-   "next": 1794101001.9573627,
+   "next": 1794104606.0801814,
    "since": 1794061173.6645193
   }
  },
@@ -112,7 +112,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1794096635.3925161,
+  "21375": 1794100241.6510365,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
@@ -195,7 +195,7 @@
   "49645": 1792147425.7033217,
   "49646": 1792147425.7033217,
   "49683": 1792147425.7033217,
-  "49965": 1794096635.3925161,
+  "49965": 1794100241.6510365,
   "50247": 1792317691.5245516,
   "50248": 1792147831.0700762
  }
