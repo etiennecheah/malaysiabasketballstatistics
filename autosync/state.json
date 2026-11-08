@@ -27,10 +27,10 @@
  },
  "fail": {
   "48654": {
-   "last": 1794166222.9670022,
+   "last": 1794167727.373684,
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 11\nrecovered: 20 box scores, 11 roster names\njoined 3 new record(s) to the player's existing profile: 2861096 Guang Yang Kiu -> 2568812, 2861107 Lim Wan Seong Lim -> 2252617, 2861121 Voon Zhang Chen -> 2786710\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 991, in <module>\n    main()\n    ~~~~^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 705, in main\n    rep = merges.apply(bb, persons, raw_b",
    "n": 1,
-   "next": 1794166822.9670022
+   "next": 1794168327.373684
   }
  },
  "full": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-08 09:25  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 10:25  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 11:45  FAILED 48654 (18): games we hold as final are no longer final on the source: 2944618",
   "2026-11-08 12:01  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Melaka 2 48-59 Johor 2  [2951429: final 48-59 read from the live feed (the schedule page does not show it as final yet); 2951429: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 48 (Melaka 2))]",
@@ -85,10 +84,11 @@
   "2026-11-09 02:52  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-09 03:05  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 03:30  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-09 03:53  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
+  "2026-11-09 03:53  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
+  "2026-11-09 03:55  FAILED 48654 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
-  "48654": 1794166222.9670022,
+  "48654": 1794167727.373684,
   "49965": 1794061173.6645193,
   "50247": 1791743461.92955
  },
