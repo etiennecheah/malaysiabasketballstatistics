@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1794117221.6532269,
+  "at": 1794117444.1062016,
   "fp": "db728cacb46fe1129a0f"
  },
  "daily": {
@@ -58,7 +58,6 @@
   }
  },
  "log": [
-  "2026-11-06 23:45  FAILED 48654 (9): games we hold as final are no longer final on the source: 2944618",
   "2026-11-07 06:21  FAILED 48654 (10): games we hold as final are no longer final on the source: 2944618",
   "2026-11-07 06:24  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
   "2026-11-07 11:13  FAILED 48654 (11): games we hold as final are no longer final on the source: 2944618",
@@ -97,7 +96,8 @@
   "2026-11-08 12:01  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Melaka 2 48-59 Johor 2  [2951429: final 48-59 read from the live feed (the schedule page does not show it as final yet); 2951429: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 48 (Melaka 2))]",
   "2026-11-08 12:03  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 12:11  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Melaka 2 48-59 Johor 2; shot charts of 1 game  [2951429: the source's box score replaces the one from the live feed]",
-  "2026-11-08 13:53  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Selangor 2 115-33 Putrajaya 2; shot charts of 1 game  [2951438: final 115-33 read from the live feed (the schedule page does not show it as final yet); season lines not read for 5 player(s): tried again next time]"
+  "2026-11-08 13:53  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Selangor 2 115-33 Putrajaya 2; shot charts of 1 game  [2951438: final 115-33 read from the live feed (the schedule page does not show it as final yet); season lines not read for 5 player(s): tried again next time]",
+  "2026-11-08 13:57  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
@@ -108,7 +108,7 @@
   "2896900": {
    "cid": "49965",
    "kind": "box",
-   "next": 1794114129.0272453,
+   "next": 1794120893.782252,
    "since": 1794061173.6645193
   }
  },
@@ -124,7 +124,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1794110492.5856931,
+  "21375": 1794117256.9443457,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
@@ -207,7 +207,7 @@
   "49645": 1792147425.7033217,
   "49646": 1792147425.7033217,
   "49683": 1792147425.7033217,
-  "49965": 1794110492.5856931,
+  "49965": 1794117256.9443457,
   "50247": 1792317691.5245516,
   "50248": 1792147831.0700762,
   "50457": 1794110492.5856931
