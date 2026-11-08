@@ -18,7 +18,7 @@
   "26279": "2026-10-10",
   "35136": "2026-10-10",
   "38575": "2026-10-16",
-  "48654": "2026-11-05",
+  "48654": "2026-11-08",
   "49965": "2026-11-08",
   "50247": "2026-10-21",
   "50248": "2026-10-21",
@@ -27,17 +27,17 @@
  },
  "fail": {
   "48654": {
-   "last": 1794125627.5196242,
-   "msg": "games we hold as final are no longer final on the source: 2944618",
-   "n": 19,
-   "next": 1794147227.5196242
+   "last": 1794147247.6194305,
+   "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 11\nrecovered: 20 box scores, 11 roster names\njoined 3 new record(s) to the player's existing profile: 2861096 Guang Yang Kiu -> 2568812, 2861107 Lim Wan Seong Lim -> 2252617, 2861121 Voon Zhang Chen -> 2786710\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 991, in <module>\n    main()\n    ~~~~^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 705, in main\n    rep = merges.apply(bb, persons, raw_b",
+   "n": 1,
+   "next": 1794147847.6194305
   }
  },
  "full": {
   "26279": 1791577474.9493973,
   "35136": 1791565381.5329828,
   "38575": 1792080511.4872327,
-  "48654": 1793573525.4894218,
+  "48654": 1794147247.6194305,
   "49965": 1794081610.100675,
   "50247": 1792360197.0091074,
   "50248": 1792360741.928966,
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-07 19:11  FAILED 48654 (14): games we hold as final are no longer final on the source: 2944618",
   "2026-11-07 19:36  sync: Major Basketball League \u2014 Johor Southern Tigers 96-72 Penang Sunrise Youngsters  [2951456: final 96-72 read from the live feed (the schedule page does not show it as final yet); 2951456: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 96 (Johor Southern Tigers))]",
   "2026-11-07 20:11  FAILED 48654 (15): games we hold as final are no longer final on the source: 2944618",
   "2026-11-07 20:34  sync: Dream Ball Championship 2026 \u2014 Trapo 83-59 Ho Hotel x Pay Fong; shot charts of 1 game  [2896902: final 83-59 read from the live feed (the schedule page does not show it as final yet)]",
@@ -85,7 +84,8 @@
   "2026-11-08 18:58  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 20:34  sync: Major Basketball League \u2014 Penang Sunrise Youngsters 95-98 KL Titans  [2951460: final 95-98 read from the live feed (the schedule page does not show it as final yet); 2951460: box score taken from the live feed (the box score page failed)]",
   "2026-11-08 20:37  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
-  "2026-11-08 20:44  sync: Major Basketball League \u2014 Penang Sunrise Youngsters 95-98 KL Titans; shot charts of 1 game  [2951460: the source's box score replaces the one from the live feed]"
+  "2026-11-08 20:44  sync: Major Basketball League \u2014 Penang Sunrise Youngsters 95-98 KL Titans; shot charts of 1 game  [2951460: the source's box score replaces the one from the live feed]",
+  "2026-11-08 22:15  FAILED 48654 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
   "48654": 1790959827.243155,
