@@ -27,10 +27,10 @@
  },
  "fail": {
   "48654": {
-   "last": 1794161667.2327752,
+   "last": 1794163188.155265,
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 11\nrecovered: 20 box scores, 11 roster names\njoined 3 new record(s) to the player's existing profile: 2861096 Guang Yang Kiu -> 2568812, 2861107 Lim Wan Seong Lim -> 2252617, 2861121 Voon Zhang Chen -> 2786710\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 991, in <module>\n    main()\n    ~~~~^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 705, in main\n    rep = merges.apply(bb, persons, raw_b",
    "n": 1,
-   "next": 1794162267.2327752
+   "next": 1794163788.155265
   }
  },
  "full": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-08 05:25  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 05:44  FAILED 48654 (17): games we hold as final are no longer final on the source: 2944618",
   "2026-11-08 06:24  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 07:25  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
@@ -85,10 +84,11 @@
   "2026-11-09 01:24  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 01:49  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 01:52  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
-  "2026-11-09 02:14  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-09 02:14  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-09 02:40  FAILED 48654 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
-  "48654": 1794161667.2327752,
+  "48654": 1794163188.155265,
   "49965": 1794061173.6645193,
   "50247": 1791743461.92955
  },
