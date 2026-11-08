@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1794156717.1680424,
+  "at": 1794160367.2127461,
   "fp": "87586880828efc6fa132"
  },
  "daily": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-08 04:09  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 fixtures, standings or season lines updated",
   "2026-11-08 04:24  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 05:25  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 05:44  FAILED 48654 (17): games we hold as final are no longer final on the source: 2944618",
@@ -85,7 +84,8 @@
   "2026-11-09 00:51  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-09 00:58  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 01:24  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-09 01:49  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-09 01:49  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-09 01:52  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
  ],
  "overdue_at": {
   "48654": 1794160156.096316,
@@ -96,7 +96,7 @@
   "2896900": {
    "cid": "49965",
    "kind": "box",
-   "next": 1794160183.0477247,
+   "next": 1794163837.204728,
    "since": 1794061173.6645193
   }
  },
@@ -112,7 +112,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1794156544.8110023,
+  "21375": 1794160200.1834877,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
@@ -195,7 +195,7 @@
   "49645": 1792147425.7033217,
   "49646": 1792147425.7033217,
   "49683": 1792147425.7033217,
-  "49965": 1794156544.8110023,
+  "49965": 1794160200.1834877,
   "50247": 1792317691.5245516,
   "50248": 1792147831.0700762,
   "50457": 1794110492.5856931,
