@@ -18,7 +18,7 @@
   "26279": "2026-10-10",
   "35136": "2026-10-10",
   "38575": "2026-10-16",
-  "48654": "2026-11-08",
+  "48654": "2026-11-09",
   "49965": "2026-11-09",
   "50247": "2026-10-21",
   "50248": "2026-10-21",
@@ -27,10 +27,10 @@
  },
  "fail": {
   "48654": {
-   "last": 1794167727.373684,
+   "last": 1794168476.6889448,
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 11\nrecovered: 20 box scores, 11 roster names\njoined 3 new record(s) to the player's existing profile: 2861096 Guang Yang Kiu -> 2568812, 2861107 Lim Wan Seong Lim -> 2252617, 2861121 Voon Zhang Chen -> 2786710\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 991, in <module>\n    main()\n    ~~~~^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 705, in main\n    rep = merges.apply(bb, persons, raw_b",
    "n": 1,
-   "next": 1794168327.373684
+   "next": 1794169076.6889448
   }
  },
  "full": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-08 12:01  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Melaka 2 48-59 Johor 2  [2951429: final 48-59 read from the live feed (the schedule page does not show it as final yet); 2951429: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 48 (Melaka 2))]",
   "2026-11-08 12:03  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-08 12:11  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Melaka 2 48-59 Johor 2; shot charts of 1 game  [2951429: the source's box score replaces the one from the live feed]",
   "2026-11-08 13:53  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Selangor 2 115-33 Putrajaya 2; shot charts of 1 game  [2951438: final 115-33 read from the live feed (the schedule page does not show it as final yet); season lines not read for 5 player(s): tried again next time]",
@@ -85,7 +84,8 @@
   "2026-11-09 03:53  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-09 03:55  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 04:03  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
-  "2026-11-09 04:07  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 6 teams]"
+  "2026-11-09 04:07  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 6 teams]",
+  "2026-11-09 04:08  FAILED 48654 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
   "48654": 1794167727.373684,
