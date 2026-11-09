@@ -27,10 +27,10 @@
  },
  "fail": {
   "48654": {
-   "last": 1794232963.3931484,
+   "last": 1794233581.481595,
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 11\nrecovered: 20 box scores, 11 roster names\njoined 3 new record(s) to the player's existing profile: 2861096 Guang Yang Kiu -> 2568812, 2861107 Lim Wan Seong Lim -> 2252617, 2861121 Voon Zhang Chen -> 2786710\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 991, in <module>\n    main()\n    ~~~~^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 705, in main\n    rep = merges.apply(bb, persons, raw_b",
    "n": 1,
-   "next": 1794233563.3931484
+   "next": 1794234181.481595
   }
  },
  "full": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-09 12:22  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 12:47  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 12:52  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Kuala Lumpur 2 67-82 Selangor 2  [2951437: final 67-82 read from the live feed (the schedule page does not show it as final yet); 2951437: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 67 (Kuala Lumpur 2))]",
   "2026-11-09 12:56  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
@@ -85,7 +84,8 @@
   "2026-11-09 21:41  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 21:51  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 22:02  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
-  "2026-11-09 22:03  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-09 22:03  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-09 22:13  FAILED 48654 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
   "48654": 1794226896.9574952,
