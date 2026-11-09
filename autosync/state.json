@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794192542.9793556,
-  "fp": "9c0f81c8997490da768c"
+  "at": 1794192743.2797847,
+  "fp": "c81084712ef42d9fa273"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-08 23:51  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-09 00:08  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 00:33  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 00:51  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
@@ -85,7 +84,8 @@
   "2026-11-09 09:49  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 09:55  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-09 10:15  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-09 10:40  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-09 10:40  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-09 10:52  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Kedah 2 75-67 Melaka 2; shot charts of 1 game  [2951430: final 75-67 read from the live feed (the schedule page does not show it as final yet)]"
  ],
  "overdue_at": {
   "48654": 1794192007.2409122,
