@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794200170.845351,
-  "fp": "96a56351cdacefa8412a"
+  "at": 1794200550.2972522,
+  "fp": "ce24c2de95701434380f"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-09 02:52  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-09 03:05  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 03:30  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 03:53  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
@@ -85,7 +84,8 @@
   "2026-11-09 12:22  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 12:47  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 12:52  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Kuala Lumpur 2 67-82 Selangor 2  [2951437: final 67-82 read from the live feed (the schedule page does not show it as final yet); 2951437: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 67 (Kuala Lumpur 2))]",
-  "2026-11-09 12:56  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
+  "2026-11-09 12:56  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
+  "2026-11-09 13:02  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Kuala Lumpur 2 67-82 Selangor 2; shot charts of 1 game  [2951437: the source's box score replaces the one from the live feed]"
  ],
  "overdue_at": {
   "48654": 1794199657.5776591,
@@ -98,12 +98,6 @@
    "kind": "box",
    "next": 1794203651.8086293,
    "since": 1794061173.6645193
-  },
-  "2951437": {
-   "cid": "50457",
-   "kind": "box",
-   "next": 1794200393.3802042,
-   "since": 1794199793.3802042
   }
  },
  "rechecked": {
