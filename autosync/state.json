@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1794225209.1756952,
+  "at": 1794225685.4451115,
   "fp": "af717d5bab757b3665ce"
  },
  "daily": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-09 09:55  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-09 10:15  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 10:40  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 10:52  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Kedah 2 75-67 Melaka 2; shot charts of 1 game  [2951430: final 75-67 read from the live feed (the schedule page does not show it as final yet)]",
@@ -85,7 +84,8 @@
   "2026-11-09 19:31  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 19:43  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Melaka 2 82-29 Putrajaya 2  [2951427: final 82-29 read from the live feed (the schedule page does not show it as final yet); 2951427: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 82 (Melaka 2))]",
   "2026-11-09 19:53  sync: 33rd MABA - MILO LUM MUN CHAK 15 & BELOW National Basketball Championship 2026 Qualifying Round (Boys) \u2014 Melaka 2 82-29 Putrajaya 2  [2951427: the source's box score replaces the one from the live feed]",
-  "2026-11-09 19:56  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-09 19:56  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-09 20:01  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
  ],
  "overdue_at": {
   "48654": 1794225392.385395,
@@ -96,7 +96,7 @@
   "2896900": {
    "cid": "49965",
    "kind": "box",
-   "next": 1794225527.9346755,
+   "next": 1794229130.74687,
    "since": 1794061173.6645193
   }
  },
@@ -112,7 +112,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1794221769.642671,
+  "21375": 1794225434.875433,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
