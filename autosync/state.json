@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1794211023.5888252,
+  "at": 1794214677.0402722,
   "fp": "ce24c2de95701434380f"
  },
  "daily": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-09 05:54  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-09 06:02  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 06:27  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 06:52  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -85,7 +84,8 @@
   "2026-11-09 15:44  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-09 15:57  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-09 16:09  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-09 16:35  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-09 16:35  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-09 16:57  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
  ],
  "overdue_at": {
   "48654": 1794213296.8166058,
@@ -96,7 +96,7 @@
   "2896900": {
    "cid": "49965",
    "kind": "box",
-   "next": 1794214529.2881436,
+   "next": 1794218157.6919973,
    "since": 1794061173.6645193
   }
  },
@@ -112,7 +112,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1794210892.613912,
+  "21375": 1794214519.1923397,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
@@ -195,7 +195,7 @@
   "49645": 1792147425.7033217,
   "49646": 1792147425.7033217,
   "49683": 1792147425.7033217,
-  "49965": 1794210892.613912,
+  "49965": 1794214519.1923397,
   "50247": 1792317691.5245516,
   "50248": 1792147831.0700762,
   "50457": 1794199983.4137354,
