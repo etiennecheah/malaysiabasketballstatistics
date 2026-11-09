@@ -2,8 +2,9 @@
    Compare › Lineups — two teams' lineups against each other, inside one
    competition (approved from the prototype, update-53).
 
-   Only DB.stats.lv.comps are offered: the three MBL seasons and the 2026 Agong
-   Cup. Each one's games live in stats/lv/<cid>.js (build_stats.py), every
+   Only DB.stats.lv.comps are offered: every men's MBL season (newest first; a new
+   season joins by itself once it has a game) and the 2026 Agong Cup. Each one's
+   games live in stats/lv/<cid>.js (build_stats.py), every
    rebuilt stint with both fives, the points and both sides' box counters,
    pulled in when the competition is chosen. The page adds them up for the
    chosen pair of teams, games and group size (a 4-, 3- or 2-man group is the

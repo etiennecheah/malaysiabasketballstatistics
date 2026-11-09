@@ -24,8 +24,9 @@ import build_lineup_stats, build_clutch
 R = os.path.dirname(os.path.abspath(__file__))
 D = os.path.join(R, 'data')
 OUT = os.path.join(R, 'stats')
-# the competitions Compare › Lineups offers: the three MBL seasons and the 2026 Agong Cup
-LV_COMPS = ['40226', '37621', '35104', '50247', '50248']
+# the competitions Compare › Lineups offers: every men's MBL season (wowy_comps 'mbl', added by
+# itself as each new season gets its first rebuilt game, newest first) and these fixed ones
+LV_COMPS = ['50247', '50248']
 # Tools › WOWY (app4zd_wowy.js) reads the same files, for the men's Agong Cup and the men's MBL only
 # (user decision, 3 Nov 2026): every edition of each that has rebuilt stints
 def wowy_comps(comps):
@@ -134,8 +135,9 @@ def main():
         if cid in WY:
             size += put('sp', cid, {'keys': PPK, 'games': spg})
         played = [g for g in c['games'] if g.get('st') == 'COMPLETE']
-        if cid in LV_COMPS:
-            lv.append({'id': cid, 'label': c.get('label') or c['name'], 'year': c['year'], 'games': len(games), 'played': len(played)})
+        if (cid in LV_COMPS or WY.get(cid) == 'mbl') and games:
+            lv.append({'id': cid, 'mbl': WY.get(cid) == 'mbl', 'label': c.get('label') or c['name'], 'year': c['year'],
+                       'games': len(games), 'played': len(played)})
         if cid in WY and games:
             wy.append({'id': cid, 'ser': WY[cid], 'label': c.get('label') or c['name'], 'year': c['year'], 'games': len(games), 'played': len(played)})
 
@@ -145,7 +147,7 @@ def main():
                                      'pm_exact_c': LJ['meta']['pm_exact_c']}},
         'cl': {'comps': cl, 'meta': {'games': K['meta']['games'], 'clutch_games': K['meta']['clutch_games'],
                                      'pts_match': K['meta']['pts_match']}},
-        'lv': {'comps': lv},
+        'lv': {'comps': sorted(lv, key=lambda c: (not c['mbl'], -(c['year'] or 0)))},
         'wy': {'comps': sorted(wy, key=lambda c: (c['ser'], c['year']))},
     }
     json.dump(index, open(os.path.join(D, 'stats_index.json'), 'w'), separators=(',', ':'), ensure_ascii=False)

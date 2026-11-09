@@ -3605,7 +3605,9 @@ a.hmg-feat:hover{ text-decoration:none; border-color:rgba(255,255,255,.26); }
 .cl-glos p{ max-width:96ch; margin:8px 0 0; }
 @media (max-width:1000px){
   .cl-tables, .cl-starts{ grid-template-columns:minmax(0,1fr); }
-  .cl-tteam{ display:inline-flex; }
+  .cl-tteam{ display:inline-flex; max-width:100%; }
+  /* two long club names (Johor Southern Tigers · Penang Sunrise Youngsters) share the width */
+  .cl-tteam button{ min-width:0; white-space:normal; line-height:1.25; text-align:center; }
   .cl-tables[data-tab="A"] .cl-lt.cl-B, .cl-tables[data-tab="B"] .cl-lt.cl-A{ display:none; }
 }
 @media (max-width:640px){
