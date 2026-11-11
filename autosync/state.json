@@ -27,10 +27,10 @@
  },
  "fail": {
   "48654": {
-   "last": 1794358963.661909,
+   "last": 1794360490.1092172,
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 11\nrecovered: 20 box scores, 11 roster names\njoined 3 new record(s) to the player's existing profile: 2861096 Guang Yang Kiu -> 2568812, 2861107 Lim Wan Seong Lim -> 2252617, 2861121 Voon Zhang Chen -> 2786710\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 991, in <module>\n    main()\n    ~~~~^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 705, in main\n    rep = merges.apply(bb, persons, raw_b",
    "n": 1,
-   "next": 1794359563.661909
+   "next": 1794361090.1092172
   }
  },
  "full": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-10 17:30  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-10 17:55  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-10 18:20  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-10 18:45  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -85,10 +84,11 @@
   "2026-11-11 07:47  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-11 08:12  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-11 08:38  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-11 09:03  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-11 09:03  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-11 09:28  FAILED 48654 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
-  "48654": 1794358963.661909,
+  "48654": 1794360490.1092172,
   "49965": 1794061173.6645193,
   "50247": 1791743461.92955
  },
