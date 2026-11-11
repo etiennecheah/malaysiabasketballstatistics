@@ -9,7 +9,7 @@ D = os.path.join(R, 'data')
 PARTS = ['app0_router.js', 'app1_core.js', 'app2_nav.js', 'app3_comp.js', 'app3b_family.js', 'app4_players.js',
          'app4b_profile.js', 'app4c_impact.js', 'app4d_radar.js', 'app4e_compare.js',
          'app4f_bpm.js', 'app4g_formulas.js', 'app4i_games.js',
-         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app4u_shots.js', 'app4w_shot3d.js', 'app4x_cmpshots.js', 'app4y_cmplineups.js', 'app4z_gameshots.js', 'app4za_milestones.js', 'app4zb_records.js', 'app4zc_postgame.js', 'app4zd_wowy.js', 'app4ze_shift.js', 'app4zf_companion.js', 'app4v_report.js', 'app4zg_scout.js', 'app4zh_mbl.js', 'app4zi_mhero.js', 'app4zj_gamebox.js', 'app5_rest.js']
+         'app4j_match.js', 'app4k_teams.js', 'app4l_profile2.js', 'app4n_live.js', 'app4o_home.js', 'app4p_account.js', 'app4q_stats.js', 'app4r_news.js', 'app4s_watch.js', 'app4t_meta.js', 'app4u_shots.js', 'app4w_shot3d.js', 'app4x_cmpshots.js', 'app4y_cmplineups.js', 'app4z_gameshots.js', 'app4za_milestones.js', 'app4zb_records.js', 'app4zc_postgame.js', 'app4zd_wowy.js', 'app4ze_shift.js', 'app4zf_companion.js', 'app4v_report.js', 'app4zg_scout.js', 'app4zh_mbl.js', 'app4zi_mhero.js', 'app4zk_sghero.js', 'app4zj_gamebox.js', 'app5_rest.js']
 
 NEWS_TYPES = ('signing', 'transfer', 'departure', 'injury', 'return', 'retirement', 'national', 'other')
 
@@ -80,7 +80,7 @@ def load_news(payload):
         if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', date) or not str(it.get('text') or '').strip():
             raise SystemExit('data/news.json item %d needs a date (YYYY-MM-DD) and a text' % (i + 1))
         o = {'date': date, 'type': it.get('type') if it.get('type') in NEWS_TYPES else 'other', 'text': str(it['text']).strip()}
-        for k in ('name', 'to', 'from', 'league', 'note', 'link'):
+        for k in ('name', 'to', 'from', 'league', 'note', 'link', 'mark', 'spotlight'):
             if str(it.get(k) or '').strip():
                 o[k] = str(it[k]).strip()
         pid = str(it.get('pid') or '').strip()

@@ -1,6 +1,18 @@
 {
- "_note": "Player news for the News page, supplied by the user. One entry per item. date: YYYY-MM-DD. type: signing, transfer, departure, injury, return, retirement, national or other. name: the player as the item writes him; pid: his id in this database (the number in his profile link, #/p/<pid>) - leave it out and the build looks the name up. to / from: the teams, as the site spells them. league: for a club outside Malaysia. text: the item itself. note: an optional second line. A signing or transfer makes 'to' the player's newest team on his card and profile until the database has later games for him.",
+ "_note": "Player news for the News page, supplied by the user. One entry per item. date: YYYY-MM-DD. type: signing, transfer, departure, injury, return, retirement, national or other. name: the player as the item writes him; pid: his id in this database (the number in his profile link, #/p/<pid>) - leave it out and the build looks the name up. to / from: the teams, as the site spells them. league: for a club outside Malaysia. text: the item itself. note: an optional second line. A signing or transfer makes 'to' the player's newest team on his card and profile until the database has later games for him. mark: the league's logo key in data/complogos (optional). spotlight: 'next-mbl-game' opens Home with this item's hero card (in place of the MBL milestone card) until the next MBL game tips off.",
  "items": [
+  {
+   "date": "2026-11-11",
+   "type": "signing",
+   "name": "Foo Suet Ying",
+   "pid": "1287260",
+   "to": "Etugen Panthers",
+   "league": "Mongolia Women's National League",
+   "mark": "the-league-mongolia",
+   "spotlight": "next-mbl-game",
+   "text": "Etugen Panthers announced the signing of Foo Suet Ying.",
+   "note": "She will play in the Mongolia Women's National League as an Asian import."
+  },
   {
    "date": "2026-10-14",
    "type": "signing",
