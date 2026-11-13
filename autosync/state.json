@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1794579094.4471982,
+  "at": 1794582152.044737,
   "fp": "210e9396d892e9672a72"
  },
  "daily": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-11 06:56  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-11 07:22  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-11 07:47  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-11 08:12  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -85,7 +84,8 @@
   "2026-11-13 04:01  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-13 04:03  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 8 teams]",
   "2026-11-13 22:01  sync: Major Basketball League \u2014 KL Titans 84-88 Selangor Hornbills  [2951464: final 84-88 read from the live feed (the schedule page does not show it as final yet); 2951464: box score taken from the live feed (the source's box score is not complete: only 4 players listed for KL Titans)]",
-  "2026-11-13 22:11  sync: Major Basketball League \u2014 KL Titans 84-88 Selangor Hornbills  [2951464: the source's box score replaces the one from the live feed]"
+  "2026-11-13 22:11  sync: Major Basketball League \u2014 KL Titans 84-88 Selangor Hornbills  [2951464: the source's box score replaces the one from the live feed]",
+  "2026-11-13 23:02  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport"
  ],
  "overdue_at": {
   "48654": 1794399962.8660247,
@@ -96,7 +96,7 @@
   "2896900": {
    "cid": "49965",
    "kind": "box",
-   "next": 1794582015.2527468,
+   "next": 1794668435.6662586,
    "since": 1794061173.6645193
   }
  },
