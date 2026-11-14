@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794632090.4675653,
-  "fp": "47b55b6a4c9a02da4bfc"
+  "at": 1794658174.4225183,
+  "fp": "16463eddb4a27959d023"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-11 08:38  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-11 09:03  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-11 09:28  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-11 09:53  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -85,7 +84,8 @@
   "2026-11-13 23:02  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-13 23:04  sync: shot charts of 1 game in 1 competition  [886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept]",
   "2026-11-14 04:01  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-14 04:04  sync: Major Basketball League \u2014 fixtures, standings or season lines updated"
+  "2026-11-14 04:04  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
+  "2026-11-14 20:09  sync: Major Basketball League \u2014 Selangor Hornbills 81-78 Penang Sunrise Youngsters  [2951465: final 81-78 read from the live feed (the schedule page does not show it as final yet); 2951465: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 81 (Selangor Hornbills))]"
  ],
  "overdue_at": {
   "48654": 1794399962.8660247,
@@ -98,6 +98,12 @@
    "kind": "box",
    "next": 1794668435.6662586,
    "since": 1794061173.6645193
+  },
+  "2951465": {
+   "cid": "50458",
+   "kind": "box",
+   "next": 1794658642.594282,
+   "since": 1794658042.594282
   }
  },
  "rechecked": {
@@ -112,7 +118,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1794650261.5897117,
+  "21375": 1794653874.9656734,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
