@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794658820.7035708,
-  "fp": "040080715a14942e2834"
+  "at": 1794666671.2040176,
+  "fp": "26c797ad52d6689cc7a0"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -44,9 +44,16 @@
   "50457": 1794257082.5598876,
   "50458": 1794600102.215564
  },
- "lines_retry": {},
+ "lines_retry": {
+  "50458": {
+   "n": 1,
+   "next": 1794667126.2977488,
+   "pids": [
+    "1286737"
+   ]
+  }
+ },
  "log": [
-  "2026-11-11 11:59  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-11 12:25  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-11 12:50  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-11 13:15  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -85,7 +92,8 @@
   "2026-11-14 21:51  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-14 22:01  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-14 22:11  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-14 22:22  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-14 22:22  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-14 22:31  sync: Major Basketball League \u2014 NS Matrix Deers 74-64 KL Titans; shot charts of 1 game  [2951449: final 74-64 read from the live feed (the schedule page does not show it as final yet); season lines not read for 1 player(s): tried again next time]"
  ],
  "overdue_at": {
   "48654": 1794399962.8660247,
