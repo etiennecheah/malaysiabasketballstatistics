@@ -27,10 +27,10 @@
  },
  "fail": {
   "48654": {
-   "last": 1794688572.0391276,
+   "last": 1794690083.3644059,
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 11\nrecovered: 20 box scores, 11 roster names\njoined 3 new record(s) to the player's existing profile: 2861096 Guang Yang Kiu -> 2568812, 2861107 Lim Wan Seong Lim -> 2252617, 2861121 Voon Zhang Chen -> 2786710\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 991, in <module>\n    main()\n    ~~~~^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 705, in main\n    rep = merges.apply(bb, persons, raw_b",
    "n": 1,
-   "next": 1794689172.0391276
+   "next": 1794690683.3644059
   }
  },
  "full": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-13 23:02  sync: Dream Ball Championship 2026 \u2014 play-by-play of YYC x MMU v Brayden x MG Living Sport",
   "2026-11-13 23:04  sync: shot charts of 1 game in 1 competition  [886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept]",
   "2026-11-14 04:01  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-14 04:04  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
@@ -85,10 +84,11 @@
   "2026-11-15 04:03  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 8 teams]",
   "2026-11-15 04:06  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
   "2026-11-15 04:11  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-15 04:36  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-15 04:36  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-15 05:01  FAILED 48654 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
-  "48654": 1794688572.0391276,
+  "48654": 1794690083.3644059,
   "49965": 1794061173.6645193,
   "50247": 1791743461.92955
  },
