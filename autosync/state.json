@@ -27,10 +27,10 @@
  },
  "fail": {
   "48654": {
-   "last": 1794755092.2532136,
+   "last": 1794756598.1492622,
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 11\nrecovered: 20 box scores, 11 roster names\njoined 3 new record(s) to the player's existing profile: 2861096 Guang Yang Kiu -> 2568812, 2861107 Lim Wan Seong Lim -> 2252617, 2861121 Voon Zhang Chen -> 2786710\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 991, in <module>\n    main()\n    ~~~~^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 705, in main\n    rep = merges.apply(bb, persons, raw_b",
    "n": 1,
-   "next": 1794755692.2532136
+   "next": 1794757198.1492622
   }
  },
  "full": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-15 08:24  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 08:49  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 09:14  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 09:39  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -85,10 +84,11 @@
   "2026-11-15 22:27  sync: Major Basketball League \u2014 Johor Southern Tigers 74-87 KL Titans  [2951451: the source's box score replaces the one from the live feed]",
   "2026-11-15 22:40  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 23:05  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-15 23:20  sync: shot charts of 1 game in 1 competition  [886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept]"
+  "2026-11-15 23:20  sync: shot charts of 1 game in 1 competition  [886173: shot chart draws 75 attempts, the box score has 145 FGA: not kept]",
+  "2026-11-15 23:30  FAILED 48654 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
-  "48654": 1794755092.2532136,
+  "48654": 1794756598.1492622,
   "49965": 1794061173.6645193,
   "50247": 1791743461.92955
  },
