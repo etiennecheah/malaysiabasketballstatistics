@@ -27,10 +27,10 @@
  },
  "fail": {
   "48654": {
-   "last": 1794738382.044784,
+   "last": 1794739882.9035907,
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 11\nrecovered: 20 box scores, 11 roster names\njoined 3 new record(s) to the player's existing profile: 2861096 Guang Yang Kiu -> 2568812, 2861107 Lim Wan Seong Lim -> 2252617, 2861121 Voon Zhang Chen -> 2786710\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 991, in <module>\n    main()\n    ~~~~^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 705, in main\n    rep = merges.apply(bb, persons, raw_b",
    "n": 1,
-   "next": 1794738982.044784
+   "next": 1794740482.9035907
   }
  },
  "full": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-15 03:11  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 03:36  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 04:01  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 04:03  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 8 teams]",
@@ -85,10 +84,11 @@
   "2026-11-15 17:11  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 17:36  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 18:01  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-15 18:26  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-15 18:26  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-15 18:51  FAILED 48654 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
-  "48654": 1794738382.044784,
+  "48654": 1794739882.9035907,
   "49965": 1794061173.6645193,
   "50247": 1791743461.92955
  },
