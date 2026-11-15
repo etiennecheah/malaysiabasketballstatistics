@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794752243.9742389,
-  "fp": "b266340495e5942f8bd5"
+  "at": 1794752863.5341477,
+  "fp": "33b820d0c94cea990344"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-15 06:42  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 07:07  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 07:33  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 07:58  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -85,21 +84,15 @@
   "2026-11-15 21:24  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 21:49  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 22:14  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-15 22:17  sync: Major Basketball League \u2014 Johor Southern Tigers 74-87 KL Titans  [2951451: final 74-87 read from the live feed (the schedule page does not show it as final yet); 2951451: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 74 (Johor Southern Tigers))]"
+  "2026-11-15 22:17  sync: Major Basketball League \u2014 Johor Southern Tigers 74-87 KL Titans  [2951451: final 74-87 read from the live feed (the schedule page does not show it as final yet); 2951451: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 74 (Johor Southern Tigers))]",
+  "2026-11-15 22:27  sync: Major Basketball League \u2014 Johor Southern Tigers 74-87 KL Titans  [2951451: the source's box score replaces the one from the live feed]"
  ],
  "overdue_at": {
   "48654": 1794752065.9030952,
   "49965": 1794061173.6645193,
   "50247": 1791743461.92955
  },
- "pending": {
-  "2951451": {
-   "cid": "50458",
-   "kind": "box",
-   "next": 1794752711.9870708,
-   "since": 1794752111.9870708
-  }
- },
+ "pending": {},
  "rechecked": {
   "1312929": "25340",
   "1312947": "25341",
@@ -112,7 +105,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1794746648.60884,
+  "21375": 1794752272.8899875,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
@@ -199,6 +192,6 @@
   "50247": 1792317691.5245516,
   "50248": 1792147831.0700762,
   "50457": 1794228241.6296322,
-  "50458": 1794658205.4549816
+  "50458": 1794752272.8899875
  }
 }
