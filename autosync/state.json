@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794742952.3826632,
-  "fp": "14860bd7d72bc162eb7c"
+  "at": 1794752243.9742389,
+  "fp": "b266340495e5942f8bd5"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-15 06:17  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 06:42  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 07:07  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 07:33  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -85,14 +84,22 @@
   "2026-11-15 20:58  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 21:24  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 21:49  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-15 22:14  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-15 22:14  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-15 22:17  sync: Major Basketball League \u2014 Johor Southern Tigers 74-87 KL Titans  [2951451: final 74-87 read from the live feed (the schedule page does not show it as final yet); 2951451: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 74 (Johor Southern Tigers))]"
  ],
  "overdue_at": {
   "48654": 1794752065.9030952,
   "49965": 1794061173.6645193,
   "50247": 1791743461.92955
  },
- "pending": {},
+ "pending": {
+  "2951451": {
+   "cid": "50458",
+   "kind": "box",
+   "next": 1794752711.9870708,
+   "since": 1794752111.9870708
+  }
+ },
  "rechecked": {
   "1312929": "25340",
   "1312947": "25341",
