@@ -27,10 +27,10 @@
  },
  "fail": {
   "48654": {
-   "last": 1794706742.6254551,
+   "last": 1794708243.6593165,
    "msg": "/usr/bin/python3 build_data.py\nmanual competitions: 11\nrecovered: 20 box scores, 11 roster names\njoined 3 new record(s) to the player's existing profile: 2861096 Guang Yang Kiu -> 2568812, 2861107 Lim Wan Seong Lim -> 2252617, 2861121 Voon Zhang Chen -> 2786710\nTraceback (most recent call last):\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 991, in <module>\n    main()\n    ~~~~^^\n  File \"/home/runner/work/malaysiabasketballstatistics/malaysiabasketballstatistics/build_data.py\", line 705, in main\n    rep = merges.apply(bb, persons, raw_b",
    "n": 1,
-   "next": 1794707342.6254551
+   "next": 1794708843.6593165
   }
  },
  "full": {
@@ -46,7 +46,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-14 22:31  sync: Major Basketball League \u2014 NS Matrix Deers 74-64 KL Titans; shot charts of 1 game  [2951449: final 74-64 read from the live feed (the schedule page does not show it as final yet); season lines not read for 1 player(s): tried again next time]",
   "2026-11-14 22:32  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-14 22:42  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-14 22:53  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -85,10 +84,11 @@
   "2026-11-15 08:24  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 08:49  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-15 09:14  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-15 09:39  FAILED 48654 (1): /usr/bin/python3 build_data.py"
+  "2026-11-15 09:39  FAILED 48654 (1): /usr/bin/python3 build_data.py",
+  "2026-11-15 10:04  FAILED 48654 (1): /usr/bin/python3 build_data.py"
  ],
  "overdue_at": {
-  "48654": 1794706742.6254551,
+  "48654": 1794708243.6593165,
   "49965": 1794061173.6645193,
   "50247": 1791743461.92955
  },
