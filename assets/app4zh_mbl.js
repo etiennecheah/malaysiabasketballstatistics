@@ -2,7 +2,9 @@
    MBL season page (#/mbl): everything about the current Major Basketball
    League season (men) on one page — the countdown or next game, the season's
    route by weekend, games, standings, teams and rosters (flip cards with the
-   MBL career on the back), a height lineup, leaders and the milestone watch.
+   MBL career on the back), a height lineup, leaders, the records (single-game
+   bests, big nights and streaks, this season or all-time, local or import) and
+   the milestone watch.
    The season is the newest MBL men's competition in the database; the header
    tab is named after it (MBL 2026/27). Built from what the page already holds:
    fixtures, standings rows, season lines and rosters. All names carry an mb-
@@ -13,7 +15,8 @@ const MB = (() => {
   const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const SHORT = {'NS Matrix Deers': 'NS Matrix', 'Penang Sunrise Youngsters': 'Penang', 'Johor Southern Tigers': 'Johor',
-    'Selangor Hornbills': 'Selangor', 'Sarawak Cola Warriors': 'Sarawak', 'Putrajaya Parkcity Heat': 'Putrajaya', 'KL Titans': 'KL Titans'};
+    'Selangor Hornbills': 'Selangor', 'Sarawak Cola Warriors': 'Sarawak', 'Putrajaya Parkcity Heat': 'Putrajaya', 'KL Titans': 'KL Titans',
+    'Pegasus Sports': 'Pegasus', 'Singapore Adroit': 'Adroit', 'UCSI Rising Star': 'UCSI'};
   // each club's colour, read once from its crest (the main hue of its saturated pixels)
   const HUE = {'NS Matrix Deers': 45, 'KL Titans': 122, 'Penang Sunrise Youngsters': 4, 'Johor Southern Tigers': 216, 'Selangor Hornbills': 16,
     'Sarawak Cola Warriors': 30, 'Putrajaya Parkcity Heat': 20};
@@ -22,7 +25,7 @@ const MB = (() => {
     PHI: 'Philippines', SGP: 'Singapore', TPE: 'Chinese Taipei', JPN: 'Japan', CHN: 'China', INA: 'Indonesia', NGR: 'Nigeria', SEN: 'Senegal',
     NZL: 'New Zealand', SSD: 'South Sudan', SUD: 'Sudan', RUS: 'Russia', BUL: 'Bulgaria', KEN: 'Kenya', ZIM: 'Zimbabwe', BOT: 'Botswana',
     COD: 'DR Congo', THA: 'Thailand', VIE: 'Vietnam', BRU: 'Brunei', HKG: 'Hong Kong'};
-  const ST = {team: null, show: 'all', sort: 'num', sel: null, lead: null, mk: 'all', mh: 3};
+  const ST = {team: null, show: 'all', sort: 'num', sel: null, lead: null, mk: 'all', mh: 3, rs: null, rw: 'all', rb: null, rk: 'tpm', rm: 'best', rx: null, rswap: false};
   let S = null, cdTimer = null, cdPrev = [], bound = false;
 
   /* ---------- the season and its pieces ---------- */
@@ -372,22 +375,167 @@ const MB = (() => {
           <span class="eta">${m.gm === 1 ? 'Next game' : 'In ~' + m.gm + ' games'}<span>${esc(at)}</span></span></a>`; }).join('') || '<div class="mb-empty">Nothing in reach for this pick</div>'}</div>`;
   }
 
+  /* ---------- records: single-game bests, big nights and streaks, from the box scores ---------- */
+  // The 2023 rosters carry no nationality: these are the Malaysians among that season's players;
+  // anyone else with no nationality on any roster counts as an import.
+  const MR_LOCAL = {'2105612': 1, '54872': 1, '2252635': 1, '2302708': 1, '346957': 1};
+  const MR_CATS = [['pts', 'Points', 'PTS'], ['reb', 'Rebounds', 'REB'], ['ast', 'Assists', 'AST'], ['blk', 'Blocks', 'BLK'], ['stl', 'Steals', 'STL'], ['tpm', '3-pointers made', '3PM']];
+  const MR_FIVE = ['pts', 'reb', 'ast', 'stl', 'blk'];
+  const mrN = (x, n) => MR_FIVE.filter(k => x[k] >= n);
+  const MR_BIG = [['td', 'Triple-double', x => mrN(x, 10).length >= 3, 10], ['d20', '20–20', x => mrN(x, 20).length >= 2, 20], ['d15', '15–15', x => mrN(x, 15).length >= 2, 15]];
+  const MR_STK = [['tpm', 'Made a three', x => x.tpm >= 1], ['p20', '20+ points', x => x.pts >= 20], ['p10', 'Double figures', x => x.pts >= 10],
+    ['r10', '10+ rebounds', x => x.reb >= 10], ['dd', 'Double-double', x => mrN(x, 10).length >= 2], ['blk', 'Blocked a shot', x => x.blk >= 1]];
+  let MRL = null, MRNAT = null;
+  function mrNat(pid) {
+    if (!MRNAT) {
+      MRNAT = {};
+      [...COMPS].sort((a, b) => (a.start || String(a.year)).localeCompare(b.start || String(b.year)))
+        .forEach(c => Object.values(c.roster || {}).forEach(rows => (rows || []).forEach(r => { if (r.nat) MRNAT[PALIAS[r.pid] || r.pid] = r.nat; })));
+    }
+    return MRNAT[pid] || (MR_LOCAL[pid] ? 'MAS' : '');
+  }
+  const mrImp = pid => mrNat(pid) !== 'MAS';
+  // every MBL men's line with minutes, oldest first
+  function mrLines() {
+    if (MRL) return MRL;
+    const out = [];
+    mblComps().forEach(c => (c.games || []).forEach(g => {
+      if (!done(g)) return;
+      const b = getBox(g.mid); if (!b) return;
+      const hw = +g.hs > +g.as, t0 = +tipAt(g);
+      b.p.forEach(r => {
+        if (!r.pid) return;
+        const home = r.team === g.h;
+        const x = {pid: PALIAS[r.pid] || r.pid, cid: c.id, cur: c.id === S.cid, y: +c.year, mid: g.mid, d: g.date, tm: t0, t: r.team, o: home ? g.a : g.h,
+          w: home ? hw : !hw, sc: home ? `${g.hs}–${g.as}` : `${g.as}–${g.hs}`,
+          pts: +r.pts || 0, reb: (+r.oreb || 0) + (+r.dreb || 0), ast: +r.ast || 0, stl: +r.stl || 0, blk: +r.blk || 0, tpm: +r.tpm || 0};
+        if (!(minsToNum(r.min) > 0) && !(x.pts || x.reb || x.ast || x.stl || x.blk || +r.fga)) return;   // a DNP line
+        out.push(x);
+      });
+    }));
+    out.sort((a, b) => a.tm - b.tm || (a.mid < b.mid ? -1 : 1));
+    return (MRL = out);
+  }
+  const mrKeep = x => (ST.rs === 'all' || x.cur) && (ST.rw === 'all' || (ST.rw === 'imp') === mrImp(x.pid));
+  const mrYr = y => `${y}/${String((y + 1) % 100).padStart(2, '0')}`;
+  const mrRank = (L, f) => L.map(x => 1 + L.filter(z => f(z) > f(x)).length);
+  const mrFace = pid => `<span class="mr-ph">${face(pid)}</span>`;
+  const mrFlag = pid => { const n = mrNat(pid); return n && n !== 'MAS' && (DB.natflags || {})[n] ? `<img class="mr-fl" src="${DB.natflags[n]}" alt="${esc(NAT[n] || n)}" title="${esc(NAT[n] || n)}" width="16" height="12">` : ''; };
+  const mrNew = x => ST.rs === 'all' && x.cur ? `<span class="mr-new" title="This season">${esc(S.title.replace(/^20/, ''))}</span>` : '';
+  const mrCr = (n, cls) => logo(n) ? `<img${cls ? ` class="${cls}"` : ''} src="${logo(n)}" alt="" width="16" height="16">` : '';
+  const mrSpan = (a, z) => a === z ? mrDate(a) : `${a.slice(0, 4) === z.slice(0, 4) ? mrDate(a).slice(0, -5) : mrDate(a)} – ${mrDate(z)}`;
+  const mrDate = iso => { const [y, m, d] = iso.split('-'); return `${+d} ${MON[+m - 1]} ${y}`; };
+
+  function mrSingle(L) {
+    return MR_CATS.map(([k, lab, tag], ci) => {
+      const top = L.filter(x => x[k] > 0).sort((a, b) => b[k] - a[k] || a.tm - b.tm).slice(0, 5), rk = mrRank(top, x => x[k]), t = top[0];
+      if (!t) return `<section class="mb-card mr-c" style="animation-delay:${ci * .05}s"><header><b>${lab}</b><em>${tag}</em></header><div class="mr-none">No game yet</div></section>`;
+      return `<section class="mb-card mr-c" style="--h:${hue(t.t)};animation-delay:${ci * .05}s"><header><b>${lab}</b><em>${tag} · one game</em></header>
+        <a class="mr-top" href="#/c/${t.cid}/box/${t.mid}" aria-label="${esc(personName(t.pid))}, ${t[k]} ${lab.toLowerCase()}, box score">${mrFace(t.pid)}
+          <span class="who"><b>${esc(personName(t.pid))}</b><small>${mrCr(t.t)}${esc(short(t.t))} ${mrFlag(t.pid)}${mrNew(t)}</small><small>v ${esc(short(t.o))} · ${mrDate(t.d)} · ${t.w ? 'W' : 'L'} ${t.sc}</small></span>
+          <span class="mr-big" data-cu="${t[k]}">${t[k]}</span></a>
+        ${top.slice(1).map((x, i) => `<a class="mr-r" href="#/p/${esc(x.pid)}"><span class="rk">${rk[i + 1]}</span>${mrFace(x.pid)}
+          <span class="n"><b><span>${esc(personName(x.pid))}</span>${mrFlag(x.pid)}${mrNew(x)}</b><small>${esc(short(x.t))} v ${esc(short(x.o))} · ${mrDate(x.d)}</small></span><span class="v">${x[k]}</span></a>`).join('')}
+      </section>`;
+    }).join('');
+  }
+
+  function mrBig(L) {
+    const cnt = Object.fromEntries(MR_BIG.map(([k, , f]) => [k, L.filter(f).length]));
+    if (!ST.rb || (!cnt[ST.rb] && Object.values(cnt).some(Boolean))) ST.rb = (MR_BIG.find(([k]) => cnt[k]) || MR_BIG[0])[0];
+    const [, lab, f, th] = MR_BIG.find(([k]) => k === ST.rb);
+    const list = L.filter(f).sort((a, b) => b.tm - a.tm), open = ST.rx === 'big', show = open ? list : list.slice(0, 6);
+    return `<div class="mr-ph2"><h3>Big nights</h3><span>${ST.rb === 'td' ? '10 or more in three of PTS, REB, AST, STL, BLK' : `${th} or more in two of PTS, REB, AST, STL, BLK`}</span></div>
+      <div class="mb-mchips" role="group" aria-label="Kind">${MR_BIG.map(([k, l]) => `<button type="button" class="mb-mchip" data-mrb="${k}" aria-pressed="${ST.rb === k}">${l}<em>${cnt[k]}</em></button>`).join('')}</div>
+      <div class="mr-list">${show.map((x, i) => {
+        const [y, m, d] = x.d.split('-');
+        return `<a class="mr-g" href="#/c/${x.cid}/box/${x.mid}" style="--h:${hue(x.t)};animation-delay:${Math.min(i, 8) * .04}s">
+          <span class="mr-dt"><b>${+d}</b><small>${MON[+m - 1]} ’${y.slice(2)}</small></span>${mrFace(x.pid)}
+          <span class="who"><span class="nm"><span>${esc(personName(x.pid))}</span>${mrFlag(x.pid)}${mrNew(x)}</span><span class="sub">${mrCr(x.t)}${esc(short(x.t))} · <span class="res ${x.w ? 'w' : 'l'}">${x.w ? 'W' : 'L'} ${x.sc}</span> v ${esc(short(x.o))}</span></span>
+          <span class="mr-pls">${MR_FIVE.filter(k => x[k] >= th || (k !== 'stl' && k !== 'blk')).map(k => `<span class="mr-pl${x[k] >= th ? ' on' : ''}"><b>${x[k]}</b><small>${k.toUpperCase()}</small></span>`).join('')}</span></a>`; }).join('')
+        || `<div class="mr-none">No ${lab.toLowerCase()} ${ST.rs === 'all' ? 'in the MBL' : 'this season'} yet${ST.rw === 'all' ? '' : ' by ' + (ST.rw === 'imp' ? 'an import' : 'a local player')}.</div>`}</div>
+      ${list.length > 6 ? `<button type="button" class="mr-more" data-mrx="big">${open ? 'Show fewer' : `Show all ${list.length}`}</button>` : ''}`;
+  }
+
+  // a run counts the games a player played, one after another; a game he sat out neither adds nor breaks it
+  function mrRuns(L, test) {
+    const by = {};
+    L.forEach(x => (by[x.pid] = by[x.pid] || []).push(x));
+    const out = [];
+    Object.entries(by).forEach(([pid, G]) => {
+      let run = [], best = [];
+      G.forEach(x => { if (test(x)) { run.push(x); if (run.length > best.length) best = run; } else run = []; });
+      const live = run.length && G[G.length - 1].cur ? run : [];
+      out.push({pid, best, live, t: G[G.length - 1].t});
+    });
+    return out;
+  }
+  function mrStreaks(L) {
+    if (!ST.rk) ST.rk = 'tpm';
+    const [, lab, test] = MR_STK.find(([k]) => k === ST.rk), runs = mrRuns(L, test), act = ST.rm === 'live';
+    const rows = runs.map(r => Object.assign({run: act ? r.live : r.best}, r)).filter(r => r.run.length >= 2)
+      .sort((a, b) => b.run.length - a.run.length || b.run[b.run.length - 1].tm - a.run[a.run.length - 1].tm);
+    const rk = mrRank(rows, r => r.run.length), open = ST.rx === 'stk', show = open ? rows.slice(0, 25) : rows.slice(0, 7);
+    const nextOf = t => S.games.filter(g => !done(g) && (g.h === t || g.a === t) && tipAt(g) > new Date()).sort((a, b) => tipAt(a) - tipAt(b))[0];
+    return `<div class="mr-ph2"><h3>Streaks</h3><span>Games in a row, counting only games played</span></div>
+      <div class="mr-tabs"><div class="mb-mchips" role="group" aria-label="Streak">${MR_STK.map(([k, l]) => `<button type="button" class="mb-mchip" data-mrk="${k}" aria-pressed="${ST.rk === k}">${l}</button>`).join('')}</div>
+        ${seg('mr-mode', [['best', 'Longest'], ['live', 'Active now', ST.rs !== 'all' && !L.length]], ST.rm, 'Streaks')}</div>
+      <div class="mr-list">${show.map((r, i) => {
+        const a = r.run[0], z = r.run[r.run.length - 1], on = !!r.live.length && r.live[r.live.length - 1] === z;
+        const n = r.run.length, cap = 34, nx = on ? nextOf(r.t) : null;
+        return `<a class="mr-s" href="#/p/${esc(r.pid)}" style="--h:${hue(z.t)};animation-delay:${Math.min(i, 8) * .04}s">
+          <span class="rk">${rk[i]}</span>${mrFace(r.pid)}
+          <span class="mid"><span class="nm">${mrCr(z.t, 'cr')}<span>${esc(personName(r.pid))}</span>${mrFlag(r.pid)}${on ? '<span class="mr-act">ACTIVE</span>' : ''}</span>
+            <span class="mr-bd" aria-hidden="true">${Array.from({length: Math.min(n, cap)}, (_, j) => `<i style="animation-delay:${(.15 + j * .018).toFixed(3)}s"></i>`).join('')}${n > cap ? `<em>+${n - cap}</em>` : ''}${on ? '<i class="nx"></i>' : ''}</span>
+          <span class="when">${mrSpan(a.d, z.d)}${on ? (nx ? ` · next game ${dlong(nx.date)}` : ' · still going') : ''}</span></span>
+          <span class="len"><b data-cu="${n}">${n}</b><small>games</small></span></a>`; }).join('')
+        || `<div class="mr-none">${act ? `No active ${lab.toLowerCase()} streak of 2 games or more.` : `No streak of 2 games or more yet.`}</div>`}</div>
+      ${rows.length > 7 ? `<button type="button" class="mr-more" data-mrx="stk">${open ? 'Show fewer' : `Show top ${Math.min(25, rows.length)}`}</button>` : ''}`;
+  }
+
+  function records() {
+    const has = typeof HS === 'undefined' || HS.hasBoxes();
+    const all = has ? mrLines() : [], nCur = new Set(all.filter(x => x.cur).map(x => x.mid)).size;
+    if (!ST.rs && has) ST.rs = nCur ? 'season' : 'all';
+    const L = all.filter(mrKeep), nG = new Set(L.map(x => x.mid)).size;
+    const yrs = [...new Set(all.map(x => x.y))];
+    const note = !has ? 'Loading the box scores…' : ST.rs === 'all' ? `${nG} games · ${yrs.length} seasons (${mrYr(Math.min(...yrs)).slice(0, 4)}–${S.title.replace(/^20/, '’')})` : `${nG} game${nG === 1 ? '' : 's'} this season`;
+    return `<div class="mb-sh"><h2>Records</h2><span class="mb-sub">${note}</span>
+        <div class="mb-tools">${seg('mr-scope', [['season', 'This season', has && !nCur], ['all', 'All-time MBL']], ST.rs || 'season', 'Seasons')}${seg('mr-who', [['all', 'All players'], ['loc', 'Local'], ['imp', 'Import']], ST.rw, 'Players')}</div></div>
+      <div class="mr-body${ST.rswap ? ' swap' : ''}" id="mr-body">${has ? `<div class="mr-grid">${mrSingle(L)}</div>
+        <div class="mr-low"><section class="mb-card mr-pane" id="mr-big">${mrBig(L)}</section><section class="mb-card mr-pane" id="mr-stk" style="animation-delay:.06s">${mrStreaks(L)}</section></div>`
+        : '<div class="mb-empty">The records appear once the box scores are in</div>'}</div>`;
+  }
+  // after a draw: the record numbers count up from zero
+  function mrCount(root) {
+    if (!root || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const els = [...root.querySelectorAll('[data-cu]')], t0 = performance.now();
+    if (!els.length) return;
+    const step = t => { const k = Math.min(1, (t - t0) / 800), e = 1 - Math.pow(1 - k, 3);
+      els.forEach(el => { el.textContent = k < 1 ? Math.round(+el.dataset.cu * e) : el.dataset.cu; });
+      if (k < 1 && els[0].isConnected) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+
   /* ---------- page ---------- */
   function render() {
-    S = season(); CAR = null;
+    S = season(); CAR = null; MRL = null; ST.rswap = false;
     if (!S) return '<div class="page"><h1 class="page-title">MBL</h1><p>No MBL season in the database.</p></div>';
     return `<div class="mb-page">${hero()}
       <nav class="mb-snav" aria-label="Page"><div class="mb-snav-in"><span class="mb-snav-logo">${COMPLOGOS['mbl-mark'] ? `<img src="${COMPLOGOS['mbl-mark']}" alt="MBL" width="54" height="22">` : ''}<b>${esc(S.title.replace(/^20/, ''))}</b></span><span class="mb-pill"></span>
-        <a href="#mb-games">Games</a><a href="#mb-stand">Standings</a><a href="#mb-teams">Teams</a><a href="#mb-stats">Stats</a><a href="#mb-miles">Milestones</a></div></nav>
+        <a href="#mb-games">Games</a><a href="#mb-stand">Standings</a><a href="#mb-teams">Teams</a><a href="#mb-stats">Stats</a><a href="#mb-rec">Records</a><a href="#mb-miles">Milestones</a></div></nav>
       <div class="mb-wrap">
         <section class="mb-sec" id="mb-games">${games()}</section>
         <section class="mb-sec" id="mb-stand">${stand()}</section>
         <section class="mb-sec" id="mb-teams">${teams()}</section>
         <section class="mb-sec" id="mb-stats">${stats()}</section>
+        <section class="mb-sec" id="mb-rec">${records()}</section>
         <section class="mb-sec" id="mb-miles">${miles()}</section>
       </div><div class="mb-tip" id="mb-tip" aria-hidden="true"></div></div>`;
   }
   const paint = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; segInd(); };
+  function mrPaint() { ST.rswap = true; paint('mb-rec', records()); mrCount(document.getElementById('mb-rec')); }
+  function mrPane(id, f) { const el = document.getElementById(id); if (!el) return; el.innerHTML = f(mrLines().filter(mrKeep)); segInd(); mrCount(el); }
   function spy() {
     const links = [...document.querySelectorAll('.mb-snav a')];
     if (!links.length) return;
@@ -417,8 +565,17 @@ const MB = (() => {
         if (id === 'mb-rsort') { ST.sort = v; paint('mb-roster', roster()); }
         if (id === 'mb-lseg') { ST.lead = v; paint('mb-stats', stats()); }
         if (id === 'mb-mh') { ST.mh = +v; paint('mb-miles', miles()); }
+        if (id === 'mr-scope' && v !== ST.rs) { ST.rs = v; ST.rx = null; mrPaint(); }
+        if (id === 'mr-who' && v !== ST.rw) { ST.rw = v; ST.rx = null; mrPaint(); }
+        if (id === 'mr-mode' && v !== ST.rm) { ST.rm = v; ST.rx = null; mrPane('mr-stk', mrStreaks); }
         return;
       }
+      const rb = e.target.closest('[data-mrb]');
+      if (rb) { ST.rb = rb.dataset.mrb; ST.rx = null; mrPane('mr-big', mrBig); return; }
+      const rk = e.target.closest('[data-mrk]');
+      if (rk) { ST.rk = rk.dataset.mrk; ST.rx = null; mrPane('mr-stk', mrStreaks); return; }
+      const rx = e.target.closest('[data-mrx]');
+      if (rx) { const w = rx.dataset.mrx; ST.rx = ST.rx === w ? null : w; mrPane(w === 'big' ? 'mr-big' : 'mr-stk', w === 'big' ? mrBig : mrStreaks); return; }
       const mk = e.target.closest('[data-mbmk]');
       if (mk) { ST.mk = mk.dataset.mbmk; paint('mb-miles', miles()); return; }
       const tm = e.target.closest('[data-mbteam]');
