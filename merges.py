@@ -169,11 +169,17 @@ def apply(bb, persons, boxes, pidmap, names):
         for p in comp['players']:
             q = m(p)
             if q in seen:
-                if q in REBUILD:
-                    lines += 1
-                    continue
-                raise AssertionError('merge collides in competition %s: two records for %s'
-                                     % (comp['id'], q))
+                if q not in REBUILD:
+                    # A confirmed group whose two records turn up in one competition (the source
+                    # registered the player again mid-event). Raising here used to stop every
+                    # later sync of that competition, so its new games never reached the site
+                    # (SBL U20 2026, Nov 2026). Rebuild that line from the box scores instead.
+                    REBUILD.add(q)
+                    print('WARNING merge: two records for %s in competition %s; its season line is '
+                          'rebuilt from the box scores (add "rebuild": true to the group in merges.json)'
+                          % (q, comp['id']))
+                lines += 1
+                continue
             seen.add(q)
             players.append(q)
             lines += p != q
