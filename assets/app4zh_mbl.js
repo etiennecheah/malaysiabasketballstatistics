@@ -381,6 +381,7 @@ const MB = (() => {
   const MR_LOCAL = {'2105612': 1, '54872': 1, '2252635': 1, '2302708': 1, '346957': 1};
   const MR_CATS = [['pts', 'Points', 'PTS'], ['reb', 'Rebounds', 'REB'], ['ast', 'Assists', 'AST'], ['blk', 'Blocks', 'BLK'], ['stl', 'Steals', 'STL'], ['tpm', '3-pointers made', '3PM']];
   const MR_FIVE = ['pts', 'reb', 'ast', 'stl', 'blk'];
+  const MR_SHOW = 10, MR_LONG = 25;   // single-game bests: ten on the card, twenty-five when opened
   const mrN = (x, n) => MR_FIVE.filter(k => x[k] >= n);
   const MR_BIG = [['td', 'Triple-double', x => mrN(x, 10).length >= 3, 10], ['d20', '20–20', x => mrN(x, 20).length >= 2, 20], ['d15', '15–15', x => mrN(x, 15).length >= 2, 15]];
   const MR_STK = [['tpm', 'Made a three', x => x.tpm >= 1], ['p20', '20+ points', x => x.pts >= 20], ['p10', 'Double figures', x => x.pts >= 10],
@@ -428,14 +429,15 @@ const MB = (() => {
 
   function mrSingle(L) {
     return MR_CATS.map(([k, lab, tag], ci) => {
-      const top = L.filter(x => x[k] > 0).sort((a, b) => b[k] - a[k] || a.tm - b.tm).slice(0, 5), rk = mrRank(top, x => x[k]), t = top[0];
+      const top = L.filter(x => x[k] > 0).sort((a, b) => b[k] - a[k] || a.tm - b.tm).slice(0, MR_LONG), rk = mrRank(top, x => x[k]), t = top[0];
       if (!t) return `<section class="mb-card mr-c" style="animation-delay:${ci * .05}s"><header><b>${lab}</b><em>${tag}</em></header><div class="mr-none">No game yet</div></section>`;
       return `<section class="mb-card mr-c" style="--h:${hue(t.t)};animation-delay:${ci * .05}s"><header><b>${lab}</b><em>${tag} · one game</em></header>
         <a class="mr-top" href="#/c/${t.cid}/box/${t.mid}" aria-label="${esc(personName(t.pid))}, ${t[k]} ${lab.toLowerCase()}, box score">${mrFace(t.pid)}
           <span class="who"><b>${esc(personName(t.pid))}</b><small>${mrCr(t.t)}${esc(short(t.t))} ${mrFlag(t.pid)}${mrNew(t)}</small><small>v ${esc(short(t.o))} · ${mrDate(t.d)} · ${t.w ? 'W' : 'L'} ${t.sc}</small></span>
           <span class="mr-big" data-cu="${t[k]}">${t[k]}</span></a>
-        ${top.slice(1).map((x, i) => `<a class="mr-r" href="#/p/${esc(x.pid)}"><span class="rk">${rk[i + 1]}</span>${mrFace(x.pid)}
+        ${top.slice(1).map((x, i) => `<a class="mr-r${i + 1 >= MR_SHOW ? ' x' : ''}" href="#/p/${esc(x.pid)}"><span class="rk">${rk[i + 1]}</span>${mrFace(x.pid)}
           <span class="n"><b><span>${esc(personName(x.pid))}</span>${mrFlag(x.pid)}${mrNew(x)}</b><small>${esc(short(x.t))} v ${esc(short(x.o))} · ${mrDate(x.d)}</small></span><span class="v">${x[k]}</span></a>`).join('')}
+        ${top.length > MR_SHOW ? `<button type="button" class="mr-more" data-mrc aria-expanded="false">Show top ${top.length}</button>` : ''}
       </section>`;
     }).join('');
   }
@@ -570,6 +572,10 @@ const MB = (() => {
         if (id === 'mr-mode' && v !== ST.rm) { ST.rm = v; ST.rx = null; mrPane('mr-stk', mrStreaks); }
         return;
       }
+      const mc = e.target.closest('[data-mrc]');
+      if (mc) { const c = mc.closest('.mr-c'), op = !c.classList.contains('open'); c.classList.toggle('open', op); mc.setAttribute('aria-expanded', op);
+        mc.textContent = op ? 'Show top ' + MR_SHOW : 'Show top ' + (c.querySelectorAll('.mr-r').length + 1);
+        if (!op && c.getBoundingClientRect().top < 0) c.scrollIntoView({block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); return; }
       const rb = e.target.closest('[data-mrb]');
       if (rb) { ST.rb = rb.dataset.mrb; ST.rx = null; mrPane('mr-big', mrBig); return; }
       const rk = e.target.closest('[data-mrk]');
