@@ -292,7 +292,38 @@ function pvPath(d, avail) {
     const g = `<g class="mk" transform="translate(${m.x},${m.cy})" data-imtip="${esc(tip)}"><rect x="${-w / 2 - 5}" y="${-h / 2 - 5}" width="${w + 10}" height="${h + 10}" rx="9" class="ko"/>${img}</g>`;
     s.push(cid ? `<a href="#/c/${cid}" aria-label="${esc(e0.short + ' ' + m.y)}">${g}</a>` : g);
   });
-  return `<div class="card pv-cpath"><div class="pv-cpath-s" data-pid="${d.pid}"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="group" aria-label="Career path: teams by level and year">${s.join('')}</svg></div></div>`;
+  return `<div class="card pv-cpath"><div class="pv-cpath-s" data-pid="${d.pid}"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="group" aria-label="Career path: teams by level and year">${s.join('')}</svg></div>${pvPathList(E, lanes)}</div>`;
+}
+/* The same path for a phone, where a year axis would be a long sideways scroll: a
+   timeline down the screen, newest year first, one row per team per level, with
+   its competitions, games and honours written out. The CSS shows one or the other. */
+function pvPathList(E, lanes) {
+  const LN = { nat: 'Malaysia', sen: 'Senior', dev: 'Development', youth: 'Youth' };
+  const yrs = [...new Set(E.map(e => e.year))].sort((a, b) => b - a);
+  // a long career opens on its last three seasons; the rest is one tap away
+  const SHOW = 3, cut = yrs.length > SHOW + 1, x = yi => cut && yi >= SHOW ? ' x' : '';
+  const out = [];
+  yrs.forEach((y, yi) => {
+    if (yi && yrs[yi - 1] - y > 1) { const n = yrs[yi - 1] - y - 1; out.push(`<li class="gap${x(yi)}"><span>${n === 1 ? y + 1 : `${y + 1}–${yrs[yi - 1] - 1}`}</span><em>no games on record</em></li>`); }
+    const rows = [];
+    lanes.forEach(([k]) => {
+      const T = {}; E.filter(e => e.year === y && e.lane === k).forEach(e => (T[e.key] = T[e.key] || []).push(e));
+      Object.values(T).sort((a, b) => b.length - a.length).forEach(g => {
+        const e0 = g[0], cid = (g.find(e => e.cid) || {}).cid;
+        const comps = g.map(e => `<span>${esc(e.short)}${e.g ? `<small> · ${e.g} game${e.g === 1 ? '' : 's'}</small>` : ''}${e.abroad ? '<small> · signed</small>' : ''}</span>`).join('');
+        const tags = [];
+        if (g.some(e => e.champ)) tags.push('<span class="pv-tag gold">★ Champion</span>');
+        [...new Set(g.flatMap(e => e.awards))].forEach(a => tags.push(`<span class="pv-tag mvp">${esc(a)}</span>`));
+        [...new Set(g.map(e => e.placing).filter(Boolean))].forEach(pl => tags.push(`<span class="pv-tag">${esc(pl)}</span>`));
+        const body = `${crest(e0.team, 34)}<div class="t"><b>${esc(pvCase(e0.team))}</b><div class="cs">${comps}</div>${tags.length ? `<div class="tg">${tags.join('')}</div>` : ''}</div><i class="lv lv-${k}">${LN[k]}</i>`;
+        rows.push(cid ? `<a class="st" href="#/c/${cid}">${body}</a>` : `<div class="st">${body}</div>`);
+      });
+    });
+    out.push(`<li class="yr${x(yi)}"><span class="y">${y}</span><div class="sts">${rows.join('')}</div></li>`);
+  });
+  const rest = yrs.length - SHOW, span = `${yrs[yrs.length - 1]}–${yrs[SHOW]}`;
+  const more = cut ? `<li class="more"><button type="button" class="pv-cpv-more" data-cpvmore="${esc(span)}" aria-expanded="false">Show ${rest} earlier season${rest === 1 ? '' : 's'} <small>${span}</small></button></li>` : '';
+  return `<ol class="pv-cpv${cut ? ' cut' : ''}" aria-label="Career path, newest first">${out.join('')}${more}</ol>`;
 }
 // drawn once at the default width; redrawn to the card's own width once it is on screen
 function pvPathFit() {
@@ -305,13 +336,22 @@ function pvPathFit() {
     x.scrollLeft = x.scrollWidth;
   });
 }
+// the phone timeline: open or close the earlier seasons
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-cpvmore]'); if (!b) return;
+  const ol = b.closest('.pv-cpv'), open = ol.classList.toggle('open');
+  b.setAttribute('aria-expanded', open);
+  const n = ol.querySelectorAll('li.yr.x').length;
+  b.innerHTML = open ? 'Show fewer seasons' : `Show ${n} earlier season${n === 1 ? '' : 's'} <small>${esc(b.dataset.cpvmore)}</small>`;
+  if (!open) ol.scrollIntoView({block: 'nearest'});
+});
 let PV_FIT_T = null;
 window.addEventListener('resize', () => { clearTimeout(PV_FIT_T); PV_FIT_T = setTimeout(pvPathFit, 150); });
 function pvGames(d) {
   return `<div class="pv-games">${d.log.slice(0, 5).map(g => `<a class="gm" href="#/c/${g.cid}/box/${g.mid}"><span class="res ${g.win ? 'w' : 'l'}">${g.win ? 'W' : 'L'}</span>
     <div class="mid"><div class="o">${crest(g.oppRaw, 20)}<span>${g.home ? 'vs' : '@'} ${esc(g.oppName)}</span><span class="sc">${g.own}–${g.opp}</span></div>
       <div class="c">${pvDay(g.date)} · ${esc(pvShortKey(g.tk))}${g.phase ? ' · ' + esc(g.phase) : ''}</div></div>
-    <div class="line"><span><b>${g.l.pts}</b>pts</span> <span>${pvReb(g.l)} reb</span> <span>${g.l.ast} ast</span></div></a>`).join('')}</div>`;
+    <div class="line"><span><b>${g.l.pts}</b>pts</span> <span><i>${pvReb(g.l)}</i> reb</span> <span><i>${g.l.ast}</i> ast</span></div></a>`).join('')}</div>`;
 }
 /* ---- national team: FIBA caps (fiba_match.py), youth and senior --------- */
 // a cap is a game played for Malaysia in a FIBA event; events before ~2007 publish points only

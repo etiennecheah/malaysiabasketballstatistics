@@ -26,7 +26,7 @@ const MB = (() => {
     PHI: 'Philippines', SGP: 'Singapore', TPE: 'Chinese Taipei', JPN: 'Japan', CHN: 'China', INA: 'Indonesia', NGR: 'Nigeria', SEN: 'Senegal',
     NZL: 'New Zealand', SSD: 'South Sudan', SUD: 'Sudan', RUS: 'Russia', BUL: 'Bulgaria', KEN: 'Kenya', ZIM: 'Zimbabwe', BOT: 'Botswana',
     COD: 'DR Congo', THA: 'Thailand', VIE: 'Vietnam', BRU: 'Brunei', HKG: 'Hong Kong'};
-  const ST = {team: null, show: 'all', sort: 'num', sel: null, lead: null, mk: 'all', mh: 3, rs: null, rw: 'all', rb: null, rk: 'tpm', rm: 'best', rx: null, rswap: false, at: null};
+  const ST = {team: null, show: 'all', sort: 'num', sel: null, lead: null, mk: 'all', mh: 3, rs: null, rw: 'all', rb: null, rk: 'tpm', rm: 'best', rx: null, rswap: false, at: null, sec: 'mb-games', leg: null};
   let S = null, cdTimer = null, cdPrev = [], bound = false;
 
   /* ---------- the season and its pieces ---------- */
@@ -164,7 +164,7 @@ const MB = (() => {
     const now = new Date();
     const html = L.map(l => {
       const left = Math.max(x(new Date(l.from + 'T00:00:00+08:00')), right + 14);
-      right = left + Math.max(96, l.games.length * 16, l.cities.join(' · ').length * 6.6);
+      right = left + Math.max(96, l.games.length * 16, l.cities.join(' · ').length * 6.6, (range(l.from, l.to) + ' · ' + l.games.length + ' games').length * 5.9);   // the widest of the dots, the city and the dates line
       l.left = left;
       return `<div class="mb-lg" style="left:${left}px"><b>${esc(l.cities.join(' · '))}</b><small>${range(l.from, l.to)} · ${l.games.length} games</small>
         <div class="mb-dots">${l.games.map(g => `<i class="${done(g) ? 'on' : ''} ${phaseOf(g) ? 'po' : ''}" title="${esc(short(g.h) + ' v ' + short(g.a))}"></i>`).join('')}</div></div>`;
@@ -195,14 +195,16 @@ const MB = (() => {
     return `<div class="mb-sh"><h2>Games</h2><span class="mb-sub">${nRes} of ${S.games.length} played</span>
       <div class="mb-tools">${seg('mb-gshow', [['all', 'All'], ['res', 'Results', !nRes], ['up', 'Upcoming']], ST.show, 'Show')}
         <div class="mb-tf" role="group" aria-label="Team"><button type="button" data-mbtf="" aria-pressed="${!ST.team}">All</button>${S.teams.map(t => `<button type="button" class="t" data-mbtf="${esc(t.name)}" style="--h:${t.hue}" aria-pressed="${ST.team === t.name}" title="${esc(t.name)}" aria-label="${esc(t.name)}">${logo(t.name) ? `<img src="${logo(t.name)}" alt="">` : esc(short(t.name))}</button>`).join('')}</div></div></div>
+      ${(() => { const L = legs(); if (ST.leg == null || !L.some(l => l.i === ST.leg)) { const c = L.find(l => l.games.some(g => !done(g))) || L[L.length - 1]; ST.leg = c ? c.i : 1; }
+        return `<div class="mb-legchips" role="group" aria-label="Weekend">${L.map(l => `<button type="button" data-mbleg="${l.i}" aria-pressed="${ST.leg === l.i}"><b>Weekend ${l.i}</b><small>${range(l.from, l.to)}</small></button>`).join('')}</div>`; })()}
       <div class="mb-legs">${legs().map(l => {
-        const gs = l.games.filter(g => ST.show === 'all' || (ST.show === 'res') === done(g));
+        const gs = l.games.filter(g => ST.show === 'all' || phone() || (ST.show === 'res') === done(g));
         if (!gs.length) return '';
         const hasT = !ST.team || gs.some(g => g.h === ST.team || g.a === ST.team);
         const cur = new Date(l.from + 'T00:00:00+08:00') <= now && now <= new Date(l.to + 'T23:59:00+08:00');
         const days = {};
         gs.forEach(g => (days[g.date] = days[g.date] || []).push(g));
-        return `<article class="mb-leg${hasT ? '' : ' dim'}"><div class="mb-leg-h"><div><span>Weekend ${l.i}</span><b>${esc(l.cities.join(' · '))}</b></div><em>${cur ? '<i>This weekend</i>' : range(l.from, l.to)}</em></div>
+        return `<article class="mb-leg${hasT ? '' : ' dim'}${ST.leg === l.i ? ' cur' : ''}" data-leg="${l.i}"><div class="mb-leg-h"><div><span>Weekend ${l.i}</span><b>${esc(l.cities.join(' · '))}</b></div><em>${cur ? '<i>This weekend</i>' : range(l.from, l.to)}</em></div>
           ${Object.entries(days).map(([d, gg]) => `<div class="mb-day">${dlong(d)}</div>${gg.map(gameRow).join('')}`).join('')}</article>`;
       }).join('')}</div>`;
   }
@@ -774,11 +776,19 @@ const MB = (() => {
   const paint = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; segInd(); };
   function mrPaint() { ST.rswap = true; paint('mb-rec', records()); mrCount(document.getElementById('mb-rec')); }
   function mrPane(id, f) { const el = document.getElementById(id); if (!el) return; el.innerHTML = f(mrLines().filter(mrKeep)); segInd(); mrCount(el); }
+  const phone = () => typeof PH !== 'undefined' && PH.on();
+  // on a phone the sections are tabs: one is shown at a time
+  function phSections() {
+    const pg = document.querySelector('.mb-page'); if (!pg) return;
+    pg.classList.toggle('ph', phone());
+    pg.querySelectorAll('.mb-wrap > .mb-sec').forEach(s => s.classList.toggle('on', s.id === ST.sec));
+  }
   function spy() {
     const links = [...document.querySelectorAll('.mb-snav a')];
     if (!links.length) return;
     let cur = links[0];
-    links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s && s.getBoundingClientRect().top < 140) cur = a; });
+    if (phone()) cur = links.find(a => a.getAttribute('href') === '#' + ST.sec) || cur;
+    else links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s && s.getBoundingClientRect().top < 140) cur = a; });
     links.forEach(a => a.classList.toggle('on', a === cur));
     const pill = document.querySelector('.mb-pill');
     if (pill) { pill.style.width = cur.offsetWidth + 'px'; pill.style.transform = `translateX(${cur.offsetLeft}px)`; }
@@ -790,10 +800,19 @@ const MB = (() => {
       const snav = e.target.closest('.mb-snav a, .mb-crests a, a[href^="#mb-"]');
       if (snav && !e.target.closest('[data-mbteam]')) {
         e.preventDefault();
-        const s = document.getElementById(snav.getAttribute('href').slice(1));
+        const id = snav.getAttribute('href').slice(1), s = document.getElementById(id);
+        if (phone() && s && s.classList.contains('mb-sec')) {
+          ST.sec = id; phSections(); spy(); segInd();
+          const bar = document.querySelector('.mb-snav'), y = bar ? bar.getBoundingClientRect().top + scrollY : 0;
+          if (scrollY > y) scrollTo({top: y, behavior: 'auto'});
+          if (id === 'mb-teams') tour();
+          return;
+        }
         if (s) s.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
         return;
       }
+      const lg = e.target.closest('[data-mbleg]');
+      if (lg) { ST.leg = +lg.dataset.mbleg; paint('mb-games', games()); const c = document.querySelector(`[data-mbleg="${ST.leg}"]`); if (c) c.scrollIntoView({block: 'nearest', inline: 'center'}); return; }
       const tf = e.target.closest('[data-mbtf]');
       if (tf) { ST.team = tf.dataset.mbtf || null; paint('mb-games', games()); return; }
       const sg = e.target.closest('.mb-seg button');
@@ -828,6 +847,7 @@ const MB = (() => {
         ST.sel = tm.dataset.mbteam;
         document.querySelectorAll('.mb-tile').forEach(b => b.setAttribute('aria-pressed', b.dataset.mbteam === ST.sel));
         paint('mb-roster', roster()); paint('mb-heights', heights());
+        if (tm.tagName === 'A' && phone()) { ST.sec = 'mb-teams'; phSections(); spy(); tour(); }
         if (tm.tagName === 'A') { const s = document.getElementById('mb-teams'); if (s) s.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); }
         return;
       }
@@ -847,7 +867,7 @@ const MB = (() => {
       tip.textContent = t.dataset.mbtip; tip.style.left = e.clientX + 12 + 'px'; tip.style.top = e.clientY - 34 + 'px'; tip.classList.add('on');
     });
     addEventListener('scroll', () => { if (document.querySelector('.mb-page')) requestAnimationFrame(spy); }, {passive: true});
-    let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (document.querySelector('.mb-page')) { tour(); segInd(); spy(); } }, 150); });
+    let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (document.querySelector('.mb-page')) { phSections(); tour(); segInd(); spy(); } }, 150); });
   }
   function maLoad() {
     if (typeof ensurePbp !== 'function' || !S || MAF || (typeof HS !== 'undefined' && !HS.hasBoxes())) return;
@@ -865,7 +885,8 @@ const MB = (() => {
     if (!S) S = season();
     bind();
     const nx = document.getElementById('mb-next'); if (nx) nx.innerHTML = nextCard();
-    tour(); segInd(); spy(); maLoad();
+    phSections(); tour(); segInd(); spy(); maLoad();
+    const lc = document.querySelector('[data-mbleg][aria-pressed="true"]'); if (lc && phone()) lc.parentElement.scrollLeft = lc.offsetLeft - 16;
     if (document.getElementById('mb-cd')) { tick(); cdTimer = setInterval(tick, 1000); }
   }
   // the header tab is named after the season: MBL 2026/27

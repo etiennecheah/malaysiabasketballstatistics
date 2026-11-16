@@ -14,6 +14,7 @@ function navShell(links, sub) {
       <div class="nav-links">${links}</div>
     </div>
     <div class="nav-right">
+      ${typeof PH !== 'undefined' ? `<a class="ph-search" href="#/players" aria-label="Search players">${PH.ic('search')}</a>` : ''}
       ${typeof accNav === 'function' ? accNav() : ''}
       <button class="theme-toggle" data-theme-toggle="1" title="Switch between the light and dark theme" aria-label="Switch theme">
         <span class="sun">☀</span><span class="moon">☾</span>
@@ -22,7 +23,8 @@ function navShell(links, sub) {
     ${typeof STATS !== 'undefined' ? STATS.navMenu(statsPage) : ''}
   </nav>
   ${typeof liveBar === 'function' ? liveBar() : ''}
-  ${sub}`;
+  ${sub}
+  ${typeof PH !== 'undefined' ? PH.bar() : ''}`;
 }
 function subnav(label, crumb, links) {
   return `<div class="subnav" role="navigation" aria-label="Section"><div class="subnav-inner">
