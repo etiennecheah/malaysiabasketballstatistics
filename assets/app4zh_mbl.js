@@ -3,8 +3,9 @@
    League season (men) on one page — the countdown or next game, the season's
    route by weekend, games, standings, teams and rosters (flip cards with the
    MBL career on the back), a height lineup, leaders, the records (single-game
-   bests, big nights and streaks, this season or all-time, local or import) and
-   the milestone watch.
+   bests, big nights and streaks, this season or all-time, local or import),
+   the milestone watch and the analysis (who scores and how, efficiency,
+   rebounds, turnovers, free throws, discipline, players' volume and efficiency).
    The season is the newest MBL men's competition in the database; the header
    tab is named after it (MBL 2026/27). Built from what the page already holds:
    fixtures, standings rows, season lines and rosters. All names carry an mb-
@@ -25,7 +26,7 @@ const MB = (() => {
     PHI: 'Philippines', SGP: 'Singapore', TPE: 'Chinese Taipei', JPN: 'Japan', CHN: 'China', INA: 'Indonesia', NGR: 'Nigeria', SEN: 'Senegal',
     NZL: 'New Zealand', SSD: 'South Sudan', SUD: 'Sudan', RUS: 'Russia', BUL: 'Bulgaria', KEN: 'Kenya', ZIM: 'Zimbabwe', BOT: 'Botswana',
     COD: 'DR Congo', THA: 'Thailand', VIE: 'Vietnam', BRU: 'Brunei', HKG: 'Hong Kong'};
-  const ST = {team: null, show: 'all', sort: 'num', sel: null, lead: null, mk: 'all', mh: 3, rs: null, rw: 'all', rb: null, rk: 'tpm', rm: 'best', rx: null, rswap: false};
+  const ST = {team: null, show: 'all', sort: 'num', sel: null, lead: null, mk: 'all', mh: 3, rs: null, rw: 'all', rb: null, rk: 'tpm', rm: 'best', rx: null, rswap: false, at: null};
   let S = null, cdTimer = null, cdPrev = [], bound = false;
 
   /* ---------- the season and its pieces ---------- */
@@ -519,13 +520,247 @@ const MB = (() => {
     requestAnimationFrame(step);
   }
 
+  /* ---------- analysis: team and player trends of this season, from the box scores and play-by-play ---------- */
+  const MA_K = ['pts', 'fgm', 'fga', 'twopm', 'twopa', 'tpm', 'tpa', 'ftm', 'fta', 'oreb', 'dreb', 'ast', 'stl', 'blk', 'tov', 'pf'];
+  const maR = (v, d = 1) => (Math.round(v * 10 ** d) / 10 ** d).toFixed(d);
+  const maPct = v => maR(v * 100, 1) + '%';
+  // fouls by kind come from the competition's play-by-play file (pbp/<cid>.js, loaded on demand): [mid, team, name, kind, pid]
+  const MA_FOUL = /^(Personal foul|Offensive foul|Technical|Bench technical|Flagrant foul|Disruptive foul|Unsportsmanlike|Disqualifying)/;
+  let MAF = null, maWait = null;
+  function maFouls() {
+    if (MAF) return MAF;
+    const data = typeof PBP_DATA !== 'undefined' && PBP_DATA[S.cid];
+    if (!data) return null;
+    const out = [];
+    S.games.forEach(g => {
+      const rec = done(g) && data.G[g.mid]; if (!rec) return;
+      const b = getBox(g.mid), byNum = {};
+      (b && b.p || []).forEach(l => { if (l.pid && l.num != null && l.num !== '') byNum[l.team + ':' + l.num] = PALIAS[l.pid] || l.pid; });
+      rec.e.forEach(e => {
+        const kind = String(data.A[e[4]] || '').trim(); if (!MA_FOUL.test(kind)) return;
+        const team = e[1] === 1 ? rec.h : e[1] === 2 ? rec.a : ''; if (!team) return;
+        const pl = data.P[e[3]] || ['', ''];
+        out.push([g.mid, team, pl[1], kind, byNum[team + ':' + pl[0]] || null]);
+      });
+    });
+    return (MAF = out);
+  }
+  let MA = null;
+  function maModel() {
+    if (MA) return MA;
+    const T = {}, P = {};
+    S.teams.forEach(t => { T[t.name] = {name: t.name, g: 0, w: 0, l: 0, opp: 0, loc: 0, imp: 0, poss: 0, oposs: 0, ooreb: 0, odreb: 0,
+      f: {pf: 0, off: 0, tech: 0, bench: 0, flag: 0, dis: 0}}; MA_K.forEach(k => { T[t.name][k] = 0; }); });
+    const imp = {};
+    S.teams.forEach(t => t.roster.forEach(p => { imp[p.pid] = !!(p.nat && p.nat !== 'MAS'); }));
+    let nG = 0;
+    S.games.forEach(g => {
+      if (!done(g)) return;
+      const b = getBox(g.mid); if (!b) return;
+      nG++;
+      const side = {};
+      [g.h, g.a].forEach(n => { side[n] = {}; MA_K.forEach(k => { side[n][k] = 0; }); });
+      b.p.forEach(r => {
+        const s = side[r.team]; if (!s || !r.pid) return;
+        const pid = PALIAS[r.pid] || r.pid, n = k => +r[k] || 0;
+        MA_K.forEach(k => { s[k] += n(k); });
+        if (T[r.team]) T[r.team][imp[pid] ? 'imp' : 'loc'] += n('pts');
+        if (!(minsToNum(r.min) > 0)) return;
+        const q = P[pid] = P[pid] || {pid, t: r.team, g: 0, min: 0, pts: 0, fga: 0, fta: 0, twopm: 0, tpm: 0, ftm: 0, reb: 0, ast: 0};
+        q.t = r.team; q.g++; q.min += minsToNum(r.min); q.pts += n('pts'); q.fga += n('fga'); q.fta += n('fta'); q.twopm += n('twopm'); q.tpm += n('tpm'); q.ftm += n('ftm');
+        q.reb += n('oreb') + n('dreb'); q.ast += n('ast');
+      });
+      const poss = s => s.fga - s.oreb + s.tov + .44 * s.fta;
+      [[g.h, g.a], [g.a, g.h]].forEach(([me, op]) => {
+        const t = T[me]; if (!t) return;
+        const a = side[me], o = side[op];
+        t.g++; MA_K.forEach(k => { t[k] += a[k]; });
+        t.opp += o.pts; t.poss += poss(a); t.oposs += poss(o); t.ooreb += o.oreb; t.odreb += o.dreb;
+        t[a.pts > o.pts ? 'w' : 'l']++;
+      });
+    });
+    // fouls by kind, from the play-by-play (side 1 is the home team)
+    const techs = {};
+    const fl = maFouls();
+    (fl || []).forEach(([mid, team, name, kind, pid]) => {
+      const t = T[team]; if (!t) return;
+      const k = /^Technical/.test(kind) ? 'tech' : /^Bench technical/.test(kind) ? 'bench' : /^Flagrant/.test(kind) ? 'flag'
+        : /^Disruptive/.test(kind) ? 'dis' : /^Offensive/.test(kind) ? 'off' : 'pf';
+      t.f[k]++;
+      if (k === 'tech' || k === 'flag' || k === 'dis') { const key = team + '|' + (pid || name), x = techs[key] = techs[key] || {team, name, pid, tech: 0, flag: 0, dis: 0}; x[k]++; }
+    });
+    const teams = Object.values(T).filter(t => t.g);
+    teams.forEach(t => { t.ortg = t.poss ? t.pts / t.poss * 100 : 0; t.drtg = t.oposs ? t.opp / t.oposs * 100 : 0; t.pace = (t.poss + t.oposs) / 2 / Math.max(1, t.g); });
+    const L = teams.reduce((a, t) => { ['pts', 'poss', 'ftm', 'fta', 'tov', 'g', 'loc', 'imp'].forEach(k => { a[k] = (a[k] || 0) + t[k]; }); return a; }, {});
+    return (MA = {teams, P: Object.values(P), techs: Object.values(techs), fouls: !!fl, nG, L, ortg: L.poss ? L.pts / L.poss * 100 : 0});
+  }
+  const maT = n => S.teams.find(t => t.name === n);
+  const maCrest = (n, sz) => logo(n) ? `<img src="${logo(n)}" alt="" width="${sz}" height="${sz}">` : '';
+  const maOn = n => ST.at && ST.at === n ? ' on' : '';
+  const maDim = () => ST.at ? ' data-dim="1"' : '';
+
+  function maDonut(name, loc, imp, big) {
+    const tot = loc + imp || 1, R = big ? 50 : 42, C = 2 * Math.PI * R, gap = 2.5, li = loc / tot * C, ii = imp / tot * C, sz = (R + 12) * 2;
+    const tip = `${name ? name : 'Whole league'}\nLocal ${loc} pts (${maPct(loc / tot)})\nImport ${imp} pts (${maPct(imp / tot)})`;
+    return `<div class="ma-dn${big ? ' lg' : ''}${name ? ' ma-t' + maOn(name) : ''}" data-tip="${esc(tip)}">
+      <svg viewBox="0 0 ${sz} ${sz}" role="img" aria-label="${esc(tip.replace(/\n/g, ', '))}"><g transform="rotate(-90 ${sz / 2} ${sz / 2})">
+        <circle class="seg a" cx="${sz / 2}" cy="${sz / 2}" r="${R}" stroke="var(--ma-2)" stroke-dasharray="${Math.max(0, ii - gap).toFixed(1)} ${C.toFixed(1)}"/>
+        <circle class="seg a" cx="${sz / 2}" cy="${sz / 2}" r="${R}" stroke="var(--ma-1)" stroke-dasharray="${Math.max(0, li - gap).toFixed(1)} ${C.toFixed(1)}" stroke-dashoffset="${(-ii).toFixed(1)}" style="animation-delay:.15s"/></g>
+        <text class="pc" x="50%" y="${sz / 2 + 3}" text-anchor="middle">${Math.round(imp / tot * 100)}%</text><text class="pl" x="50%" y="${sz / 2 + 17}" text-anchor="middle">IMPORT</text></svg>
+      <b>${name ? maCrest(name, 18) + esc(short(name)) : 'MBL ' + esc(S.title.replace(/^20/, ''))}</b><small>${Math.round(loc / tot * 100)}% local</small></div>`;
+  }
+  function maWho(m) {
+    const ts = [...m.teams].sort((a, b) => b.imp / (b.imp + b.loc) - a.imp / (a.imp + a.loc)), hi = ts[0], lo = ts[ts.length - 1], sh = t => Math.round(t.imp / (t.imp + t.loc) * 100);
+    return `<div class="ma-h"><h3>Who scores</h3><span>Points by local and import players</span><span class="ma-lg"><span><i style="background:var(--ma-1)"></i>Local</span><span><i style="background:var(--ma-2)"></i>Import</span></span></div>
+      <p class="ma-kick">Imports have scored <b>${Math.round(m.L.imp / (m.L.imp + m.L.loc) * 100)}%</b> of the league's points. <b>${esc(short(hi.name))}</b> lean on them most (${sh(hi)}%), <b>${esc(short(lo.name))}</b> least (${sh(lo)}%).</p>
+      <div class="ma-donuts">${maDonut('', m.L.loc, m.L.imp, 1)}${ts.map(t => maDonut(t.name, t.loc, t.imp)).join('')}</div>`;
+  }
+  // one row per team: crest, then a bar of segments, then the value
+  function maRow(t, i, segs, val, sub, rk, extra) {
+    return `<div class="ma-row ma-t${maOn(t.name)}"><span class="rk">${rk != null ? rk : ''}</span><span class="tm">${maCrest(t.name, 22)}<span>${esc(short(t.name))}</span>${extra || ''}</span>
+      <div class="ma-track">${segs}</div><span class="v">${val}${sub ? `<small>${sub}</small>` : ''}</span></div>`;
+  }
+  const maSeg = (w, col, label, tip, i) => w > 0 ? `<span class="ma-seg" style="width:${w.toFixed(2)}%;background:${col};animation-delay:${(i * .06).toFixed(2)}s" data-tip="${esc(tip)}">${w >= 13 ? label : ''}</span>` : '';
+  function maHow(m) {
+    const ts = [...m.teams].sort((a, b) => b.pts / b.g - a.pts / a.g);
+    const rows = ts.map((t, i) => {
+      const p2 = t.twopm * 2, p3 = t.tpm * 3, ft = t.ftm, all = p2 + p3 + ft || 1;
+      return maRow(t, i, maSeg(p2 / all * 100, 'var(--ma-1)', maPct(p2 / all).replace(/\.\d/, ''), `${t.name}\n2PT ${p2} pts · ${maPct(p2 / all)}\n${t.twopm}/${t.twopa} (${maPct(t.twopm / (t.twopa || 1))})`, i)
+        + maSeg(p3 / all * 100, 'var(--ma-2)', maPct(p3 / all).replace(/\.\d/, ''), `${t.name}\n3PT ${p3} pts · ${maPct(p3 / all)}\n${t.tpm}/${t.tpa} (${maPct(t.tpm / (t.tpa || 1))})`, i)
+        + maSeg(ft / all * 100, 'var(--ma-3)', maPct(ft / all).replace(/\.\d/, ''), `${t.name}\nFree throws ${ft} pts · ${maPct(ft / all)}\n${t.ftm}/${t.fta} (${maPct(t.ftm / (t.fta || 1))})`, i),
+        maR(t.pts / t.g), 'PPG', i + 1);
+    }).join('');
+    const b3 = [...m.teams].sort((a, b) => b.tpm * 3 / b.pts - a.tpm * 3 / a.pts)[0];
+    return `<div class="ma-h"><h3>How they score</h3><span>Share of points</span><span class="ma-lg"><span><i style="background:var(--ma-1)"></i>2PT</span><span><i style="background:var(--ma-2)"></i>3PT</span><span><i style="background:var(--ma-3)"></i>Free throw</span></span></div>
+      <p class="ma-kick"><b>${esc(short(b3.name))}</b> get the most from deep: ${maPct(b3.tpm * 3 / b3.pts)} of their points are threes.</p>
+      <div class="ma-rows">${rows}</div>`;
+  }
+  function maEff(m) {
+    const W = 560, H = 340, pl = 56, pr = 16, pt = 18, pb = 40;
+    const xs = m.teams.map(t => t.ortg), ys = m.teams.map(t => t.drtg);
+    const lo = Math.floor(Math.min(...xs, ...ys) - 4), hi = Math.ceil(Math.max(...xs, ...ys) + 4);
+    const x = v => pl + (v - lo) / (hi - lo) * (W - pl - pr), y = v => pt + (v - lo) / (hi - lo) * (H - pt - pb);   // lower DRtg sits higher
+    const step = (hi - lo) > 24 ? 10 : 5, ticks = []; for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) ticks.push(v);
+    let g = ticks.map(v => `<line class="gl" x1="${x(v)}" x2="${x(v)}" y1="${pt}" y2="${H - pb}"/><text class="tx" x="${x(v)}" y="${H - pb + 16}" text-anchor="middle">${v}</text>
+      <line class="gl" x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}"/><text class="tx" x="${pl - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`).join('');
+    g += `<line class="av" x1="${x(m.ortg)}" x2="${x(m.ortg)}" y1="${pt}" y2="${H - pb}"/><line class="av" x1="${pl}" x2="${W - pr}" y1="${y(m.ortg)}" y2="${y(m.ortg)}"/>
+      <text class="qd" x="${W - pr - 4}" y="${pt + 12}" text-anchor="end">Good O · Good D</text><text class="qd" x="${pl + 6}" y="${pt + 12}">Defence first</text>
+      <text class="qd" x="${W - pr - 4}" y="${H - pb - 8}" text-anchor="end">Outscore them</text><text class="qd" x="${pl + 6}" y="${H - pb - 8}">Struggling</text>
+      <text class="tx" x="${(pl + W - pr) / 2}" y="${H - 4}" text-anchor="middle">Offensive rating · points scored per 100 possessions →</text>
+      <text class="tx" transform="translate(11 ${(pt + H - pb) / 2}) rotate(-90)" text-anchor="middle">Defensive rating · allowed per 100 (↑ better)</text>`;
+    g += m.teams.map((t, i) => { const cx = x(t.ortg), cy = y(t.drtg), l = logo(t.name);
+      return `<g class="ma-dot${maOn(t.name)}" style="animation-delay:${(.1 + i * .07).toFixed(2)}s" data-tip="${esc(`${t.name}  ${t.w}–${t.l}\nOffensive rating ${maR(t.ortg)}\nDefensive rating ${maR(t.drtg)}\nNet ${t.ortg - t.drtg >= 0 ? '+' : ''}${maR(t.ortg - t.drtg)} · pace ${maR(t.pace)}`)}">
+        <circle class="ring" cx="${cx}" cy="${cy}" r="17"/>${l ? `<image href="${l}" x="${cx - 12}" y="${cy - 12}" width="24" height="24"/>` : ''}
+        <text class="nm" x="${cx}" y="${cy + 31}" text-anchor="middle">${esc(short(t.name))}</text></g>`; }).join('');
+    const best = [...m.teams].sort((a, b) => (b.ortg - b.drtg) - (a.ortg - a.drtg))[0];
+    return `<div class="ma-h"><h3>Efficiency</h3><span>Points per 100 possessions</span></div>
+      <p class="ma-kick">League average ${maR(m.ortg)} (dashed). Best net rating: <b>${esc(short(best.name))}</b>, ${best.ortg - best.drtg >= 0 ? '+' : ''}${maR(best.ortg - best.drtg)}.</p>
+      <div class="ma-sc"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Offensive against defensive rating by team">${g}</svg></div>`;
+  }
+  function maGlass(m) {
+    const ts = [...m.teams].sort((a, b) => (b.oreb + b.dreb) / b.g - (a.oreb + a.dreb) / a.g), mx = Math.max(...ts.map(t => (t.oreb + t.dreb) / t.g));
+    const rows = ts.map((t, i) => { const d = t.dreb / t.g, o = t.oreb / t.g, op = t.oreb / ((t.oreb + t.odreb) || 1);
+      return maRow(t, i, maSeg(d / mx * 100, 'var(--ma-1)', maR(d), `${t.name}\nDefensive ${maR(d)} per game\nDREB% ${maPct(t.dreb / ((t.dreb + t.ooreb) || 1))}`, i)
+        + maSeg(o / mx * 100, 'var(--ma-2)', maR(o), `${t.name}\nOffensive ${maR(o)} per game\nOREB% ${maPct(op)} of their misses`, i), maR(d + o), 'RPG', i + 1); }).join('');
+    const bo = [...m.teams].sort((a, b) => b.oreb / (b.oreb + b.odreb) - a.oreb / (a.oreb + a.odreb))[0];
+    return `<div class="ma-h"><h3>Rebounds</h3><span>Per game</span><span class="ma-lg"><span><i style="background:var(--ma-1)"></i>Defensive</span><span><i style="background:var(--ma-2)"></i>Offensive</span></span></div>
+      <p class="ma-kick"><b>${esc(short(bo.name))}</b> win back the most of their own misses: ${maPct(bo.oreb / (bo.oreb + bo.odreb))}.</p>
+      <div class="ma-rows">${rows}</div>`;
+  }
+  function maTov(m) {
+    const ts = [...m.teams].sort((a, b) => a.tov / a.g - b.tov / b.g), mx = Math.max(...ts.map(t => t.tov / t.g)), av = m.L.tov / m.L.g;
+    const rows = ts.map((t, i) => maRow(t, i, `<span class="ma-seg" style="width:${(t.tov / t.g / mx * 100).toFixed(1)}%;background:var(--ma-1);animation-delay:${(i * .06).toFixed(2)}s" data-tip="${esc(`${t.name}\n${maR(t.tov / t.g)} turnovers per game\n${t.ast} assists · AST/TO ${maR(t.ast / (t.tov || 1), 2)}\nTOV% ${maPct(t.tov / (t.poss || 1))} of possessions`)}"></span><span class="avg" style="left:${(av / mx * 100).toFixed(1)}%"></span>`,
+      maR(t.tov / t.g), `AST/TO ${maR(t.ast / (t.tov || 1), 2)}`, i + 1)).join('');
+    const ba = [...m.teams].sort((a, b) => b.ast / (b.tov || 1) - a.ast / (a.tov || 1))[0];
+    return `<div class="ma-h"><h3>Ball security</h3><span>Turnovers per game · fewest first</span><span class="ma-lg"><span><i style="background:var(--text);opacity:.55;width:2px"></i>League average ${maR(av)}</span></span></div>
+      <p class="ma-kick"><b>${esc(short(ts[0].name))}</b> give the ball away least, ${maR(ts[0].tov / ts[0].g)} a game. Best assist-to-turnover: <b>${esc(short(ba.name))}</b>, ${maR(ba.ast / (ba.tov || 1), 2)}.</p>
+      <div class="ma-rows">${rows}</div>`;
+  }
+  function maFt(m) {
+    const ts = [...m.teams].sort((a, b) => b.ftm / (b.fta || 1) - a.ftm / (a.fta || 1)), av = m.L.ftm / (m.L.fta || 1);
+    const rows = ts.map((t, i) => { const p = t.ftm / (t.fta || 1);
+      return maRow(t, i, `<span class="ma-seg" style="width:${(p * 100).toFixed(1)}%;background:var(--ma-3);animation-delay:${(i * .06).toFixed(2)}s" data-tip="${esc(`${t.name}\n${t.ftm}/${t.fta} free throws · ${maPct(p)}\n${maR(t.fta / t.g)} attempts per game`)}"></span><span class="avg" style="left:${(av * 100).toFixed(1)}%"></span>`,
+        maPct(p), `${maR(t.fta / t.g)} FTA/G`, i + 1); }).join('');
+    return `<div class="ma-h"><h3>Free throws</h3><span>Made of attempted</span><span class="ma-lg"><span><i style="background:var(--text);opacity:.55;width:2px"></i>League ${maPct(av)}</span></span></div>
+      <div class="ma-rows">${rows}</div>`;
+  }
+  // a name in the play-by-play ("Lim Jun Wei Lim") to the player on that team's roster with the most words in common
+  function maPid(team, name) {
+    const t = maT(team), w = new Set(String(name).toUpperCase().split(/[\s,]+/).filter(Boolean));
+    let best = null, n = 1;
+    (t ? t.roster : []).forEach(p => { const k = personName(p.pid).toUpperCase().split(/[\s,]+/).filter(x => w.has(x)).length; if (k > n) { n = k; best = p.pid; } });
+    return best;
+  }
+  function maDisc(m) {
+    const ts = [...m.teams].sort((a, b) => (a.f.pf + a.f.off) / a.g - (b.f.pf + b.f.off) / b.g);
+    const pill = (v, hot) => `<span class="ma-pill${v && hot ? ' hot' : ''}">${v}</span>`;
+    const rows = ts.map(t => `<tr class="ma-t${maOn(t.name)}"><td><span class="tm">${maCrest(t.name, 20)}${esc(short(t.name))}</span></td><td><b>${maR((t.f.pf + t.f.off + t.f.tech + t.f.flag + t.f.dis) / t.g)}</b></td>
+      <td>${pill(t.f.off)}</td><td>${pill(t.f.tech + t.f.bench, 1)}</td><td>${pill(t.f.dis, 1)}</td><td>${pill(t.f.flag, 1)}</td></tr>`).join('');
+    if (!m.fouls) return `<div class="ma-h"><h3>Discipline</h3><span>Fouls from the play-by-play</span></div><div class="ma-note">${typeof PBP_ST !== 'undefined' && PBP_ST[S.cid] === 'error' ? 'The play-by-play could not be loaded.' : 'Loading the play-by-play…'}</div>`;
+    const who = m.techs.map(x => Object.assign({}, x, {pid: x.pid || maPid(x.team, x.name)})).sort((a, b) => (b.tech + b.flag * 2 + b.dis) - (a.tech + a.flag * 2 + a.dis));
+    return `<div class="ma-h"><h3>Discipline</h3><span>Fouls from the play-by-play</span></div>
+      <div class="ma-tw"><table class="ma-tbl"><thead><tr><th>Team</th><th>Fouls/G</th><th title="Offensive fouls">Offensive</th><th title="Technical fouls, players and bench">Technical</th><th title="Disruptive fouls">Disruptive</th><th title="Flagrant fouls">Flagrant</th></tr></thead><tbody>${rows}</tbody></table></div>
+      ${who.length ? `<div class="ma-who"><h4>Players on the sheet</h4>${who.slice(0, 6).map(x => `<div class="ma-pr ma-t${maOn(x.team)}"><span class="ma-ph">${x.pid ? face(x.pid) : esc(initials(x.name))}</span>
+        <span class="n"><b>${esc(x.pid ? personName(x.pid) : x.name)}</b><small>${esc(short(x.team))}</small></span>
+        <span>${[x.tech ? `${x.tech} T` : '', x.dis ? `${x.dis} D` : '', x.flag ? `${x.flag} F` : ''].filter(Boolean).map(v => `<span class="ma-pill hot">${v}</span>`).join(' ')}</span></div>`).join('')}</div>` : ''}
+      <div class="ma-note">T technical · D disruptive · F flagrant</div>`;
+  }
+  // players: scoring volume against efficiency (true shooting)
+  function maScorers(m) {
+    const ps = m.P.filter(p => p.g >= Math.max(2, Math.ceil(m.nG / S.teams.length * .4)) && p.fga + .44 * p.fta >= 15);
+    const ts = p => p.pts / (2 * (p.fga + .44 * p.fta));
+    const W = 560, H = 320, pl = 56, pr = 16, pt = 14, pb = 40;
+    const xv = ps.map(p => p.pts / p.g), yv = ps.map(ts);
+    const x0 = 0, x1 = Math.ceil((Math.max(...xv, 10) + 2) / 5) * 5, y0 = Math.floor(Math.min(...yv, .4) * 20) / 20, y1 = Math.ceil(Math.max(...yv, .65) * 20) / 20;
+    const x = v => pl + (v - x0) / (x1 - x0) * (W - pl - pr), y = v => H - pb - (v - y0) / (y1 - y0) * (H - pt - pb);
+    let g = '';
+    for (let v = 0; v <= x1; v += 5) g += `<line class="gl" x1="${x(v)}" x2="${x(v)}" y1="${pt}" y2="${H - pb}"/><text class="tx" x="${x(v)}" y="${H - pb + 16}" text-anchor="middle">${v}</text>`;
+    for (let v = y0; v <= y1 + 1e-9; v += .05) g += `<line class="gl" x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}"/><text class="tx" x="${pl - 8}" y="${y(v) + 4}" text-anchor="end">${Math.round(v * 100)}%</text>`;
+    g += `<text class="tx" x="${(pl + W - pr) / 2}" y="${H - 4}" text-anchor="middle">Points per game →</text><text class="tx" transform="translate(11 ${(pt + H - pb) / 2}) rotate(-90)" text-anchor="middle">True shooting %</text>`;
+    const placed = [], last = n => personName(n).split(/[ ,]+/).filter(w => !/^(jr|sr|ii|iii|iv)$/i.test(w)).slice(-1)[0] || '';
+    // a label goes right of its dot, or below, left or above it: wherever it does not cover another label
+    const spot = (cx, cy, txt) => { const w = txt.length * 6.4 + 4; for (const [dx, dy, a] of [[10, 4, 'start'], [10, 16, 'start'], [-10, 4, 'end'], [10, -8, 'start'], [-10, 16, 'end'], [-10, -8, 'end']]) {
+        const x0 = a === 'start' ? cx + dx : cx + dx - w, bx = [x0, cy + dy - 10, x0 + w, cy + dy + 2];
+        if (bx[2] > W - 2 || bx[0] < pl) continue;
+        if (!placed.some(q => q[0] < bx[2] && bx[0] < q[2] && q[1] < bx[3] && bx[1] < q[3])) { placed.push(bx); return `<text class="nm" x="${cx + dx}" y="${cy + dy}" text-anchor="${a}">${esc(txt)}</text>`; } }
+      return ''; };
+    const lab = new Set([...ps].sort((a, b) => b.pts / b.g - a.pts / a.g).slice(0, 5).concat([...ps].sort((a, b) => ts(b) - ts(a)).slice(0, 2)).map(p => p.pid));
+    ps.sort((a, b) => b.pts / b.g - a.pts / a.g);
+    ps.forEach(p => { const cx = x(p.pts / p.g), cy = y(ts(p)); placed.push([cx - 7, cy - 7, cx + 7, cy + 7]); });   // labels keep off the dots too
+    g += ps.map((p, i) => { const im = maT(p.t) && (maT(p.t).roster.find(r => r.pid === p.pid) || {}).nat !== 'MAS', cx = x(p.pts / p.g), cy = y(ts(p));
+      return `<g class="ma-dot${maOn(p.t)}" style="animation-delay:${(.1 + Math.min(i, 30) * .02).toFixed(2)}s" data-tip="${esc(`${personName(p.pid)} · ${short(p.t)}\n${maR(p.pts / p.g)} PPG in ${p.g} games\nTS ${maPct(ts(p))} · ${p.tpm} threes`)}">
+        <circle cx="${cx}" cy="${cy}" r="6.5" fill="${im ? 'var(--ma-2)' : 'var(--ma-1)'}" stroke="var(--surface)" stroke-width="2"/>
+        ${lab.has(p.pid) ? spot(cx, cy, last(p.pid)) : ''}</g>`; }).join('');
+    return `<div class="ma-h"><h3>Volume and efficiency</h3><span>${ps.length} players with enough shots</span><span class="ma-lg"><span><i style="background:var(--ma-1);border-radius:50%"></i>Local</span><span><i style="background:var(--ma-2);border-radius:50%"></i>Import</span></span></div>
+      <div class="ma-sc"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Points per game against true shooting percentage">${g}</svg></div>`;
+  }
+  function maProfile(m) {
+    const ps = [...m.P].filter(p => p.g >= 2).sort((a, b) => b.pts / b.g - a.pts / a.g).slice(0, 8);
+    const rows = ps.map((p, i) => { const p2 = p.twopm * 2, p3 = p.tpm * 3, ft = p.ftm, all = p2 + p3 + ft || 1;
+      return `<a class="ma-row ma-prow ma-t${maOn(p.t)}" href="#/p/${esc(p.pid)}"><span class="rk">${i + 1}</span><span class="tm"><span class="ma-ph">${face(p.pid)}</span><span>${esc(personName(p.pid))}</span></span>
+        <div class="ma-track">${maSeg(p2 / all * 100, 'var(--ma-1)', Math.round(p2 / all * 100) + '%', `${personName(p.pid)}\n2PT ${p2} pts`, i)}${maSeg(p3 / all * 100, 'var(--ma-2)', Math.round(p3 / all * 100) + '%', `${personName(p.pid)}\n3PT ${p3} pts (${p.tpm} made)`, i)}${maSeg(ft / all * 100, 'var(--ma-3)', Math.round(ft / all * 100) + '%', `${personName(p.pid)}\nFree throws ${ft} pts`, i)}</div>
+        <span class="v">${maR(p.pts / p.g)}<small>PPG</small></span></a>`; }).join('');
+    return `<div class="ma-h"><h3>Top scorers' diet</h3><span>Share of each player's points</span><span class="ma-lg"><span><i style="background:var(--ma-1)"></i>2PT</span><span><i style="background:var(--ma-2)"></i>3PT</span><span><i style="background:var(--ma-3)"></i>FT</span></span></div>
+      <div class="ma-rows">${rows}</div>`;
+  }
+  function analysis() {
+    const has = typeof HS === 'undefined' || HS.hasBoxes(), m = has ? maModel() : null;
+    const head = `<div class="mb-sh"><h2>Analysis</h2><span class="mb-sub">${m ? `${m.nG} game${m.nG === 1 ? '' : 's'} this season · teams and players` : 'Loading the box scores…'}</span>
+      <div class="mb-tools"><div class="mb-tf" role="group" aria-label="Highlight a team"><button type="button" data-mat="" aria-pressed="${!ST.at}">All</button>${S.teams.map(t => `<button type="button" class="t" data-mat="${esc(t.name)}" style="--h:${t.hue}" aria-pressed="${ST.at === t.name}" title="${esc(t.name)}" aria-label="${esc(t.name)}">${logo(t.name) ? `<img src="${logo(t.name)}" alt="">` : esc(short(t.name))}</button>`).join('')}</div></div></div>`;
+    if (!m || !m.nG) return head + `<div class="mb-empty">${m ? 'The analysis starts after the first game' : 'The analysis appears once the box scores are in'}</div>`;
+    const card = (html, cls, i) => `<section class="mb-card ma-c${cls ? ' ' + cls : ''}"${maDim()} style="animation-delay:${(i * .05).toFixed(2)}s">${html}</section>`;
+    return head + `<div class="ma-grid">${card(maWho(m), 'wide', 0)}${card(maHow(m), '', 1)}${card(maEff(m), '', 2)}${card(maGlass(m), '', 3)}${card(maTov(m), '', 4)}${card(maFt(m), '', 5)}${card(maDisc(m), '', 6)}</div>
+      <div class="mb-sh" style="margin-top:10px"><h2 style="font-size:20px">Players</h2><span class="mb-sub">Everyone with minutes this season</span></div>
+      <div class="ma-grid">${card(maScorers(m), '', 7)}${card(maProfile(m), '', 8)}</div>`;
+  }
+
   /* ---------- page ---------- */
   function render() {
-    S = season(); CAR = null; MRL = null; ST.rswap = false;
+    S = season(); CAR = null; MRL = null; ST.rswap = false; MA = null; MAF = null;
     if (!S) return '<div class="page"><h1 class="page-title">MBL</h1><p>No MBL season in the database.</p></div>';
     return `<div class="mb-page">${hero()}
       <nav class="mb-snav" aria-label="Page"><div class="mb-snav-in"><span class="mb-snav-logo">${COMPLOGOS['mbl-mark'] ? `<img src="${COMPLOGOS['mbl-mark']}" alt="MBL" width="54" height="22">` : ''}<b>${esc(S.title.replace(/^20/, ''))}</b></span><span class="mb-pill"></span>
-        <a href="#mb-games">Games</a><a href="#mb-stand">Standings</a><a href="#mb-teams">Teams</a><a href="#mb-stats">Stats</a><a href="#mb-rec">Records</a><a href="#mb-miles">Milestones</a></div></nav>
+        <a href="#mb-games">Games</a><a href="#mb-stand">Standings</a><a href="#mb-teams">Teams</a><a href="#mb-stats">Stats</a><a href="#mb-rec">Records</a><a href="#mb-miles">Milestones</a><a href="#mb-ana">Analysis</a></div></nav>
       <div class="mb-wrap">
         <section class="mb-sec" id="mb-games">${games()}</section>
         <section class="mb-sec" id="mb-stand">${stand()}</section>
@@ -533,7 +768,8 @@ const MB = (() => {
         <section class="mb-sec" id="mb-stats">${stats()}</section>
         <section class="mb-sec" id="mb-rec">${records()}</section>
         <section class="mb-sec" id="mb-miles">${miles()}</section>
-      </div><div class="mb-tip" id="mb-tip" aria-hidden="true"></div></div>`;
+        <section class="mb-sec" id="mb-ana">${analysis()}</section>
+      </div><div class="mb-tip" id="mb-tip" aria-hidden="true"></div><div class="ma-tip" id="ma-tip" aria-hidden="true"></div></div>`;
   }
   const paint = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; segInd(); };
   function mrPaint() { ST.rswap = true; paint('mb-rec', records()); mrCount(document.getElementById('mb-rec')); }
@@ -576,6 +812,8 @@ const MB = (() => {
       if (mc) { const c = mc.closest('.mr-c'), op = !c.classList.contains('open'); c.classList.toggle('open', op); mc.setAttribute('aria-expanded', op);
         mc.textContent = op ? 'Show top ' + MR_SHOW : 'Show top ' + (c.querySelectorAll('.mr-r').length + 1);
         if (!op && c.getBoundingClientRect().top < 0) c.scrollIntoView({block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); return; }
+      const at = e.target.closest('[data-mat]');
+      if (at) { ST.at = at.dataset.mat || null; paint('mb-ana', analysis()); return; }
       const rb = e.target.closest('[data-mrb]');
       if (rb) { ST.rb = rb.dataset.mrb; ST.rx = null; mrPane('mr-big', mrBig); return; }
       const rk = e.target.closest('[data-mrk]');
@@ -600,6 +838,9 @@ const MB = (() => {
       }
     });
     document.addEventListener('mousemove', e => {
+      const mt = document.getElementById('ma-tip'), mx = e.target.closest && e.target.closest('[data-tip]');
+      if (mt) { if (mx && mx.closest('#mb-ana')) { mt.textContent = mx.dataset.tip; mt.classList.add('on');
+        mt.style.left = Math.min(innerWidth - mt.offsetWidth - 10, e.clientX + 14) + 'px'; mt.style.top = Math.max(8, e.clientY - mt.offsetHeight - 12) + 'px'; } else mt.classList.remove('on'); }
       const tip = document.getElementById('mb-tip'); if (!tip) return;
       const t = e.target.closest && e.target.closest('[data-mbtip]');
       if (!t) { tip.classList.remove('on'); return; }
@@ -608,13 +849,23 @@ const MB = (() => {
     addEventListener('scroll', () => { if (document.querySelector('.mb-page')) requestAnimationFrame(spy); }, {passive: true});
     let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (document.querySelector('.mb-page')) { tour(); segInd(); spy(); } }, 150); });
   }
+  function maLoad() {
+    if (typeof ensurePbp !== 'function' || !S || MAF || (typeof HS !== 'undefined' && !HS.hasBoxes())) return;
+    ensurePbp(S.cid);
+    clearInterval(maWait);
+    maWait = setInterval(() => {
+      if (!document.getElementById('mb-ana')) { clearInterval(maWait); return; }
+      if (PBP_ST[S.cid] === 'loading') return;
+      clearInterval(maWait); MA = null; paint('mb-ana', analysis());
+    }, 300);
+  }
   function after() {
     clearInterval(cdTimer); cdPrev = [];
     if (!document.querySelector('.mb-page')) return;
     if (!S) S = season();
     bind();
     const nx = document.getElementById('mb-next'); if (nx) nx.innerHTML = nextCard();
-    tour(); segInd(); spy();
+    tour(); segInd(); spy(); maLoad();
     if (document.getElementById('mb-cd')) { tick(); cdTimer = setInterval(tick, 1000); }
   }
   // the header tab is named after the season: MBL 2026/27
