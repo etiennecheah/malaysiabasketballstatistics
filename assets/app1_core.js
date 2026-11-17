@@ -511,8 +511,20 @@ function crestPlate(name) {
   const k = teamLogoKey(name);
   return TEAM_LOGO_DARK[k] ? ' crest-logo-dark' : TEAM_LOGO_LIGHT[k] ? ' crest-logo-light' : '';
 }
+/* Other countries' national sides (FIBA events) wear their flag (data/natflags, flag-icons, MIT,
+   keyed on the IOC code). Only the plain country name: "Singapore (NYDP)" keeps its own crest. */
+const NAT_TEAMS = { 'hong-kong-china': 'HKG', 'hong-kong': 'HKG', 'singapore': 'SGP', 'indonesia': 'INA', 'thailand': 'THA',
+  'fiji': 'FIJ', 'mongolia': 'MGL', 'vietnam': 'VIE', 'philippines': 'PHI', 'laos': 'LAO', 'brunei': 'BRU',
+  'chinese-taipei': 'TPE', 'japan': 'JPN', 'china': 'CHN', 'australia': 'AUS', 'new-zealand': 'NZL' };
+function natTeamFlag(name) {
+  if (/\(/.test(String(name || ''))) return null;
+  const c = NAT_TEAMS[teamSlug(name)], f = DB.natflags || {};
+  return c && f[c] ? f[c] : null;
+}
 function crest(name, size) {
   const sz = size || 26;
+  const nf = natTeamFlag(name);
+  if (nf) return `<span class="crest-flag" style="width:${sz}px;height:${sz}px;"><img src="${nf}" alt="" loading="lazy" decoding="async"></span>`;
   const logo = teamLogo(name);
   if (logo) {
     return `<img class="crest-logo${crestPlate(name)}" src="${logo}" alt="" width="${sz}" height="${sz}" loading="lazy" decoding="async" style="width:${sz}px;height:${sz}px;">`;
