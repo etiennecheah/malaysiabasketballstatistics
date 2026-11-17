@@ -80,15 +80,39 @@ function liveCandidates() {
 }
 
 // how the reader is told the page keeps itself current
-function liveCadence() { return LIVE.batch === false ? 'every 30 s' : liveFeedWait() != null ? 'seconds after the official feed' : 'every 15 s'; }
+function liveCadence() {
+  if (liveList('live').some(x => liveIsFiba(x.data))) return 'every minute, from FIBA\u2019s game page (a few minutes behind the arena)';
+  return LIVE.batch === false ? 'every 30 s' : liveFeedWait() != null ? 'seconds after the official feed' : 'every 15 s';
+}
 function liveFast() { return /^#\/(home|live\/|watch\/)/.test(HS.hash()) || HS.hash() === '' || HS.hash() === '#/'; }
 
 /* One request for every game being followed (relay v3: /games?ids=…), so the count of
    requests does not grow with the number of games on at once. A relay that does not
    know /games (v2) gets the old one-request-per-game instead, from then on. */
+/* FIBA events (relay v3.2): their fixtures are 'fiba-<FIBA game id>', and the relay reads each game
+   from FIBA's public game page, which FIBA's CDN keeps for up to 4 minutes — so these games are a
+   few minutes behind the arena. Competition id -> FIBA's event slug. */
+const LIVE_FIBA = { 'fiba-acpq-2029': 'fiba-asia-cup-2029-pre-qualifiers' };
+const LIVE_FIBA_WAIT = 60e3;
+const liveFibaEvent = m => { const g = GAME_BY_MID[m]; return /^fiba-\d{5,7}$/.test(m) && g ? LIVE_FIBA[g.cid] || null : null; };
+const liveIsFiba = d => !!(d && d.src === 'fiba');
+async function liveFetchFiba(mids, out) {
+  const by = {};
+  mids.forEach(m => { (by[liveFibaEvent(m)] = by[liveFibaEvent(m)] || []).push(m); });
+  await Promise.all(Object.entries(by).map(async ([ev, ms]) => {
+    try {
+      const r = await fetch(LIVE_RELAY + '/fiba/' + ev + '/games?ids=' + ms.map(m => m.slice(5)).join(','));
+      if (!r.ok) { ms.forEach(m => { out[m] = { status: r.status === 404 ? 0 : r.status }; }); return; }
+      const j = await r.json();
+      ms.forEach(m => { const d = (j.games || {})[m]; out[m] = !d ? { status: 502 } : d.error ? { status: d.status || 502 } : { status: 200, d, next: typeof d.nextIn === 'number' ? d.nextIn : null }; });
+    } catch (e) { ms.forEach(m => { out[m] = { status: 0 }; }); }
+  }));
+}
 async function liveFetchAll(mids) {
+  const fiba = mids.filter(liveFibaEvent);
   const ok = mids.filter(m => /^\d{5,9}$/.test(m)), out = {};
-  mids.forEach(m => { if (!ok.includes(m)) out[m] = { status: 404 }; });
+  mids.forEach(m => { if (!ok.includes(m) && !fiba.includes(m)) out[m] = { status: 404 }; });
+  if (fiba.length) await liveFetchFiba(fiba, out);
   if (LIVE.batch !== false && ok.length) {
     try {
       for (let i = 0; i < ok.length; i += 8) {
@@ -124,7 +148,8 @@ async function liveTick() {
     const prev = LIVE.games[g.mid] || { g, state: 'pending', data: null, at: 0 };
     prev.g = g;
     const r = got[g.mid] || { status: 0 };
-    prev.nextAt = r.status === 200 && r.next != null ? Date.now() + r.next * 1000 : 0;   // a stale feed time must never speed up the next request
+    // a stale feed time must never speed up the next request; FIBA games keep their own minute (below)
+    prev.nextAt = r.status === 200 && r.next != null && !liveFibaEvent(g.mid) ? Date.now() + r.next * 1000 : 0;
     if (r.status === 404) { prev.state = prev.data ? prev.state : 'pending'; prev.err = 0; }
     else if (r.status !== 200 || !r.d || !Array.isArray(r.d.teams)) prev.err = Date.now();
     else {
@@ -140,7 +165,9 @@ async function liveTick() {
   LIVE.last = Date.now();
   // when to ask again: just after the feed's next copy (relay v3.1), else every 15 s (v3) or 30 s (older
   // relay) on the fast pages, every 60 s elsewhere, and every 5 minutes with nothing near tip-off
-  const fast = LIVE.batch === false ? 30e3 : (liveFeedWait() || LIVE_FAST);
+  let fast = LIVE.batch === false ? 30e3 : (liveFeedWait() || LIVE_FAST);
+  // FIBA's page changes at most every few minutes: once a minute is plenty when only FIBA games are on
+  if (cands.length && cands.every(g => liveFibaEvent(g.mid))) fast = LIVE_FIBA_WAIT;
   const wait = cands.length ? (liveFast() || document.getElementById('cn') ? fast : 60e3) : 5 * 60e3;
   LIVE.wait = wait;
   liveRefresh();
@@ -251,6 +278,7 @@ function livePlayText(a) {
   if (t === 'jumpball') return 'Jump ball' + (s ? ' — ' + liveSub(s) : '');
   if (t === 'period') return (s === 'start' ? 'Start of ' : 'End of ') + livePeriod(a);
   if (t === 'game') return s === 'start' ? 'Game starts' : 'Game ends';
+  if (t === 'note') return s || '';                    // FIBA: a coach's challenge and the like, in FIBA's words
   return (t || '') + (s ? ' — ' + liveSub(s) : '');
 }
 function livePlayCap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }

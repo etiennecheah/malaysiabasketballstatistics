@@ -67,7 +67,7 @@ CHAMP_OVERRIDE = {'39599': 'Negeri Sembilan'}
 # Cup is published as "61st MABA/MATRIX National Basketball Championship For Men/Women"
 # A competition named for the year it qualifies for, played the year before: the season it
 # belongs to is the year its games were played.
-YEAR_OVERRIDE = {'fiba-wac-2027-seaba': 2026}
+YEAR_OVERRIDE = {'fiba-wac-2027-seaba': 2026, 'fiba-acpq-2029': 2026}
 SERIES_OVERRIDE = {'25502': 'Agong Cup', '25503': 'Agong Cup', '23322': 'Agong Cup', '23328': 'Agong Cup'}
 
 RECENT_STAND_DAYS = 21

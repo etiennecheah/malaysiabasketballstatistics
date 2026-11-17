@@ -288,7 +288,9 @@ const GBX = (() => {
     return `<div class="lv-crumb"><a href="#/">Home</a> › <a href="#/c/${g.cid}">${esc(liveCompName(g.cid))}</a> › ${esc(h.name)} vs ${esc(a.name)}</div>
       ${sbd}
       <div class="gb-lgrid">${feed}<div class="gb-col">${box}${extra}</div></div>
-      <p class="gb-note">Live figures come straight from Genius Sports' LiveStats feed and can change as the scorer corrects them. Season averages, leaders, standings and BPM don't move during a game.</p>`;
+      <p class="gb-note">${d.src === 'fiba'
+        ? 'Live figures come from FIBA\u2019s own game page on fiba.basketball, which FIBA refreshes every few minutes, so they run a few minutes behind the arena and can change as the scorer corrects them.'
+        : 'Live figures come straight from Genius Sports\u2019 LiveStats feed and can change as the scorer corrects them.'} Season averages, leaders, standings and BPM don't move during a game.</p>`;
   }
 
   /* ---------------- a finished game: header ---------------- */
