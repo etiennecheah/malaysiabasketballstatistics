@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1794837636.6552758,
-  "fp": "df0983da3be8e4677345"
+  "at": 1794881168.188934,
+  "fp": "374be8eda2adb113c18b"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -18,7 +18,7 @@
   "26279": "2026-10-10",
   "35136": "2026-10-10",
   "38575": "2026-10-16",
-  "48654": "2026-11-16",
+  "48654": "2026-11-17",
   "49965": "2026-11-16",
   "50247": "2026-10-21",
   "50248": "2026-10-21",
@@ -39,7 +39,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-16 00:20  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 00:46  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 01:11  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 01:36  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -78,7 +77,8 @@
   "2026-11-16 14:41  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 15:06  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 15:32  FAILED 48654 (1): /usr/bin/python3 build_data.py",
-  "2026-11-16 15:59  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 EST JERSEY x VALUEVEST 92-108 SUPERSPORTS x REX BBA; SUPERSPORTS x REX BBA 89-88 EST JERSEY x VALUEVEST; shot charts of 2 games"
+  "2026-11-16 15:59  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 EST JERSEY x VALUEVEST 92-108 SUPERSPORTS x REX BBA; SUPERSPORTS x REX BBA 89-88 EST JERSEY x VALUEVEST; shot charts of 2 games",
+  "2026-11-17 10:06  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1794815815.7582607,
