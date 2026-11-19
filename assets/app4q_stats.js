@@ -338,7 +338,7 @@ const STATS = (function () {
       wire(p, S, draw, () => VIEWS);
       draw();
     }
-    return { S, draw, mount, current, measure, groups };
+    return { S, draw, mount, current, measure, groups, VIEWS, BY, COMPS };
   })();
 
   // =============================================================================
@@ -711,11 +711,12 @@ const STATS = (function () {
   function render(which) {
     PAGE = which === 'clutch' ? 'clutch' : 'lineups';
     const mod = PAGE === 'clutch' ? CL : LU;
+    if (PAGE === 'lineups' && mod.S && typeof LUX !== 'undefined') return LUX.render();
     if (!mod.S) return `<div class="page st-page"><h1 class="page-title">${PAGE === 'clutch' ? 'Clutch' : 'Lineups'}</h1>
       <div class="card"><div class="empty-row"><span class="empty-dot"></span>No competition has play-by-play complete enough for this page yet.</div></div></div>`;
     return `<div class="page st-page" id="st-root">${PAGE === 'clutch' ? clutchHTML() : lineupsHTML()}</div>`;
   }
-  function redraw() { if (el('st-root')) (PAGE === 'clutch' ? CL : LU).draw(); }
+  function redraw() { if (el('lx-root') && typeof LUX !== 'undefined') LUX.draw(); else if (el('st-root')) (PAGE === 'clutch' ? CL : LU).draw(); }
 
   // ---- the Stats menu in the site bar ---------------------------------------------------
   // The menu hangs from the bar itself, not from the row of links (which scrolls sideways
@@ -748,10 +749,11 @@ const STATS = (function () {
     if (links && btn) {
       links.addEventListener('scroll', () => { const m = el('st-menu'); if (m && !m.hidden) openMenu(true); });
       // on a phone the row of links scrolls sideways: start with the Stats tab in view when it is the page
-      if (el('st-root') && links.scrollWidth > links.clientWidth)
+      if ((el('st-root') || el('lx-root')) && links.scrollWidth > links.clientWidth)
         links.scrollLeft = Math.max(0, btn.offsetLeft - links.offsetLeft - (links.clientWidth - btn.offsetWidth) / 2);
     }
-    if (el('st-root')) (PAGE === 'clutch' ? CL : LU).mount();
+    if (el('lx-root') && typeof LUX !== 'undefined') LUX.mount();
+    else if (el('st-root')) (PAGE === 'clutch' ? CL : LU).mount();
   }
   const navButton = active => `<button class="nav-link st-navbtn ${active ? 'active' : ''}" id="st-navbtn" aria-haspopup="true" aria-expanded="false" aria-controls="st-menu">Tools<span class="st-caret" aria-hidden="true">▼</span></button>`;
   const navMenu = cur => `<div class="st-menu" id="st-menu" hidden>
@@ -767,7 +769,8 @@ const STATS = (function () {
       <a href="#/milestones"${cur === 'milestones' ? ' aria-current="page"' : ''}>Milestones<small>Who is close to a career landmark</small></a>
       <a href="#/formulas"${cur === 'formulas' ? ' aria-current="page"' : ''}>Formulas<small>What every number means, and where it comes from</small></a>
     </div>`;
-  return { put, render, afterRender, navButton, navMenu, LU, CL, DATA, page: () => PAGE };
+  return { put, render, afterRender, navButton, navMenu, LU, CL, DATA, page: () => PAGE,
+    IDX, load, fmt, short, famOf, side, teamMeasures, sortRows, setLast: cid => { LAST = cid; } };
 })();
 function STATS_PUT(kind, cid, d) { STATS.put(kind, cid, d); }
 function renderStats(which) { return STATS.render(which); }
