@@ -145,6 +145,9 @@ function hsMeta(hash) {
     shift: ['Stat Line Shift', 'How an Agong Cup or MBL player’s stat line changes with and without chosen teammates on the floor: scoring, playmaking, shooting and team ratings, from every substitution in the play-by-play.'],
     compare: ['Compare Players', 'Compare two Malaysian basketball players side by side: career stats, peak seasons and head-to-head games.'],
   };
+  // a tab of the MBL page (/mbl/players/): the season's title and the tab's name
+  const MBT = { games: 'Games', standings: 'Standings', leaders: 'Leaders', teams: 'Teams', players: 'Players', records: 'Records', milestones: 'Milestones', analysis: 'Analysis' };
+  if (p0 === 'mbl' && MBT[parts[1]]) return page(S.mbl[0] + ' · ' + MBT[parts[1]], S.mbl[1], { index: false });
   if (S[p0]) return page(S[p0][0], S[p0][1], { index: p0 !== 'compare' || parts.length === 1 });
   return page('Malaysia Basketball Database', home.desc, { index: false });
 }

@@ -221,14 +221,14 @@ document.addEventListener('click', e => {
     const k = cs.dataset.csort;
     SORT.comp.dir = (SORT.comp.key === k && SORT.comp.dir === 'desc') ? 'asc' : 'desc';
     SORT.comp.key = k;
-    const cid = (HS.hash().match(/#\/c\/([^\/]+)/) || [])[1];
+    const cid = (HS.hash().match(/#\/c\/([^\/]+)/) || [])[1] || ((document.getElementById('players-body') || {}).dataset || {}).cid;
     if (cid) cpRedraw(cid);
     return;
   }
   const cv = e.target.closest('[data-cpview]');
   if (cv) {
     CPV.view = cv.dataset.cpview; SORT.comp = { key: cpView().sort, dir: 'desc' };
-    const cid = (HS.hash().match(/#\/c\/([^\/]+)/) || [])[1];
+    const cid = (HS.hash().match(/#\/c\/([^\/]+)/) || [])[1] || ((document.getElementById('players-body') || {}).dataset || {}).cid;
     const el = document.getElementById('players-body');
     if (el && cid) el.innerHTML = compPlayersTable(cid);
     return;
@@ -283,7 +283,7 @@ let qTimer = null;
 document.addEventListener('input', e => {
   if (e.target.id === 'cp-q') {
     CPV.q = e.target.value;
-    const cid = (HS.hash().match(/#\/c\/([^\/]+)/) || [])[1];
+    const cid = (HS.hash().match(/#\/c\/([^\/]+)/) || [])[1] || ((document.getElementById('players-body') || {}).dataset || {}).cid;
     if (cid) cpRedraw(cid);
     return;
   }

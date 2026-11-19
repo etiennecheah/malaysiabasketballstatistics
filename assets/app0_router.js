@@ -104,6 +104,8 @@ const HS = (() => {
     moreIn = true;
     if (typeof PV !== 'undefined') PV.data = null;
     if (/^#\/(p|c|compare|watch|stats)\//.test(hash()) && typeof softRoute === 'function') softRoute();
+    // the MBL page's Players tab: its Advanced view reads the ratings that just arrived
+    else if (/^#\/mbl\b/.test(hash())) { const el = document.getElementById('players-body'); if (el && el.dataset.cid && typeof compPlayersTable === 'function') el.innerHTML = compPlayersTable(el.dataset.cid); }
   }
   return { BASE, PATHS, BOOT_PATH, hash, url, go, start, more, boxes, hasBoxes: boxesIn, hasMore: () => moreIn || !DB.more };
 })();

@@ -26,8 +26,8 @@ const MB = (() => {
     PHI: 'Philippines', SGP: 'Singapore', TPE: 'Chinese Taipei', JPN: 'Japan', CHN: 'China', INA: 'Indonesia', NGR: 'Nigeria', SEN: 'Senegal',
     NZL: 'New Zealand', SSD: 'South Sudan', SUD: 'Sudan', RUS: 'Russia', BUL: 'Bulgaria', KEN: 'Kenya', ZIM: 'Zimbabwe', BOT: 'Botswana',
     COD: 'DR Congo', THA: 'Thailand', VIE: 'Vietnam', BRU: 'Brunei', HKG: 'Hong Kong'};
-  const ST = {team: null, show: 'all', sort: 'num', sel: null, lead: null, mk: 'all', mh: 3, rs: null, rw: 'all', rb: null, rk: 'tpm', rm: 'best', rx: null, rswap: false, at: null, sec: 'mb-games', leg: null};
-  let S = null, cdTimer = null, cdPrev = [], bound = false;
+  const ST = {team: null, show: 'all', sort: 'num', sel: null, lead: null, mk: 'all', mh: 3, rs: null, rw: 'all', rb: null, rk: 'tpm', rm: 'best', rx: null, rswap: false, at: null, sec: 'mb-over', leg: null};
+  let S = null, cdTimer = null, cdPrev = [], bound = false, JUMP = false;
 
   /* ---------- the season and its pieces ---------- */
   const mblComps = () => COMPS.filter(c => c.series === SER && c.gender !== 'Women').sort((a, b) => (a.start || '').localeCompare(b.start || ''));
@@ -757,16 +757,73 @@ const MB = (() => {
   }
 
   /* ---------- page ---------- */
+  /* ---------- the page is tabs (update-109): one section at a time, the tab in the address (/mbl/players/) ---------- */
+  const TABS = [['mb-over', 'Overview', ''], ['mb-games', 'Games', 'games'], ['mb-stand', 'Standings', 'standings'], ['mb-stats', 'Leaders', 'leaders'],
+    ['mb-teams', 'Teams', 'teams'], ['mb-players', 'Players', 'players'], ['mb-rec', 'Records', 'records'], ['mb-miles', 'Milestones', 'milestones'], ['mb-ana', 'Analysis', 'analysis']];
+  function tabFromUrl() {
+    const m = /^#\/mbl\/([a-z]+)/.exec(typeof HS !== 'undefined' ? HS.hash() : '');
+    const t = m && TABS.find(x => x[2] === m[1]);
+    ST.sec = t ? t[0] : 'mb-over';
+  }
+  function tabToUrl() {
+    if (typeof HS === 'undefined' || !HS.PATHS || !/^#\/mbl\b/.test(HS.hash())) return;
+    const t = TABS.find(x => x[0] === ST.sec), slug = t ? t[2] : '';
+    try { history.replaceState(history.state, '', HS.url('mbl' + (slug ? '/' + slug : ''))); } catch (e) {}
+    if (typeof hsApplyMeta === 'function') { try { hsApplyMeta(HS.hash()); } catch (e) {} }
+  }
+  const more = (id, l) => `<a class="mbo-more" href="#${id}">${l}<span aria-hidden="true">→</span></a>`;
+
+  /* ---------- overview: the season at a glance ---------- */
+  function overview() {
+    const gs = [...S.games].sort((a, b) => tipAt(a) - tipAt(b)), fin = gs.filter(done);
+    const tot = fin.reduce((a, g) => a + +g.hs + +g.as, 0);
+    const close = fin.filter(g => Math.abs(g.hs - g.as) <= 5).length;
+    const big = fin.slice().sort((a, b) => Math.abs(b.hs - b.as) - Math.abs(a.hs - a.as))[0];
+    const high = fin.slice().sort((a, b) => (+b.hs + +b.as) - (+a.hs + +a.as))[0];
+    const wl = g => +g.hs > +g.as ? [g.h, g.hs, g.a, g.as] : [g.a, g.as, g.h, g.hs];
+    const tile = (k, v, sub, tip) => `<div class="mbo-tile"><span class="k"${tip ? ` data-imtip="${esc(tip)}"` : ''}>${k}</span><b>${v}</b><span class="s">${sub}</span></div>`;
+    const tiles = fin.length ? `<div class="mbo-tiles">
+      ${tile('Points per game', (tot / fin.length / 2).toFixed(1), `per team, ${fin.length} game${fin.length === 1 ? '' : 's'}`)}
+      ${tile('Close games', `${close}<small>/${fin.length}</small>`, 'decided by 5 or fewer')}
+      ${big ? (() => { const [w, ws, l, ls] = wl(big); return tile('Biggest win', '+' + (ws - ls), `${esc(short(w))} ${ws}–${ls} ${esc(short(l))}`); })() : ''}
+      ${high ? (() => { const [w, ws, l, ls] = wl(high); return tile('Highest scoring', +ws + +ls, `${esc(short(w))} ${ws}–${ls} ${esc(short(l))}`); })() : ''}</div>` : '';
+    const rows = standings();
+    const table = `<section class="mb-card mbo-card"><header><h2>Standings</h2>${more('mb-stand', 'Full standings')}</header>
+      <table class="mbo-st"><thead><tr><th>#</th><th class="l">Team</th><th>W</th><th>L</th><th>Diff</th><th class="l f">Last 5</th></tr></thead><tbody>
+      ${rows.map((r, i) => `<tr><td class="pos">${r.gp ? i + 1 : '–'}</td><td class="l tm">${crestI(r.team, 24)}<a href="#mb-teams" data-mbteam="${esc(r.team)}">${esc(r.team)}</a></td><td>${r.w}</td><td>${r.l}</td>
+        <td class="${r.diff > 0 ? 'pos-d' : r.diff < 0 ? 'neg-d' : ''}">${r.diff > 0 ? '+' : ''}${r.diff}</td><td class="l f"><span class="mb-l5">${r.res.slice(-5).map(x => `<i class="${x}">${x.toUpperCase()}</i>`).join('')}</span></td></tr>`).join('')}</tbody></table></section>`;
+    const up = gs.filter(g => !done(g)).slice(0, 4), last = fin.slice(-4).reverse();
+    const list = (h, id, l, arr) => arr.length ? `<section class="mb-card mbo-card"><header><h2>${h}</h2>${more(id, l)}</header><div class="mbo-gms">${arr.map(g => `<div class="mbo-g"><div class="mbo-d">${dlong(g.date)}${done(g) ? ' · Final' : ' · ' + hm(g.time)}</div>${gameRow(g)}</div>`).join('')}</div></section>` : '';
+    const on = new Map(players().map(p => [p.pid, p])), season = (S.c.players || []).filter(r => r.g && on.has(r.pid));
+    const gmax = Math.max(1, ...rows.map(r => r.gp)), min = Math.max(1, Math.ceil(gmax * .4));
+    const lead = season.length ? [['pts', 'Points'], ['reb', 'Rebounds'], ['ast', 'Assists']].map(([k, l]) => {
+      const top = season.filter(r => r.g >= min).map(r => ({r, v: per(r, k)})).sort((a, b) => b.v - a.v).slice(0, 3);
+      return `<div class="mbo-lc"><h3>${l} per game</h3>${top.map(({r, v}, i) => `<a class="mbo-lr" href="#/p/${esc(r.pid)}"><span class="ph">${face(r.pid)}</span><span class="n"><b>${esc(personName(r.pid))}</b><small>${crestI(on.get(r.pid).team, 14)}${esc(short(on.get(r.pid).team))}</small></span><span class="v">${v.toFixed(1)}</span></a>`).join('')}</div>`; }).join('') : '';
+    return `<div class="mb-sh"><h2>Overview</h2><span class="mb-sub">${fin.length} of ${gs.length} games played</span></div>${tiles}
+      <div class="mbo-grid"><div class="mbo-main">${table}${list('Next up', 'mb-games', 'All games', up)}${list('Latest results', 'mb-games', 'All results', last)}</div>
+      ${lead ? `<aside class="mb-card mbo-card mbo-lead"><header><h2>Leaders</h2>${more('mb-stats', 'All categories')}</header>${lead}<p class="mbo-note">This season · at least ${min} game${min === 1 ? '' : 's'}</p></aside>` : ''}</div>`;
+  }
+
+  /* ---------- players: every line of the season, four views (the competition's own table, app4_players.js) ---------- */
+  function playersTab() {
+    const n = (S.c.players || []).filter(r => r.g).length;
+    return `<div class="mb-sh"><h2>Players</h2><span class="mb-sub">${n} players · switch between Per game, Totals, Shooting and Advanced</span></div>
+      <div id="players-body" class="mbo-players" data-cid="${esc(S.cid)}">${typeof compPlayersTable === 'function' ? compPlayersTable(S.cid) : ''}</div>`;
+  }
+
   function render() {
     S = season(); CAR = null; MRL = null; ST.rswap = false; MA = null; MAF = null;
     if (!S) return '<div class="page"><h1 class="page-title">MBL</h1><p>No MBL season in the database.</p></div>';
-    return `<div class="mb-page">${hero()}
-      <nav class="mb-snav" aria-label="Page"><div class="mb-snav-in"><span class="mb-snav-logo">${COMPLOGOS['mbl-mark'] ? `<img src="${COMPLOGOS['mbl-mark']}" alt="MBL" width="54" height="22">` : ''}<b>${esc(S.title.replace(/^20/, ''))}</b></span><span class="mb-pill"></span>
-        <a href="#mb-games">Games</a><a href="#mb-stand">Standings</a><a href="#mb-teams">Teams</a><a href="#mb-stats">Stats</a><a href="#mb-rec">Records</a><a href="#mb-miles">Milestones</a><a href="#mb-ana">Analysis</a></div></nav>
+    tabFromUrl(); JUMP = ST.sec !== 'mb-over';
+    return `<div class="mb-page tabs">${hero()}
+      <nav class="mb-snav" aria-label="Season sections"><div class="mb-snav-in"><span class="mb-snav-logo">${COMPLOGOS['mbl-mark'] ? `<img src="${COMPLOGOS['mbl-mark']}" alt="MBL" width="54" height="22">` : ''}<b>${esc(S.title.replace(/^20/, ''))}</b></span><span class="mb-pill"></span>
+        ${TABS.map(([id, l]) => `<a href="#${id}"${ST.sec === id ? ' class="on" aria-current="page"' : ''}>${l}${id === 'mb-games' ? `<small>${S.games.length}</small>` : id === 'mb-players' ? `<small>${(S.c.players || []).filter(r => r.g).length}</small>` : ''}</a>`).join('')}</div></nav>
       <div class="mb-wrap">
+        <section class="mb-sec${ST.sec === 'mb-over' ? ' on' : ''}" id="mb-over">${overview()}</section>
         <section class="mb-sec" id="mb-games">${games()}</section>
         <section class="mb-sec" id="mb-stand">${stand()}</section>
         <section class="mb-sec" id="mb-teams">${teams()}</section>
+        <section class="mb-sec" id="mb-players">${playersTab()}</section>
         <section class="mb-sec" id="mb-stats">${stats()}</section>
         <section class="mb-sec" id="mb-rec">${records()}</section>
         <section class="mb-sec" id="mb-miles">${miles()}</section>
@@ -782,13 +839,12 @@ const MB = (() => {
     const pg = document.querySelector('.mb-page'); if (!pg) return;
     pg.classList.toggle('ph', phone());
     pg.querySelectorAll('.mb-wrap > .mb-sec').forEach(s => s.classList.toggle('on', s.id === ST.sec));
+    pg.querySelectorAll('.mb-snav a').forEach(a => { const on = a.getAttribute('href') === '#' + ST.sec; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   }
   function spy() {
     const links = [...document.querySelectorAll('.mb-snav a')];
     if (!links.length) return;
-    let cur = links[0];
-    if (phone()) cur = links.find(a => a.getAttribute('href') === '#' + ST.sec) || cur;
-    else links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s && s.getBoundingClientRect().top < 140) cur = a; });
+    const cur = links.find(a => a.getAttribute('href') === '#' + ST.sec) || links[0];
     links.forEach(a => a.classList.toggle('on', a === cur));
     const pill = document.querySelector('.mb-pill');
     if (pill) { pill.style.width = cur.offsetWidth + 'px'; pill.style.transform = `translateX(${cur.offsetLeft}px)`; }
@@ -801,9 +857,9 @@ const MB = (() => {
       if (snav && !e.target.closest('[data-mbteam]')) {
         e.preventDefault();
         const id = snav.getAttribute('href').slice(1), s = document.getElementById(id);
-        if (phone() && s && s.classList.contains('mb-sec')) {
-          ST.sec = id; phSections(); spy(); segInd();
-          const bar = document.querySelector('.mb-snav'), y = bar ? bar.getBoundingClientRect().top + scrollY : 0;
+        if (s && s.classList.contains('mb-sec')) {
+          ST.sec = id; phSections(); spy(); segInd(); tabToUrl();
+          const bar = document.querySelector('.mb-snav'), y = bar ? bar.getBoundingClientRect().top + scrollY - (phone() ? 58 : 64) : 0;
           if (scrollY > y) scrollTo({top: y, behavior: 'auto'});
           if (id === 'mb-teams') tour();
           return;
@@ -847,8 +903,9 @@ const MB = (() => {
         ST.sel = tm.dataset.mbteam;
         document.querySelectorAll('.mb-tile').forEach(b => b.setAttribute('aria-pressed', b.dataset.mbteam === ST.sel));
         paint('mb-roster', roster()); paint('mb-heights', heights());
-        if (tm.tagName === 'A' && phone()) { ST.sec = 'mb-teams'; phSections(); spy(); tour(); }
-        if (tm.tagName === 'A') { const s = document.getElementById('mb-teams'); if (s) s.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); }
+        if (tm.tagName === 'A') { ST.sec = 'mb-teams'; phSections(); spy(); tour(); tabToUrl();
+          const bar = document.querySelector('.mb-snav'), y = bar ? bar.getBoundingClientRect().top + scrollY - (phone() ? 58 : 64) : 0;
+          scrollTo({top: y, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); }
         return;
       }
       // a touch screen has no hover: the first tap turns the card over, the second opens the profile
@@ -888,6 +945,9 @@ const MB = (() => {
     phSections(); tour(); segInd(); spy(); maLoad();
     const lc = document.querySelector('[data-mbleg][aria-pressed="true"]'); if (lc && phone()) lc.parentElement.scrollLeft = lc.offsetLeft - 16;
     if (document.getElementById('mb-cd')) { tick(); cdTimer = setInterval(tick, 1000); }
+    // opened at a tab's own address (/mbl/players/): start at the tab, not the season header
+    if (JUMP) { JUMP = false; const bar = document.querySelector('.mb-snav');
+      if (bar) requestAnimationFrame(() => scrollTo({top: bar.getBoundingClientRect().top + scrollY - (phone() ? 58 : 64), behavior: 'auto'})); }
   }
   // the header tab is named after the season: MBL 2026/27
   function tabLabel() { const s = season(); return s ? 'MBL ' + s.title : 'MBL'; }
