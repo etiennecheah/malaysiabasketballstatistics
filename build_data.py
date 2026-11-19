@@ -14,6 +14,11 @@ import json, re, os, datetime, collections, statistics
 import merges
 
 D = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
+# nationality corrections from the owner (data/nat_fix.json): {pid: IOC code}
+try:
+    NAT_FIX = {k: v for k, v in json.load(open(os.path.join(D, 'nat_fix.json'))).items() if not k.startswith('_')}
+except FileNotFoundError:
+    NAT_FIX = {}
 
 PERSON_FIELDS = ['Team','BLKR','Index','Gm Sc','FGA','FGM','Fls On','Tot Fouls','Uns. Foul','FTA','FTM',
                  'GS','Losses','-','Mins','Off Rat','+','2CP','Poss PG','DEF','DR%','OFF','OR%','ST%',
@@ -865,7 +870,7 @@ def main():
         for tid, rows in c['roster']:
             roster[tid] = [{'pid': r[0], 'num': r[1], 'dob': r[2], 'age': num(r[3]),
                             'ht': plausible(num(r[4]), 120, 235), 'wt': plausible(num(r[5]), 25, 200),
-                            'pos': r[6], 'nat': r[7]} for r in rows]
+                            'pos': r[6], 'nat': NAT_FIX.get(r[0], r[7])} for r in rows]
 
         # Player stat lines, emitted as schema-ordered arrays (['pid','team'] + PF_KEYS)
         # so the 41 key names aren't repeated 9,424 times in the payload.

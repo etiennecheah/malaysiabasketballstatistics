@@ -184,7 +184,7 @@ function hmRow(g, done) {
   return `<a class="td-row" href="${href}" title="${esc(liveCompName(g.cid))}">
     ${done ? '' : `<span class="td-t"><b>${esc((g.time || 'TBC').replace(/\s?(AM|PM)$/i, ''))}</b><small>${esc(((g.time || '').match(/AM|PM/i) || [''])[0])}</small></span>`}
     <span class="td-tms">${t(g.h, hs, hw)}${t(g.a, as, aw)}</span>
-    <span class="td-m">${done && g.ff ? '<small>Forfeit</small>' : ''}${c ? compCrest(c, 20) : ''}<i class="td-arr">→</i></span></a>`;
+    <span class="td-m">${done && g.ff ? '<small>Forfeit</small>' : ''}${c ? compCrest(c, 38) : ''}<i class="td-arr">→</i></span></a>`;
 }
 function hmByDay(list, done) {
   let last = '', k = 0;

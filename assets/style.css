@@ -8096,4 +8096,7 @@ a.td-feat:hover{ transform:translateY(-3px); box-shadow:var(--shadow-2); text-de
   .clx-t tbody tr:hover td{ background:none; }
   .clx-t tbody tr:hover td.on{ background:color-mix(in oklab, var(--hl-soft) 55%, transparent); }
 }
+/* Today: the competition's mark on each game row, big enough to read (update-119) */
+.td-m .comp-crest{ border-radius:10px; padding:3px; box-shadow:none; }
+@media (max-width:560px){ .td-m .comp-crest{ width:32px !important; height:32px !important; border-radius:8px; } }
 /* <<< NEW LOOK <<< */

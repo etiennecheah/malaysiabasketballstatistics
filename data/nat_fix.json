@@ -1,0 +1,4 @@
+{
+  "_note": "Nationality corrections for roster rows the source got wrong, supplied by the owner: {person id: IOC code}. build_data.py applies them to every roster row of that person (after merges), so the player counts as an import where the site splits local and import.",
+  "2869859": "USA"
+}
