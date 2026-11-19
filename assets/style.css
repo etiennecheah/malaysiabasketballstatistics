@@ -7132,7 +7132,7 @@ a.gb-potg:hover{ transform:translateY(-2px); box-shadow:var(--shadow-2); text-de
 .mbo-st th{ padding:9px 10px; font:700 11px var(--body); letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted); text-align:right; border-bottom:1px solid var(--border); }
 .mbo-st td{ padding:9px 10px; text-align:right; border-bottom:1px solid var(--hair); font-size:14px; }
 .mbo-st tr:last-child td{ border-bottom:0; }
-.mbo-st .l{ text-align:left; }
+.mbo-st th.l, .mbo-st td.l{ text-align:left; }
 .mbo-st th:first-child, .mbo-st td:first-child{ padding-left:18px; width:28px; }
 .mbo-st th:last-child, .mbo-st td:last-child{ padding-right:18px; }
 .mbo-st td.pos{ font:800 18px var(--display); color:var(--text-muted); }
