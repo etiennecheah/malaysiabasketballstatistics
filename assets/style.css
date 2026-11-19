@@ -7245,7 +7245,8 @@ img[src$="#pf95"]{ scale:0.95; }
 .pd-n > span{ display:flex; align-items:center; gap:5px; font-size:13px; color:var(--text-muted); min-width:0; white-space:nowrap; }
 .pd-n .d{ flex:none; }
 .pd-tag{ font:700 10.5px var(--body); letter-spacing:.08em; padding:3px 7px; border-radius:6px; background:var(--surface-alt); color:var(--text-muted); }
-.pd-tag.mbl{ background:var(--hl); color:var(--hl-ink); }
+.pd-tag.mbl{ background:none; padding:0; display:inline-flex; align-items:center; }
+.pd-tag.mbl img{ display:block; height:20px; width:auto; }
 .pd-s{ display:grid; justify-items:end; gap:2px; }
 .pd-s b{ font:800 24px/1 var(--display); font-variant-numeric:tabular-nums; }
 .pd-s small{ font:700 10px var(--body); letter-spacing:.08em; color:var(--text-muted); }
@@ -7278,6 +7279,7 @@ img[src$="#pf95"]{ scale:0.95; }
   .pd-row .pd-n{ grid-column:2; grid-row:1 / span 2; }
   .pd-row .pd-s{ grid-row:1; }
   .pd-row .pd-tag{ grid-column:3 / span 2; grid-row:2; justify-self:end; padding:2px 6px; font-size:9.5px; }
+  .pd-row .pd-tag.mbl{ padding:0; } .pd-tag.mbl img{ height:15px; }
   .pd-s b{ font-size:21px; }
 }
 @media (max-width:360px){ .pd-row{ grid-template-columns:40px minmax(0, 1fr) 34px 38px; gap:8px; padding:10px; } .pd-row .avatar{ width:40px; height:40px; } .pd-s b{ font-size:19px; } }

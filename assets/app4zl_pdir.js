@@ -61,7 +61,9 @@ const PDIR = (() => {
   function row(r, q) {
     const b = r.b, t = r.t, nm = esc(b.name);
     const hl = q ? nm.replace(new RegExp('(' + q.split(/\s+/).filter(Boolean).map(x => esc(x).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'gi'), '<mark>$1</mark>') : nm;
-    const tag = r.scope === 'mbl' ? '<span class="pd-tag mbl" title="MBL career numbers">MBL</span>' : r.scope === 'all' ? '<span class="pd-tag" title="Every competition he has played">All</span>' : '';
+    // the MBL's own mark (a cut-out, no plate) says these are MBL career numbers
+    const mk = (typeof COMPLOGOS !== 'undefined' && (COMPLOGOS['mbl-mark'] || COMPLOGOS.mbl)) || '';
+    const tag = r.scope === 'mbl' ? (mk ? `<span class="pd-tag mbl" title="MBL career numbers"><img src="${mk}" alt="MBL" width="44" height="18" loading="lazy" decoding="async"></span>` : '<span class="pd-tag mbl" title="MBL career numbers">MBL</span>') : r.scope === 'all' ? '<span class="pd-tag" title="Every competition he has played">All</span>' : '';
     return `<li><a class="pd-row" href="#/p/${b.pid}">${avatar(b.pid, b.name)}
       <span class="pd-n"><b>${hl}</b><span>${b.team ? teamMark(b.team) + `<span class="t">${esc(typeof pvCase === 'function' ? pvCase(b.team) : b.team)}</span>` : ''}${b.year ? `<span class="d"> · ${b.year}</span>` : ''}${b.pos ? `<span class="d p"> · ${esc(posName(b.pos))}</span>` : ''}</span></span>
       ${tag}<span class="pd-s"><b>${t.g}</b><small>G</small></span><span class="pd-s"><b>${t.g ? f1(r.ppg) : '–'}</b><small>PPG</small></span>
