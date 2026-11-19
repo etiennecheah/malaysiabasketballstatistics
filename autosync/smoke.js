@@ -74,7 +74,7 @@ function serve(root, base) {
   await page.waitForTimeout(800);
   const home = await page.evaluate(() => ({
     title: (document.querySelector('#hm-games') || {}).textContent || '',
-    tiles: document.querySelectorAll('#hm-games .hmg-res .hmg-row').length,
+    tiles: document.querySelectorAll('#hm-games .hmg-res .hmg-row, #hm-games .td-res .td-row').length,
     comps: typeof COMPS !== 'undefined' ? COMPS.length : 0,
     faces: typeof DB !== 'undefined' ? Object.keys(DB.photos || {}).filter(k => !(DB.avatars && DB.avatars[k])).length : -1,
     photos: typeof DB !== 'undefined' ? Object.keys(DB.photos || {}).length : 0,

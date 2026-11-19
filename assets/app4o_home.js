@@ -1,9 +1,14 @@
 /* =========================================================================
-   Home — the front door.
+   Today — the front door (update-115).
 
-   Two things: the games box at the top (what is on or next, with a countdown, and the
-   latest results — the site's only list of games since update-51) and the doors into
-   the rest of the site. Live games repaint #lv-hero-side (app4n_live.js).
+   A quiet page with one job: the games. A welcome at the top (a greeting for the
+   time of day in Malaysia, the state of play, and a way into the tour), the next
+   tip-off with a ticking countdown (or the games on now), then two lists side by
+   side: what is coming up and the latest results. Nothing else.
+
+   Live games repaint #lv-hero-side and #hm-upn by themselves (app4n_live.js).
+   The welcome guide (app6c_guide.js) still opens on a first visit, and the
+   "Take the tour" button in the welcome brings it back.
    ========================================================================= */
 
 const HM = { cache: {} };
@@ -40,41 +45,9 @@ function hmCountdown(ms) {
   const d = Math.floor(ms / HM_DAY), h = Math.floor(ms % HM_DAY / 3600e3), m = Math.floor(ms % 3600e3 / 60e3);
   return 'in ' + (d ? d + ' d ' + h + ' h' : h ? h + ' h ' + m + ' min' : m + ' min');
 }
-/* ---------------------------- sections ---------------------------- */
-function renderHome() {
-  return `<div class="hm"><h1 class="sr-only">HoopStats MY: Malaysian basketball statistics</h1>
-    ${typeof SGX !== 'undefined' && SGX.active() ? SGX.render() : typeof MHX !== 'undefined' ? MHX.render() : ''}
-    <section class="hm-hero">
-      <div class="bloom" style="--team:${teamBloom((hmUpcoming()[0] || {}).h || '')}"><i class="b1"></i><i class="b2"></i></div><div class="grain"></div>
-      <div class="hm-hero-in hmg" id="hm-games">${hmGamesInner()}</div>
-    </section>
-    ${hmExplore()}
-  </div>`;
-}
-
-function hmSecHead(t, link, label) {
-  return `<div class="hm-sec-h"><h2>${t}</h2>${link ? `<a href="${link}">${label} →</a>` : ''}</div>`;
-}
-
-function hmExplore() {
-  const items = [
-    ['#/compare', 'Compare', 'Put any two players side by side, in a competition they both played.'],
-    ['#/teams', 'Teams', 'Every club, state and national side — crests, rosters and records.'],
-    ['#/formulas', 'Formulas', 'What every abbreviation means and where each number comes from.'],
-  ];
-  return `<section class="hm-sec">${hmSecHead('Explore', '', '')}
-    <div class="hm-explore">${items.map(([h, t, d]) => `<a class="card hm-door" href="${h}"><b>${t}</b><span>${esc(d)}</span><i>→</i></a>`).join('')}</div></section>`;
-}
-
-/* ---------------------------- the games box (update-51) ----------------------------
-   The top of Home is the site's only list of games now that the Games page is gone:
-   Up next (the game being played, else the next tip-off with a countdown, then the
-   fixtures after it) and Results (newest first, by competition, more on request).
-   The featured card sits in #lv-hero-side, which the live layer repaints by itself. */
-HM.box = { show: 'up', comp: '', nRes: 40 };   // results drawn so far; more are drawn as the list nears its end
 const HM_TBD = n => /^(to be (determined|decided|confirmed)|tbd|tba|tbc)$/i.test(String(n || '').trim());
 const hmTeamName = n => HM_TBD(n) ? 'To be decided' : n;
-const hmMark = (n, sz) => HM_TBD(n) ? `<span class="hmg-tbd" style="width:${sz}px;height:${sz}px"></span>` : crest(n, sz);
+const hmMark = (n, sz) => HM_TBD(n) ? `<span class="td-tbd" style="width:${sz}px;height:${sz}px"></span>` : crest(n, sz);
 // every fixture still to come, the to-be-decided ones included (they show as such)
 function hmFixtures() {
   const now = liveNow(), rows = [];
@@ -87,16 +60,57 @@ function hmFixtures() {
 }
 const hmDayKey = g => { const s = liveStart(g); return s == null ? g.date || '' : new Date(s + 8 * 3600e3).toISOString().slice(0, 10); };
 const hmDayLabel = g => hmDate(g, true);
-function hmCdBoxes(ms) {
-  if (ms <= 0) return '<span class="hmg-soon"><i></i>Tip-off</span>';
-  const d = Math.floor(ms / HM_DAY), h = Math.floor(ms % HM_DAY / 3600e3), m = Math.floor(ms % 3600e3 / 60e3);
-  return [[d, 'Days'], [h, 'Hrs'], [m, 'Min']].map(([v, l]) => `<span><b>${String(v).padStart(2, '0')}</b>${l}</span>`).join('');
+// "Today", "Tomorrow", "In 3 days" for a fixture; "Yesterday" for a result
+function hmRel(g) {
+  const k = hmDayKey(g); if (!k) return '';
+  const today = new Date(liveNow() + 8 * 3600e3).toISOString().slice(0, 10);
+  const n = Math.round((Date.parse(k) - Date.parse(today)) / HM_DAY);
+  return n === 0 ? 'Today' : n === 1 ? 'Tomorrow' : n === -1 ? 'Yesterday' : n > 1 && n < 7 ? 'In ' + n + ' days' : '';
 }
-/* Several games on at once (update-89): one red card each, live games first in tip-off order, then
-   a game the feed has just finished in grey. A score that changed since the last
-   poll rolls up; a card slides in only the first time it is drawn. */
+
+/* ---------------------------- the page ---------------------------- */
+HM.box = { show: 'up', nUp: 6, nRes: 8 };
+function hmGreeting() {
+  const h = new Date(liveNow() + 8 * 3600e3).getUTCHours();
+  return h < 5 ? 'Good evening' : h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
+}
+function hmToday() {
+  const d = new Date(liveNow() + 8 * 3600e3);
+  return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][d.getUTCDay()] + ', ' + d.getUTCDate() + ' '
+    + ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][d.getUTCMonth()];
+}
+// the line under the greeting: what is happening right now
+function hmPulse() {
+  const nLive = liveList('live').length;
+  if (nLive) return `<button type="button" class="td-pill live" data-td-jump="lv-hero-side"><i></i>${nLive} game${nLive === 1 ? '' : 's'} live now</button>`;
+  const g = hmUpcoming()[0];
+  if (g) { const r = hmRel(g); return `<button type="button" class="td-pill" data-td-jump="lv-hero-side"><i></i>Next tip-off ${r ? r.toLowerCase() : esc(hmDayLabel(g))}${g.time ? ', ' + esc(g.time) : ''}</button>`; }
+  return '';
+}
+const hmWords = (t, base) => t.split(' ').map((w, i) => `<span class="w" style="--d:${(base + i * 0.07).toFixed(2)}s">${w}</span>`).join(' ');
+function renderHome() {
+  const n = COMPS.reduce((a, c) => a + (c.nDone || 0), 0);
+  return `<div class="td"><h1 class="sr-only">HoopStats MY: Malaysian basketball statistics</h1>
+    <section class="td-hero" aria-label="Welcome">
+      <svg class="td-court" viewBox="0 0 600 300" aria-hidden="true" preserveAspectRatio="xMaxYMid slice">
+        <g class="lines"><path d="M600 20 H360 V280 H600"/><path d="M600 95 H470 V205 H600"/><circle cx="470" cy="150" r="55"/><path d="M600 25 H560 A125 125 0 0 0 560 275 H600"/><circle cx="572" cy="150" r="9"/><path d="M360 95 A55 55 0 0 0 360 205"/></g>
+        <path class="arc" d="M150 250 Q 360 -60 568 142"/><circle class="ball" r="9" cx="0" cy="0"/>
+      </svg>
+      <div class="td-hero-in">
+        <span class="td-date">${hmToday()}</span>
+        <p class="td-greet">${hmWords(hmGreeting() + '.', 0.05)}</p>
+        <p class="td-sub">${hmWords('Every Malaysian basketball game, in one place.', 0.25)}</p>
+        <div class="td-acts"><span class="td-pulse" id="td-pulse">${hmPulse()}</span><button type="button" class="td-tour" data-hsg-open><span class="td-tour-ic" aria-hidden="true">?</span><span><b>New here?</b> Take the one-minute tour</span></button></div>
+        <span class="td-since">${n.toLocaleString()} games on record since ${Math.min(...COMPS.map(c => +c.year).filter(Boolean))}</span>
+      </div>
+    </section>
+    <div class="td-feat-wrap" id="lv-hero-side">${hmHeroSide()}</div>
+    <div class="td-games" id="hm-games">${hmGamesInner()}</div>
+  </div>`;
+}
+
+/* ---------------------------- the spotlight: on now, or next ---------------------------- */
 const HM_LV = { seen: new Set(), score: {} };
-// games on now first (by tip-off), then the ones the feed has just finished
 const hmLiveGames = () => [...liveList('live'), ...liveList('final')].filter(x => x.data)
   .sort((p, q) => (p.state === 'final') - (q.state === 'final') || (liveStart(p.g) || 0) - (liveStart(q.g) || 0));
 // how far the game has run, 0–1, from the period and the clock (ten-minute quarters)
@@ -117,115 +131,103 @@ function hmLiveCard(x, i) {
   const d = x.data, [h, a] = d.teams, fin = d.status === 'final', c = COMP_BY_ID[x.g.cid], mid = x.g.mid;
   const first = !HM_LV.seen.has(mid); HM_LV.seen.add(mid);
   const hl = h.score > a.score, al = a.score > h.score;
-  const clk = fin ? 'Final' : liveClock(d);
-  return `<a class="lvc${fin ? ' fin' : ''}${first ? ' in' : ''}" href="#/live/${mid}" style="--p:${hmLvProgress(d).toFixed(3)};animation-delay:${i * 0.08}s">
-    <div class="lvc-k">${c ? compCrest(c, 22) : ''}<span>${esc(liveCompName(x.g.cid))}</span><em>${fin ? 'Final' : '<i></i>Live'}</em></div>
-    <div class="lvc-m">
-      <div class="lvc-s${hl ? ' lead' : ''}">${crest(h.name, 40)}<b>${esc(h.name)}</b></div>
-      <div class="lvc-sc"><span class="${hl ? 'lead' : ''}">${hmLvScore(mid, 0, h.score, x.at)}</span><i>–</i><span class="${al ? 'lead' : ''}">${hmLvScore(mid, 1, a.score, x.at)}</span></div>
-      <div class="lvc-s r${al ? ' lead' : ''}">${crest(a.name, 40)}<b>${esc(a.name)}</b></div>
+  return `<a class="td-live${fin ? ' fin' : ''}${first ? ' in' : ''}" href="#/live/${mid}" style="--p:${hmLvProgress(d).toFixed(3)};--i:${i}">
+    <div class="td-fk">${c ? compCrest(c, 20) : ''}<span>${esc(liveCompName(x.g.cid))}</span><em class="${fin ? 'fin' : 'on'}">${fin ? 'Final' : '<i></i>Live'}</em></div>
+    <div class="td-lm">
+      <div class="td-ls${hl ? ' lead' : ''}">${crest(h.name, 40)}<b>${esc(h.name)}</b><strong>${hmLvScore(mid, 0, h.score, x.at)}</strong></div>
+      <div class="td-ls${al ? ' lead' : ''}">${crest(a.name, 40)}<b>${esc(a.name)}</b><strong>${hmLvScore(mid, 1, a.score, x.at)}</strong></div>
     </div>
-    <div class="lvc-f"><span class="lvc-clk">${esc(clk)}</span>${x.g.time ? `<span class="lvc-tip">Tip-off ${esc(x.g.time)}</span>` : ''}<span class="lvc-go">${fin ? 'Box score and plays' : 'Follow the game'}</span></div>
-    ${fin ? '' : '<span class="lvc-bar"><i></i></span>'}</a>`;
+    <div class="td-lf"><span>${esc(fin ? 'Final' : liveClock(d))}</span><span class="go">${fin ? 'Box score and plays' : 'Follow the game'}<i>→</i></span></div>
+    ${fin ? '' : '<span class="td-lbar"><i></i></span>'}</a>`;
 }
-// "3 live · 7 fixtures"
+// "3 live · 7 games to come"
 function hmUpCount(nLater, feat) {
   const nLive = liveList('live').length, n = nLater + Math.max(nLive, feat ? 1 : 0);
-  return `${nLive > 1 ? `<em class="lvn">${nLive} live</em> · ` : ''}${n} fixture${n === 1 ? '' : 's'}`;
+  return `${nLive ? `<em class="lvn">${nLive} live</em> · ` : ''}${n} to come`;
 }
 function hmUpCountNow() {
   const feat = (liveList('live')[0] || liveList('final')[0] || {}).g || hmUpcoming()[0];
   return hmUpCount(hmFixtures().filter(g => !feat || g.mid !== feat.mid).filter(g => !(LIVE.games[g.mid] && LIVE.games[g.mid].data)).length, feat);
 }
-// the featured card: a live game, a game the feed has just finished, else the next tip-off
+function hmCdBoxes(ms) {
+  if (ms <= 0) return '<span class="td-soon"><i></i>Tip-off</span>';
+  const d = Math.floor(ms / HM_DAY), h = Math.floor(ms % HM_DAY / 3600e3), m = Math.floor(ms % 3600e3 / 60e3), s = Math.floor(ms % 60e3 / 1e3);
+  return [[d, 'days'], [h, 'hrs'], [m, 'min'], [s, 'sec']].map(([v, l]) => `<span class="td-cu" data-u="${l}"><b>${String(v).padStart(2, '0')}</b><small>${l}</small></span>`).join('');
+}
+// the spotlight: the games on now, a game the feed has just finished, else the next tip-off
 function hmHeroSide() {
+  // the welcome's status line follows the live layer too
+  setTimeout(() => { const p = document.getElementById('td-pulse'); if (p) p.innerHTML = hmPulse(); }, 0);
   const many = hmLiveGames();
-  if (many.length > 1) return `<div class="lvs">${many.map(hmLiveCard).join('')}</div>`;
-  const on = liveList('live')[0] || liveList('final')[0];
-  if (on && on.data) {
-    const d = on.data, [h, a] = d.teams, fin = d.status === 'final', c = COMP_BY_ID[on.g.cid];
-    return `<a class="hmg-feat hmg-feat-on" href="#/live/${on.g.mid}">
-      <div class="hmg-feat-k">${c ? compCrest(c, 22) : ''}<span>${esc(liveCompName(on.g.cid))}</span>${fin ? '<em class="hmg-fin">Final</em>' : '<em class="hmg-live"><i></i>Live</em>'}</div>
-      <div class="hmg-match">${[h, a].map((t, i) => `<div class="hmg-side${fin && t.score > [h, a][1 - i].score ? ' w' : ''}">${crest(t.name, 60)}<b>${esc(t.name)}</b><strong>${t.score}</strong></div>`).join('<div class="hmg-vs">–</div>')}</div>
-      <div class="hmg-feat-f"><span>${esc(liveClock(d))}</span><span class="hmg-go">${fin ? 'Box score and plays' : 'Follow the game'} →</span></div></a>`;
-  }
+  if (many.length) return `<div class="td-lives${many.length > 1 ? ' many' : ''}">${many.map(hmLiveCard).join('')}</div>`;
   const g = hmUpcoming()[0];
-  if (!g) return `<div class="hmg-empty">No fixtures published yet. New games show here as soon as an organiser lists them.</div>`;
-  const c = COMP_BY_ID[g.cid], s = liveStart(g);
-  return `<a class="hmg-feat" href="#/c/${g.cid}/schedule">
-    <div class="hmg-feat-k">${c ? compCrest(c, 22) : ''}<span>${esc(liveCompName(g.cid))}</span><em>Next game</em></div>
-    <div class="hmg-match"><div class="hmg-side">${crest(g.h, 60)}<b>${esc(g.h)}</b></div><div class="hmg-vs">VS</div><div class="hmg-side">${crest(g.a, 60)}<b>${esc(g.a)}</b></div></div>
-    <div class="hmg-feat-f"><span>${esc(hmDayLabel(g))}${g.time ? ' · ' + esc(g.time) : ''}${g.venue ? `<small>${esc(g.venue)}</small>` : ''}</span>
-      <span class="hmg-cd" data-cdbox="${s}">${hmCdBoxes(s - liveNow())}</span></div></a>`;
+  if (!g) return `<div class="td-feat td-none"><b>No fixtures published yet</b><span>New games show here as soon as an organiser lists them.</span></div>`;
+  const c = COMP_BY_ID[g.cid], s = liveStart(g), r = hmRel(g);
+  const side = (n, cls) => `<div class="td-side ${cls}">${hmMark(n, 72)}<b>${esc(hmTeamName(n))}</b></div>`;
+  return `<a class="td-feat" href="#/c/${g.cid}/schedule" style="--th:${teamBloom(g.h)};--ta:${teamBloom(g.a)}">
+    <div class="td-fk">${c ? compCrest(c, 20) : ''}<span>${esc(liveCompName(g.cid))}</span><em>Next game${r ? ' · ' + r : ''}</em></div>
+    <div class="td-match">${side(g.h, 'h')}<div class="td-vs"><span>vs</span></div>${side(g.a, 'a')}</div>
+    <div class="td-ff"><span class="td-when"><b>${esc(hmDayLabel(g))}${g.time ? ' · ' + esc(g.time) : ''}</b>${g.venue ? `<small>${esc(g.venue)}</small>` : ''}</span>
+      <span class="td-cd" data-cdbox="${s}" aria-label="Countdown to tip-off">${hmCdBoxes(s - liveNow())}</span></div></a>`;
 }
-function hmTeams(g, hs, as) {
-  const done = hs != null, hw = done && +hs > +as, aw = done && +as > +hs;
-  const t = (n, sc, w) => `<span class="hmg-tm${w ? ' w' : ''}${HM_TBD(n) ? ' tbd' : ''}">${hmMark(n, 22)}<span class="nm">${esc(hmTeamName(n))}</span>${done ? `<b>${sc == null ? '' : sc}</b>` : ''}</span>`;
-  return `<span class="hmg-tms">${t(g.h, hs, hw)}${t(g.a, as, aw)}</span>`;
+
+/* ---------------------------- the two lists ---------------------------- */
+function hmRow(g, done) {
+  const c = COMP_BY_ID[g.cid], hs = done ? g.hs : null, as = done ? g.as : null;
+  const hw = done && +hs > +as, aw = done && +as > +hs;
+  const t = (n, sc, w) => `<span class="td-tm${w ? ' w' : ''}${HM_TBD(n) ? ' tbd' : ''}">${hmMark(n, 26)}<span class="nm">${esc(hmTeamName(n))}</span>${done ? `<b>${sc == null ? '' : sc}</b>` : ''}</span>`;
+  const href = done ? (g.box ? `#/c/${g.cid}/box/${g.mid}` : `#/c/${g.cid}`) : `#/c/${g.cid}/schedule`;
+  return `<a class="td-row" href="${href}" title="${esc(liveCompName(g.cid))}">
+    ${done ? '' : `<span class="td-t"><b>${esc((g.time || 'TBC').replace(/\s?(AM|PM)$/i, ''))}</b><small>${esc(((g.time || '').match(/AM|PM/i) || [''])[0])}</small></span>`}
+    <span class="td-tms">${t(g.h, hs, hw)}${t(g.a, as, aw)}</span>
+    <span class="td-m">${done && g.ff ? '<small>Forfeit</small>' : ''}${c ? compCrest(c, 20) : ''}<i class="td-arr">→</i></span></a>`;
 }
-function hmByDay(list, row) {
-  let last = '';
-  return list.map(g => { const k = hmDayKey(g), head = k !== last ? `<div class="hmg-day">${esc(hmDayLabel(g))}</div>` : ''; last = k; return head + row(g); }).join('');
+function hmByDay(list, done) {
+  let last = '', k = 0;
+  return list.map(g => {
+    const key = hmDayKey(g), r = hmRel(g);
+    const head = key !== last ? `<div class="td-day"><b>${esc(hmDayLabel(g))}</b>${r ? `<span>${r}</span>` : ''}</div>` : '';
+    last = key;
+    return head + hmRow(g, done).replace('class="td-row"', `class="td-row" style="--i:${Math.min(k++, 12)}"`);
+  }).join('');
 }
 function hmGamesInner() {
   const B = HM.box, feat = (liveList('live')[0] || liveList('final')[0] || {}).g || hmUpcoming()[0];
   const later = hmFixtures().filter(g => !feat || g.mid !== feat.mid).filter(g => !(LIVE.games[g.mid] && LIVE.games[g.mid].data));
-  const done = hmCompleted(), comps = [...new Set(done.slice(0, 400).map(g => g.cid))].map(id => COMP_BY_ID[id]).filter(Boolean)
-    .sort((a, b) => (a.label || a.name).localeCompare(b.label || b.name));
-  const res = done.filter(g => !B.comp || g.cid === B.comp), shownRes = res.slice(0, B.nRes);
-  const logo = cid => { const c = COMP_BY_ID[cid]; return c ? compCrest(c, 20) : ''; };
-  return `<div class="hmg-head"><div class="hm-eyebrow"><span class="hm-eyebrow-dot"></span>HoopStatsMY · Games</div>
-      <div class="hmg-tabs" role="group" aria-label="Show"><button data-hmshow="up" aria-pressed="${B.show === 'up'}">Upcoming</button><button data-hmshow="res" aria-pressed="${B.show === 'res'}">Results</button></div></div>
-    <div class="hmg-cols" data-show="${B.show}">
-      <section class="hmg-up" aria-label="Upcoming games">
-        <div class="hmg-col-h"><h2>Up next</h2><span id="hm-upn">${hmUpCount(later.length, feat)}</span></div>
-        <div id="lv-hero-side">${hmHeroSide()}</div>
-        ${later.length ? `<div class="hmg-scroll${later.length > 3 ? ' more' : ''}" tabindex="0" aria-label="Later fixtures"><div class="hmg-list">${hmByDay(later, g => `<a class="hmg-row" href="#/c/${g.cid}/schedule">${hmTeams(g)}<span class="hmg-meta"><b>${esc(g.time || 'Time TBC')}</b>${logo(g.cid)}</span></a>`)}</div></div>` : ''}
+  const res = hmCompleted();
+  const up = later.slice(0, B.nUp), rs = res.slice(0, B.nRes);
+  return `<div class="td-switch" role="group" aria-label="Show"><button type="button" data-hmshow="up" aria-pressed="${B.show === 'up'}">Coming up</button><button type="button" data-hmshow="res" aria-pressed="${B.show === 'res'}">Latest results</button><span class="td-sw-ind" aria-hidden="true"></span></div>
+    <div class="td-cols" data-show="${B.show}">
+      <section class="td-col td-up" aria-label="Coming up">
+        <header class="td-ch"><h2>Coming up</h2><span id="hm-upn">${hmUpCount(later.length, feat)}</span></header>
+        ${up.length ? `<div class="td-list">${hmByDay(up, false)}</div>${later.length > up.length ? `<button type="button" class="td-more" data-hmmore="up">Show ${Math.min(8, later.length - up.length)} more<i>↓</i></button>` : ''}`
+          : '<div class="td-empty">Nothing else is scheduled yet.</div>'}
       </section>
-      <section class="hmg-res" aria-label="Results">
-        <div class="hmg-col-h"><h2>Results</h2>
-          <select class="hmg-sel" data-hmcomp aria-label="Competition"><option value="">All competitions</option>${comps.map(c => `<option value="${esc(c.id)}" ${c.id === B.comp ? 'selected' : ''}>${esc(c.label || c.name)}</option>`).join('')}</select></div>
-        ${shownRes.length ? `<div class="hmg-scroll hmg-rs${res.length > 6 ? ' more' : ''}" tabindex="0" aria-label="Results">${hmResList(shownRes, res.length)}</div>`
-          : '<div class="hmg-empty">No results yet.</div>'}
+      <section class="td-col td-res hmg-res" aria-label="Latest results">
+        <header class="td-ch"><h2>Latest results</h2><span>newest first</span></header>
+        ${rs.length ? `<div class="td-list">${hmByDay(rs, true)}</div>${res.length > rs.length ? `<button type="button" class="td-more" data-hmmore="res">Show ${Math.min(10, res.length - rs.length)} more<i>↓</i></button>` : ''}`
+          : '<div class="td-empty">No results yet.</div>'}
       </section>
     </div>`;
 }
-// the results, newest first; the list ends with a quiet note once every result is drawn
-function hmResList(shown, total) {
-  const logo = cid => { const c = COMP_BY_ID[cid]; return c ? compCrest(c, 20) : ''; };
-  return `<div class="hmg-list">${hmByDay(shown, g => `<a class="hmg-row" href="${g.box ? `#/c/${g.cid}/box/${g.mid}` : `#/c/${g.cid}`}" title="${esc(liveCompName(g.cid))}">${hmTeams(g, g.hs, g.as)}<span class="hmg-meta"><b>${logo(g.cid)}${g.ff ? 'Forfeit' : 'Final'}</b><span class="${g.box ? 'hmg-box' : ''}">${g.box ? 'Box score →' : 'No box score'}</span></span></a>`)}</div>`
-    + (shown.length >= total ? `<div class="hmg-end">${total.toLocaleString()} result${total === 1 ? '' : 's'} · that is all of them</div>` : '<div class="hmg-end">Loading more…</div>');
-}
-// a repaint keeps the place the reader had scrolled each list to
-const hmBoxPaint = (keepRes = true) => {
-  const el = document.getElementById('hm-games'); if (!el) return;
-  const tops = [...el.querySelectorAll('.hmg-scroll')].map(s => [s.classList.contains('hmg-rs'), s.scrollTop]);
-  el.innerHTML = hmGamesInner();
-  el.querySelectorAll('.hmg-scroll').forEach(s => { const t = tops.find(x => x[0] === s.classList.contains('hmg-rs'));
-    if (t && (keepRes || !t[0])) s.scrollTop = t[1]; hmScrollEnd(s); });
-};
-// the fade at the foot of a list goes once its last row is in view
-const hmScrollEnd = el => el.classList.toggle('end', el.scrollTop + el.clientHeight >= el.scrollHeight - 4);
-document.addEventListener('scroll', e => {
-  const s = e.target; if (!s.classList || !s.classList.contains('hmg-scroll')) return;
-  hmScrollEnd(s);
-  // near the end of the results: draw the next forty in place
-  if (s.classList.contains('hmg-rs') && s.scrollTop + s.clientHeight >= s.scrollHeight - 300) {
-    const B = HM.box, res = hmCompleted().filter(g => !B.comp || g.cid === B.comp);
-    if (B.nRes < res.length) { B.nRes += 40; const top = s.scrollTop; s.innerHTML = hmResList(res.slice(0, B.nRes), res.length); s.scrollTop = top; }
-  }
-}, true);
+const hmBoxPaint = () => { const el = document.getElementById('hm-games'); if (el) { el.innerHTML = hmGamesInner(); el.classList.add('again'); } };
 document.addEventListener('click', e => {
-  const sh = e.target.closest && e.target.closest('[data-hmshow]');
-  if (sh) { HM.box.show = sh.dataset.hmshow; hmBoxPaint(); return; }
-});
-document.addEventListener('change', e => {
-  if (!e.target.matches || !e.target.matches('[data-hmcomp]')) return;
-  HM.box.comp = e.target.value; HM.box.nRes = 40; hmBoxPaint(false);
+  const t = e.target.closest && e.target.closest('[data-hmshow], [data-hmmore], [data-td-jump]'); if (!t) return;
+  const d = t.dataset;
+  if (d.hmshow) { HM.box.show = d.hmshow; const c = document.querySelector('.td-cols'); if (c) c.dataset.show = d.hmshow;
+    document.querySelectorAll('[data-hmshow]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.hmshow === d.hmshow))); return; }
+  if (d.hmmore) { if (d.hmmore === 'up') HM.box.nUp += 8; else HM.box.nRes += 10; hmBoxPaint(); return; }
+  if (d.tdJump) { e.preventDefault(); const el = document.getElementById(d.tdJump); if (el) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' }); }
 });
 
-/* the countdown ticks while Home is open */
+/* the countdown ticks every second while Today is open; a digit that changes rolls in */
 setInterval(() => {
   document.querySelectorAll('[data-countdown]').forEach(el => { el.textContent = hmCountdown(+el.dataset.countdown - liveNow()); });
-  document.querySelectorAll('[data-cdbox]').forEach(el => { el.innerHTML = hmCdBoxes(+el.dataset.cdbox - liveNow()); });
-}, 20e3);
+  document.querySelectorAll('[data-cdbox]').forEach(el => {
+    const tmp = document.createElement('span'); tmp.innerHTML = hmCdBoxes(+el.dataset.cdbox - liveNow());
+    const now = el.querySelectorAll('.td-cu'), next = tmp.querySelectorAll('.td-cu');
+    if (now.length !== next.length) { el.innerHTML = tmp.innerHTML; return; }
+    next.forEach((n, i) => { const b = now[i].querySelector('b'), v = n.querySelector('b').textContent;
+      if (b.textContent !== v) { b.textContent = v; now[i].classList.remove('tick'); void now[i].offsetWidth; now[i].classList.add('tick'); } });
+  });
+}, 1000);
