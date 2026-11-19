@@ -6987,7 +6987,7 @@ html.app body::before{ background:var(--bg); }
 .hsg-x svg, .hsg-in .i svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
 .hsg-hero h2{ margin:12px 0 0; max-width:14ch; font:800 clamp(36px, 6vw, 54px)/.95 var(--display); text-transform:uppercase; letter-spacing:.01em; }
 .hsg-hero h2:focus{ outline:none; }
-.hsg-hero h2 em{ font-style:normal; white-space:nowrap; background:var(--hl); color:var(--hl-ink); padding:0 6px; border-radius:4px; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+.hsg-hero h2 em{ display:inline-block; margin-top:.1em; padding:.07em .14em .01em; line-height:.95; font-style:normal; white-space:nowrap; background:var(--hl); color:var(--hl-ink); border-radius:4px; }
 .hsg-hero p{ margin:12px 0 0; max-width:52ch; color:#c3c8ce; font-size:15px; line-height:1.5; }
 .hsg-facts{ display:flex; flex-wrap:wrap; gap:8px 26px; margin-top:18px; }
 .hsg-facts div{ display:grid; }
