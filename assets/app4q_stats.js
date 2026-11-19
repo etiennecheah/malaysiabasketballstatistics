@@ -584,7 +584,7 @@ const STATS = (function () {
       wire(p, S, draw, views);
       draw();
     }
-    return { S, draw, mount, current, measure, tmeasure, tally };
+    return { S, draw, mount, current, measure, tmeasure, tally, views, BY, COMPS, TIME };
   })();
 
   // ---- the page shells ---------------------------------------------------------------
@@ -712,11 +712,12 @@ const STATS = (function () {
     PAGE = which === 'clutch' ? 'clutch' : 'lineups';
     const mod = PAGE === 'clutch' ? CL : LU;
     if (PAGE === 'lineups' && mod.S && typeof LUX !== 'undefined') return LUX.render();
+    if (PAGE === 'clutch' && mod.S && typeof CLX !== 'undefined') return CLX.render();
     if (!mod.S) return `<div class="page st-page"><h1 class="page-title">${PAGE === 'clutch' ? 'Clutch' : 'Lineups'}</h1>
       <div class="card"><div class="empty-row"><span class="empty-dot"></span>No competition has play-by-play complete enough for this page yet.</div></div></div>`;
     return `<div class="page st-page" id="st-root">${PAGE === 'clutch' ? clutchHTML() : lineupsHTML()}</div>`;
   }
-  function redraw() { if (el('lx-root') && typeof LUX !== 'undefined') LUX.draw(); else if (el('st-root')) (PAGE === 'clutch' ? CL : LU).draw(); }
+  function redraw() { if (el('lx-root') && typeof LUX !== 'undefined') LUX.draw(); else if (el('clx-root') && typeof CLX !== 'undefined') CLX.draw(); else if (el('st-root')) (PAGE === 'clutch' ? CL : LU).draw(); }
 
   // ---- the Stats menu in the site bar ---------------------------------------------------
   // The menu hangs from the bar itself, not from the row of links (which scrolls sideways
@@ -749,10 +750,11 @@ const STATS = (function () {
     if (links && btn) {
       links.addEventListener('scroll', () => { const m = el('st-menu'); if (m && !m.hidden) openMenu(true); });
       // on a phone the row of links scrolls sideways: start with the Stats tab in view when it is the page
-      if ((el('st-root') || el('lx-root')) && links.scrollWidth > links.clientWidth)
+      if ((el('st-root') || el('lx-root') || el('clx-root')) && links.scrollWidth > links.clientWidth)
         links.scrollLeft = Math.max(0, btn.offsetLeft - links.offsetLeft - (links.clientWidth - btn.offsetWidth) / 2);
     }
     if (el('lx-root') && typeof LUX !== 'undefined') LUX.mount();
+    else if (el('clx-root') && typeof CLX !== 'undefined') CLX.mount();
     else if (el('st-root')) (PAGE === 'clutch' ? CL : LU).mount();
   }
   const navButton = active => `<button class="nav-link st-navbtn ${active ? 'active' : ''}" id="st-navbtn" aria-haspopup="true" aria-expanded="false" aria-controls="st-menu">Tools<span class="st-caret" aria-hidden="true">▼</span></button>`;

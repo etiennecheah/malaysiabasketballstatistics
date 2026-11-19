@@ -103,7 +103,7 @@ function serve(root, base) {
   if (!pcards) errors.push('Players page shows no players');
 
   // the Stats pages pull one file per competition from stats/: both must fill their tables
-  for (const [route, body] of [['/stats/lineups', 'lx-tbody'], ['/stats/clutch', 'st-cl-tbody']]) {
+  for (const [route, body] of [['/stats/lineups', 'lx-tbody'], ['/stats/clutch', 'clx-tbody']]) {
     await go(route);
     let rows = 0;
     for (let i = 0; i < 40 && !rows; i++) {
