@@ -71,7 +71,8 @@ const CLX = (() => {
           </div></div></div>
         </div>
         <div class="clx-top" id="clx-top"></div>
-        <div class="lx-th"><div><h2 id="clx-count"></h2><p id="clx-sorted"></p></div><div id="clx-views"></div></div>
+        <div class="lx-th"><div><h2 id="clx-count"></h2><p id="clx-sorted"></p></div><div id="clx-views"></div>
+          <div class="clx-sortm"><label><span>Sort by</span><select id="clx-sortsel" class="lx-sel"></select></label><button type="button" class="lx-btn" id="clx-dir" data-clx-dir></button></div></div>
         <section class="lx-card lx-tablecard"><div class="lx-scroll"><table class="lx-t clx-t"><thead id="clx-thead"></thead><tbody id="clx-tbody"></tbody></table></div>
           <div class="lx-foot"><span id="clx-cov"></span><span id="clx-more"></span></div></section>
         <details class="lx-card lx-how"><summary>How clutch time is counted, and what each column means</summary><div class="lx-howb"><p id="clx-gl-intro"></p><div class="lx-check" id="clx-check"></div><dl class="lx-gl" id="clx-gl"></dl></div></details>
@@ -107,7 +108,8 @@ const CLX = (() => {
   const DEF = { time: 300, diff: 5, ab: 'any', period: 'all', outcome: 'all', team: '', vs: '', pos: '', start: 'all', min: 0, gp: 1, q: '' };
   function onChange(e) {
     const s = S(), t = e.target;
-    if (t.id === 'clx-season') { s.season = +t.value; s.team = s.vs = ''; fillComp(); ST().setLast(s.cid); }
+    if (t.id === 'clx-sortsel') { const col = L().views()[s.view].cols.find(x => x.key === t.value); if (!col) return; s.sort = col.key; s.dir = col.low ? 1 : -1; }
+    else if (t.id === 'clx-season') { s.season = +t.value; s.team = s.vs = ''; fillComp(); ST().setLast(s.cid); }
     else if (t.id === 'clx-comp') { s.cid = t.value; s.team = s.vs = ''; ST().setLast(s.cid); }
     else { const f = FIELDS.find(x => x[1] === t.id); if (!f || t.type === 'search' || t.type === 'number') return; s[f[0]] = f[2] ? +t.value : t.value; }
     SHOW.n = 25; draw();
@@ -129,6 +131,7 @@ const CLX = (() => {
     else if (d.clxView) { s.view = d.clxView; const V = L().views()[s.view]; if (!V.cols.some(x => x.key === s.sort)) { s.sort = V.first || 'min'; s.dir = -1; } }
     else if (d.clxSort) { const V = L().views()[s.view], col = V.cols.find(x => x.key === d.clxSort); const k = col ? col.key : (V.first || 'min'); if (s.sort === k) s.dir = -s.dir; else { s.sort = k; s.dir = col && col.low ? 1 : -1; } }
     else if (d.clxClear) { if (d.clxClear === 'all') Object.assign(s, DEF); else s[d.clxClear] = DEF[d.clxClear]; syncInputs(); }
+    else if (d.clxDir != null) s.dir = -s.dir;
     else if (d.clxMore != null) { SHOW.n += 25; draw(); return; }
     else if (d.clxFocus) { const r = $('clx-tbody'); if (r) r.closest('section').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }); return; }
     else return;
@@ -203,8 +206,10 @@ const CLX = (() => {
       const lead = isP
         ? `<span class="lx-who"><i class="clx-rk">${k + 1}</i>${face(d, r.pi)}<span class="lx-nm"><b>${pname(d, r.pi)}</b><small>${esc(tn)}${d.players[r.pi][2] ? ' · ' + esc(d.players[r.pi][2]) : ''}${d.players[r.pi][3] ? ' · ' + (c.year - d.players[r.pi][3]) : ''}</small></span></span>`
         : `<span class="lx-who"><i class="clx-rk">${k + 1}</i>${crest(tn, 26)}<span class="lx-nm"><b>${esc(tn)}</b></span></span>`;
-      return `<tr${r.min < 5 ? ' class="care"' : ''}><td class="lx-lu">${lead}</td>${view.cols.map(x => `<td${x.key === col.key ? ' class="on"' : ''}>${ST().fmt(x.get(m), x, s.mode)}</td>`).join('')}</tr>`;
+      return `<tr${r.min < 5 ? ' class="care"' : ''}><td class="lx-lu">${lead}</td>${view.cols.map(x => `<td data-l="${esc(x.label)}"${x.key === col.key ? ' class="on"' : ''}>${ST().fmt(x.get(m), x, s.mode)}</td>`).join('')}</tr>`;
     }).join('') : `<tr><td class="lx-empty" colspan="${view.cols.length + 1}">Nothing in this competition matches these filters. Widen the clutch time or the point difference, or clear a team or player filter.</td></tr>`;
+    $('clx-sortsel').innerHTML = view.cols.map(x => opt(x.key, x.label + ' · ' + x.title, x.key === col.key)).join('');
+    $('clx-dir').textContent = s.dir < 0 ? '↓ High to low' : '↑ Low to high';
     $('clx-more').innerHTML = rows.length > SHOW.n ? `<button type="button" class="lx-btn" data-clx-more>Show ${Math.min(25, rows.length - SHOW.n)} more of ${rows.length.toLocaleString()}</button>` : '';
     $('clx-cov').textContent = `${c.label} · ${c.games} of ${c.rebuilt} rebuilt games reached clutch time`;
     $('clx-gl').innerHTML = view.cols.map(x => `<div><dt>${esc(x.label)}</dt><dd>${esc(x.title)}</dd></div>`).join('');
