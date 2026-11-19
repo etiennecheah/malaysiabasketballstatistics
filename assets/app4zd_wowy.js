@@ -211,10 +211,7 @@ function wyNet(key, v) {
 
 /* ---- the page ---- */
 function renderWowy() {
-  return `<div class="page wy-page">
-    <div class="page-head"><div><h1 class="page-title">With or without you</h1>
-      <div class="page-sub">How a team played with each mix of its players on and off the floor, rebuilt from every substitution in the play-by-play. Men’s Agong Cup and MBL.</div></div></div>
-    <div id="wy-root" class="wy"></div></div>`;
+  return `<div class="page wy-page wx-page"><div id="wy-root" class="wy wx"></div></div>`;
 }
 function wySegHtml(id, items, cur, attr) {
   return `<div class="wy-seg" id="${id}" role="group"><span class="wy-ind" aria-hidden="true"></span>${items.map(([k, l]) => `<button type="button" ${attr}="${k}" aria-pressed="${String(k) === String(cur)}">${l}</button>`).join('')}</div>`;
@@ -222,11 +219,19 @@ function wySegHtml(id, items, cur, attr) {
 function wyShell() {
   const ys = wyYears(WY.ser), yo = ys.map(y => `<option value="${y}">${y}</option>`).join('');
   return `
-  <div class="wy-ctl">
-    ${wySegHtml('wy-ser', Object.keys(WY_SER).filter(k => wyYears(k).length).map(k => [k, WY_SER[k]]), WY.ser, 'data-wyser')}
-    <div class="wy-pick"><label for="wy-from">FROM</label><select id="wy-from">${yo}</select><label for="wy-to">TO</label><select id="wy-to">${yo}</select></div>
-    <div class="wy-pick"><label for="wy-team">TEAM</label><select id="wy-team"></select></div>
-  </div>
+  <header class="lx-head wx-head"><div class="lx-in">
+    <nav class="lx-crumbs" aria-label="Breadcrumb"><span>Tools</span><i>/</i><span>WOWY</span></nav>
+    <div class="lx-top"><span class="lx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/></svg></span>
+      <div class="lx-tt"><h1>WOWY</h1><p>With or without you: how a team played with each player on the floor and off it, how each pair did together, and every mix of the players you pick. Men’s Agong Cup and MBL, rebuilt from every substitution.</p></div>
+      <div class="lx-comp wx-comp"><label><span>League</span>${wySegHtml('wy-ser', Object.keys(WY_SER).filter(k => wyYears(k).length).map(k => [k, WY_SER[k]]), WY.ser, 'data-wyser')}</label>
+        <div class="wx-yrs"><label><span>From</span><select id="wy-from" class="lx-sel">${yo}</select></label><label><span>To</span><select id="wy-to" class="lx-sel">${yo}</select></label></div></div></div>
+    <div class="lx-tiles" id="wy-tiles"></div>
+  </div></header>
+  <nav class="lx-strip" aria-label="Tools"><div class="lx-in">${WX_TOOLS.map(([h, t]) => `<a href="${h}"${h === '#/wowy' ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</div></nav>
+  <div class="lx-in wx-body">
+  <div class="lx-chips wx-teams" id="wy-teams" role="group" aria-label="Team"></div>
+  <div class="wx-grid"><section class="lx-card wx-swing" id="wy-swing" aria-label="On and off"></section><section class="lx-card wx-pairs" id="wy-pairs" aria-label="Pairs"></section></div>
+  <div class="lx-th wx-th" id="wy-combos"><div><h2>Every combination</h2><p>Pick up to five players under Players: each row is the team with exactly that mix on the floor. Or switch to 2- to 5-man lineups. Tap a row for its full breakdown.</p></div></div>
   <div class="wy-ctl">
     ${wySegHtml('wy-mode', WY_MODES, WY.mode, 'data-wymode')}
     <button type="button" class="wy-btn" id="wy-bp" aria-expanded="${WY.openP}" aria-controls="wy-fp" ${WY.mode === 'wowy' ? '' : 'hidden'}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 5.2a3.3 3.3 0 0 1 0 6.1M18.5 14.8c1.6.8 2.6 2.5 3 5.2"/></svg>Players <em id="wy-nc"></em></button>
@@ -247,15 +252,16 @@ function wyShell() {
     <div><h3>Shooting, turnovers, rebounds</h3><p><code>TS% = PTS ÷ (2 × (FGA + 0.44 × FTA))</code>, <code>TOV% = TOV ÷ possessions</code>, <code>ORB% = OREB ÷ (OREB + opponent DREB)</code>. The small number under each is the gap to the league average of the editions chosen.</p></div>
     <div><h3>Game clock and garbage time</h3><p>“Last 5 of Q4 + OT” counts only the part of each stretch after 5:00 left in the fourth. Garbage time starts a stretch in the fourth with a lead of 25+ and more than 7:30 left, 20+ with 7:30 to 5:00 left, or 10+ inside the last five minutes.</p></div>
     <div><h3>What it can’t tell you</h3><p>On/off shows how the team played across those minutes, not why. Teammates, opponents and a few hot shooting nights all sit inside the number, and a tournament is 5 to 12 games: read rows with few minutes with care.</p></div>
-  </div></details>`;
+  </div></details>
+  </div>`;
 }
 function wyFillTeams() {
   const sec = {};
   wyData().forEach(c => c.games.forEach(g => g.st.forEach(s => { sec[g.h] = (sec[g.h] || 0) + s[1]; sec[g.a] = (sec[g.a] || 0) + s[1]; })));
   const L = Object.keys(sec).sort((a, b) => wyTeamName(a).localeCompare(wyTeamName(b)));
   if (!L.includes(WY.team)) { const last = wyData().slice(-1)[0]; WY.team = last && L.includes(last.champ) ? last.champ : L[0] || ''; }
-  const el = document.getElementById('wy-team');
-  if (el) { el.innerHTML = L.map(t => `<option value="${esc(t)}">${esc(wyTeamName(t))}</option>`).join(''); el.value = WY.team; }
+  const el = document.getElementById('wy-teams');
+  if (el) el.innerHTML = L.map(t => `<button type="button" class="lx-chip" data-wyteam="${esc(t)}" aria-pressed="${t === WY.team}">${crest(wyTeamName(t), 20)}${esc(wyTeamName(t))}</button>`).join('');
 }
 function wyPlayerMins() {
   const m = {}, gp = {};
@@ -378,7 +384,7 @@ function wyPaint() {
   requestAnimationFrame(wyIndicators);
 }
 // the table and the headings only
-function wyRefresh() { wyTable(); wyHeads(); wyToUrl(); }
+function wyRefresh() { wyTable(); wyHeads(); wyBoard(); wyToUrl(); }
 
 /* ---- the address ---- */
 function wyFromUrl() {
@@ -441,10 +447,94 @@ function wyDetail(r) {
   requestAnimationFrame(() => requestAnimationFrame(() => dlg.querySelectorAll('.wy-share i').forEach(i => { i.style.width = i.dataset.w + '%'; })));
 }
 
+/* ---- the tool-page look (update-114): headline tiles, the swing board and the pairs ----
+   All three follow every filter the table does: years, games, clock, garbage time,
+   players held on or off. */
+const WX_TOOLS = [['#/stats/lineups', 'Lineups'], ['#/stats/clutch', 'Clutch'], ['#/wowy', 'WOWY'], ['#/shift', 'Stat Line Shift'],
+  ['#/compare', 'Compare players'], ['#/compare/lineups', 'Compare lineups'], ['#/milestones', 'Milestones'], ['#/formulas', 'Formulas']];
+const WX_CARE = 25;   // minutes: under this, read with care
+const wxSurname = p => { const n = String(personName(p)).replace(/\s+(Jr\.?|Sr\.?|II|III|IV)$/i, '').split(',')[0].trim().split(/\s+/); return n[n.length - 1]; };
+const wxNum = v => v == null || !isFinite(v) ? '·' : (v > 0.5 ? '+' : v < -0.5 ? '−' : '') + Math.abs(Math.round(v));
+function wyBoard() {
+  const sw = document.getElementById('wy-swing'), pr = document.getElementById('wy-pairs'), tl = document.getElementById('wy-tiles');
+  if (!sw || !pr || !tl) return;
+  if (!wyReady()) {
+    tl.innerHTML = [0, 1, 2, 3].map(() => '<div class="lx-tile"><span class="lx-sk"></span></div>').join('');
+    sw.innerHTML = '<div class="lx-wait">Loading the play-by-play…</div>'; pr.innerHTML = ''; return;
+  }
+  const cs = wyData(), tg = wyTeamGames(cs).filter(x => wyGameOk(x.c, x.g, x.home));
+  const T = wyZero(), on = {}, off = {}, res = [];
+  const roster = new Set(); tg.forEach(({ g, home }) => (home ? g.hp : g.ap).forEach(p => roster.add(p)));
+  tg.forEach(({ g, home }) => {
+    let pf = 0, pa = 0;
+    g.st.forEach(s => {
+      pf += home ? s[4][0] : s[4][1]; pa += home ? s[4][1] : s[4][0];
+      if (s[1] <= 0 || !wyStintOk(s, home)) return;
+      const w = wyClockW(s); if (!w) return;
+      const own = home ? s[2] : s[3];
+      wyAdd(T, s, home, w, g.mid);
+      roster.forEach(p => { const box = own.includes(p) ? on : off; wyAdd(box[p] || (box[p] = wyZero()), s, home, w, g.mid); });
+    });
+    res.push(pf > pa);
+  });
+  const TM = wyMetrics(T), team = wyTeamName(WY.team);
+  const rows = [...roster].filter(p => on[p] && on[p].sec > 0).map(p => {
+    const a = wyMetrics(on[p]), b = off[p] ? wyMetrics(off[p]) : { min: 0, net: null, off: null, def: null };
+    return { p, a, b, swing: a.net != null && b.net != null ? a.net - b.net : null };
+  }).sort((x, y) => (y.swing ?? -1e9) - (x.swing ?? -1e9));
+  const big = rows.filter(r => r.a.min >= WX_CARE && r.b.min >= 10 && r.swing != null).sort((x, y) => Math.abs(y.swing) - Math.abs(x.swing))[0];
+  const pace = TM.min ? (TM.po + TM.pd) / 2 / TM.min * 40 : null, w = res.filter(Boolean).length;
+  tl.innerHTML = [
+    ['Net rating', wySg(TM.net), `${esc(team)}: ${wyF1(TM.off)} scored, ${wyF1(TM.def)} allowed per 100`, TM.net > 0 ? 'hl' : ''],
+    ['Record', `${w}–${res.length - w}`, `in ${res.length} game${res.length === 1 ? '' : 's'} with full play-by-play`],
+    big ? ['Biggest swing', wySg(big.swing), `${esc(personName(big.p))}: ${wySg(big.a.net)} on, ${wySg(big.b.net)} off`] : ['Biggest swing', '—', `nobody with ${WX_CARE}+ minutes on and 10+ off`],
+    ['Pace', wyF1(pace), `possessions per 40 · league ${wyF1(WY.lg ? WY.lg.ppm * 40 : null)}`]]
+    .map(([k, v, x, c]) => `<div class="lx-tile ${c || ''}"><span class="k">${k}</span><span class="v">${v}</span><span class="x">${x}</span></div>`).join('');
+  // the swing board
+  const span = Math.max(10, ...rows.filter(r => r.swing != null).map(r => Math.abs(r.swing)));
+  sw.innerHTML = `<div class="lx-ch"><div><h2>On and off</h2><p>The team’s net rating per 100 possessions with each player on the floor and off it. The swing is the difference. Tap a player to see his combinations.</p></div></div>
+    <div class="wx-sh" aria-hidden="true"><span>Player</span><span>On</span><span>Off</span><span class="c">Swing</span><span></span></div>
+    <div class="wx-rows">${rows.map((r, i) => { const v = r.swing, wd = v == null ? 0 : Math.abs(v) / span * 50, pos = v != null && v >= 0;
+      return `<button type="button" class="wx-row${r.a.min < WX_CARE ? ' care' : ''}" data-wyswing="${esc(r.p)}" style="--i:${Math.min(i, 16)}" data-imtip="${esc(`${personName(r.p)} · on: ${wyF1(r.a.off)} scored, ${wyF1(r.a.def)} allowed · off: ${wyF1(r.b.off)} scored, ${wyF1(r.b.def)} allowed`)}">
+        <span class="wx-who">${wyDisc(r.p)}<span><b>${esc(personName(r.p))}</b><small>${Math.round(r.a.min)} min on · ${Math.round(r.b.min)} off</small></span></span>
+        <span class="wx-v" data-l="On">${wyNetTxt(r.a.net)}</span><span class="wx-v" data-l="Off">${wyNetTxt(r.b.net)}</span>
+        <span class="wx-bar"><i class="${pos ? 'pos' : 'neg'}" style="${pos ? 'left:50%' : `right:50%`};width:${wd.toFixed(1)}%"></i></span>
+        <span class="wx-sv ${v == null ? '' : pos ? 'pos' : 'neg'}">${wySg(v)}</span></button>`; }).join('') || '<p class="wy-muted" style="padding:16px 20px">No minutes match these filters.</p>'}</div>
+    <p class="lx-note wx-foot">Faded rows played under ${WX_CARE} minutes: read them with care. Hover a row for points scored and allowed.</p>`;
+  // the pairs: the eight players with the most minutes
+  const top = rows.slice().sort((x, y) => y.a.min - x.a.min).slice(0, 8).map(r => r.p);
+  if (top.length < 3) { pr.innerHTML = `<div class="lx-ch"><div><h2>Pairs</h2></div></div><p class="wy-muted" style="padding:16px 20px">Too few players for pairs.</p>`; return; }
+  const P = {}, ix = Object.fromEntries(top.map((p, i) => [p, i]));
+  tg.forEach(({ g, home }) => g.st.forEach(s => {
+    if (s[1] <= 0 || !wyStintOk(s, home)) return;
+    const w = wyClockW(s); if (!w) return;
+    const inn = (home ? s[2] : s[3]).filter(p => p in ix).sort((a, b) => ix[a] - ix[b]);
+    inn.forEach((a, x) => inn.slice(x + 1).forEach(b => { const k = a + '|' + b; wyAdd(P[k] || (P[k] = wyZero()), s, home, w, g.mid); }));
+  }));
+  const cell = (a, b) => {
+    const A = a === b ? on[a] : P[ix[a] < ix[b] ? a + '|' + b : b + '|' + a];
+    if (!A || A.sec < 60) return `<span class="wx-c none" aria-label="Under a minute together">·</span>`;
+    const M = wyMetrics(A), v = Math.max(-30, Math.min(30, M.net || 0)), k = Math.round(Math.abs(v) / 30 * 100);
+    return `<span class="wx-c${a === b ? ' self' : ''}${M.min < WX_CARE ? ' care' : ''}${k > 55 ? ' dk' : ''}" style="--k:${k}%;--c:${v >= 0 ? 'var(--accent)' : 'var(--accent-2)'}" tabindex="0"
+      data-imtip="${esc(`${a === b ? personName(a) + ' on the floor' : wxSurname(a) + ' with ' + wxSurname(b)} · ${Math.round(M.min)} min · ${wyF1(M.off)} scored, ${wyF1(M.def)} allowed · net ${wySg(M.net)}`)}">${wxNum(M.net)}</span>`;
+  };
+  pr.innerHTML = `<div class="lx-ch"><div><h2>Pairs</h2><p>Net rating with both on the floor, for the ${top.length} players with the most minutes. The diagonal is each player alone.</p></div></div>
+    <div class="wx-hmw"><div class="wx-hm" style="--n:${top.length}">
+      <span class="wx-corner"></span>${top.map(p => `<span class="wx-ch" data-imtip="${esc(personName(p))}">${wyDisc(p)}<small>${esc(wxSurname(p))}</small></span>`).join('')}
+      ${top.map(a => `<span class="wx-rh" data-imtip="${esc(personName(a))}">${wyDisc(a)}<b>${esc(wxSurname(a))}</b></span>${top.map(b => cell(a, b)).join('')}`).join('')}
+    </div>
+    <div class="wx-key"><span class="wx-ramp"></span><span><small>Outscored</small><small>Even</small><small>Outscoring</small></span></div>
+    <p class="lx-note">Faded cells: under ${WX_CARE} minutes together. Hover or tap a cell for its minutes and ratings.</p></div>`;
+}
+const wyNetTxt = v => `<b class="${v == null ? '' : v > 0.05 ? 'wy-good' : v < -0.05 ? 'wy-bad' : ''}">${wySg(v)}</b>`;
+
 /* ---- events ---- */
 document.addEventListener('click', e => {
   const t = e.target.closest && e.target.closest('#wy-root button'); if (!t) return;
   const d = t.dataset;
+  if (d.wyteam != null) { if (d.wyteam === WY.team) return; WY.team = d.wyteam; WY.vs = {}; WY.oppPick = new Set(); wyDefaultCombo(); wyFillTeams(); wyFillPlayers(); wyFillFilters(); wyRefresh(); return; }
+  if (d.wyswing != null) { WY.mode = 'wowy'; WY.combo = [d.wyswing]; WY.hold = {}; WY.openP = false; const r = document.getElementById('wy-root'); if (r) { delete r.dataset.built; } wyPaint();
+    const c = document.getElementById('wy-combos'); if (c) c.scrollIntoView({ behavior: wyReduce() ? 'auto' : 'smooth', block: 'start' }); return; }
   if (d.wyser) { if (d.wyser === WY.ser) return; WY.ser = d.wyser; const Y = wyYears(WY.ser); WY.from = WY.to = Y[Y.length - 1]; WY.team = ''; WY.booted = false; WY.phase = 'all'; WY.dFrom = WY.dTo = ''; WY.vs = {}; WY.oppPick = new Set();
     document.querySelectorAll('#wy-ser button').forEach(b => b.setAttribute('aria-pressed', String(b === t)));
     const yo = Y.map(y => `<option value="${y}">${y}</option>`).join(''); document.getElementById('wy-from').innerHTML = yo; document.getElementById('wy-to').innerHTML = yo; wyPaint(); return; }
@@ -503,3 +593,8 @@ function wyAfterRender() {
   wyFromUrl();
   wyPaint();
 }
+// a tap on a pairs cell shows its numbers (touch has no hover); after the site's own tap handler, which hides tips
+document.addEventListener('click', e => {
+  const c = e.target.closest && e.target.closest('.wx-c[data-imtip], .wx-ch[data-imtip], .wx-rh[data-imtip]'); if (!c || typeof imTipMove !== 'function') return;
+  setTimeout(() => { const r = c.getBoundingClientRect(); imTipMove({ clientX: r.left + r.width / 2, clientY: r.bottom }, c); }, 0);
+});
