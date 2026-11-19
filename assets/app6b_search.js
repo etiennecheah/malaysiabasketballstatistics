@@ -107,7 +107,7 @@ const HSQ = (() => {
       const T = r.teams.slice(0, 4).map(({ t }) => item(id(), '#/t/' + encodeURIComponent(t.slug), ['t', t.slug, t.name, 'Team'].join('|'), crest(t.name, 34), hl(t.name, q), esc(plural(t.nComps, 'competition') + (t.lastYear > 0 ? ' · last played ' + t.lastYear : ''))));
       const C = r.comps.slice(0, 4).map(({ c, nm }) => item(id(), '#/c/' + c.id, ['c', c.id, nm, 'Competition'].join('|'), `<span class="hsq-cm">${compCrest(c, 30)}</span>`, hl(nm, q), esc([c.year, c.nGames ? plural(c.nGames, 'game') : ''].filter(Boolean).join(' · '))));
       const G = r.pages.slice(0, 3).map(p => item(id(), p[2], '', pageMark(p[3]), esc(p[0]), esc(p[1])));
-      const X = r.terms.slice(0, 3).map(([k, v]) => item(id(), '#/formulas', 'x|' + k, `<span class="hsq-term${k.length > 4 ? ' sm' : ''}">${esc(k)}</span>`, esc(v.split(' — ')[0]), esc(v.split(' — ')[1] || '')));
+      const X = r.terms.slice(0, 3).map(([k, v]) => item(id(), '#/help/glossary/' + encodeURIComponent(k), 'x|' + k, `<span class="hsq-term${k.length > 4 ? ' sm' : ''}">${esc(k)}</span>`, esc(v.split(' — ')[0]), esc(v.split(' — ')[1] || '')));
       const total = P.length + T.length + C.length + G.length + X.length;
       const more = r.players.length > 6 ? `<a class="hsq-all" href="#/players" data-hsq-all="${esc(q)}">All ${r.players.length.toLocaleString()}</a>` : '';
       res.innerHTML = total

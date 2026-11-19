@@ -83,7 +83,7 @@ function renderNav(state, cid, tab) {
       ? '<span class="subnav-crumb">Stat Line Shift · one player’s line with and without his teammates, men’s Agong Cup and MBL</span>'
       : `<span class="subnav-crumb">Malaysia basketball database · ${COMPS.length} competitions</span>`;
     // a player's page opens straight into its own full-width hero
-    return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' || state === 'milestones' || state === 'records' || state === 'mbl' ? '' : subnav(label, crumb, []));
+    return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' || state === 'milestones' || state === 'records' || state === 'mbl' || state === 'help' ? '' : subnav(label, crumb, []));
   }
   // Competition-scoped pages: the site bar, with Competitions lit. The sections of
   // the competition are tabs in the page's own header (compHeader); a team or a
@@ -97,6 +97,8 @@ function renderNav(state, cid, tab) {
 // the same every time: worked out once (the first number formatting starts the locale data, slow on a phone)
 let FOOTER = null;
 function renderFooter() {
+  // the footer with links (app4zm_help.js); the plain note stays as the fallback
+  if (typeof HELP !== 'undefined') return FOOTER || (FOOTER = HELP.footer());
   return FOOTER || (FOOTER = `<footer class="footer-note">
     ${SITE} — a database of Malaysian basketball competitions. ${COMPS.length} competitions, ${Object.keys(PERSONS).length.toLocaleString()} players and ${COMPS.reduce((a, c) => a + c.nGames, 0).toLocaleString()} fixtures, all sourced from the MABA / Genius Sports competition portal. Every figure shown is the source's own published value or a total/percentage computed from it, and gaps in the source are labelled rather than filled in. The exception is the player Advanced tab, where PER, usage, Win Shares and BPM are computed here from box scores — Win Shares and BPM are models, their numbers are estimates, and the tab says so and shows their uncertainty.
   </footer>`);
@@ -114,7 +116,7 @@ function pvKeepScroll(y) {
   const natural = pg.getBoundingClientRect().top + window.scrollY, stick = parseFloat(getComputedStyle(nav).top) || 0;
   window.scrollTo(0, Math.min(y, Math.max(0, natural - stick)));
 }
-const ROUTE_NO_BOX = /^(|home|mbl|players|competitions|teams|live|me|admin|privacy)$/;
+const ROUTE_NO_BOX = /^(|home|mbl|players|competitions|teams|live|me|admin|privacy|help)$/;
 let ROUTE_DRAWN = false;
 function route() {
   const hash = HS.hash().replace(/^#/, '') || '/';
@@ -202,6 +204,9 @@ function route() {
     state = 'milestones'; body = renderMilestones();
   } else if (parts[0] === 'formulas') {
     state = 'formulas'; body = renderFormulas();
+  } else if (parts[0] === 'help') {
+    // How to use, What the numbers mean, Where the data comes from (app4zm_help.js)
+    state = 'help'; body = renderHelp(parts[1], parts[2]);
   } else if (parts[0] === 'compare' && parts[1] === 'lineups') {
     // Compare › Lineups: two teams' fives against each other, in one competition
     state = 'compare'; body = renderCmpLineups(parts[2]);

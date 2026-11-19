@@ -138,6 +138,7 @@ function hsMeta(hash) {
     mbl: [typeof MB !== 'undefined' ? MB.tabLabel() : 'MBL', 'The Major Basketball League season on one page: fixtures and results by weekend, standings, the five teams and their rosters with every player\'s MBL career, the height lineup, stat leaders and the milestones in reach.'],
     milestones: ['MBL Milestones', 'Milestones of Malaysian players in the MBL: career and team totals every 50 points, rebounds, assists, steals, blocks and games, who is next, and single-game feats.'],
     records: ['Records & Honours', 'Records and honours in Malaysian basketball: champions and individual awards, single-game, tournament and career records, youngest and oldest players and the 180 Club, for U15, U17, U20, U23, the MBL and the Agong Cup.'],
+    help: ['How to use HoopStatsMY', 'Find your way around HoopStatsMY: search, the MBL season, players, competitions, teams, records and the tools.'],
     formulas: ['Formulas', 'How every statistic on ' + SITE_NAME + ' is calculated: shooting percentages, PER, usage, Win Shares and BPM.'],
     stats: ['Tools · Lineups and Clutch', 'Lineup and clutch statistics for Malaysian basketball competitions.'],
     privacy: ['Privacy & Site Rules', 'How ' + SITE_NAME + ' handles accounts, player profile claims and personal data, and the rules for using the site.'],
@@ -147,6 +148,8 @@ function hsMeta(hash) {
   };
   // a tab of the MBL page (/mbl/players/): the season's title and the tab's name
   const MBT = { games: 'Games', standings: 'Standings', leaders: 'Leaders', teams: 'Teams', players: 'Players', records: 'Records', milestones: 'Milestones', analysis: 'Analysis' };
+  if (p0 === 'help' && parts[1] === 'glossary') return page('What the numbers mean', 'Every abbreviation on ' + SITE_NAME + ' in plain words: the box score, shooting, the ratings the source publishes and the ones worked out here.', {});
+  if (p0 === 'help' && parts[1] === 'data') return page('Where the data comes from', 'Where ' + SITE_NAME + ' gets its numbers, what is worked out here, how new games arrive, and how corrections work.', {});
   if (p0 === 'mbl' && MBT[parts[1]]) return page(S.mbl[0] + ' · ' + MBT[parts[1]], S.mbl[1], { index: false });
   if (S[p0]) return page(S[p0][0], S[p0][1], { index: p0 !== 'compare' || parts.length === 1 });
   return page('Malaysia Basketball Database', home.desc, { index: false });

@@ -9,7 +9,7 @@ const fs = require('fs'), path = require('path'), vm = require('vm');
 const [OUT, SHELL, SITE, DBJS, APPJS, BOXJS, BOXURL] = process.argv.slice(2);
 // a page that reads the box scores starts fetching them with the rest (Home and the directories
 // fetch them after they are drawn, so on a slow line they don't share it): the same list as ROUTE_NO_BOX
-const NO_BOX = /^(|home|players|competitions|teams|live|me|admin|privacy)$/;
+const NO_BOX = /^(|home|players|competitions|teams|live|me|admin|privacy|help)$/;
 const preload = r => (BOXURL && !NO_BOX.test(String(r || '').split('/')[0]) ? '<link rel="preload" as="script" href="' + BOXURL + '">' : '');
 const BASE = new URL(SITE).pathname.replace(/\/?$/, '/');
 const shell = fs.readFileSync(SHELL, 'utf8');
@@ -59,7 +59,7 @@ vm.runInContext(fs.readFileSync(APPJS, 'utf8') + '\n;this.__route = route; this.
 
 // ---- every page that gets a file of its own
 const routes = vm.runInContext(`(() => {
-  const r = ['', 'mbl', 'players', 'competitions', 'teams', 'milestones', 'records', 'formulas', 'compare', 'privacy'];
+  const r = ['', 'mbl', 'players', 'competitions', 'teams', 'milestones', 'records', 'formulas', 'compare', 'privacy', 'help', 'help/glossary', 'help/data'];
   Object.keys(PERSONS).forEach(pid => { if (!PALIAS[pid]) r.push('p/' + pid); });
   COMPS.forEach(c => {
     r.push('c/' + c.id);
