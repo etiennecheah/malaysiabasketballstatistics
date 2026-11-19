@@ -23,7 +23,7 @@ const COL_FN = {}; ALL_COLS.forEach(([k, l, f]) => { COL_FN[k] = f; });
 
 const SORT = { comp: { key: 'pts', dir: 'desc' }, glob: { key: 'pts', dir: 'desc' } };
 const PAGE = { glob: 0, q: '', cards: 1 };
-let GVIEW = 'cards';   // the directory opens as cards; the table is one click away
+let GVIEW = 'list';   // the directory opens as the list (app4zl_pdir.js); the full table is one click away
 const PAGE_SIZE = 60;
 const CARD_PAGE = 24;
 
@@ -205,15 +205,9 @@ function globFilterBar() {
 }
 
 function renderGlobalPlayers() {
-  return `<div class="page">
-    ${dirHero('Player index')}
-    <div class="dir-bar">
-      <div><span class="dir-count">${Object.keys(CAREER).length.toLocaleString()}</span> <span class="dir-count-l">players</span></div>
-      <span class="seg">
-        <button class="seg-btn ${GVIEW === 'cards' ? 'seg-on' : ''}" data-gview="cards">Cards</button>
-        <button class="seg-btn ${GVIEW === 'table' ? 'seg-on' : ''}" data-gview="table">Table</button>
-      </span>
-    </div>
+  if (GVIEW !== 'table' && typeof PDIR !== 'undefined') return PDIR.render();
+  return `<div class="page pd-page pd-tablepage">
+    ${typeof PDIR !== 'undefined' ? PDIR.head('table') : dirHero('Player index')}
     ${globFilterBar()}
     <div id="glob-body">${GVIEW === 'cards' ? globCards() : globTable()}</div>
   </div>`;

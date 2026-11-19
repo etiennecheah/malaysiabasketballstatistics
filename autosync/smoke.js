@@ -99,7 +99,7 @@ function serve(root, base) {
   if (!clRows) errors.push('Compare › Lineups shows no lineups');
 
   await go('/players');
-  const pcards = await page.evaluate(() => document.querySelectorAll('.pcard').length);
+  const pcards = await page.evaluate(() => document.querySelectorAll('.pcard, .pd-row').length);
   if (!pcards) errors.push('Players page shows no players');
 
   // the Stats pages pull one file per competition from stats/: both must fill their tables
@@ -185,6 +185,6 @@ function serve(root, base) {
   }
   await browser.close();
   srv.close();
-  console.log('page check: Home ' + home.tiles + ' results in the games box, ' + home.comps + ' competitions, Players ' + pcards + ' cards, ' + games.length + ' new game(s)');
+  console.log('page check: Home ' + home.tiles + ' results in the games box, ' + home.comps + ' competitions, Players ' + pcards + ' rows, ' + games.length + ' new game(s)');
   if (errors.length) { console.log('PAGE CHECK FAILED\n  ' + errors.join('\n  ')); process.exit(1); }
 })().catch(e => { console.log('PAGE CHECK FAILED\n  ' + e.message); process.exit(1); });

@@ -20,6 +20,13 @@ const TEAMS = DB.teams;
 const PERSONS = DB.persons;
 // person id -> data URI portrait, embedded at build time from data/photos/<pid>.*
 const PHOTOS = DB.photos || {};
+// A portrait cropped tighter than the rest (the head fills the frame) carries its size in
+// data/player_extras.json (photoFit, e.g. 0.7). The address gets a #pf70 mark, and style.css
+// draws such a portrait that much smaller, standing on the box's floor, wherever a big
+// portrait is shown; the small round faces are left alone.
+Object.entries(DB.playerExtras || {}).forEach(([pid, x]) => {
+  if (x && x.photoFit && PHOTOS[pid]) PHOTOS[pid] = String(PHOTOS[pid]).split('#')[0] + '#pf' + Math.round(Math.min(1, Math.max(.5, +x.photoFit)) * 20) * 5;
+});
 const COMPLOGOS = DB.complogos || {};
 /* ids the source published twice for one player, folded onto the survivor */
 const PALIAS = DB.palias || {};
