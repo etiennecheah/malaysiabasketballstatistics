@@ -1,8 +1,8 @@
 /* =========================================================================
    Phones. Below 700px the site keeps its pages but changes the frame:
    the header becomes one row (wordmark, search, account, theme), the page
-   links move to a tab bar at the bottom of the screen (Home, MBL, Players,
-   Leagues, More), and More opens a sheet with everything else. Pages that
+   links move to a tab bar at the bottom of the screen (Today, MBL, Search,
+   Players, More), and More opens a sheet with everything else. Pages that
    are long lists of sections (the MBL page) switch them with tabs instead
    of stacking them; see app4zh_mbl.js. One global: PH.
    ========================================================================= */
@@ -62,23 +62,26 @@ const PH = (() => {
   }
   function bar() {
     const c = cur();
-    const it = [['home', 'Home', '#/', 'home'], ['mbl', 'MBL', '#/mbl', 'ball'], ['players', 'Players', '#/players', 'players'], ['comps', 'Leagues', '#/competitions', 'trophy']];
+    const it = [['home', 'Today', '#/', 'home'], ['mbl', 'MBL', '#/mbl', 'ball'], ['search', 'Search', '', 'search'], ['players', 'Players', '#/players', 'players']];
     // Teams, Milestones and Records sit in More on a phone; the iPad rail shows them
-    const x2 = [['teams', 'Teams', '#/teams', 'shield'], ['miles', 'Milestones', '#/milestones', 'flag'], ['records', 'Records', '#/records', 'star']];
-    const tab = ([k, l, h, i], x) => `<a href="${h}" class="ph-tab${k === 'mbl' ? ' live' : ''}${x ? ' ph-x2' : ''}"${c === k ? ' aria-current="page"' : ''}><span class="i">${ic(i)}</span>${l}</a>`;
-    const main = ['home', 'mbl', 'players', 'comps'].includes(c);
+    const x2 = [['comps', 'Leagues', '#/competitions', 'trophy'], ['teams', 'Teams', '#/teams', 'shield'], ['miles', 'Milestones', '#/milestones', 'flag'], ['records', 'Records', '#/records', 'star']];
+    // Search is a button: it opens the search panel (app6b_search.js)
+    const tab = ([k, l, h, i], x) => k === 'search'
+      ? `<button type="button" class="ph-tab ph-find" data-hs-search aria-label="Search players, teams and competitions"><span class="i">${ic(i)}</span>${l}</button>`
+      : `<a href="${h}" class="ph-tab${k === 'mbl' ? ' live' : ''}${x ? ' ph-x2' : ''}"${c === k ? ' aria-current="page"' : ''}><span class="i">${ic(i)}</span>${l}</a>`;
+    const main = ['home', 'mbl', 'players'].includes(c);
     return `<nav class="ph-bar" aria-label="Main">${it.map(t => tab(t)).join('')}${x2.map(t => tab(t, 1)).join('')}
       <button type="button" class="ph-tab ph-more" data-ph="more" data-sub="${main ? '' : x2.some(t => t[0] === c) ? 'x2' : 'more'}" aria-haspopup="dialog" aria-expanded="false"${main ? '' : ' aria-current="page"'}><span class="i">${ic('more')}</span>More</button></nav>
       <div class="ph-veil" data-ph="close" hidden></div>
       <div class="ph-sheet" role="dialog" aria-modal="true" aria-label="More pages" hidden><div class="ph-grab" aria-hidden="true"></div>
         <div class="ph-sh"><h2>More</h2><button type="button" class="ph-x" data-ph="close" aria-label="Close">${ic('x')}</button></div>
-        <div class="ph-grid">${[['#/teams', 'Teams', 'shield'], ['#/milestones', 'Milestones', 'flag'], ['#/records', 'Records & Honours', 'star'], ['#/formulas', 'Formulas', 'book']].map(([h, l, i]) => `<a href="${h}">${ic(i)}<span>${l}</span></a>`).join('')}</div>
+        <div class="ph-grid">${[['#/competitions', 'Competitions', 'trophy'], ['#/teams', 'Teams', 'shield'], ['#/records', 'Records & Honours', 'star'], ['#/milestones', 'Milestones', 'flag'], ['#/formulas', 'Formulas', 'book']].map(([h, l, i]) => `<a href="${h}">${ic(i)}<span>${l}</span></a>`).join('')}</div>
         <h3>Tools</h3>
         <div class="ph-list">${[['#/compare', 'Compare players', 'Two players, inside a competition they both played', 'compare'], ['#/compare/lineups', 'Compare lineups', "Two teams' fives against each other", 'swap'],
           ['#/stats/lineups', 'Lineups', 'Groups of 5, 4, 3 or 2 players on court together', 'lineup'], ['#/stats/clutch', 'Clutch', 'Last five minutes, score within five', 'clock'],
           ['#/wowy', 'WOWY', 'A team with and without its players', 'split'], ['#/shift', 'Stat Line Shift', "One player's line with and without teammates", 'players']]
           .map(([h, l, s, i]) => `<a href="${h}">${ic(i)}<span><b>${l}</b><small>${s}</small></span></a>`).join('')}</div>
-        <div class="ph-row"><button type="button" data-theme-toggle="1">${ic('sun')}Light or dark</button></div></div>`;
+        <div class="ph-row"><button type="button" data-hsg-open>${ic('book')}Welcome guide</button><button type="button" data-theme-toggle="1">${ic('sun')}Light or dark</button></div></div>`;
   }
   function sheet(open, kb) {
     const s = document.querySelector('.ph-sheet'), v = document.querySelector('.ph-veil'), b = document.querySelector('[data-ph="more"]');

@@ -319,6 +319,8 @@ const GBX = (() => {
   }
   // the report's data file arrived: draw the chart into the waiting card
   function flowReady(mid) {
+    const st = document.getElementById('gb-story');
+    if (st && st.dataset.mid === mid) { const g = GAME_BY_MID[mid], h = g && storyHtml(mid, g); if (h) st.innerHTML = '<h2>How it was won</h2>' + h; else st.remove(); }
     const el = document.getElementById('gb-flow');
     if (!el || el.dataset.mid !== mid) return;
     const g = GAME_BY_MID[mid];
@@ -326,18 +328,67 @@ const GBX = (() => {
     if (svg) el.innerHTML = '<h2>Game flow</h2>' + svg;
     else el.parentElement && el.parentElement.classList.add('gb-noflow'), el.remove();
   }
+  // a team's win–loss in this competition once this game is counted ("3–1")
+  function record(cid, team, g) {
+    const c = COMP_BY_ID[cid]; if (!c) return '';
+    const key = x => (x.date || '') + ' ' + (x.time || '') + ' ' + x.mid;
+    let W = 0, L = 0;
+    c.games.forEach(x => {
+      if (x.st !== 'COMPLETE' || x.hs == null || x.ff || key(x) > key(g)) return;
+      const s = x.h === team ? 0 : x.a === team ? 1 : -1; if (s < 0 || +x.hs === +x.as) return;
+      ((s === 0) === (+x.hs > +x.as)) ? W++ : L++;
+    });
+    return W + L ? `${W}–${L}` : '';
+  }
+
+  /* ---------------- a finished game: the summary above the box score ----------------
+     How it was won, in plain words, from the post-game numbers (stats/pg/<mid>.js,
+     loaded on demand), and the player of the game: the best Game Score on the
+     winning side. */
+  const times = n => n === 1 ? 'once' : n === 2 ? 'twice' : n + ' times';
+  const gmsc = s => (s.pts || 0) + 0.4 * (s.fgm || 0) - 0.7 * (s.fga || 0) - 0.4 * ((s.fta || 0) - (s.ftm || 0)) + 0.7 * (s.oreb || 0) + 0.3 * (s.dreb || 0)
+    + (s.stl || 0) + 0.7 * (s.ast || 0) + 0.7 * (s.blk || 0) - 0.4 * (s.pf || 0) - (s.tov || 0);
+  function storyHtml(mid, g) {
+    const R = typeof PG_DATA !== 'undefined' && PG_DATA[mid];
+    if (!R || R.hs == null || R.as == null || !R.lead_t) return '';
+    const W = R.hs > R.as ? 0 : 1, L = 1 - W, TN = [R.h, R.a], code = s => esc(watchCode(TN[s]));
+    const mm = t => Math.floor(t / 60) + ':' + String(Math.round(t % 60)).padStart(2, '0');
+    const lc = R.lead_changes || 0, ti = R.ties || 0;
+    const qs = (R.periods || []).map((q, i) => ({ i, m: W ? q[1] - q[0] : q[0] - q[1] })).sort((a, b) => b.m - a.m)[0];
+    const run = (R.runs || []).filter(r => r.side === W).sort((a, b) => b.pts - a.pts)[0];
+    const lines = [`<b>${esc(TN[W])}</b> beat ${esc(TN[L])} by ${Math.abs(R.hs - R.as)}.`,
+      lc ? `The lead changed hands ${times(lc)}${ti ? ` and the scores were level ${times(ti)}` : ''}.` : `${esc(TN[W])} led from the first score${ti ? `, after the scores were level ${times(ti)}` : ''}.`];
+    if (qs && qs.m > 0) lines.push(`${qs.i < 4 ? 'The ' + ['first', 'second', 'third', 'fourth'][qs.i] + ' quarter' : 'Overtime'} did the most damage: ${R.periods[qs.i][W]}–${R.periods[qs.i][L]}.`);
+    if (run && run.pts >= 8) lines.push(`Biggest run: ${run.pts}–0 by ${esc(TN[W])}.`);
+    const tile = (v, k, tip) => `<div><b>${v}</b><span${tip ? ` data-imtip="${esc(tip)}"` : ''}>${k}</span></div>`;
+    return `<p class="gb-story-t">${lines.join(' ')}</p>
+      <div class="gb-story-n">${tile(R.big[W], code(W) + ' biggest lead')}${tile(R.big[L] || 0, code(L) + ' biggest lead')}${tile(mm(R.lead_t[W]), 'Time ' + code(W) + ' led')}${R.pace ? tile((Math.round(R.pace * 10) / 10).toFixed(1), 'Pace', STAT_GLOSS.PACE || 'Possessions per 40 minutes') : ''}</div>`;
+  }
+  function potg(cid, g, lines) {
+    const w = +g.hs > +g.as ? g.h : +g.as > +g.hs ? g.a : null;
+    const pool = lines.filter(x => x.l.pid && (w ? x.l.team === w : x.l.team === g.h || x.l.team === g.a) && x.s.fga != null);
+    const best = pool.map(x => ({ x, v: gmsc(x.s) })).sort((a, b) => b.v - a.v)[0];
+    if (!best || best.v <= 0) return '';
+    const { l, s } = best.x, side = l.team === g.a ? 1 : 0, nm = l.name || personName(l.pid);
+    const st = [['pts', 'PTS'], ['reb', 'REB'], ['ast', 'AST']].map(([k, t]) => `<div><b>${val(s, k) ?? '–'}</b><span>${t}</span></div>`).join('')
+      + `<div><b>${s.fgm || 0}/${s.fga}</b><span>FG</span></div>`;
+    return `<a class="gb-card gb-potg" href="#/p/${l.pid}" style="--th:${HUE[side]}"><span class="gb-potg-k">Player of the game</span>
+      ${face(l.pid, nm, side, 'gb-potg-av')}<b class="gb-potg-n">${esc(nm)}</b><span class="gb-potg-t">${crest(l.team, 16)}${esc(l.team)}</span>
+      <div class="gb-potg-s">${st}</div><span class="gb-potg-g" data-imtip="${esc(STAT_GLOSS.GmSc || 'Game Score')}">Game Score ${(Math.round(best.v * 10) / 10).toFixed(1)}</span></a>`;
+  }
+
   function head(o) {
     const { cid, mid, g, tab, tabs, periods, status, round } = o;
     const done = g.st === 'COMPLETE' && g.hs != null;
     const w = done ? (+g.hs > +g.as ? 0 : +g.as > +g.hs ? 1 : -1) : -1;
     const side = (s) => {
-      const nm = s ? g.a : g.h;
-      return `<div class="gb-ht${s ? ' r' : ''}">${s ? '' : crest(nm, 72)}<div><b>${esc(nm)}</b><small>${s ? 'Away' : 'Home'}</small></div>${s ? crest(nm, 72) : ''}</div>`;
+      const nm = s ? g.a : g.h, rc = done ? record(cid, nm, g) : '';
+      return `<div class="gb-ht${s ? ' r' : ''}${w === s ? ' gb-won' : ''}">${s ? '' : crest(nm, 72)}<div><b>${esc(nm)}</b><small>${s ? 'Away' : 'Home'}${rc ? `<span class="gb-rec"> · ${rc}</span>` : ''}</small></div>${s ? crest(nm, 72) : ''}</div>`;
     };
     const when = [g.date ? fmtDate(g.date) : '', g.time || '', g.venue || ''].filter(Boolean).map(esc).join(' · ');
     const btns = (typeof watchLink === 'function' ? watchLink(mid, g.st === 'COMPLETE' ? 'Watch the game with stats' : 'Watch with live stats', 'm-watch gb-pri') : '')
       + (typeof scoutGameLinks === 'function' ? scoutGameLinks(mid, g) : '');
-    const hero = `<section class="gb-hero">
+    const hero = `<section class="gb-hero${done ? ' gb-done' : ''}">
       <h1 class="sr-only">${esc(g.h)}${g.hs != null ? ' ' + fmt0(g.hs) + ' – ' + fmt0(g.as) + ' ' : ' v '}${esc(g.a)}</h1>
       ${side(0)}
       <div class="gb-hs"><div class="gb-fsc"><span class="${w === 0 ? 'w' : ''}">${fmt0(g.hs)}</span><i>–</i><span class="${w === 1 ? 'w' : ''}">${fmt0(g.as)}</span></div>
@@ -400,9 +451,28 @@ const GBX = (() => {
       return `<a class="gb-ld" href="#/p/${x.l.pid}" style="--th:${HUE[side]};animation-delay:${i * 0.07}s">${face(x.l.pid, nm, side, 'gb-lg')}<span class="gb-lt"><small>${l}</small><b>${esc(nm)}</b><em>${crest(x.l.team, 14)} ${line}</em></span><span class="gb-lv">${val(s, k)}</span></a>`;
     }).join('')}</div>` : '';
     const other = [...new Set(lines.map(x => x.l.team).filter(t => !sides.includes(t)))];
-    return ld + `<div class="gb-tbs">${teamPart(g.h, 0)}${teamPart(g.a, 1)}${other.map(t => teamPart(t || '—', -1)).join('')}</div>
+    // the summary: how it was won (once the post-game numbers are here) and the player of the game
+    let sum = '';
+    if (g.st === 'COMPLETE' && g.hs != null && !g.ff) {
+      const pg = potg(cid, g, lines);
+      const canStory = typeof hasPostgame === 'function' && hasPostgame(cid, mid);
+      let story = canStory ? storyHtml(mid, g) : '';
+      if (canStory && !story && typeof ensurePostgame === 'function') ensurePostgame(mid);
+      const sc = canStory ? `<div class="gb-card gb-story" id="gb-story" data-mid="${esc(mid)}"><h2>How it was won</h2>${story || '<div class="gb-flwait"></div>'}</div>` : '';
+      if (sc || pg) sum = `<div class="gb-sum${sc && pg ? '' : ' one'}">${sc}${pg}</div>`;
+    }
+    // on a phone one team's box at a time, picked here
+    const sw = other.length ? '' : `<div class="gb-tsw" role="group" aria-label="Show a team's box score">${[g.h, g.a].map((t, i) => `<button type="button" data-gbt="${i}" aria-pressed="${i === 0}">${crest(t, 18)}<span>${esc(t)}</span></button>`).join('')}</div>`;
+    return sum + ld + sw + `<div class="gb-tbs" data-show="0">${teamPart(g.h, 0)}${teamPart(g.a, 1)}${other.map(t => teamPart(t || '—', -1)).join('')}</div>
       <p class="gb-note">Per-player box score as published on this game's statistics page; team totals are the sum of the player lines. Starters are grouped first where the source marks them. Click a column to sort, or a player for their career.</p>`;
   }
 
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-gbt]'); if (!b) return;
+    const w = b.closest('.gb-tsw'), t = w && w.nextElementSibling;
+    if (!t || !t.classList.contains('gb-tbs')) return;
+    t.dataset.show = b.dataset.gbt;
+    w.querySelectorAll('[data-gbt]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  });
   return { table, live, head, box, flowReady, face, HUE };
 })();

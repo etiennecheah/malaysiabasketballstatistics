@@ -763,6 +763,9 @@ const STATS = (function () {
       <a href="#/compare"${cur === 'cmp-players' ? ' aria-current="page"' : ''}>Compare players<small>Two players, inside a competition they both played</small></a>
       <a href="#/compare/lineups"${cur === 'cmp-lineups' ? ' aria-current="page"' : ''}>Compare lineups<small>Two teams' fives against each other in one competition</small></a>
       ${typeof scoutMenu === 'function' ? scoutMenu(cur) : ''}
+      <span class="st-menu-sep" role="separator"></span>
+      <a href="#/milestones"${cur === 'milestones' ? ' aria-current="page"' : ''}>Milestones<small>Who is close to a career landmark</small></a>
+      <a href="#/formulas"${cur === 'formulas' ? ' aria-current="page"' : ''}>Formulas<small>What every number means, and where it comes from</small></a>
     </div>`;
   return { put, render, afterRender, navButton, navMenu, LU, CL, DATA, page: () => PAGE };
 })();

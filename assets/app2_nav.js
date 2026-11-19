@@ -1,23 +1,32 @@
 /* ---------------------------- chrome ---------------------------- */
 const SITE = 'HOOPSTATS MY';
+// the header's own icons (the phone layer's set lives in PH)
+const NAV_IC = (() => {
+  const i = d => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
+  return { search: i('M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-5.2-5.2'),
+    help: i('M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM9.6 9.3a2.5 2.5 0 0 1 4.8 1c0 1.7-2.4 2.2-2.4 3.7M12 17.2v.1'),
+    sun: i('M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4'),
+    moon: i('M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z') };
+})();
 
 function navShell(links, sub) {
   // which page of the Tools menu is open, so the menu can mark it
   const h = HS.hash();
   const statsPage = /^#\/stats/.test(h) ? (/^#\/stats\/clutch/.test(h) ? 'clutch' : 'lineups')
-    : /^#\/compare\/lineups/.test(h) ? 'cmp-lineups' : /^#\/compare/.test(h) ? 'cmp-players' : /^#\/wowy/.test(h) ? 'wowy' : /^#\/shift/.test(h) ? 'shift' : /^#\/scouting/.test(h) ? 'scouting' : '';
+    : /^#\/compare\/lineups/.test(h) ? 'cmp-lineups' : /^#\/compare/.test(h) ? 'cmp-players' : /^#\/wowy/.test(h) ? 'wowy' : /^#\/shift/.test(h) ? 'shift' : /^#\/scouting/.test(h) ? 'scouting' : /^#\/milestones/.test(h) ? 'milestones' : /^#\/formulas/.test(h) ? 'formulas' : '';
   return `
   <a class="skip-link" href="#main" data-skip>Skip to content</a>
   <nav class="nav" aria-label="Site">
     <div class="nav-left">
-      <a href="#/" class="wordmark" style="color:#fff;"><span class="dot"></span>${SITE}</a>
+      <a href="#/" class="wordmark" aria-label="HoopStatsMY, home"><span class="dot"></span><span class="wm-t">HOOPSTATS</span><span class="wm-my">MY</span></a>
       <div class="nav-links">${links}</div>
     </div>
     <div class="nav-right">
-      ${typeof PH !== 'undefined' ? `<a class="ph-search" href="#/players" aria-label="Search players">${PH.ic('search')}</a>` : ''}
+      <button type="button" class="hs-sbtn" data-hs-search aria-label="Search players, teams and competitions" aria-keyshortcuts="/ Control+K">${NAV_IC.search}<span class="hs-sbtn-t">Search players, teams…</span><kbd>/</kbd></button>
+      <button type="button" class="nav-ic nav-help" data-hsg-open aria-label="Guide: how to use HoopStatsMY" title="How to use HoopStatsMY">${NAV_IC.help}</button>
       ${typeof accNav === 'function' ? accNav() : ''}
       <button class="theme-toggle" data-theme-toggle="1" title="Switch between the light and dark theme" aria-label="Switch theme">
-        <span class="sun">☀</span><span class="moon">☾</span>
+        <span class="sun">${NAV_IC.sun}</span><span class="moon">${NAV_IC.moon}</span>
       </button>
     </div>
     ${typeof STATS !== 'undefined' ? STATS.navMenu(statsPage) : ''}
@@ -34,15 +43,14 @@ function subnav(label, crumb, links) {
 }
 
 function siteLinks(state) {
-  return [['#/', 'Home', state === 'home' || state === 'live'],
+  return [['#/', 'Today', state === 'home' || state === 'live'],
           ['mbl', typeof MB !== 'undefined' ? MB.tabLabel() : 'MBL', state === 'mbl'],
           ['#/players', 'Players', state === 'global-players' || state === 'player'],
           ['#/competitions', 'Competitions', state === 'hub' || state === 'notfound' || state === 'comp' || state === 'cfam'],
           ['#/teams', 'Teams', state === 'teams-hub' || state === 'team-global'],
-          ['#/milestones', 'Milestones', state === 'milestones'],
-          ['#/records', 'Records & Honours', state === 'records'],
-          ['stats', 'Tools', state === 'stats' || state === 'compare' || state === 'wowy' || state === 'shift' || state === 'scouting'],   // a button: it opens the Tools menu (Lineups, Clutch, Compare)
-          ['#/formulas', 'Formulas', state === 'formulas']]
+          ['#/records', 'Records', state === 'records'],
+          // a button: it opens the Tools menu (Lineups, Clutch, Compare, and Milestones and Formulas at its foot)
+          ['stats', 'Tools', state === 'stats' || state === 'compare' || state === 'wowy' || state === 'shift' || state === 'scouting' || state === 'milestones' || state === 'formulas']]
     .map(([h, t, a]) => h === 'stats' ? (typeof STATS !== 'undefined' ? STATS.navButton(a) : '')
       // the current MBL season, with a small pulsing dot
       : h === 'mbl' ? `<a href="#/mbl" class="nav-link nav-mbl ${a ? 'active' : ''}"><i aria-hidden="true"></i>${esc(t)}</a>`
