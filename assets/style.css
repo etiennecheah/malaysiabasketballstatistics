@@ -8099,4 +8099,34 @@ a.td-feat:hover{ transform:translateY(-3px); box-shadow:var(--shadow-2); text-de
 /* Today: the competition's mark on each game row, big enough to read (update-119) */
 .td-m .comp-crest{ border-radius:10px; padding:3px; box-shadow:none; }
 @media (max-width:560px){ .td-m .comp-crest{ width:32px !important; height:32px !important; border-radius:8px; } }
+/* ---------- Tools › Stat Line Shift (update-120): the tool-page look and the with/without board ---------- */
+.page.sx-page{ max-width:none; padding:0 0 64px; }
+.wy.sx{ gap:0; margin-top:0; display:block; }
+.sx-body{ display:flex; flex-direction:column; gap:16px; padding-top:24px; }
+.sx-ch{ flex-wrap:wrap; align-items:flex-end; }
+.sx-ch > div:first-child{ flex:1 1 360px; min-width:0; }
+.sx-ctl{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end; min-width:0; max-width:100%; }
+.sx-ctl .sl-units{ padding:3px; border-radius:999px; background:var(--surface-alt); border:1px solid var(--border); }
+.sx-ctl .sl-units button{ padding:6px 12px; }
+.sx-ctl .sl-units button[aria-pressed="true"]{ background:var(--surface); box-shadow:var(--shadow); }
+.sx-stat button{ height:32px; padding:0 12px; font-size:12.5px; }
+.sx-sh, .sx-row{ grid-template-columns:minmax(0,1.2fr) 72px 72px minmax(140px,1.5fr) 72px; }
+.sx-row{ cursor:pointer; }
+.sx-th{ margin:16px 0 0; }
+/* the league switch on the dark band: a touch-sized pill, not a tall one (WOWY too) */
+:root .lx-head .wy-seg button{ display:inline-flex; align-items:center; padding-block:0; min-height:40px; }
+.sx .sl-side{ top:128px; }
+.sx .wy-ctl{ margin:0; }
+@media (max-width:860px){
+  .sx-ctl{ justify-content:flex-start; }
+  .sx-row{ grid-template-columns:minmax(0,1fr) 58px 58px 58px; }
+  .sx .sl-side{ position:static; }
+  .sx-stat{ flex-wrap:wrap; border-radius:18px; overflow:visible; }
+}
+@media (max-width:560px){
+  .sx-row{ grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr); }
+  .sx-row .wx-who{ grid-column:1 / -1; }
+  .sx-row .wx-bar{ grid-column:1 / -1; grid-row:3; }
+  .sx-row .wx-v{ text-align:left; }
+}
 /* <<< NEW LOOK <<< */

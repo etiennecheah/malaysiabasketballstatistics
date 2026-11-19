@@ -231,23 +231,28 @@ function slTable() {
 
 /* ---- the page ---- */
 function renderShift() {
-  return `<div class="page sl-page">
-    <div class="page-head"><div><h1 class="page-title">Stat line shift</h1>
-      <div class="page-sub">One player’s stat line in every combination of the teammates you pick: how his scoring, passing and shooting move when they share the floor and when they don’t. Men’s Agong Cup and MBL.</div></div></div>
-    <div id="sl-root" class="wy sl"></div></div>`;
+  return `<div class="page sl-page sx-page"><div id="sl-root" class="wy sl sx"></div></div>`;
 }
 function slShell() {
   const ys = wyYears(SL.ser), yo = ys.map(y => `<option value="${y}">${y}</option>`).join('');
   const seg = (id, items, cur, attr) => `<div class="wy-seg" id="${id}" role="group"><span class="wy-ind" aria-hidden="true"></span>${items.map(([k, l]) => `<button type="button" ${attr}="${k}" aria-pressed="${String(k) === String(cur)}">${l}</button>`).join('')}</div>`;
   return `
-  <div class="wy-ctl">
-    ${seg('sl-ser', Object.keys(WY_SER).filter(k => wyYears(k).length).map(k => [k, WY_SER[k]]), SL.ser, 'data-slser')}
-    <div class="wy-pick"><label for="sl-from">FROM</label><select id="sl-from">${yo}</select><label for="sl-to">TO</label><select id="sl-to">${yo}</select></div>
-    <div class="wy-pick"><label for="sl-team">TEAM</label><select id="sl-team"></select></div>
-    <span id="sl-phasebox"></span>
-  </div>
+  <header class="lx-head sx-head"><div class="lx-in">
+    <nav class="lx-crumbs" aria-label="Breadcrumb"><span>Tools</span><i>/</i><span>Stat Line Shift</span></nav>
+    <div class="lx-top"><span class="lx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l5-6 4 3 4-7 5 5"/><path d="M3 21h18"/></svg></span>
+      <div class="lx-tt"><h1>Stat Line Shift</h1><p>One player’s own stat line with the teammates you pick on the floor and off it: how his scoring, passing and shooting move in every mix. Men’s Agong Cup and MBL, from every substitution in the play-by-play.</p></div>
+      <div class="lx-comp wx-comp"><label><span>League</span>${seg('sl-ser', Object.keys(WY_SER).filter(k => wyYears(k).length).map(k => [k, WY_SER[k]]), SL.ser, 'data-slser')}</label>
+        <div class="wx-yrs"><label><span>From</span><select id="sl-from" class="lx-sel">${yo}</select></label><label><span>To</span><select id="sl-to" class="lx-sel">${yo}</select></label></div></div></div>
+    <div class="lx-tiles" id="sl-tiles"></div>
+  </div></header>
+  <nav class="lx-strip" aria-label="Tools"><div class="lx-in">${WX_TOOLS.map(([h, t]) => `<a href="${h}"${h === '#/shift' ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</div></nav>
+  <div class="lx-in sx-body">
+  <div class="lx-chips wx-teams" id="sl-teams" role="group" aria-label="Team"></div>
+  <section class="lx-card sx-board" id="sl-board" aria-label="His line with and without each teammate"></section>
+  <div class="lx-th sx-th"><div><h2>Every mix</h2><p>Pick a main player and up to four teammates: each on/off mix becomes a column. Or see every player side by side, or a table of the whole roster with and without one player.</p></div></div>
   <div class="wy-ctl">
     ${seg('sl-view', [['combos', 'Combos'], ['side', 'Side by side'], ['table', 'Table']], SL.view, 'data-slview')}
+    <span id="sl-phasebox"></span>
     <button type="button" class="wy-btn" id="sl-cust"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>Customize stats</button>
   </div>
   <div class="sl-layout ${SL.view === 'table' ? 'wide' : ''}" id="sl-layout">
@@ -259,15 +264,16 @@ function slShell() {
     <div><h3>Per 100, per 30, totals</h3><p>Per 100 divides by the team’s possessions in those minutes (<code>FGA + 0.44 × FTA − OREB + TOV</code>), per 30 by his minutes: a game here is 40 minutes, not the NBA’s 48. USG% is his share of the team’s shots, free-throw trips and turnovers while he is on.</p></div>
     <div><h3>The Team tab</h3><p>ORTG and DRTG are points per 100 possessions for and against, PACE possessions per 40 minutes, PTS% his share of the team’s points. The badge sits on the bigger of the two numbers and says by how much.</p></div>
     <div><h3>Read with care</h3><p>A tournament is 5 to 12 games: under ${SL_MIN_WARN} minutes, a column can swing on one hot night.</p></div>
-  </div></details>`;
+  </div></details>
+  </div>`;
 }
 function slFillTeams() {
   const sec = {};
   slData().forEach(c => c.games.forEach(g => g.st.forEach(s => { sec[g.h] = (sec[g.h] || 0) + s[1]; sec[g.a] = (sec[g.a] || 0) + s[1]; })));
   const L = Object.keys(sec).sort((a, b) => wyTeamName(a).localeCompare(wyTeamName(b)));
   if (!L.includes(SL.team)) { const last = slData().slice(-1)[0]; SL.team = last && L.includes(last.champ) ? last.champ : L[0] || ''; }
-  const el = document.getElementById('sl-team');
-  if (el) { el.innerHTML = L.map(t => `<option value="${esc(t)}">${esc(wyTeamName(t))}</option>`).join(''); el.value = SL.team; }
+  const el = document.getElementById('sl-teams');
+  if (el) el.innerHTML = L.map(t => `<button type="button" class="lx-chip" data-slteam="${esc(t)}" aria-pressed="${t === SL.team}">${crest(wyTeamName(t), 20)}${esc(wyTeamName(t))}</button>`).join('');
 }
 function slFillPhase() {
   const has = slData().some(c => c.games.some(g => g.po)), box = document.getElementById('sl-phasebox'); if (!box) return;
@@ -292,9 +298,49 @@ function slFillRoster() {
   el.classList.toggle('short', !SL.allRoster && n > 6);
   if (more) { more.hidden = n <= 6; more.textContent = SL.allRoster ? 'Show fewer players' : `Show all ${n} players`; more.setAttribute('aria-expanded', String(!!SL.allRoster)); }
 }
+/* ---- the band's tiles and the teammate board (update-120) ---- */
+const SX_STATS = [['PTS', 'Points'], ['TS%', 'TS%'], ['AST', 'Assists'], ['REB', 'Rebounds'], ['USG', 'Usage'], ['NET', 'Net rating']];
+function slBoard() {
+  const tl = document.getElementById('sl-tiles'), bd = document.getElementById('sl-board'); if (!tl || !bd) return;
+  if (!slReady() || !SL.main) {
+    tl.innerHTML = [0, 1, 2, 3].map(() => '<div class="lx-tile"><span class="lx-sk"></span></div>').join('');
+    bd.innerHTML = `<div class="lx-wait">${slReady() ? 'No player has minutes in these games.' : slFailed() ? 'The play-by-play for these games did not load. Reload the page to try again.' : 'Loading the play-by-play…'}</div>`; return;
+  }
+  const M = SL.main, roster = slRoster(), me = roster.find(r => r.p === M) || { min: 0, g: 0 }, k = SL.bstat || 'PTS', u = SL.unit;
+  const all = slCombos(M, []).all, team = wyTeamName(SL.team);
+  const rows = roster.filter(r => r.p !== M).map(r => {
+    const { acc } = slCombos(M, [r.p]), w = acc[1], wo = acc[0], val = (key, A) => slValue(key, A, u);
+    const dv = key => { const a = val(key, w), b = val(key, wo); return a == null || b == null ? null : a - b; };
+    return { p: r.p, w, wo, a: val(k, w), b: val(k, wo), d: dv(k), dPts: dv('PTS'), dNet: dv('NET'), mw: w.sec / 60, mo: wo.sec / 60 };
+  }).filter(r => r.mw > 0);
+  // a tile names a teammate only with a fair sample on both sides: 25+ minutes with and without, else 10+
+  const pick = (f, m) => rows.filter(r => r.mw >= m && r.mo >= m && f(r) != null).sort((x, y) => f(y) - f(x))[0], best = f => pick(f, SL_MIN_WARN) || pick(f, 10);
+  const bP = best(r => r.dPts), bN = best(r => r.dNet), p30 = slValue('PTS', all, 'p30'), ul = { p100: 'per 100', p30: 'per 30', tot: 'in total' }[u];
+  const sv = (key, v) => v == null ? '—' : (v > 0.0001 ? '+' : v < -0.0001 ? '−' : '') + slFmt(key, Math.abs(v), u, true);
+  tl.innerHTML = [
+    ['Main player', slFmt('PTS', p30, 'p30'), `points per 30 · ${esc(personName(M))}, ${me.g} game${me.g === 1 ? '' : 's'}, ${Math.round(me.min)} min`, 'hl'],
+    bP ? ['Scores more with', sv('PTS', bP.dPts), `points ${ul} with ${esc(personName(bP.p))} on the floor than without him`] : ['Scores more with', '—', 'no teammate has 10+ minutes with him and without him'],
+    bN ? ['Best together', sv('NET', bN.dNet), `net rating with ${esc(personName(bN.p))} on, against him off`] : ['Best together', '—', 'no teammate has 10+ minutes with him and without him'],
+    ['Sample', `${all.g.size}`, `game${all.g.size === 1 ? '' : 's'} for ${esc(team)} · ${SL.phase === 'po' ? 'playoffs' : SL.phase === 'rs' ? 'regular season' : 'all games'}`]]
+    .map(([kk, v, x, c]) => `<div class="lx-tile ${c || ''}"><span class="k">${kk}</span><span class="v">${v}</span><span class="x">${x}</span></div>`).join('');
+  rows.sort((x, y) => (y.d ?? -1e9) - (x.d ?? -1e9));
+  const span = Math.max(k === 'NET' ? 10 : 1e-9, ...rows.filter(r => r.d != null).map(r => Math.abs(r.d)));
+  const lab = (SX_STATS.find(x => x[0] === k) || [k, k])[1];
+  bd.innerHTML = `<div class="lx-ch sx-ch"><div><h2>With and without</h2><p>${esc(personName(M))}’s ${esc(lab.toLowerCase())} ${SL_STATS[k].k === 'count' ? ul : ''} with each teammate on the floor, and without him. Tap a teammate to open that mix below.</p></div>
+      <div class="sx-ctl">${slUnits(false)}<div class="lx-seg sx-stat" role="group" aria-label="Stat">${SX_STATS.map(([kk, l]) => `<button type="button" data-sxstat="${kk}" aria-pressed="${kk === k}">${l}</button>`).join('')}</div></div></div>
+    <div class="wx-sh sx-sh" aria-hidden="true"><span>Teammate</span><span>With</span><span>Without</span><span class="c">Change</span><span></span></div>
+    <div class="wx-rows">${rows.map((r, i) => { const v = r.d, wd = v == null ? 0 : Math.abs(v) / span * 50, pos = v != null && v >= 0, care = Math.min(r.mw, r.mo) < SL_MIN_WARN;
+      return `<button type="button" class="wx-row sx-row${care ? ' care' : ''}" data-sxmate="${esc(r.p)}" style="--i:${Math.min(i, 16)}">
+        <span class="wx-who">${wyDisc(r.p)}<span><b>${esc(personName(r.p))}</b><small>${Math.round(r.mw)} min with · ${Math.round(r.mo)} without</small></span></span>
+        <span class="wx-v" data-l="With">${slFmt(k, r.a, u)}</span><span class="wx-v" data-l="Without">${slFmt(k, r.b, u)}</span>
+        <span class="wx-bar"><i class="${pos ? 'pos' : 'neg'}" style="${pos ? 'left:50%' : 'right:50%'};width:${wd.toFixed(1)}%"></i></span>
+        <span class="wx-sv ${v == null ? '' : pos ? 'pos' : 'neg'}">${sv(k, v)}</span></button>`; }).join('') || '<p class="wy-muted" style="padding:16px 20px">No teammate shared the floor with him in these games.</p>'}</div>
+    <p class="lx-note wx-foot">Faded rows have under ${SL_MIN_WARN} minutes with or without: read them with care.</p>`;
+}
 function slStage(anim) {
   const st = document.getElementById('sl-stage'); if (!st) return;
   const lay = document.getElementById('sl-layout'); if (lay) lay.classList.toggle('wide', SL.view === 'table');
+  slBoard();
   if (!slReady()) { st.innerHTML = `<div class="sl-tcard"><div class="wy-empty">${slFailed() ? 'The play-by-play for these games did not load. Reload the page to try again.' : 'Loading the play-by-play…'}</div></div>`; return; }
   if (!SL.main) { st.innerHTML = '<div class="sl-tcard"><div class="wy-empty">No player has minutes in these games.</div></div>'; return; }
   if (SL.view === 'combos') st.innerHTML = slCard(SL.main, SL.mates, { id: 'c', L: SL.colL, R: SL.colR });
@@ -384,6 +430,10 @@ document.addEventListener('click', e => {
   if (d.slser) { if (d.slser === SL.ser) return; SL.ser = d.slser; const Y = wyYears(SL.ser); SL.from = SL.to = Y[Y.length - 1]; SL.team = ''; SL.main = null; SL.booted = false; SL.phase = 'all';
     document.querySelectorAll('#sl-ser button').forEach(b => b.setAttribute('aria-pressed', String(b === t)));
     const yo = Y.map(y => `<option value="${y}">${y}</option>`).join(''); document.getElementById('sl-from').innerHTML = yo; document.getElementById('sl-to').innerHTML = yo; slPaint(); return; }
+  if (d.slteam != null) { if (d.slteam === SL.team) return; SL.team = d.slteam; SL.main = null; slFillTeams(); slDefaults(); slFillPhase(); slFillRoster(); slStage(true); requestAnimationFrame(slIndicators); return; }
+  if (d.sxstat) { SL.bstat = d.sxstat; slBoard(); return; }
+  if (d.sxmate) { SL.mates = [d.sxmate]; SL.view = 'combos'; SL.colL = SL.colR = null; SL.card = {}; document.querySelectorAll('#sl-view button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.slview === 'combos'))); slIndicators(); slFillRoster(); slStage(true);
+    const th = document.querySelector('.sx-th'); if (th) th.scrollIntoView({ behavior: wyReduce() ? 'auto' : 'smooth', block: 'start' }); return; }
   if (d.slview) { SL.view = d.slview; SL.menu = null; document.querySelectorAll('#sl-view button').forEach(b => b.setAttribute('aria-pressed', String(b === t))); slIndicators(); slStage(true); return; }
   if (d.slphase) { SL.phase = d.slphase; document.querySelectorAll('#sl-phase button').forEach(b => b.setAttribute('aria-pressed', String(b === t))); slIndicators(); slDefaults(); slFillRoster(); slStage(true); return; }
   if (t.id === 'sl-cust') { slCustomize(); return; }
