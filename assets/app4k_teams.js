@@ -322,7 +322,9 @@ function tpDivCard(t, d, yrs) {
       : '<span>No titles yet</span>'}</div>
   </div>`;
 }
-function renderTeamGlobal(slug) {
+function renderTeamGlobal(slug, tab) {
+  // the team page after the prototype (app4zn_teampage.js); this older layout is the fallback
+  if (typeof TPG !== 'undefined') { const h = TPG.render(slug, tab); if (h) return h; }
   const t = teamBySlug(slug);
   if (!t) return `<div class="page"><div class="page-head"><div><h1 class="page-title">Team not found</h1></div></div>
     <div class="card"><div class="empty-row"><span class="empty-dot"></span>Browse all teams from the <a href="#/teams">Teams</a> page.</div></div></div>`;

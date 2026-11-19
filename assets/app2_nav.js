@@ -83,7 +83,7 @@ function renderNav(state, cid, tab) {
       ? '<span class="subnav-crumb">Stat Line Shift · one player’s line with and without his teammates, men’s Agong Cup and MBL</span>'
       : `<span class="subnav-crumb">Malaysia basketball database · ${COMPS.length} competitions</span>`;
     // a player's page opens straight into its own full-width hero
-    return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' || state === 'milestones' || state === 'records' || state === 'mbl' || state === 'help' ? '' : subnav(label, crumb, []));
+    return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' || state === 'milestones' || state === 'records' || state === 'mbl' || state === 'help' || state === 'team-global' ? '' : subnav(label, crumb, []));
   }
   // Competition-scoped pages: the site bar, with Competitions lit. The sections of
   // the competition are tabs in the page's own header (compHeader); a team or a
@@ -183,7 +183,7 @@ function route() {
   } else if (parts[0] === 'teams') {
     state = 'teams-hub'; body = renderTeamsHub();
   } else if (parts[0] === 't' && parts[1]) {
-    state = 'team-global'; body = renderTeamGlobal(decodeURIComponent(parts[1]));
+    state = 'team-global'; body = renderTeamGlobal(decodeURIComponent(parts[1]), parts[2]);
   } else if (parts[0] === 'stats') {
     // Stats: Lineups and Clutch, chosen from the menu under the Stats tab
     state = 'stats'; tab = parts[1] === 'clutch' ? 'clutch' : 'lineups'; body = renderStats(tab);
