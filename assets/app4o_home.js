@@ -89,25 +89,29 @@ function hmPulse() {
 }
 const hmWords = (t, base) => t.split(' ').map((w, i) => `<span class="w" style="--d:${(base + i * 0.07).toFixed(2)}s">${w}</span>`).join(' ');
 function renderHome() {
-  const n = COMPS.reduce((a, c) => a + (c.nDone || 0), 0);
   return `<div class="td"><h1 class="sr-only">HoopStats MY: Malaysian basketball statistics</h1>
-    <section class="td-hero" aria-label="Welcome">
-      <svg class="td-court" viewBox="0 0 600 300" aria-hidden="true" preserveAspectRatio="xMaxYMid slice">
-        <g class="lines"><path d="M600 20 H360 V280 H600"/><path d="M600 95 H470 V205 H600"/><circle cx="470" cy="150" r="55"/><path d="M600 25 H560 A125 125 0 0 0 560 275 H600"/><circle cx="572" cy="150" r="9"/><path d="M360 95 A55 55 0 0 0 360 205"/></g>
-        <path class="arc" d="M150 250 Q 360 -60 568 142"/><circle class="ball" r="9" cx="0" cy="0"/>
-      </svg>
-      <div class="td-hero-in">
-        <span class="td-date">${hmToday()}</span>
-        <p class="td-greet">${hmWords(hmGreeting() + '.', 0.05)}</p>
-        <p class="td-sub">${hmWords('Every Malaysian basketball game, in one place.', 0.25)}</p>
-        <div class="td-acts"><span class="td-pulse" id="td-pulse">${hmPulse()}</span><button type="button" class="td-tour" data-hsg-open><span class="td-tour-ic" aria-hidden="true">?</span><span><b>New here?</b> Take the one-minute tour</span></button></div>
-        <span class="td-since">${n.toLocaleString()} games on record since ${Math.min(...COMPS.map(c => +c.year).filter(Boolean))}</span>
-      </div>
-    </section>
     <div class="td-feat-wrap" id="lv-hero-side">${hmHeroSide()}</div>
     <div class="td-games" id="hm-games">${hmGamesInner()}</div>
+    ${hmHelp()}
   </div>`;
 }
+// the foot of Today: three things worth knowing, and the tour
+function hmHelp() {
+  const g = k => `<button type="button" class="gl" data-imtip="${esc((typeof STAT_GLOSS !== 'undefined' && STAT_GLOSS[k]) || k)}">${esc(k)}</button>`;
+  return `<section class="td-help" aria-label="New to HoopStatsMY">
+    <div class="td-help-h"><span class="td-eyebrow">New to HoopStatsMY?</span><h2>Three things worth knowing</h2></div>
+    <ol class="td-tips">
+      <li><b>Search finds anything</b><span>Players, teams, leagues, even stat terms. Press <kbd>/</kbd> or tap Search.</span></li>
+      <li><b>Dotted words explain themselves</b><span>Hover or tap ${g('TS%')}, ${g('+/-')} or ${g('EFF')} to see what they mean.</span></li>
+      <li><b>Compare any two players</b><span>Side by side, and head to head where they met. <a class="td-link" href="#/compare">Try it</a></span></li>
+    </ol>
+    <button type="button" class="td-tourbtn" data-td-tour><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8zM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Take the 30-second tour</button>
+  </section>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-td-tour]'); if (!b) return;
+  if (typeof HSG !== 'undefined' && HSG.tour) HSG.tour();
+});
 
 /* ---------------------------- the spotlight: on now, or next ---------------------------- */
 const HM_LV = { seen: new Set(), score: {} };
