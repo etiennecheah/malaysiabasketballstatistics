@@ -115,7 +115,7 @@ function msNext() {
       <div class="ms-goal"><div class="t">${n.th}<span>${MS_KL[n.k]}</span></div><div class="g"><b>${n.need}</b> to go · ${n.gn === 1 ? 'next game' : '~' + n.gn + ' games'}</div></div>
       <div class="ms-ring"><svg viewBox="0 0 62 62" aria-hidden="true"><circle class="bg" cx="31" cy="31" r="26"/><circle class="fg" cx="31" cy="31" r="26" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(MS.anim ? C : C * (1 - p)).toFixed(1)}" data-off="${(C * (1 - p)).toFixed(1)}"/></svg><em>${n.cur}</em></div>
       <div class="ms-scope"><span>${MS.sc === 'c' ? 'MBL career' : 'With ' + esc(n.t)}</span><span>${n.k === 'gp' ? '' : (Math.round(n.pace * 10) / 10).toFixed(1) + ' per game'}</span></div></a>`; }).join('');
-  return `<section class="ms-next" aria-label="Next up"><div class="ms-h"><h2><i></i>Next up</h2>${all.length ? `<small>${all.length} within two games</small>` : ''}</div>
+  return `<section class="ms-next" aria-label="Next up"><div class="ms-h"><h2><i></i>Next up</h2>${all.length ? `<small>${all.length} local players within two games of a milestone</small>` : ''}</div>
     <div class="ms-rail">${cards || '<div class="ms-none">—</div>'}</div></section>`;
 }
 function msStats() {
@@ -169,10 +169,20 @@ function renderMilestones() {
   const m = msModel();
   MS.anim = true;
   if (!m.comps.length) return `<div class="page"><div class="card"><div class="empty-row"><span class="empty-dot"></span>No MBL season in the database yet.</div></div></div>`;
-  return `<div class="page ms-page">
-    <div class="ms-head"><h1>MBL Milestones</h1>
-      <div class="ms-seg" role="group" aria-label="Count"><button data-mssc="c" aria-pressed="${MS.sc === 'c'}">MBL career</button><button data-mssc="t" aria-pressed="${MS.sc === 't'}">With one team</button></div></div>
-    <div id="ms-next">${msNext()}</div>
+  const yrs = [...new Set(m.comps.map(c => c.year))].sort(), span = yrs.length > 1 ? yrs[0] + '–' + yrs[yrs.length - 1] : yrs[0];
+  const nLocal = new Set(m.rows.map(r => r.pid)).size;
+  return `<div class="page ms-page mx-page">
+    <header class="lx-head mx-head"><div class="lx-in">
+      <nav class="lx-crumbs" aria-label="Breadcrumb"><span>Tools</span><i>/</i><span>Milestones</span></nav>
+      <div class="lx-top"><span class="lx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg></span>
+        <div class="lx-tt"><span class="mx-badge">${(DB.natflags || {}).MAS ? `<img src="${DB.natflags.MAS}" alt="" width="18" height="13">` : ''}MBL · local players only</span><h1>MBL Local Milestones</h1>
+          <p>Milestones of <b>Malaysian (local) players in the men’s Major Basketball League</b>, ${esc(span)}: every 50 points, rebounds, assists, steals, blocks and games, over an MBL career or with one team, and the big single games. ${nLocal} local players counted. <b>Import players are not included.</b></p></div>
+        <div class="lx-comp mx-comp"><label><span>Count</span><div class="ms-seg" role="group" aria-label="Count"><button data-mssc="c" aria-pressed="${MS.sc === 'c'}">MBL career</button><button data-mssc="t" aria-pressed="${MS.sc === 't'}">With one team</button></div></label></div></div>
+      <div id="ms-next">${msNext()}</div>
+    </div></header>
+    <nav class="lx-strip" aria-label="Tools"><div class="lx-in">${WX_TOOLS.map(([h, t]) => `<a href="${h}"${h === '#/milestones' ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</div></nav>
+    <div class="lx-in mx-body">
+    <p class="mx-local"><b>Local players only.</b> A player counts as local when every roster lists him as Malaysian; where no roster says, when he has Malaysia caps or has played a Malaysian state or school competition. Imports’ MBL numbers are left out of every count on this page.</p>
     <div id="ms-stats">${msStats()}</div>
     <div class="ms-board">
       <section class="ms-card"><div class="ms-h"><h2>Leaders</h2></div><div class="ms-lad" id="ms-lad">${msLadder()}</div></section>
@@ -180,6 +190,7 @@ function renderMilestones() {
     </div>
     <section><div class="ms-h"><h2>Single game</h2></div>${msFeats()}
       <div class="ms-flist ${MS.ft ? 'open' : ''}" id="ms-flist"><div><div class="ms-card ms-fl" id="ms-fl">${msFeatList()}</div></div></div></section>
+    </div>
   </div>`;
 }
 // after the page is drawn: the rings and bars fill, the counts run up

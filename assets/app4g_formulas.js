@@ -124,10 +124,10 @@ const FX_SECTIONS = [
 ];
 
 function renderFormulas() {
+  const all = FX_SECTIONS.flatMap(x => x[3]), n = k => all.filter(r => r[2] === k).length;
   const secs = FX_SECTIONS.map(([id, title, intro, rows]) => `
-    <div class="card fx-sec" data-fxsec="${id}">
-      <div class="card-head">${esc(title)}</div>
-      ${intro ? `<div class="fx-intro">${intro}</div>` : ''}
+    <section class="lx-card fx-sec" data-fxsec="${id}" id="fx-${id}">
+      <div class="lx-ch fxx-ch"><div><h2>${esc(title)}</h2>${intro ? `<p>${intro}</p>` : ''}</div><span class="fxx-n">${rows.length}</span></div>
       <div class="fx-list">
         ${rows.map(([ab, name, prov, formula, note]) => `
           <div class="fx" data-fxq="${esc((ab + ' ' + name + ' ' + note).toLowerCase())}">
@@ -142,47 +142,41 @@ function renderFormulas() {
             ${note ? `<div class="fx-note">${note}</div>` : ''}
           </div>`).join('')}
       </div>
-    </div>`).join('');
+    </section>`).join('');
 
-  return `<div class="page">
-    <div class="fx-hero">
-      <h1 class="fx-title">Every number on this site</h1>
-      <p class="fx-lede">What each abbreviation means, the formula behind it, and — the part that
-        usually goes unsaid — whether it was published by the source or worked out here. Hover any
-        column header anywhere on the site for the short version; this is the long one.</p>
-      <div class="fx-keys">
-        ${Object.keys(FX_SRC).map(k => `<div class="fx-key">${fxMark(k)}<span>${esc(FX_SRC[k][1])}</span></div>`).join('')}
+  return `<div class="page fxx-page">
+    <header class="lx-head fxx-head"><div class="lx-in">
+      <nav class="lx-crumbs" aria-label="Breadcrumb"><span>Tools</span><i>/</i><span>Formulas</span></nav>
+      <div class="lx-top"><span class="lx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h-2.5a3 3 0 0 0-3 3v13M6.5 11H14M14.5 13l5 6M19.5 13l-5 6"/></svg></span>
+        <div class="lx-tt"><h1>Formulas</h1><p>What each abbreviation means, the formula behind it, and — the part that usually goes unsaid — whether it was published by the source or worked out here. Hover any column header anywhere on the site for the short version; this is the long one.</p></div>
+        <div class="lx-comp fxx-find"><label><span>Find a statistic</span><input class="lx-sel fx-q" id="fx-q" type="search" placeholder="eFG%, usage, VORP…" autocomplete="off" aria-label="Filter the list of statistics"></label></div></div>
+      <div class="lx-tiles">
+        <div class="lx-tile hl"><span class="k">Statistics explained</span><span class="v">${all.length}</span><span class="x">in ${FX_SECTIONS.length} groups, from the box score to estimated impact</span></div>
+        ${Object.keys(FX_SRC).map(k => `<div class="lx-tile fxx-t"><span class="k">${fxMark(k)}</span><span class="v">${n(k)}</span><span class="x">${esc(FX_SRC[k][1])}</span></div>`).join('')}
       </div>
-    </div>
-
-    <div class="fx-bar">
-      <input class="fx-q" id="fx-q" placeholder="Find a statistic…" autocomplete="off"
-             aria-label="Filter the list of statistics">
-      <div class="fx-jumps">${FX_SECTIONS.map(([id, title]) =>
-        `<button class="chip chip-sm" data-fxjump="${id}">${esc(title)}</button>`).join('')}</div>
-    </div>
-    <div class="fx-empty" id="fx-empty" hidden>Nothing matches that. Try an abbreviation — <b>eFG%</b>, <b>VORP</b>, <b>TO%</b>.</div>
-
-    <div class="fx-note-tier">
-      <b>One rule governs all of them.</b> A <em>tier</em> is a series paired with an age group — Major
-      Basketball League, or D-League U23, or MABA/MATRIX 17 &amp; Below. Totals add up across tiers;
-      every per-game figure, percentage and percentile belongs to exactly one, because averaging a
-      U15 national championship with a senior league produces a number that describes neither.
-    </div>
-
-    ${secs}
-
-    <div class="card">
-      <div class="card-head">Where the data comes from</div>
-      <div class="pad">
-        <p class="bpm-p">Every published figure on this site is scraped from the MABA / Genius Sports
-          results portal: ${COMPS.length} competitions, ${Object.keys(PERSONS).length.toLocaleString()} players,
-          every box score the portal has published. Nothing is edited, and nothing is filled in where the
-          source is silent — a missing figure shows as a dash rather than a zero.</p>
-        <p class="bpm-p">Two things on the site are <strong>not</strong> from the portal. Estimated impact
-          (BPM, VORP, points added) is a model, and it says so on its own tab, beside its own interval.
-          And duplicate person records — the same player registered twice under different spellings — are
-          merged by hand, which changes whose career a figure belongs to but never the figure itself.</p>
+    </div></header>
+    <nav class="lx-strip" aria-label="Tools"><div class="lx-in">${WX_TOOLS.map(([h, t]) => `<a href="${h}"${h === '#/formulas' ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</div></nav>
+    <div class="lx-in fxx-body">
+      <aside class="fxx-side" aria-label="Groups"><h2>Groups</h2><div class="fxx-jumps">${FX_SECTIONS.map(([id, title, , rows]) =>
+        `<button type="button" data-fxjump="${id}"><span>${esc(title)}</span><em>${rows.length}</em></button>`).join('')}</div></aside>
+      <div class="fxx-main">
+        <div class="fxx-tier"><b>One rule governs all of them.</b> A <em>tier</em> is a series paired with an age group — Major
+          Basketball League, or D-League U23, or MABA/MATRIX 17 &amp; Below. Totals add up across tiers;
+          every per-game figure, percentage and percentile belongs to exactly one, because averaging a
+          U15 national championship with a senior league produces a number that describes neither.</div>
+        <div class="fx-empty lx-card" id="fx-empty" hidden>Nothing matches that. Try an abbreviation — <b>eFG%</b>, <b>VORP</b>, <b>TO%</b>.</div>
+        ${secs}
+        <section class="lx-card fxx-src"><div class="lx-ch"><div><h2>Where the data comes from</h2></div></div>
+          <div class="fxx-srcb">
+            <p>Every published figure on this site is scraped from the MABA / Genius Sports
+              results portal: ${COMPS.length} competitions, ${Object.keys(PERSONS).length.toLocaleString()} players,
+              every box score the portal has published. Nothing is edited, and nothing is filled in where the
+              source is silent — a missing figure shows as a dash rather than a zero.</p>
+            <p>Two things on the site are <strong>not</strong> from the portal. Estimated impact
+              (BPM, VORP, points added) is a model, and it says so on its own tab, beside its own interval.
+              And duplicate person records — the same player registered twice under different spellings — are
+              merged by hand, which changes whose career a figure belongs to but never the figure itself.</p>
+          </div></section>
       </div>
     </div>
   </div>`;

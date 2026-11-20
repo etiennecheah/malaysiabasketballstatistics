@@ -83,7 +83,7 @@ function renderNav(state, cid, tab) {
       ? '<span class="subnav-crumb">Stat Line Shift · one player’s line with and without his teammates, men’s Agong Cup and MBL</span>'
       : `<span class="subnav-crumb">Malaysia basketball database · ${COMPS.length} competitions</span>`;
     // a player's page opens straight into its own full-width hero
-    return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' || state === 'milestones' || state === 'records' || state === 'mbl' || state === 'help' || state === 'team-global' || state === 'stats' || state === 'wowy' || state === 'shift' ? '' : subnav(label, crumb, []));
+    return navShell(links, state === 'player' || state === 'cfam' || state === 'home' || state === 'live' || state === 'me' || state === 'milestones' || state === 'records' || state === 'mbl' || state === 'help' || state === 'team-global' || state === 'stats' || state === 'wowy' || state === 'shift' || state === 'formulas' ? '' : subnav(label, crumb, []));
   }
   // Competition-scoped pages: the site bar, with Competitions lit. The sections of
   // the competition are tabs in the page's own header (compHeader); a team or a
