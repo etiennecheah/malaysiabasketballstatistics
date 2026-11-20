@@ -26,7 +26,8 @@ function hsMeta(hash) {
     title: SITE_NAME + ' — Malaysia Basketball Database',
     desc: 'Stats for Malaysian basketball: ' + nComps + ' competitions and ' + nPlayers.toLocaleString('en') +
       ' players — MBL, D-League, Agong Cup, national youth championships and FIBA youth events. Box scores, standings, leaders, career stats and honours.',
-    ld: [], index: true,
+    // the official account, so search engines tie the Instagram profile to the site
+    ld: [{ '@context': 'https://schema.org', '@type': 'Organization', name: SITE_NAME, sameAs: ['https://www.instagram.com/hoopstats_my/'] }], index: true,
   };
   const page = (title, desc, extra) => Object.assign({ title: title + ' | ' + SITE_NAME, desc: hsMetaClip(desc, 300), ld: [], index: true }, extra || {});
   const p0 = parts[0];

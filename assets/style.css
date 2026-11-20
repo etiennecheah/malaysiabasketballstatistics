@@ -8274,4 +8274,16 @@ a.td-feat:hover{ transform:translateY(-3px); box-shadow:var(--shadow-2); text-de
   .hlm-court{ background:radial-gradient(circle at 50% 100%, transparent 0 140px, rgba(17,19,22,.12) 140px 142px, transparent 142px), radial-gradient(120% 70% at 0% 0%, rgba(255,255,255,.35), transparent 55%); }
 }
 @media (max-width:380px){ .hlm-stop small{ font-size:9.5px; } .hlm-attrs div{ grid-template-columns:64px minmax(0,1fr) 24px; } }
+/* ---------- footer: the official Instagram (update-128) ---------- */
+.sf-ig{ display:inline-flex; align-items:center; gap:12px; margin-top:20px; padding:8px 16px 8px 8px; border-radius:999px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); color:#f1f2ee; text-decoration:none; transition:background-color .2s, border-color .2s, transform .2s var(--ease-out); }
+.sf-ig:hover{ text-decoration:none; background:rgba(255,198,41,.1); border-color:color-mix(in oklab, var(--hl) 60%, transparent); transform:translateY(-2px); }
+.sf-ig:focus-visible{ outline:2px solid var(--hl); outline-offset:3px; }
+.sf-ig-i{ width:38px; height:38px; border-radius:50%; display:grid; place-items:center; background:var(--hl); color:#111316; flex:none; }
+.sf-ig-i svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2; }
+.sf-ig-i .d{ fill:currentColor; stroke:none; }
+.sf-ig-t{ display:grid; gap:1px; line-height:1.2; }
+.sf-ig-t b{ font:700 15px var(--body); }
+.sf-ig-t small{ font-size:12px; color:#a4aab2; }
+.sf-ig-a{ width:16px; height:16px; fill:none; stroke:#a4aab2; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; transition:transform .25s var(--ease-out), stroke .2s; }
+.sf-ig:hover .sf-ig-a{ transform:translate(2px,-2px); stroke:var(--hl); }
 /* <<< NEW LOOK <<< */

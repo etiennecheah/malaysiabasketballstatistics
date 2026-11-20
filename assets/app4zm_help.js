@@ -102,7 +102,8 @@ const HELP = (() => {
     return `<footer class="site-foot"><div class="sf-in">
       <div class="sf-top">
         <div class="sf-brand"><a href="#/" class="sf-mark" aria-label="HoopStatsMY, home"><span class="dot"></span><span>HOOPSTATS</span><span class="wm-my">MY</span></a>
-          <p>Every Malaysian basketball game on record since ${F.since}: ${n0(F.games)} games, ${n0(F.players)} players and ${F.comps} competitions, built from the organisers’ own box scores.</p></div>
+          <p>Every Malaysian basketball game on record since ${F.since}: ${n0(F.games)} games, ${n0(F.players)} players and ${F.comps} competitions, built from the organisers’ own box scores.</p>
+          <a class="sf-ig" href="https://www.instagram.com/hoopstats_my/" target="_blank" rel="noopener"><span class="sf-ig-i" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle class="d" cx="17.3" cy="6.7" r="1.1"/></svg></span><span class="sf-ig-t"><b>@hoopstats_my</b><small>Follow us on Instagram</small></span><svg class="sf-ig-a" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a></div>
         ${col('Follow the game', [['#/', 'Today'], ['#/mbl', mbl()], ['#/competitions', 'Every competition'], ['#/records', 'Records & honours']])}
         ${col('Look someone up', [['#/players', 'Players'], ['#/teams', 'Teams'], ['#/compare', 'Compare two players'], ['#/me', 'My players']])}
         ${col('Help', [['#/help', 'How to use HoopStatsMY'], ['#/help/glossary', 'What the numbers mean'], ['#/help/data', 'Where the data comes from'], ['', 'Show the welcome guide']])}
