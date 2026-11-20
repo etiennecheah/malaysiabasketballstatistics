@@ -124,7 +124,7 @@ function sm3dInit() {
   board.position.set(0, 3.425, 1.2); hoop.add(board);
   const edge = new T.LineSegments(new T.EdgesGeometry(board.geometry), new T.LineBasicMaterial({color: 0xe6ecf7})); edge.position.copy(board.position); hoop.add(edge);
   const sq = new T.LineSegments(new T.EdgesGeometry(new T.PlaneGeometry(0.59, 0.45)), new T.LineBasicMaterial({color: 0xe6ecf7})); sq.position.set(0, 3.275, 1.18); hoop.add(sq);
-  const rim = new T.Mesh(new T.TorusGeometry(0.225, 0.018, 8, 40), new T.MeshStandardMaterial({color: 0xf08a3c, roughness: 0.5}));
+  const rim = new T.Mesh(new T.TorusGeometry(0.225, 0.018, 8, 40), new T.MeshStandardMaterial({color: 0xe6b226, roughness: 0.5}));
   rim.rotation.x = Math.PI / 2; rim.position.set(0, 3.05, SM_RIM); hoop.add(rim);
   const pole = new T.Mesh(new T.CylinderGeometry(0.06, 0.08, 3.9, 12), mat); pole.position.set(0, 1.95, -0.9); hoop.add(pole);
   const arm = new T.Mesh(new T.BoxGeometry(0.08, 0.08, 2.1), mat); arm.position.set(0, 3.45, 0.15); hoop.add(arm);
@@ -143,8 +143,8 @@ function sm3dInit() {
   SM3.fx = new T.Group(); scene.add(SM3.fx);
   const cvs = (w, h, draw) => { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h); return tex(c); };
   SM3.ballMat = new T.MeshStandardMaterial({roughness: 0.75, map: cvs(256, 128, (g, w, h) => {
-    const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#d9662a'); gr.addColorStop(0.5, '#f08a3c'); gr.addColorStop(1, '#d9662a');
-    g.fillStyle = gr; g.fillRect(0, 0, w, h); g.strokeStyle = '#2a1608'; g.lineWidth = 4;
+    const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#c69700'); gr.addColorStop(0.5, '#e6b226'); gr.addColorStop(1, '#c69700');
+    g.fillStyle = gr; g.fillRect(0, 0, w, h); g.strokeStyle = '#241a03'; g.lineWidth = 4;
     g.beginPath(); g.moveTo(0, h / 2); g.lineTo(w, h / 2); g.moveTo(w / 4, 0); g.lineTo(w / 4, h); g.moveTo(3 * w / 4, 0); g.lineTo(3 * w / 4, h); g.stroke();
     for (const cx of [0, w / 2, w]) { g.beginPath(); for (let y = 0; y <= h; y += 4) { const x = cx + 30 * Math.sin(y / h * Math.PI); if (y) g.lineTo(x, y); else g.moveTo(x, y); } g.stroke(); }
   })});

@@ -494,11 +494,11 @@ function smDrawHoop(g) {
   g.beginPath(); bd.forEach(([a, b], k) => k ? g.lineTo(a, b) : g.moveTo(a, b)); g.closePath(); g.fillStyle = 'rgba(207,224,255,.12)'; g.fill();
   g.lineWidth = 3; g.strokeStyle = 'rgba(230,236,247,.9)'; g.stroke();
   line([P(-0.295, 1.2, 3.05), P(-0.295, 1.2, 3.5), P(0.295, 1.2, 3.5), P(0.295, 1.2, 3.05), P(-0.295, 1.2, 3.05)], 2.5, 'rgba(230,236,247,.9)');
-  line([P(0, 1.2, 3.05), P(0, SM_RIM - 0.225, 3.05)], 4, '#f08a3c');                              // bracket
+  line([P(0, 1.2, 3.05), P(0, SM_RIM - 0.225, 3.05)], 4, '#e6b226');                              // bracket
   const top = circ(0.225, 3.05, 16), low = circ(0.14, 2.65, 16);                                  // net
   for (let k = 0; k < 16; k++) { line([top[k], low[(k + 1) % 16]], 1.6, 'rgba(255,255,255,.5)'); line([top[k], low[(k + 15) % 16]], 1.6, 'rgba(255,255,255,.5)'); }
   line(low, 1.6, 'rgba(255,255,255,.5)');
-  line(circ(0.225, 3.05), 7, 'rgba(8,12,20,.6)'); line(circ(0.225, 3.05), 4.5, '#f08a3c');         // rim
+  line(circ(0.225, 3.05), 7, 'rgba(8,12,20,.6)'); line(circ(0.225, 3.05), 4.5, '#e6b226');         // rim
 }
 function smDrawZones(g, list) {
   const LZ = SM.mix.LZ, sm = smSummary(list), step = 0.1;

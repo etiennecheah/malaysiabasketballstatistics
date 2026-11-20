@@ -180,7 +180,7 @@ function pgSheets(R, c) {
       <rect x="${X(-2.45)}" y="0" width="${4.9 * s}" height="${5.8 * s}" ${ln}/><circle cx="${X(0)}" cy="${Y(5.8)}" r="${1.8 * s}" ${ln}/>
       <path d="M${X(-6.6)},0 L${X(-6.6)},${Y(1.575 + R3 * Math.cos(a3))} ${arc.replace(/^M/, 'L')} L${X(6.6)},0" ${ln}/>
       <path d="M${X(-1.25)},${Y(1.575)} A${1.25 * s},${1.25 * s} 0 0 0 ${X(1.25)},${Y(1.575)}" ${ln}/>
-      <line x1="${X(-0.9)}" x2="${X(0.9)}" y1="${Y(1.2)}" y2="${Y(1.2)}" stroke="#5c5548" stroke-width="2.4"/><circle cx="${X(0)}" cy="${Y(1.575)}" r="${0.23 * s}" stroke="#d9762a" stroke-width="2" fill="none"/>
+      <line x1="${X(-0.9)}" x2="${X(0.9)}" y1="${Y(1.2)}" y2="${Y(1.2)}" stroke="#5c5548" stroke-width="2.4"/><circle cx="${X(0)}" cy="${Y(1.575)}" r="${0.23 * s}" stroke="#d09e00" stroke-width="2" fill="none"/>
       ${list.filter(p => !p[2]).map(p => { const x = X(p[0]), y = Y(p[1] + 1.575); return `<path d="M${x - 3.6},${y - 3.6} L${x + 3.6},${y + 3.6} M${x + 3.6},${y - 3.6} L${x - 3.6},${y + 3.6}" stroke="#9a2f2f" stroke-width="1.7" opacity=".75"/>`; }).join('')}
       ${list.filter(p => p[2]).map(p => `<circle cx="${X(p[0])}" cy="${Y(p[1] + 1.575)}" r="4.6" fill="${col}" stroke="#1d2433" stroke-width="1"/>`).join('')}
     </svg>`;

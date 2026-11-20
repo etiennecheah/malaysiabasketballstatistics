@@ -183,7 +183,7 @@ function csScene(sides) {
   const hoop = new T.Group(), mat = new T.MeshStandardMaterial({color: 0xd9dee8, roughness: 0.6});
   const board = new T.Mesh(new T.BoxGeometry(1.8, 1.05, 0.04), new T.MeshStandardMaterial({color: 0xcfe0ff, transparent: true, opacity: 0.18})); board.position.set(0, 3.425, 1.2); hoop.add(board);
   const edge = new T.LineSegments(new T.EdgesGeometry(board.geometry), new T.LineBasicMaterial({color: 0xe6ecf7})); edge.position.copy(board.position); hoop.add(edge);
-  const rim = new T.Mesh(new T.TorusGeometry(0.225, 0.018, 8, 40), new T.MeshStandardMaterial({color: 0xf08a3c})); rim.rotation.x = Math.PI / 2; rim.position.set(0, 3.05, SM_RIM); hoop.add(rim);
+  const rim = new T.Mesh(new T.TorusGeometry(0.225, 0.018, 8, 40), new T.MeshStandardMaterial({color: 0xe6b226})); rim.rotation.x = Math.PI / 2; rim.position.set(0, 3.05, SM_RIM); hoop.add(rim);
   const pole = new T.Mesh(new T.CylinderGeometry(0.06, 0.08, 3.9, 12), mat); pole.position.set(0, 1.95, -0.9); hoop.add(pole);
   const arm = new T.Mesh(new T.BoxGeometry(0.08, 0.08, 2.1), mat); arm.position.set(0, 3.45, 0.15); hoop.add(arm);
   const net = new T.Mesh(new T.CylinderGeometry(0.225, 0.14, 0.4, 16, 1, true), new T.MeshBasicMaterial({color: 0xffffff, wireframe: true, transparent: true, opacity: 0.45})); net.position.set(0, 2.85, SM_RIM); hoop.add(net);

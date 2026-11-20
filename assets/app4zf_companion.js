@@ -13,7 +13,7 @@
      └──────────────────────────────────────────────────┴ play ─────┘
 
    Look (v3, Nov 2026): black ground, hairlines instead of filled panels, square
-   edges; team colours only as accents; orange (#FF6B1A) only for "now" — the
+   edges; team colours only as accents; yellow (#DEA900) only for "now" — the
    live dot, the playhead, the latest shot; gold for a followed player.
 
    Data: the live relay (app4n_live.js) while the game is on, and once more
@@ -517,7 +517,7 @@ function renderCompanion(mid) {
   return `<div class="cn" id="cn" data-mid="${esc(mid)}">
     <div class="cn-sr" aria-live="polite" id="cn-say"></div>
     <header class="cn-top">
-      <a class="cn-brand" href="#/" title="HoopStatsMY home"><svg width="18" height="18" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12" fill="none" stroke="#FF6B1A" stroke-width="2.6"/><path d="M2 14h24M14 2v24M5.5 5.5c4 4 4 13 0 17M22.5 5.5c-4 4-4 13 0 17" fill="none" stroke="#FF6B1A" stroke-width="1.7"/></svg>HOOPSTATS MY</a>
+      <a class="cn-brand" href="#/" title="HoopStatsMY home"><svg width="18" height="18" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12" fill="none" stroke="#DEA900" stroke-width="2.6"/><path d="M2 14h24M14 2v24M5.5 5.5c4 4 4 13 0 17M22.5 5.5c-4 4-4 13 0 17" fill="none" stroke="#DEA900" stroke-width="1.7"/></svg>HOOPSTATS MY</a>
       <span class="cn-rule" aria-hidden="true"></span>
       <span class="cn-crumb">${compCrest(c, 18)}<a href="#/c/${g.cid}">${esc(liveCompName(g.cid))}</a><span>${esc(g.h)} vs ${esc(g.a)}</span></span>
       <span class="cn-fresh" id="cn-fresh"></span>
@@ -1067,9 +1067,9 @@ function cpnShotsShown(all) {
 const CPN_COURT = `<g fill="none" stroke="rgba(255,255,255,.2)" stroke-width="5">
   <rect x="2.5" y="2.5" width="2795" height="1495"/><line x1="1400" y1="0" x2="1400" y2="1500"/><circle cx="1400" cy="750" r="180"/>
   <rect x="0" y="505" width="580" height="490"/><circle cx="580" cy="750" r="180"/><path d="M0 90 L299 90 A675 675 0 0 1 299 1410 L0 1410"/><path d="M157.5 625 A125 125 0 0 1 157.5 875"/>
-  <line x1="120" y1="660" x2="120" y2="840" stroke="rgba(255,255,255,.5)" stroke-width="7"/><circle cx="157.5" cy="750" r="23" stroke="#FF6B1A" stroke-opacity=".8"/>
+  <line x1="120" y1="660" x2="120" y2="840" stroke="rgba(255,255,255,.5)" stroke-width="7"/><circle cx="157.5" cy="750" r="23" stroke="#DEA900" stroke-opacity=".8"/>
   <rect x="2220" y="505" width="580" height="490"/><circle cx="2220" cy="750" r="180"/><path d="M2800 90 L2501 90 A675 675 0 0 0 2501 1410 L2800 1410"/><path d="M2642.5 625 A125 125 0 0 0 2642.5 875"/>
-  <line x1="2680" y1="660" x2="2680" y2="840" stroke="rgba(255,255,255,.5)" stroke-width="7"/><circle cx="2642.5" cy="750" r="23" stroke="#FF6B1A" stroke-opacity=".8"/></g>`;
+  <line x1="2680" y1="660" x2="2680" y2="840" stroke="rgba(255,255,255,.5)" stroke-width="7"/><circle cx="2642.5" cy="750" r="23" stroke="#DEA900" stroke-opacity=".8"/></g>`;
 function cpnZoneSvg(f) {
   return `<rect class="cn-zf" x="0" y="505" width="580" height="490" fill="${f.pt}"/>
     <g clip-path="url(#cn-in3)"><rect class="cn-zf" x="580" y="505" width="820" height="490" fill="${f.mc}"/><rect class="cn-zf" x="0" y="0" width="1400" height="505" fill="${f.mTop}"/><rect class="cn-zf" x="0" y="995" width="1400" height="505" fill="${f.mBot}"/></g>

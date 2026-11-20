@@ -27,8 +27,8 @@ const CF_LIST = [
   ['dbc', 'Dream Ball Championship', 'DBC', 'other'],
   ['inv', 'Invitational & other tournaments', 'Invitational', 'other'],
 ];
-const CF_SECTIONS = [['senior', 'Senior leagues & cups', '#d4a63a'], ['games', 'Multi-sport games', '#d97b53'],
-  ['dev', 'Development leagues', '#33c17a'], ['youth', 'Youth & schools', '#c98a3b'], ['national', 'Malaysia national teams', '#9aa3b2'], ['other', 'Invitationals & other tournaments', '#7a9cff']];
+const CF_SECTIONS = [['senior', 'Senior leagues & cups', '#d4a63a'], ['games', 'Multi-sport games', '#f2d14b'],
+  ['dev', 'Development leagues', '#33c17a'], ['youth', 'Youth & schools', '#5bb8d6'], ['national', 'Malaysia national teams', '#9aa3b2'], ['other', 'Invitationals & other tournaments', '#7a9cff']];
 const CF_META = {};
 CF_LIST.forEach(([k, name, short, sec]) => { CF_META[k] = { key: k, name, short, sec }; });
 

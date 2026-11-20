@@ -10,16 +10,16 @@ function teamName(tid) { const t = TEAMS[tid]; return typeof t === 'string' ? t 
 
 // [key, section label, short chip label, dot colour]
 const TEAM_CATS = [
-  ['national', 'National Championships — U15, U17 & MSSM U18', 'National youth', '#c98a3b'],
+  ['national', 'National Championships — U15, U17 & MSSM U18', 'National youth', '#5bb8d6'],
   ['agong', 'Agong Cup', 'Agong Cup', '#d4a63a'],
-  ['matrixcup', 'MABA/MATRIX Cup', 'MATRIX Cup', '#b8793a'],
-  ['sukma', 'SUKMA — Sukan Malaysia', 'SUKMA', '#d97b53'],
+  ['matrixcup', 'MABA/MATRIX Cup', 'MATRIX Cup', '#8f9dff'],
+  ['sukma', 'SUKMA — Sukan Malaysia', 'SUKMA', '#f2d14b'],
   ['mbl', 'MBL — Major Basketball League', 'MBL', '#4a9eff'],
   ['wmbl', 'WMBL — Women\'s MBL', 'WMBL', '#e0668f'],
   ['wmba', 'WMBA — Women\'s Malaysia Basketball Alliance', 'WMBA', '#9bc53d'],
   ['u23', 'Malaysia D-League U23', 'D-League U23', '#33c17a'],
   ['u20', 'Malaysia D-League U20', 'D-League U20', '#5fcf9a'],
-  ['sbl', 'SBL U20 — Selangor Basketball League', 'SBL U20', '#f0913a'],
+  ['sbl', 'SBL U20 — Selangor Basketball League', 'SBL U20', '#c9d94a'],
   ['sukses', 'Sukan Selangor (SUKSES)', 'SUKSES', '#b07cd6'],
   ['dbc', 'DBC — Dream Ball Championship', 'DBC', '#e8b53d'],
   ['nxt', 'NXT Championship', 'NXT', '#6bd0c0'],

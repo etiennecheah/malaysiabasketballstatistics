@@ -247,7 +247,7 @@ const MHX = (() => {
     const x = cv.getContext('2d'); if (!x) return; x.scale(dpr, dpr);
     const cx = o.left - r.left + o.width * .5, cy = o.top - r.top + o.height * .45, h = LIST[I] ? LIST[I].hue : 30;
     const P = Array.from({length: 34}, (_, i) => { const a = Math.random() * Math.PI * 2, s = 2 + Math.random() * 5;
-      return {x: cx + Math.cos(a) * 20, y: cy + Math.sin(a) * 14, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 1.2, life: 1, r: 1 + Math.random() * 2.2, c: i % 3 ? `oklch(85% 0.12 ${h})` : '#ffb27a'}; });
+      return {x: cx + Math.cos(a) * 20, y: cy + Math.sin(a) * 14, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 1.2, life: 1, r: 1 + Math.random() * 2.2, c: i % 3 ? `oklch(85% 0.12 ${h})` : '#fbd47c'}; });
     const start = performance.now();
     (function f(t) {
       x.clearRect(0, 0, r.width, r.height);
