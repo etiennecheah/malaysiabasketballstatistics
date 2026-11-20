@@ -8112,7 +8112,8 @@ a.td-feat:hover{ transform:translateY(-3px); box-shadow:var(--shadow-2); text-de
 .sx-stat button{ height:32px; padding:0 12px; font-size:12.5px; }
 .sx-sh, .sx-row{ grid-template-columns:minmax(0,1.2fr) 72px 72px minmax(140px,1.5fr) 72px; }
 .sx-row{ cursor:pointer; }
-.sx-th{ margin:16px 0 0; }
+.sx-th{ margin:4px 0 0; }
+.sx-board{ margin-top:16px; }
 /* the league switch on the dark band: a touch-sized pill, not a tall one (WOWY too) */
 :root .lx-head .wy-seg button{ display:inline-flex; align-items:center; padding-block:0; min-height:40px; }
 .sx .sl-side{ top:128px; }

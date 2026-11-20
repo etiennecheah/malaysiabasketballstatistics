@@ -174,7 +174,9 @@ function slTween(scope) {
     el.textContent = slFmt(key, from, unit); requestAnimationFrame(step);
   });
 }
-const slUnits = long => `<div class="sl-units" role="group" aria-label="Unit">${SL_UNITS.map(([k, l]) => `<button type="button" data-slunit="${k}" aria-pressed="${SL.unit === k}">${long && k === SL.unit ? SL_ULONG[k] : l}</button>`).join('')}</div>`;
+const SL_UFULL = { p100: 'Per 100 possessions', p30: 'Per 30 minutes', tot: 'Totals' };
+// every unit spelled out in full wherever it is offered (owner's request: "Per 100" alone confused)
+const slUnits = (long, full) => `<div class="sl-units" role="group" aria-label="Unit">${SL_UNITS.map(([k, l]) => `<button type="button" data-slunit="${k}" aria-pressed="${SL.unit === k}">${SL_UFULL[k]}</button>`).join('')}</div>`;
 function slCard(pid, mates, o) {
   const { acc, all } = slCombos(pid, mates), full = (1 << mates.length) - 1, get = c => c === 'all' ? all : acc[c];
   let L = o.L, R = o.R;
@@ -248,7 +250,6 @@ function slShell() {
   <nav class="lx-strip" aria-label="Tools"><div class="lx-in">${WX_TOOLS.map(([h, t]) => `<a href="${h}"${h === '#/shift' ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</div></nav>
   <div class="lx-in sx-body">
   <div class="lx-chips wx-teams" id="sl-teams" role="group" aria-label="Team"></div>
-  <section class="lx-card sx-board" id="sl-board" aria-label="His line with and without each teammate"></section>
   <div class="lx-th sx-th"><div><h2>Every mix</h2><p>Pick a main player and up to four teammates: each on/off mix becomes a column. Or see every player side by side, or a table of the whole roster with and without one player.</p></div></div>
   <div class="wy-ctl">
     ${seg('sl-view', [['combos', 'Combos'], ['side', 'Side by side'], ['table', 'Table']], SL.view, 'data-slview')}
@@ -259,6 +260,7 @@ function slShell() {
     <aside class="sl-side" aria-label="Players"><div><h2>Players</h2><p>Pick the player whose line you want (<b>Main</b>) and up to four teammates. Every on/off mix of the teammates becomes a column you can choose.</p></div><div class="sl-roster" id="sl-roster"></div><button type="button" class="wy-chip sl-more" id="sl-more" hidden aria-controls="sl-roster"></button></aside>
     <div class="sl-stage" id="sl-stage"></div>
   </div>
+  <section class="lx-card sx-board" id="sl-board" aria-label="His line with and without each teammate"></section>
   <details class="wy-how"><summary>How it’s calculated</summary><div class="wy-howg">
     <div><h3>Which minutes</h3><p>Every substitution in the play-by-play gives the five on the floor for each stretch of a game. A column adds up every stretch with the main player on the floor and the teammates on or off as it says. His own points, shots, rebounds and the rest are counted inside those stretches only, and add up to his box scores.</p></div>
     <div><h3>Per 100, per 30, totals</h3><p>Per 100 divides by the team’s possessions in those minutes (<code>FGA + 0.44 × FTA − OREB + TOV</code>), per 30 by his minutes: a game here is 40 minutes, not the NBA’s 48. USG% is his share of the team’s shots, free-throw trips and turnovers while he is on.</p></div>
@@ -315,7 +317,7 @@ function slBoard() {
   }).filter(r => r.mw > 0);
   // a tile names a teammate only with a fair sample on both sides: 25+ minutes with and without, else 10+
   const pick = (f, m) => rows.filter(r => r.mw >= m && r.mo >= m && f(r) != null).sort((x, y) => f(y) - f(x))[0], best = f => pick(f, SL_MIN_WARN) || pick(f, 10);
-  const bP = best(r => r.dPts), bN = best(r => r.dNet), p30 = slValue('PTS', all, 'p30'), ul = { p100: 'per 100', p30: 'per 30', tot: 'in total' }[u];
+  const bP = best(r => r.dPts), bN = best(r => r.dNet), p30 = slValue('PTS', all, 'p30'), ul = { p100: 'per 100 possessions', p30: 'per 30 minutes', tot: 'in total' }[u];
   const sv = (key, v) => v == null ? '—' : (v > 0.0001 ? '+' : v < -0.0001 ? '−' : '') + slFmt(key, Math.abs(v), u, true);
   tl.innerHTML = [
     ['Main player', slFmt('PTS', p30, 'p30'), `points per 30 · ${esc(personName(M))}, ${me.g} game${me.g === 1 ? '' : 's'}, ${Math.round(me.min)} min`, 'hl'],
@@ -327,7 +329,7 @@ function slBoard() {
   const span = Math.max(k === 'NET' ? 10 : 1e-9, ...rows.filter(r => r.d != null).map(r => Math.abs(r.d)));
   const lab = (SX_STATS.find(x => x[0] === k) || [k, k])[1];
   bd.innerHTML = `<div class="lx-ch sx-ch"><div><h2>With and without</h2><p>${esc(personName(M))}’s ${esc(lab.toLowerCase())} ${SL_STATS[k].k === 'count' ? ul : ''} with each teammate on the floor, and without him. Tap a teammate to open that mix below.</p></div>
-      <div class="sx-ctl">${slUnits(false)}<div class="lx-seg sx-stat" role="group" aria-label="Stat">${SX_STATS.map(([kk, l]) => `<button type="button" data-sxstat="${kk}" aria-pressed="${kk === k}">${l}</button>`).join('')}</div></div></div>
+      <div class="sx-ctl">${slUnits(false, true)}<div class="lx-seg sx-stat" role="group" aria-label="Stat">${SX_STATS.map(([kk, l]) => `<button type="button" data-sxstat="${kk}" aria-pressed="${kk === k}">${l}</button>`).join('')}</div></div></div>
     <div class="wx-sh sx-sh" aria-hidden="true"><span>Teammate</span><span>With</span><span>Without</span><span class="c">Change</span><span></span></div>
     <div class="wx-rows">${rows.map((r, i) => { const v = r.d, wd = v == null ? 0 : Math.abs(v) / span * 50, pos = v != null && v >= 0, care = Math.min(r.mw, r.mo) < SL_MIN_WARN;
       return `<button type="button" class="wx-row sx-row${care ? ' care' : ''}" data-sxmate="${esc(r.p)}" style="--i:${Math.min(i, 16)}">
