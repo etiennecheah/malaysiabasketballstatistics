@@ -92,15 +92,37 @@ function renderHome() {
   return `<div class="td"><h1 class="sr-only">HoopStats MY: Malaysian basketball statistics</h1>
     <div class="td-feat-wrap" id="lv-hero-side">${hmHeroSide()}</div>
     <div class="td-games" id="hm-games">${hmGamesInner()}</div>
-    ${hmHelp()}
     ${hmHoopsLife()}
+    ${hmHelp()}
   </div>`;
 }
-// the very foot of Today: a way through to hoopslife.com (update-126)
+// above the guide box: HoopsLife MY, a Malaysian basketball career simulator (update-127).
+// The player card is a picture of the idea, not data: a rating that fills, three attributes,
+// and the road from youth basketball to the national team lighting up stop by stop.
 function hmHoopsLife() {
-  return `<section class="td-hl" aria-label="hoopslife.com">
-    <div class="td-hl-t"><span class="td-eyebrow">More basketball</span><h2>hoopslife.com</h2><p>Step over to Hoops Life. It opens in a new tab, so your place on HoopStatsMY stays right here.</p></div>
-    <a class="td-hl-go" href="https://hoopslife.com/" target="_blank" rel="noopener">Enter hoopslife.com<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+  const road = ['U15', 'U18', 'D-League', 'MBL', 'Malaysia'];
+  const attrs = [['Shooting', 82], ['Handles', 74], ['Defence', 69]];
+  return `<section class="hlm" aria-labelledby="hlm-t">
+    <div class="hlm-court" aria-hidden="true"></div>
+    <div class="hlm-copy">
+      <span class="hlm-eye"><i aria-hidden="true"></i>Play · Career simulator</span>
+      <h2 id="hlm-t">Write your own <em>Malaysian basketball</em> career</h2>
+      <p><b>HoopsLife MY</b> is a Malaysian basketball career simulator. Take a player from the youth courts toward the MBL and the national team, one season at a time.</p>
+      <a class="hlm-go" href="https://hoopslifemy.com/" target="_blank" rel="noopener"><span>Play on hoopslifemy.com</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <small class="hlm-note">Opens in a new tab · your place here stays put</small>
+    </div>
+    <div class="hlm-stage" aria-hidden="true">
+      <div class="hlm-card">
+        <div class="hlm-top">
+          <span class="hlm-av"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.2" r="4"/><path d="M4.5 21c.9-4.3 3.9-6.6 7.5-6.6s6.6 2.3 7.5 6.6"/></svg></span>
+          <span class="hlm-id"><b>Your player</b><small>PG · 17 · Malaysia</small></span>
+          <span class="hlm-ovr"><svg viewBox="0 0 44 44"><circle class="bg" cx="22" cy="22" r="18"/><circle class="fg" cx="22" cy="22" r="18"/></svg><b class="n"></b><small>OVR</small></span>
+        </div>
+        <div class="hlm-attrs">${attrs.map(([k, v], i) => `<div style="--v:${v}%;--i:${i}"><span>${k}</span><i><b></b></i><em>${v}</em></div>`).join('')}</div>
+        <div class="hlm-road"><span class="hlm-line"><b></b></span>${road.map((r, i) => `<span class="hlm-stop" style="--i:${i}"><i></i><small>${r}</small></span>`).join('')}</div>
+      </div>
+      <span class="hlm-ball"></span>
+    </div>
   </section>`;
 }
 // the foot of Today: three things worth knowing, and the tour
