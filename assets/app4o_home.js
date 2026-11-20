@@ -93,7 +93,15 @@ function renderHome() {
     <div class="td-feat-wrap" id="lv-hero-side">${hmHeroSide()}</div>
     <div class="td-games" id="hm-games">${hmGamesInner()}</div>
     ${hmHelp()}
+    ${hmHoopsLife()}
   </div>`;
+}
+// the very foot of Today: a way through to hoopslife.com (update-126)
+function hmHoopsLife() {
+  return `<section class="td-hl" aria-label="hoopslife.com">
+    <div class="td-hl-t"><span class="td-eyebrow">More basketball</span><h2>hoopslife.com</h2><p>Step over to Hoops Life. It opens in a new tab, so your place on HoopStatsMY stays right here.</p></div>
+    <a class="td-hl-go" href="https://hoopslife.com/" target="_blank" rel="noopener">Enter hoopslife.com<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+  </section>`;
 }
 // the foot of Today: three things worth knowing, and the tour
 function hmHelp() {
