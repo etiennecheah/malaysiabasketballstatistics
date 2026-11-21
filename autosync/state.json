@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1795274320.0218434,
-  "fp": "bcaf2f34b70eb34479e7"
+  "at": 1795295307.61964,
+  "fp": "ce601f64086340b80c21"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -18,8 +18,8 @@
   "26279": "2026-10-10",
   "35136": "2026-10-10",
   "38575": "2026-10-16",
-  "48654": "2026-11-21",
-  "49965": "2026-11-21",
+  "48654": "2026-11-22",
+  "49965": "2026-11-22",
   "50247": "2026-10-21",
   "50248": "2026-10-21",
   "50457": "2026-11-12",
@@ -31,7 +31,7 @@
   "35136": 1791565381.5329828,
   "38575": 1792080511.4872327,
   "48654": 1794772825.9254622,
-  "49965": 1794686492.4828753,
+  "49965": 1795295147.7866554,
   "50247": 1792360197.0091074,
   "50248": 1792360741.928966,
   "50457": 1794257082.5598876,
@@ -39,7 +39,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-16 10:05  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 10:30  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 10:55  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 11:20  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -78,7 +77,8 @@
   "2026-11-21 21:11  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
   "2026-11-21 21:21  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
   "2026-11-21 21:31  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
-  "2026-11-21 23:18  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport"
+  "2026-11-21 23:18  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
+  "2026-11-22 05:08  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport  [rosters published for 6 of 8 teams]"
  ],
  "overdue_at": {
   "48654": 1794815815.7582607,
@@ -89,7 +89,7 @@
   "2896903": {
    "cid": "49965",
    "kind": "box",
-   "next": 1795277799.7807467,
+   "next": 1795298747.7866554,
    "since": 1795257271.3151884
   }
  },
