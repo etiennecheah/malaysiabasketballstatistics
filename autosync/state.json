@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1795263662.5303822,
-  "fp": "7d9d7b6769b87c367c4f"
+  "at": 1795263847.8814242,
+  "fp": "90651639718778daafa2"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -39,7 +39,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-16 06:17  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 06:42  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 07:07  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 07:33  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -78,7 +77,8 @@
   "2026-11-21 19:48  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
   "2026-11-21 19:58  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
   "2026-11-21 20:10  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
-  "2026-11-21 20:21  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport"
+  "2026-11-21 20:21  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
+  "2026-11-21 20:24  sync: Dream Ball Championship 2026 \u2014 Ai Play 106-67 Trapo; shot charts of 1 game"
  ],
  "overdue_at": {
   "48654": 1794815815.7582607,
