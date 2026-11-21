@@ -1,6 +1,6 @@
 {
  "built": {
-  "at": 1795259232.8778458,
+  "at": 1795259855.3577814,
   "fp": "7d9d7b6769b87c367c4f"
  },
  "daily": {
@@ -39,7 +39,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-16 04:02  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 04:05  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
   "2026-11-16 04:11  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 04:36  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -78,7 +77,8 @@
   "2026-11-21 18:36  sync: Dream Ball Championship 2026 \u2014 Vigor x TARUMT 105-69 Brayden x MG Living Sport; shot charts of 1 game  [2896903: final 105-69 read from the live feed (the schedule page does not show it as final yet); 2896903: box score taken from the live feed (the source's box score is not complete: Brayden x MG Living Sport players' points add to 63, scoreboard says 69)]",
   "2026-11-21 18:46  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
   "2026-11-21 18:57  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
-  "2026-11-21 19:07  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport"
+  "2026-11-21 19:07  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
+  "2026-11-21 19:17  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport"
  ],
  "overdue_at": {
   "48654": 1794815815.7582607,
@@ -89,7 +89,7 @@
   "2896903": {
    "cid": "49965",
    "kind": "box",
-   "next": 1795259718.1228442,
+   "next": 1795260320.5910804,
    "since": 1795257271.3151884
   }
  },
