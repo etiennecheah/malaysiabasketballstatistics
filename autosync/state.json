@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1795164176.0201302,
-  "fp": "98cbd0fe4c4c6fe4928f"
+  "at": 1795255312.5002217,
+  "fp": "b11005fef7270a9aca84"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -39,7 +39,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-16 02:02  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 02:27  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 02:53  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 03:18  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -78,7 +77,8 @@
   "2026-11-17 10:06  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
   "2026-11-17 10:08  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 8 teams]",
   "2026-11-17 10:11  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
-  "2026-11-18 10:25  sync: Major Basketball League \u2014 fixtures, standings or season lines updated"
+  "2026-11-18 10:25  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
+  "2026-11-21 18:01  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated"
  ],
  "overdue_at": {
   "48654": 1794815815.7582607,
@@ -98,7 +98,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1795237068.194971,
+  "21375": 1795255097.9544353,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
