@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1795295307.61964,
-  "fp": "ce601f64086340b80c21"
+  "at": 1795310256.5865576,
+  "fp": "0e04edef4752200174fa"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -39,7 +39,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-16 10:30  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 10:55  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 11:20  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 11:45  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -78,7 +77,8 @@
   "2026-11-21 21:21  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
   "2026-11-21 21:31  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
   "2026-11-21 23:18  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
-  "2026-11-22 05:08  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport  [rosters published for 6 of 8 teams]"
+  "2026-11-22 05:08  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport  [rosters published for 6 of 8 teams]",
+  "2026-11-22 09:17  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport"
  ],
  "overdue_at": {
   "48654": 1794815815.7582607,
@@ -89,7 +89,7 @@
   "2896903": {
    "cid": "49965",
    "kind": "box",
-   "next": 1795298747.7866554,
+   "next": 1795313696.7136893,
    "since": 1795257271.3151884
   }
  },
