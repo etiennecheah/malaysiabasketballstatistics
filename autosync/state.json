@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1795386591.5610712,
-  "fp": "dd6f281fd8018b138ef2"
+  "at": 1795386777.2881758,
+  "fp": "3c6f1c6ff1f92f5dc076"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -19,7 +19,7 @@
   "35136": "2026-10-10",
   "38575": "2026-10-16",
   "48654": "2026-11-23",
-  "49965": "2026-11-22",
+  "49965": "2026-11-23",
   "50247": "2026-10-21",
   "50248": "2026-10-21",
   "50457": "2026-11-12",
@@ -39,7 +39,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-16 12:10  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 12:35  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 13:00  FAILED 48654 (1): /usr/bin/python3 build_data.py",
   "2026-11-16 13:25  FAILED 48654 (1): /usr/bin/python3 build_data.py",
@@ -78,7 +77,8 @@
   "2026-11-22 09:17  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
   "2026-11-22 16:49  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
   "2026-11-23 01:07  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport",
-  "2026-11-23 06:29  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [1 player page(s) not published by the source now: the lines we hold are kept]"
+  "2026-11-23 06:29  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated  [1 player page(s) not published by the source now: the lines we hold are kept]",
+  "2026-11-23 06:32  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport  [rosters published for 6 of 8 teams]"
  ],
  "overdue_at": {
   "48654": 1794815815.7582607,
@@ -89,7 +89,7 @@
   "2896903": {
    "cid": "49965",
    "kind": "box",
-   "next": 1795370708.334559,
+   "next": 1795390220.680078,
    "since": 1795257271.3151884
   }
  },
