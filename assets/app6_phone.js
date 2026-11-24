@@ -194,8 +194,10 @@ const PH = (() => {
   /* ---------- Any table that still does not fit (update-130) ----------
      Every width (it began with phones and tablets). The rule for the site: a data
      table shows all of its content inside its box, with no sideways scroll.
-     A table wider than its box first gives up some padding (fx-t1), then
-     some type size (fx-t2); if it still does not fit, its rows become cards,
+     A table up to 10% too wide is drawn a little smaller (zoom, 90% at
+     least). A wider one first gives up some padding (fx-t1), then some type
+     size (fx-t2), each kept only if it helps; if it still does not fit, its
+     rows become cards (never a table that opens its own rows, like the box score),
      on a phone the phone's cards (five numbers a line), on a tablet or a
      laptop wider cards with eight numbers a line (tb-cards). A tap opens the rest. */
   // every width: the honour rolls and the lineup table are wider than a laptop's page too
@@ -207,10 +209,20 @@ const PH = (() => {
     }
     return t.parentElement || document.body;
   }
-  // a table drawn as a block can scroll inside itself: its scrollWidth is what it needs
-  const over = (t, b) => Math.max(t.getBoundingClientRect().width, t.scrollWidth) > b.clientWidth + 1 - (parseFloat(getComputedStyle(b).paddingLeft) || 0) - (parseFloat(getComputedStyle(b).paddingRight) || 0)
-    || t.scrollWidth > t.clientWidth + 1;
+  // the width a table needs on screen: a table drawn as a block can scroll inside itself (its scrollWidth),
+  // and under CSS zoom some browsers report scrollWidth unzoomed, so it is scaled by the drawn/laid-out ratio
+  const need = t => { const r = t.getBoundingClientRect().width; return Math.max(r, t.scrollWidth * r / (t.offsetWidth || r || 1)); };
+  const room = b => b.clientWidth - (parseFloat(getComputedStyle(b).paddingLeft) || 0) - (parseFloat(getComputedStyle(b).paddingRight) || 0);
+  const over = (t, b) => need(t) > room(b) + 1 || t.scrollWidth > t.clientWidth + 1;
   function cardSpec(t) { for (const [sel, keys, nid] of CARDS) if (t.matches(sel)) return [keys, nid]; return [null, 0]; }
+  // a table that is only a little too wide is drawn a little smaller (CSS zoom, never below 90%)
+  function shrink(t, b) {
+    const z = Math.floor((room(b) - 1) / need(t) * 1000) / 1000;
+    if (z < 0.9 || z >= 1) return false;
+    t.style.zoom = z; t.dataset.fz = '1';
+    if (!over(t, b)) return true;
+    t.style.zoom = ''; delete t.dataset.fz; return false;
+  }
   function fitOne(t, tab) {
     if (t.dataset.fx) {
       if (t.dataset.fx === 'cards') { const [k, nid] = cardSpec(t); card(t, k, nid, tab ? (nid ? 4 : 8) : 0); }
@@ -221,10 +233,20 @@ const PH = (() => {
     const b = boxOf(t);
     if (!b || !b.clientWidth) return;
     if (!over(t, b)) { t.dataset.fx = 'ok'; return; }
-    t.classList.add('fx-t1');
-    if (!over(t, b)) { t.dataset.fx = 't1'; return; }
-    t.classList.add('fx-t2');
-    if (!over(t, b)) { t.dataset.fx = 't2'; return; }
+    if (shrink(t, b)) { t.dataset.fx = 'zoom'; return; }
+    // less padding, then smaller type: each kept only if it makes the table narrower (some tables already pad less than 6px)
+    let w = need(t);
+    for (const c of ['fx-t1', 'fx-t2']) {
+      t.classList.add(c);
+      const w2 = need(t);
+      if (w2 >= w) { t.classList.remove(c); continue; }
+      w = w2;
+      if (!over(t, b)) { t.dataset.fx = c.slice(3); return; }
+    }
+    if (shrink(t, b)) { t.dataset.fx = 'zoom'; return; }
+    // a table with its own way of opening a row (the box score's detail rows, hidden until a tap) keeps its design
+    const own = t.matches('.gb-bs, [data-nocard]') || [...t.tBodies].some(x => [...x.rows].some(r => r.cells.length && getComputedStyle(r).display === 'none'));
+    if (own) { t.dataset.fx = 'own'; return; }
     t.classList.remove('fx-t1', 'fx-t2');
     const [k, nid] = cardSpec(t);
     t.dataset.fx = 'cards';
@@ -244,6 +266,7 @@ const PH = (() => {
     document.querySelectorAll('table[data-fx]').forEach(t => {
       if (t.dataset.fx === 'cards') t.classList.remove('fx-cards', 'tb-cards', ...(on() ? [] : ['ph-cards']));
       t.classList.remove('fx-t1', 'fx-t2'); delete t.dataset.fx;
+      if (t.dataset.fz) { t.style.zoom = ''; delete t.dataset.fz; }
     });
     tables();
   }
