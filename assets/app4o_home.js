@@ -90,6 +90,7 @@ function hmPulse() {
 const hmWords = (t, base) => t.split(' ').map((w, i) => `<span class="w" style="--d:${(base + i * 0.07).toFixed(2)}s">${w}</span>`).join(' ');
 function renderHome() {
   return `<div class="td"><h1 class="sr-only">HoopStats MY: Malaysian basketball statistics</h1>
+    ${typeof NTX !== 'undefined' ? NTX.render() : ''}
     <div class="td-feat-wrap" id="lv-hero-side">${hmHeroSide()}</div>
     <div class="td-games" id="hm-games">${hmGamesInner()}</div>
     ${hmHoopsLife()}

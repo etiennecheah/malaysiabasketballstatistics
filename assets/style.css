@@ -8406,3 +8406,147 @@ a.td-feat:hover{ transform:translateY(-3px); box-shadow:var(--shadow-2); text-de
   :root .gb-ht b{ font-size:22px; }
   :root .gb-hs > small{ max-width:250px; text-wrap:balance; }
 }
+
+/* ---------- National team hero on Today (update-132): the November window's twelve ---------- */
+.ntx{ --stage:#0a0e1c; --stage-2:#121a3a; --chalk:#f3f1e8; --chalk-dim:#a7adbd; --stage-line:rgba(255,255,255,.1);
+  margin-bottom:18px; font-family:var(--body); line-height:1.5; position:relative; isolation:isolate; overflow:hidden; border-radius:22px; color:var(--chalk);
+  background:radial-gradient(120% 90% at 72% 0%, var(--stage-2) 0%, var(--stage) 62%);
+  display:grid; grid-template-columns:minmax(300px, 380px) 1fr; grid-template-rows:auto 1fr auto;
+  grid-template-areas:"head stage" "body stage" "fix fix"; }
+.ntx-bg{ position:absolute; inset:0; z-index:-1; pointer-events:none; }
+.ntx-ghost{ position:absolute; right:-1%; top:2%; font:900 clamp(90px, 15vw, 210px)/.8 var(--display); letter-spacing:.01em;
+  color:transparent; -webkit-text-stroke:1px rgba(255,199,44,.13); white-space:nowrap; }
+.ntx-floor{ position:absolute; left:30%; right:-10%; bottom:52px; height:55%;
+  background:radial-gradient(50% 60% at 55% 100%, rgba(255,199,44,.2), transparent 70%); }
+.ntx-beam{ position:absolute; top:-20%; left:44%; width:46%; height:120%; transform:skewX(-14deg);
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.045) 45%, rgba(255,255,255,.07) 50%, transparent);
+  opacity:.9; }
+.ntx-grain{ position:absolute; inset:0; opacity:.22; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E"); }
+
+.ntx-head, .ntx-body{ position:relative; z-index:3; display:flex; flex-direction:column; gap:16px; min-width:0; }
+.ntx-head{ grid-area:head; padding:30px 8px 0 30px; }
+.ntx-body{ grid-area:body; padding:18px 8px 20px 30px; justify-content:flex-end; }
+.ntx-eye{ margin:0; display:flex; align-items:center; gap:8px; font:600 11.5px/1.3 var(--body); letter-spacing:.1em; text-transform:uppercase; color:var(--chalk-dim); }
+.ntx-eye .ntx-dot{ width:7px; height:7px; border-radius:50%; background:var(--hl); box-shadow:0 0 0 0 rgba(255,199,44,.6); animation:ntxPulse 2.2s infinite; flex:none; }
+.ntx-title{ margin:0; font:900 clamp(38px, 4.6vw, 58px)/.86 var(--display); text-transform:uppercase; letter-spacing:.005em; text-wrap:balance; }
+.ntx-title span{ display:block; overflow:hidden; }
+.ntx-title span i{ display:block; font-style:normal; animation:ntxLine .8s cubic-bezier(.2,.8,.2,1) both; }
+.ntx-title span:nth-child(2) i{ animation-delay:.12s; color:var(--hl); }
+
+.ntx-card{ position:relative; display:grid; grid-template-columns:auto 1fr; gap:4px 16px; align-items:end; padding-top:16px; border-top:1px solid var(--stage-line); }
+.ntx-num{ grid-row:span 2; font:900 92px/.78 var(--display); color:var(--hl); letter-spacing:-.01em; overflow:hidden; min-width:1.15em; text-align:left; }
+.ntx-num span{ display:block; }
+.ntx-who{ min-width:0; }
+.ntx-given{ font:600 13px/1.2 var(--body); color:var(--chalk-dim); letter-spacing:.02em; }
+.ntx-fam{ font:800 clamp(34px, 3.4vw, 44px)/.9 var(--display); text-transform:uppercase; letter-spacing:.01em; overflow-wrap:anywhere; }
+.ntx-meta{ grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+.ntx-meta span{ font:600 12.5px/1 var(--body); padding:7px 10px; border-radius:999px; background:rgba(255,255,255,.07); border:1px solid var(--stage-line); white-space:nowrap; }
+.ntx-meta .ntx-club{ background:transparent; }
+.ntx-note{ grid-column:1 / -1; display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:13px; color:var(--chalk-dim); min-height:22px; }
+.ntx-note .ntx-tag{ font:700 10.5px/1 var(--body); letter-spacing:.08em; text-transform:uppercase; padding:5px 8px; border-radius:5px; }
+.ntx-note .ntx-tag.back{ background:var(--hl); color:var(--hl-ink); }
+.ntx-note .ntx-tag.new{ background:transparent; color:var(--chalk); box-shadow:inset 0 0 0 1px rgba(243,241,232,.45); }
+.ntx-note b{ color:var(--chalk); font-weight:600; font-variant-numeric:tabular-nums; }
+.ntx-card.swap .ntx-num span{ animation:ntxRoll .55s cubic-bezier(.2,.8,.2,1) both; }
+.ntx-card.swap .ntx-fam, .ntx-card.swap .ntx-given{ animation:ntxLine .55s cubic-bezier(.2,.8,.2,1) both; }
+.ntx-card.swap .ntx-meta, .ntx-card.swap .ntx-note{ animation:ntxFade .6s .08s both; }
+
+.ntx-ctl{ display:flex; align-items:center; gap:8px; }
+.ntx-ctl button, .ntx-ctl a{ display:inline-grid; place-items:center; height:38px; min-width:38px; padding:0 12px; border-radius:999px; border:1px solid var(--stage-line);
+  background:rgba(255,255,255,.05); color:var(--chalk); font:600 13px var(--body); cursor:pointer; text-decoration:none; transition:background-color .15s, border-color .15s; }
+.ntx-ctl button:hover, .ntx-ctl a:hover{ background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.25); }
+.ntx-ctl a.ntx-prof{ background:var(--hl); color:var(--hl-ink); border-color:var(--hl); padding:0 16px; }
+.ntx-ctl a.ntx-prof:hover{ background:#ffd55c; }
+.ntx-ctl svg{ width:16px; height:16px; }
+.ntx-prog{ flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.12); overflow:hidden; min-width:40px; }
+.ntx-prog i{ display:block; height:100%; width:100%; background:var(--hl); transform-origin:left; transform:scaleX(0); }
+.ntx-count{ white-space:nowrap; font:700 12px/1 var(--body); color:var(--chalk-dim); font-variant-numeric:tabular-nums; letter-spacing:.04em; }
+
+/* the twelve, two rows like a team photo (the front row is inset so the end players' shoulders stay inside the stage) */
+.ntx-stage{ grid-area:stage; position:relative; z-index:2; height:clamp(250px, 37vw, 450px); margin-top:14px;
+  -webkit-mask-image:linear-gradient(#000 82%, transparent); mask-image:linear-gradient(#000 82%, transparent); }
+.ntx-fig{ position:absolute; left:calc(var(--x) * 100%); bottom:var(--b); height:var(--h); padding:0; border:0; background:none; cursor:pointer;
+  transform:translateX(-50%); z-index:var(--z); transition:transform .5s cubic-bezier(.2,.8,.2,1); -webkit-tap-highlight-color:transparent; }
+.ntx-fig.back{ --h:72%; --b:25%; --z:1; } .ntx-fig.front{ --h:80%; --b:-7%; --z:2; }
+.ntx-fig img{ display:block; height:100%; width:auto; max-width:none; filter:brightness(.4) saturate(.4); transition:filter .5s;
+  animation:ntxRise .9s cubic-bezier(.2,.8,.2,1) both; animation-delay:var(--d); }
+.ntx-fig.on img{ filter:brightness(1.04) saturate(1) drop-shadow(0 0 22px rgba(255,199,44,.32)); }
+.ntx-fig.on{ transform:translateX(-50%) translateY(-3%) scale(1.035); }
+/* the back row stands behind the front row's heads and the top of the stage, so its tag sits under the chin, pointing up */
+.ntx-fig.back .ntx-pin{ top:31%; transform:translate(-50%, -6px); }
+.ntx-fig.back.on .ntx-pin{ transform:translate(-50%, 0); }
+.ntx-fig.back .ntx-pin::after{ bottom:auto; top:-4px; }
+.ntx-fig .ntx-pin{ position:absolute; left:50%; top:-26px; transform:translate(-50%, 6px); opacity:0; transition:opacity .3s, transform .4s;
+  font:800 15px/1 var(--display); letter-spacing:.04em; background:var(--hl); color:var(--hl-ink); padding:5px 8px 4px; border-radius:6px; white-space:nowrap; pointer-events:none; }
+.ntx-fig .ntx-pin::after{ content:""; position:absolute; left:50%; bottom:-4px; width:8px; height:8px; background:var(--hl); transform:translateX(-50%) rotate(45deg); z-index:-1; }
+.ntx-fig.on .ntx-pin{ opacity:1; transform:translate(-50%, 0); }
+.ntx-fig:focus-visible{ outline:none; } .ntx-fig:focus-visible img{ filter:brightness(1) drop-shadow(0 0 0 2px var(--hl)); outline:2px solid var(--hl); outline-offset:-2px; }
+.ntx-sweep{ position:absolute; inset:0; z-index:4; pointer-events:none; background:linear-gradient(100deg, transparent 35%, rgba(255,255,255,.18) 50%, transparent 65%);
+  transform:translateX(-110%); animation:ntxSweep 1.3s 1.05s cubic-bezier(.4,0,.2,1) both; mix-blend-mode:overlay; }
+
+/* the window: three games on the floor */
+.ntx-fix{ grid-area:fix; position:relative; z-index:3; display:grid; grid-template-columns:auto repeat(3, minmax(0, 1fr)); gap:0;
+  border-top:1px solid var(--stage-line); background:rgba(5,7,14,.55); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+.ntx-grp{ padding:14px 22px 14px 30px; display:flex; flex-direction:column; justify-content:center; gap:2px; border-right:1px solid var(--stage-line); }
+.ntx-grp b{ font:800 20px/1 var(--display); text-transform:uppercase; letter-spacing:.03em; }
+.ntx-grp span{ font-size:12px; color:var(--chalk-dim); white-space:nowrap; }
+.ntx-gm{ color:var(--chalk); text-decoration:none; transition:background-color .15s; padding:12px 18px; display:grid; grid-template-columns:auto 1fr; gap:2px 12px; align-items:center; border-right:1px solid var(--stage-line); min-width:0;
+  animation:ntxFade .6s both; animation-delay:var(--d); }
+.ntx-gm:last-child{ border-right:0; }
+.ntx-gm:hover{ background:rgba(255,255,255,.05); text-decoration:none; color:var(--chalk); }
+.ntx-gm .ntx-day{ grid-row:span 2; display:grid; place-items:center; width:46px; height:46px; border-radius:10px; background:rgba(255,255,255,.06); border:1px solid var(--stage-line); }
+.ntx-gm .ntx-day b{ font:800 22px/.9 var(--display); } .ntx-gm .ntx-day small{ font:700 9.5px/1 var(--body); letter-spacing:.08em; text-transform:uppercase; color:var(--chalk-dim); }
+.ntx-gm .ntx-vs{ display:flex; align-items:center; gap:7px; font:700 14px/1.2 var(--body); min-width:0; }
+.ntx-gm .ntx-vs img{ width:20px; height:14px; border-radius:2px; object-fit:cover; box-shadow:0 0 0 1px rgba(255,255,255,.18); flex:none; }
+.ntx-gm .ntx-vs em{ font-style:normal; font-weight:500; color:var(--chalk-dim); }
+.ntx-gm .ntx-vs .ntx-t{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ntx-gm .ntx-when{ font-size:12.5px; color:var(--chalk-dim); font-variant-numeric:tabular-nums; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ntx-gm.next .ntx-when b{ color:var(--hl); font-weight:700; }
+.ntx-gm.next .ntx-day{ background:var(--hl); border-color:var(--hl); color:var(--hl-ink); } .ntx-gm.next .ntx-day small{ color:var(--hl-ink); }
+
+
+@keyframes ntxPulse{ 0%{ box-shadow:0 0 0 0 rgba(255,199,44,.55); } 70%{ box-shadow:0 0 0 9px rgba(255,199,44,0); } 100%{ box-shadow:0 0 0 0 rgba(255,199,44,0); } }
+@keyframes ntxLine{ from{ transform:translateY(105%); } to{ transform:none; } }
+@keyframes ntxRoll{ from{ transform:translateY(80%); opacity:0; } to{ transform:none; opacity:1; } }
+@keyframes ntxFade{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+@keyframes ntxRise{ from{ transform:translateY(38%); opacity:0; } 60%{ opacity:1; } to{ transform:none; opacity:1; } }
+@keyframes ntxSweep{ to{ transform:translateX(110%); } }
+
+/* narrower desktops and landscape tablets: Group F goes above the three games, so their names have room */
+@media (max-width:1100px){
+  .ntx-fix{ grid-template-columns:repeat(3, minmax(0, 1fr)); }
+  .ntx-grp{ grid-column:1 / -1; flex-direction:row; justify-content:flex-start; align-items:baseline; gap:10px; flex-wrap:wrap; padding:12px 22px 12px 30px; border-right:0; border-bottom:1px solid var(--stage-line); }
+  .ntx-grp span{ white-space:normal; }
+}
+/* tablet: the card and the stage side by side get tight; stack the stage under the copy */
+@media (max-width:900px){
+  .ntx{ grid-template-columns:1fr; grid-template-rows:auto; grid-template-areas:"head" "stage" "body" "fix"; }
+  .ntx-head{ padding:26px 22px 0; }
+  .ntx-body{ padding:4px 22px 20px; }
+  .ntx-stage{ height:clamp(230px, 52vw, 400px); margin-top:0; }
+  .ntx-ghost{ top:auto; bottom:30%; }
+  .ntx-floor{ left:0; right:0; }
+  .ntx-fix{ grid-template-columns:repeat(3, minmax(0, 1fr)); }
+  .ntx-grp{ grid-column:1 / -1; flex-direction:row; justify-content:flex-start; align-items:baseline; gap:10px; flex-wrap:wrap; padding:12px 22px; border-right:0; border-bottom:1px solid var(--stage-line); }
+  .ntx-grp span{ white-space:normal; }
+}
+/* phone: the copy and the card stay compact; games stack */
+@media (max-width:560px){
+  .ntx{ border-radius:18px; }
+  .ntx-head{ padding:22px 18px 0; gap:12px; }
+  .ntx-body{ padding:4px 18px 18px; gap:14px; }
+  .ntx-title{ font-size:40px; }
+  .ntx-num{ font-size:70px; }
+  .ntx-fam{ font-size:32px; }
+  .ntx-stage{ height:clamp(200px, 62vw, 300px); }
+  .ntx-fig .ntx-pin{ font-size:13px; top:-22px; }
+  .ntx-fix{ grid-template-columns:1fr; }
+  .ntx-gm{ border-right:0; border-bottom:1px solid var(--stage-line); padding:10px 18px; }
+  .ntx-gm:last-child{ border-bottom:0; }
+  .ntx-grp{ padding:12px 18px; }
+}
+@media (prefers-reduced-motion: reduce){
+  .ntx *, .ntx *::before, .ntx *::after{ animation:none !important; transition:none !important; }
+  .ntx-sweep{ display:none; }
+}

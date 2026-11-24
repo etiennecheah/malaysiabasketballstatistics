@@ -48,6 +48,11 @@ MAS = {
     224468: '2371573',   # Wei Yong Ong (captain)
     389791: '2252605',   # Shu Wen, Jayson Lee
 }
+# Called up for the Second Round window (Ulaanbaatar, 26-29 Nov 2026), not in the August squad: profile, shirt
+# number (read off the team photos the owner supplied), position (as the site has it). They join the roster now,
+# so the live pages link them by shirt number; once a game with them is imported, add their FIBA person ids to MAS.
+CALLUPS = [('620479', '0', 'PG'), ('1845447', '7', 'SG'), ('1957810', '8', 'SF'), ('797690', '20', 'PF'),
+           ('1885900', '21', 'SF'), ('2371570', '22', 'F')]
 # Every First Round result of the two groups that feed Group F (FIBA's schedule page), for the tables
 FIRST_ROUND = {
     'C': [('INA', 80, 'SGP', 54), ('MAS', 54, 'HKG', 77), ('HKG', 71, 'INA', 60), ('SGP', 56, 'MAS', 100),
@@ -204,7 +209,8 @@ def main():
              table('First Round · Group C (final)', ['HKG', 'MAS', 'INA', 'SGP'], FIRST_ROUND['C'])]
     M['comps'].append({
         'id': CID, 'name': NAME, 'teams': teams, 'stand': stand, 'games': rows, 'lead': lead, 'players': players,
-        'roster': [['fx-mas', [[p, num[p], '', '', '', '', pos[p], 'MAS'] for p in players]]],
+        'roster': [['fx-mas', [[p, num[p], '', '', '', '', pos[p], 'MAS'] for p in players]
+                    + [[p, n, '', '', '', '', ps, 'MAS'] for p, n, ps in CALLUPS if p not in players]]],
         'src': 'FIBA (fiba.basketball)',
         'standNote': 'Worked out here from FIBA\'s results (2 points a win, 1 a loss). Group F keeps every team\'s '
                      'First Round games; the top two of Groups E and F go through.',
