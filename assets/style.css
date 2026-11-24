@@ -8435,7 +8435,7 @@ a.td-feat:hover{ transform:translateY(-3px); box-shadow:var(--shadow-2); text-de
 .ntx-title span:nth-child(2) i{ animation-delay:.12s; color:var(--hl); }
 
 .ntx-card{ position:relative; display:grid; grid-template-columns:auto 1fr; gap:4px 16px; align-items:end; padding-top:16px; border-top:1px solid var(--stage-line); }
-.ntx-num{ grid-row:span 2; font:900 92px/.78 var(--display); color:var(--hl); letter-spacing:-.01em; overflow:hidden; min-width:1.15em; text-align:left; }
+.ntx-num{ grid-row:span 2; font:900 92px/1 var(--display); color:var(--hl); letter-spacing:-.01em; overflow:hidden; margin-bottom:-.14em; /* a full-height line box: the roll-in clips to it, so it must hold the whole digit */ min-width:1.15em; text-align:left; }
 .ntx-num span{ display:block; }
 .ntx-who{ min-width:0; }
 .ntx-given{ font:600 13px/1.2 var(--body); color:var(--chalk-dim); letter-spacing:.02em; }
