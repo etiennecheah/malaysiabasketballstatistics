@@ -1,6 +1,6 @@
 # HoopStatsMY
 
-Malaysian basketball statistics: https://etiennecheah.github.io/malaysiabasketballstatistics/
+Malaysian basketball statistics: https://hoopstats.my/
 
 This repository holds what the site is built from and the job that keeps it up to date.
 

@@ -18,7 +18,7 @@
 const ACC_CFG = { apiKey: 'AIzaSyC48KaJxnXHm1j5HWWIKyldB9PSw2F4I1M', authDomain: 'hoopstatsmy.firebaseapp.com', projectId: 'hoopstatsmy', appId: '1:862709178167:web:48dbf78e8c6759105144b2' };
 const ACC_IG = 'hoopstats_my';
 const ACC_SDK = 'https://www.gstatic.com/firebasejs/12.19.0/';
-const ACC_HOSTS = ['etiennecheah.github.io', 'localhost', '127.0.0.1'];
+const ACC_HOSTS = ['hoopstats.my', 'www.hoopstats.my', 'etiennecheah.github.io', 'localhost', '127.0.0.1'];
 const ACC_ID = /^[A-Za-z0-9._-]{1,50}$/;
 const ACC_SITES = [
   ['ig', 'Instagram', 'instagram.com/', v => 'https://www.instagram.com/' + v + '/', '@'],

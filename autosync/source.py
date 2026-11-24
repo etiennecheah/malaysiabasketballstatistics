@@ -20,7 +20,7 @@ from bs4 import BeautifulSoup
 
 HOST = 'https://hosted.dcd.shared.geniussports.com'
 BASE = HOST + '/maba/en/competition/'
-UA = 'HoopStatsMY-sync/1.0 (+https://etiennecheah.github.io/malaysiabasketballstatistics/)'
+UA = 'HoopStatsMY-sync/1.0 (+https://hoopstats.my/)'
 GAP = 0.6            # seconds between two requests leaving the same worker
 _last = threading.local()
 
