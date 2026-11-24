@@ -236,13 +236,24 @@ function route() {
   } else if (parts[0] === 'c') {
     state = 'notfound'; body = renderNotFound(parts[1]);
   } else {
-    body = renderHub();
+    // an address the site does not have (a typo, an old link): say so, and offer the way on
+    state = 'notfound'; body = renderPageNotFound(parts.join('/'));
   }
 
   app.innerHTML = renderNav(state, cid, tab) + '<main id="main" tabindex="-1">' + body + '</main>' + renderFooter();
   if (samePlayer) pvKeepScroll(keepY); else window.scrollTo(0, 0);
   if (typeof afterRender === 'function') afterRender();
   if (typeof hsApplyMeta === 'function') hsApplyMeta(HS.hash());
+}
+
+function renderPageNotFound(path) {
+  return `<div class="page">
+    <div class="page-head"><div>
+      <h1 class="page-title">Page not found</h1>
+      <div class="page-sub">There is no page at "/${esc(path || '')}". It may have moved, or the address has a typo.</div>
+    </div></div>
+    <div class="card"><div class="empty-row"><span class="empty-dot"></span><span>Try the search at the top, or go to <a href="#/">Today</a>, <a href="#/mbl">MBL 2026/27</a>, <a href="#/players">Players</a> or <a href="#/competitions">Competitions</a>.</span></div></div>
+  </div>`;
 }
 
 function renderNotFound(id) {

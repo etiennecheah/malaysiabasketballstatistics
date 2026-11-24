@@ -378,6 +378,8 @@ function rowOf(e) {
   const row = e.target.closest && e.target.closest('[data-href]');
   if (!row || e.target.closest('a, button, input, select, textarea, label, summary')) return null;
   if (String(window.getSelection ? getSelection() : '')) return null;     // selecting text, not opening
+  // a row drawn as a card that opens (app6_phone.js): its numbers and its arrow open the card; its title still follows the link
+  if (row.matches('tr.ph-xr') && !e.target.closest('td[data-id]') && (row.closest('table.tb-cards') || (row.closest('table.ph-cards') && matchMedia('(max-width:700px)').matches))) return null;
   return row;
 }
 function rowUrl(row) { const a = row.querySelector('a.row-link[href]'); return a ? a.href : null; }

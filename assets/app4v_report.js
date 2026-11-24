@@ -288,7 +288,7 @@ function rpTab(pid) {
 
   const shots = rpShotsDev(R);
   const bests = rpBests(R);
-  return pvSec('Report', 'Development · ' + rows.length + ' events', '',
+  return pvSec('Report', 'Development · ' + rows.length + (rows.length === 1 ? ' event' : ' events'), '',
     `<div class="rp">${hero}${thenNow}${changed}${trend}${sameEv}${shots}${bests}${rpNotesDev(R, imp, dec)}${rpAgainst(R)}
     <section class="rp-card"><details><summary>Every event behind the report</summary>${rpTable(R)}</details>
     <details class="rp-method"><summary>How the report is built</summary>
@@ -325,7 +325,7 @@ function rpMilestones(R) {
   top('ts', 'Best true shooting');
   const m0 = read[0], m1 = read[read.length - 1];
   if (m0 && m1 && m0 !== m1) F.push(['Minutes a game', `${rpF1(m0.mpg)} → ${rpF1(m1.mpg)}`]);
-  F.push(['Games with box scores', `${rows.reduce((a, r) => a + r.g, 0)} in ${rows.length} events`]);
+  F.push(['Games with box scores', `${rows.reduce((a, r) => a + r.g, 0)} in ${rows.length} event${rows.length === 1 ? '' : 's'}`]);
   return F;
 }
 // one competition he has played more than once: each edition, with the change from the one before

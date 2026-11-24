@@ -523,7 +523,7 @@ function teamRoster(cid, pids, roster, statByPid, tid) {
     .sort((a, b) => (Number(a.b.num) || 999) - (Number(b.b.num) || 999) || personName(a.pid).localeCompare(personName(b.pid)));
   const anyStats = rows.some(r => hasStats(r.p));
   return `<div class="card">
-    <div class="table-scroll"><table>
+    <div class="table-scroll"><table class="ros-table">
       <thead><tr><th class="left nosort">Player</th><th class="nosort"${gloss('#')}>#</th><th class="nosort"${gloss('Pos')}>Pos</th><th class="nosort"${gloss('Ht')}>Ht</th><th class="nosort"${gloss('Wt')}>Wt</th><th class="nosort">Age</th><th class="nosort"${gloss('Nat')}>Nat</th>
       ${anyStats ? `<th class="nosort"${gloss('G')}>G</th><th class="nosort"${gloss('PTS')}>PTS</th><th class="nosort"${gloss('PPG')}>PPG</th><th class="nosort"${gloss('RPG')}>RPG</th><th class="nosort" style="padding-right:20px;"${gloss('APG')}>APG</th>` : '<th class="nosort" style="padding-right:20px;"></th>'}</tr></thead>
       <tbody>${rows.map(r => {
@@ -544,7 +544,7 @@ function teamRoster(cid, pids, roster, statByPid, tid) {
 function teamResults(cid, name, games) {
   const done = games.filter(g => g.st === 'COMPLETE').sort((a, b) => (b.date || '').localeCompare(a.date || ''));
   const up = games.filter(isUpcoming);
-  return `<div class="card">
+  return `<div class="card tr-card">
     <div class="card-head">Results</div>
     ${done.length ? done.map(g => {
       const home = g.h === name, own = home ? g.hs : g.as, opp = home ? g.as : g.hs;

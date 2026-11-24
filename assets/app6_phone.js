@@ -113,9 +113,12 @@ const PH = (() => {
      Short standings tables keep their table and drop low-value columns.
      Here we only label the cells (data-l, data-id) and mark the rows. */
   const CARDS = [['.pv-table', null], ['.cp-table', ['G', 'MIN', 'PTS', 'REB', 'AST']], ['.ms-tbl', null],
-    ['.st-table', ['GP', 'MIN', 'PTS', '+/-', 'FG%']], ['.rh-roll table', 'all'], ['.wy-tbl', ['MIN', 'NET', 'OFF', 'DEF'], 1]];
+    ['.st-table', ['GP', 'MIN', 'PTS', '+/-', 'FG%']], ['.rh-roll table', 'all'], ['.wy-tbl', ['MIN', 'NET', 'OFF', 'DEF'], 1],
+    ['.ros-table', ['#', 'Pos', 'PPG', 'RPG', 'APG']], ['.lx-t', ['MIN', 'PTS', '+/-', 'FG%', '3P%', 'REB', 'AST', 'TOV']]];
   const PRI = ['G', 'GP', 'Caps', 'W–L', 'PTS', 'REB', 'AST', 'MIN', 'PER', 'BPM', 'On', 'Off', 'Diff', '+/-'];
   const IDC = /(^|\s)(left|l|yr|st-left|st-lu|st-tm|st-tmh|cx-rank|cp-rk)(\s|$)/;
+  // headings that name who or what a row is: always part of the card's title
+  const IDL = /^(#|rk|rank|team|player|lineup|name|club|event|competition|season|opponent)$/i;
   const lab = th => (th.textContent || '').replace(/[▼▲↓↑]/g, '').replace(/\s+/g, ' ').trim();
   function cols(t) {
     const hr = t.tHead && t.tHead.rows[t.tHead.rows.length - 1];
@@ -125,30 +128,32 @@ const PH = (() => {
     return {L, th, hr};
   }
   function each(tr, f) { let ci = 0; for (const c of tr.cells) { f(c, ci); ci += c.colSpan || 1; } }
-  function card(t, keys, nid) {
+  function card(t, keys, nid, nk) {
     const C = cols(t); if (!C) return;
     const rows = [...t.tBodies].flatMap(b => [...b.rows]);
-    // the same rows under new headings (a view switch): label them again
-    const sig = C.L.join('|');
+    // the same rows under new headings (a view switch), or a new count of key numbers: label them again
+    const sig = C.L.join('|') + '#' + (nk || 0);
     if (t.dataset.phk && t.dataset.phk !== sig) rows.forEach(r => { delete r.dataset.phd; r.classList.remove('ph-xr', 'ph-open', 'ph-full'); r.removeAttribute('tabindex'); r.querySelectorAll('td.ph-br').forEach(x => x.remove()); });
     t.dataset.phk = sig;
     const fresh = rows.filter(r => !r.dataset.phd);
     if (!fresh.length && C.hr.dataset.phd) return;
     // which columns say who/when/where (the card's title) and which hold numbers
     const first = rows.find(r => r.cells.length >= C.L.length - 1) || rows[0];
-    const id = C.L.map((l, i) => IDC.test(C.th[i].className) || (keys === 'all' && i < 2) || i < (nid || 0));
+    const id = C.L.map((l, i) => IDC.test(C.th[i].className) || (keys === 'all' && i < 2) || i < (nid || 0) || IDL.test(l));
     if (first) each(first, (c, ci) => { if (IDC.test(c.className)) id[ci] = true; });
+    // a table that marks no who/what column: its first column is the card's title
+    if (!id.some(Boolean)) id[0] = true;
     const stat = C.L.map((l, i) => i).filter(i => !id[i]);
     let key;
-    if (keys === 'all' || stat.length <= (nid ? 4 : 6)) key = new Set(stat);
+    if (keys === 'all' || stat.length <= (nk || (nid ? 4 : 6))) key = new Set(stat);
     else {
-      const want = keys || PRI, pick = [], n = nid ? 4 : 5;
+      const want = keys || PRI, pick = [], n = nk || (nid ? 4 : 5);
       for (const w of want) { const i = stat.find(j => C.L[j] === w); if (i != null && !pick.includes(i)) pick.push(i); if (pick.length === n) break; }
       for (const i of stat) { if (pick.length >= n) break; if (!pick.includes(i)) pick.push(i); }
       key = new Set(pick);
     }
     t.classList.add('ph-cards'); if (keys === 'all') t.classList.add('ph-names'); if (nid) t.classList.add('ph-four');
-    if (t.querySelector('thead th[data-csort], thead th button[data-sort]')) t.classList.add('ph-sort');
+    if (t.querySelector('thead th[data-csort], thead th button[data-sort], thead th button[data-lx-sort]')) t.classList.add('ph-sort');
     C.hr.dataset.phd = '1';
     C.th.forEach((c, i) => { if (id[i]) c.dataset.id = ''; else c.removeAttribute('data-id'); });
     for (const r of fresh) {
@@ -158,7 +163,9 @@ const PH = (() => {
         n++;
         if (id[ci] || (c.colSpan > 1 && ci < stat[0])) { c.dataset.id = ''; return; }
         c.dataset.l = C.L[ci] || '';
-        const k = key.has(ci) || /(^|\s)(cp-on|st-sorted)(\s|$)/.test(c.className);
+        // a long value or heading (a time span, "21/68 · 30.9%", "JST FGM-A") takes a double slot
+        c.classList.toggle('ph-w', Math.max((c.textContent || '').trim().length, (C.L[ci] || '').length) > 7);
+        const k = key.has(ci) || /(^|\s)(cp-on|st-sorted)(\s|$)/.test(c.className) || (c.classList.contains('on') && !!t.closest('.lx-scroll'));
         c.classList.toggle('ph-m', !k); if (!k) more = true;
       });
       if (n === 1) { r.classList.add('ph-full'); continue; }
@@ -176,22 +183,84 @@ const PH = (() => {
     for (const b of t.tBodies) for (const r of b.rows) if (!r.dataset.phd) { r.dataset.phd = '1'; each(r, (c, ci) => { c.dataset.l = C.L[ci] || ''; }); }
   }
   function tables() {
-    if (!on()) return;
-    const m = document.querySelector('main') || document.body;
-    for (const [sel, keys, nid] of CARDS) m.querySelectorAll(sel).forEach(t => card(t, keys, nid));
-    m.querySelectorAll('.cx-table, .table-scroll > table:not([class])').forEach(fit);
+    if (on()) {
+      const m = document.querySelector('main') || document.body;
+      for (const [sel, keys, nid] of CARDS) m.querySelectorAll(sel).forEach(t => card(t, keys, nid));
+      m.querySelectorAll('.cx-table, .table-scroll > table:not([class])').forEach(fit);
+    }
+    fitAll();
   }
+
+  /* ---------- Any table that still does not fit (update-130) ----------
+     Every width (it began with phones and tablets). The rule for the site: a data
+     table shows all of its content inside its box, with no sideways scroll.
+     A table wider than its box first gives up some padding (fx-t1), then
+     some type size (fx-t2); if it still does not fit, its rows become cards,
+     on a phone the phone's cards (five numbers a line), on a tablet or a
+     laptop wider cards with eight numbers a line (tb-cards). A tap opens the rest. */
+  // every width: the honour rolls and the lineup table are wider than a laptop's page too
+  const fon = () => true;
+  function boxOf(t) {
+    for (let e = t.parentElement; e && e !== document.body; e = e.parentElement) {
+      const o = getComputedStyle(e).overflowX;
+      if (o !== 'visible' || e.matches('main, .page, section, .card')) return e;
+    }
+    return t.parentElement || document.body;
+  }
+  // a table drawn as a block can scroll inside itself: its scrollWidth is what it needs
+  const over = (t, b) => Math.max(t.getBoundingClientRect().width, t.scrollWidth) > b.clientWidth + 1 - (parseFloat(getComputedStyle(b).paddingLeft) || 0) - (parseFloat(getComputedStyle(b).paddingRight) || 0)
+    || t.scrollWidth > t.clientWidth + 1;
+  function cardSpec(t) { for (const [sel, keys, nid] of CARDS) if (t.matches(sel)) return [keys, nid]; return [null, 0]; }
+  function fitOne(t, tab) {
+    if (t.dataset.fx) {
+      if (t.dataset.fx === 'cards') { const [k, nid] = cardSpec(t); card(t, k, nid, tab ? (nid ? 4 : 8) : 0); }
+      return;
+    }
+    if (t.closest('svg, [data-nofit]') || !t.tHead || !t.tBodies.length || !t.offsetWidth) return;
+    if (!tab && t.classList.contains('ph-cards')) { t.dataset.fx = 'ok'; return; }
+    const b = boxOf(t);
+    if (!b || !b.clientWidth) return;
+    if (!over(t, b)) { t.dataset.fx = 'ok'; return; }
+    t.classList.add('fx-t1');
+    if (!over(t, b)) { t.dataset.fx = 't1'; return; }
+    t.classList.add('fx-t2');
+    if (!over(t, b)) { t.dataset.fx = 't2'; return; }
+    t.classList.remove('fx-t1', 'fx-t2');
+    const [k, nid] = cardSpec(t);
+    t.dataset.fx = 'cards';
+    t.classList.add('ph-cards', 'fx-cards');
+    if (tab) t.classList.add('tb-cards');
+    card(t, k, nid, tab ? (nid ? 4 : 8) : 0);
+  }
+  function fitAll() {
+    if (!fon()) return;
+    const m = document.querySelector('main') || document.body, tab = !on();
+    m.querySelectorAll('table').forEach(t => fitOne(t, tab));
+  }
+  // a new width (a turned tablet, a resized window): every table is measured again
+  let fw = typeof innerWidth === 'number' ? innerWidth : 0, fr = 0;
+  function refit() {
+    if (innerWidth === fw) return; fw = innerWidth;
+    document.querySelectorAll('table[data-fx]').forEach(t => {
+      if (t.dataset.fx === 'cards') t.classList.remove('fx-cards', 'tb-cards', ...(on() ? [] : ['ph-cards']));
+      t.classList.remove('fx-t1', 'fx-t2'); delete t.dataset.fx;
+    });
+    tables();
+  }
+  addEventListener('resize', () => { clearTimeout(fr); fr = setTimeout(refit, 200); });
+  // tabs and view switches show tables that were hidden: measure after a tap
+  document.addEventListener('click', () => { clearTimeout(tq); tq = setTimeout(tables, 160); });
   if (typeof matchMedia === 'function') { const mq = matchMedia(MQ); (mq.addEventListener ? mq.addEventListener('change', tables) : mq.addListener(tables)); }
   let tq = 0;
   new MutationObserver(() => { clearTimeout(tq); tq = setTimeout(tables, 120); }).observe(document.documentElement, {childList: true, subtree: true});
   function flip(r) { const o = !r.classList.contains('ph-open'); r.classList.toggle('ph-open', o); r.setAttribute('aria-expanded', o); }
   document.addEventListener('click', e => {
     const r = e.target.closest('table.ph-cards tr.ph-xr');
-    if (!r || !on() || e.target.closest('a, button, input, select, label, [data-pvopen]')) return;
+    if (!r || !(on() || r.closest('table.tb-cards')) || e.target.closest('a, button, input, select, label, [data-pvopen]')) return;
     flip(r);
   });
   document.addEventListener('keydown', e => {
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('table.ph-cards tr.ph-xr') && on()) { e.preventDefault(); flip(e.target); }
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('table.ph-cards tr.ph-xr') && (on() || e.target.closest('table.tb-cards'))) { e.preventDefault(); flip(e.target); }
   });
   return {on, bar, after, ic, sheet, app: APP, tables};
 })();

@@ -155,6 +155,8 @@ function hsMeta(hash) {
   if (p0 === 'stats' && parts[1] === 'clutch') return page('Clutch', 'Clutch-time statistics for Malaysian basketball: the last five minutes of close games, by player and team, with filters for the clock, the margin, the quarter, the result, the opponent, position and role.', {});
   if (p0 === 'stats' && parts[1] === 'lineups') return page('Lineups', 'Every five-player lineup in Malaysian basketball competitions rebuilt from the play-by-play: minutes, offensive, defensive and net rating.', {});
   if (S[p0]) return page(S[p0][0], S[p0][1], { index: p0 !== 'compare' || parts.length === 1 });
+  // an address the router does not know shows "Page not found" (app2_nav.js); its tab says so too
+  if (!/^(live|scout|scouting|watch|me|admin|privacy|players|competitions|teams|t|stats|cf|shift|wowy|records|mbl|milestones|formulas|help|compare|p|c)$/.test(p0)) return page('Page not found', home.desc, { index: false });
   return page('Malaysia Basketball Database', home.desc, { index: false });
 }
 
