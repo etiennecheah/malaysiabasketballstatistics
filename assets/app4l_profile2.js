@@ -610,16 +610,20 @@ function renderPlayer(pid, tab) {
   tab = PV_OLD_TAB[tab] || tab;
   // the Shot map tab, for players with shots in a competition whose charts the sync reads
   let tabs = typeof smHas === 'function' && smHas(pid) ? PV_TABS.concat([['shots', 'Shot map']]) : PV_TABS;
+  // the Clips tab, for players with made baskets on film (the clip index loads with the first profile opened;
+  // a page opened at /clips keeps its tab while it loads)
+  pvcLoad();
+  if (pvcHas(pid) || (tab === 'clips' && PVC.state !== 'done')) tabs = tabs.concat([['clips', 'Clips']]);
   // the Report tab, for every player with a line that has minutes
   if (typeof rpHas === 'function' && rpHas(pid)) tabs = tabs.concat([['report', 'Report']]);
   if (!tabs.some(x => x[0] === tab)) tab = 'overview';
   const d = pvData(pid);
   const t = d.tiers.find(x => x.key === heroTierFor(pid, d.tiers)) || null;
-  const body = tab === 'report' ? rpTab(pid) : tab === 'shots' ? smTab(pid) : tab === 'stats' ? pvStats(pid, d, t) : tab === 'log' ? pvLog(pid, d) : tab === 'adv' ? pvAdv(pid, d, t) : tab === 'splits' ? pvSplits(pid, d) : pvOverview(pid, d);
+  const body = tab === 'report' ? rpTab(pid) : tab === 'clips' ? pvcTab(pid, d) : tab === 'shots' ? smTab(pid) : tab === 'stats' ? pvStats(pid, d, t) : tab === 'log' ? pvLog(pid, d) : tab === 'adv' ? pvAdv(pid, d, t) : tab === 'splits' ? pvSplits(pid, d) : pvOverview(pid, d);
   return `<div class="pv">
     ${pvHero(pid, d, t)}
     <div class="page pv-page">
-      <nav class="pv-tabs" role="tablist" aria-label="Player sections">${tabs.map(([k, l]) => `<a href="#/p/${pid}/${k}" class="${tab === k ? 'on' : ''}" role="tab" aria-selected="${tab === k}">${l}${k === 'log' && d.log.length ? `<span class="n">${d.log.length}</span>` : ''}</a>`).join('')}</nav>
+      <nav class="pv-tabs" role="tablist" aria-label="Player sections">${tabs.map(([k, l]) => `<a href="#/p/${pid}/${k}" class="${tab === k ? 'on' : ''}" role="tab" aria-selected="${tab === k}">${l}${k === 'log' && d.log.length ? `<span class="n">${d.log.length}</span>` : k === 'clips' && pvcCount(pid) ? `<span class="n">${pvcCount(pid)}</span>` : ''}</a>`).join('')}</nav>
       ${body}
     </div>
   </div>`;
@@ -637,3 +641,138 @@ document.addEventListener('click', e => {
   if (b.dataset.pvsplit) PV.split = b.dataset.pvsplit;
   softRoute();
 });
+
+
+/* =========================================================================
+   Clips tab: every made field goal of the player on film, newest game first.
+
+   The HoopStatsMY Film Room cuts each made basket from the game's broadcast (free
+   throws left out) and its site_clips.py uploads them to Cloudflare R2 (bucket
+   hoopstats-clips, served at https://clips.hoopstats.my/): <mid>/<NNN>.mp4 with a poster
+   <NNN>.jpg, and one small index, index.json. Video stays off GitHub Pages (1 GB in all),
+   and a new game needs no change here or on GitHub: the index lists it and the tab shows it.
+   The bucket's CORS rule lets hoopstats.my read index.json (claude/scoring-clips.md).
+
+   index.json: { games:   { <mid>: { cid, date, team: 'A'|'B' (the side clipped),
+                                     a, b (FIBA team codes), sa, sb (final score), src } },
+                 players: { <pid>: { <mid>: [ { f, q, clk, pts, shot, tags,
+                                                sa, sb (score after it), dur } ] } } }
+
+   The index loads once, with the first profile opened (never in the page checks or
+   the prerender); the tab appears for a player who has clips. Each game is one player
+   with its list beside it: a click plays that basket and the next follows when it ends.
+   ========================================================================= */
+const PVC = { idx: null, state: 'idle', next: true, want: false };
+const PVC_HOME = 'https://clips.hoopstats.my/';
+const pvcBase = () => PVC_HOME;
+function pvcLoad() {
+  if (PVC.state !== 'idle') return;
+  if (typeof fetch !== 'function' || typeof window === 'undefined' || (typeof navigator !== 'undefined' && navigator.webdriver)) { PVC.state = 'off'; return; }
+  PVC.state = 'loading';
+  fetch(PVC_HOME + 'index.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).catch(() => null).then(j => {
+    PVC.idx = j && j.players ? j : { games: {}, players: {} };
+    PVC.state = 'done';
+    // the profile on screen gets its tab now (or, opened at /clips, its clips)
+    if (ROUTE_PID && (pvcHas(ROUTE_PID) || PVC.want)) softRoute();
+  });
+}
+const pvcOf = pid => (PVC.idx && PVC.idx.players[pid]) || {};
+const pvcCount = pid => Object.values(pvcOf(pid)).reduce((n, a) => n + a.length, 0);
+const pvcHas = pid => pvcCount(pid) > 0;
+const pvcSecs = clk => { const [m, s] = String(clk).split(':'); return (+m || 0) * 60 + (+s || 0); };
+// "Q2 7:50"; overtime "OT1 2:10"
+const pvcWhen = c => (c.q > 4 ? 'OT' + (c.q - 4) : 'Q' + c.q) + ' ' + c.clk;
+
+/* one game: the result and box score line as the site has them, else FIBA's own numbers from the index */
+function pvcGame(pid, d, mid, clips) {
+  const m = (PVC.idx.games || {})[mid] || {}, g = GAME_BY_MID[mid], lg = d.log.find(x => x.mid === mid);
+  const side = m.team === 'A' ? 'a' : 'b', other = side === 'a' ? 'b' : 'a';
+  const ownName = PV_NAT[m[side]] || m[side] || '', oppName = PV_NAT[m[other]] || m[other] || '';
+  const home = lg ? lg.home : g ? String(g.h).toLowerCase() === ownName.toLowerCase() : false;
+  const own = lg ? lg.own : m['s' + side], opp = lg ? lg.opp : m['s' + other];
+  const sorted = clips.slice().sort((x, y) => x.q - y.q || pvcSecs(y.clk) - pvcSecs(x.clk));
+  return { mid, m, lg, clips: sorted, side, home, own, opp, win: own != null && opp != null && own > opp,
+    date: (g && g.date) || m.date || '', cid: (g && g.cid) || m.cid || '',
+    oppName: lg ? lg.oppName : g ? pvCase(home ? g.a : g.h) : oppName, oppRaw: lg ? lg.oppRaw : g ? (home ? g.a : g.h) : oppName };
+}
+
+function pvcTab(pid, d) {
+  if (PVC.state === 'loading' || PVC.state === 'idle') {
+    PVC.want = true;
+    return pvSec('Scoring clips', '', '', `<div class="card pv-card"><div class="empty-row"><span class="empty-dot"></span>Loading the clips…</div></div>`);
+  }
+  PVC.want = false;
+  const mine = pvcOf(pid);
+  const G = Object.keys(mine).map(mid => pvcGame(pid, d, mid, mine[mid])).sort((a, b) => b.date.localeCompare(a.date));
+  const all = G.reduce((a, x) => a.concat(x.clips), []), threes = all.filter(c => c.pts === 3).length;
+  if (!all.length) return pvSec('Scoring clips', '', '', `<div class="card pv-card"><div class="empty-row"><span class="empty-dot"></span>No clips of this player yet.</div></div>`);
+  const base = pvcBase();
+  const sub = `${all.length} made field goal${all.length === 1 ? '' : 's'} on film${threes ? `, ${threes} of them three${threes === 1 ? '' : 's'}` : ''} · newest game first`;
+  const auto = `<label class="pvc-auto"><input type="checkbox" data-pvc-auto${PVC.next ? ' checked' : ''}> Play the next one</label>`;
+  const games = G.map(x => {
+    const c0 = x.clips[0], comp = COMP_BY_ID[x.cid], l = x.lg && x.lg.l, tag = x.lg ? 'a' : 'div';
+    const head = `<div class="pv-games pvc-hd"><${tag} class="gm"${x.lg ? ` href="#/c/${x.cid}/box/${x.mid}"` : ''}>
+      ${x.own != null ? `<span class="res ${x.win ? 'w' : 'l'}">${x.win ? 'W' : 'L'}</span>` : '<span></span>'}
+      <div class="mid"><div class="o">${crest(x.oppRaw, 20)}<span>${x.home ? 'vs' : '@'} ${esc(x.oppName)}</span>${x.own != null ? `<span class="sc">${x.own}–${x.opp}</span>` : ''}</div>
+        <div class="c">${x.date ? pvDay(x.date) : ''}${comp ? ' · ' + esc(pvShortKey(tierKey(comp))) : ''}${x.lg && x.lg.phase ? ' · ' + esc(x.lg.phase) : ''}</div></div>
+      <div class="line">${l ? `<span><b>${fmt0(l.pts)}</b>pts</span> <span><i>${fmt0(l.fgm)}/${fmt0(l.fga)}</i> FG</span> <span><i>${fmt0(l.tpm)}/${fmt0(l.tpa)}</i> 3P</span>`
+        : `<span><b>${x.clips.length}</b>${x.clips.length === 1 ? 'basket' : 'baskets'}</span>`}</div></${tag}></div>`;
+    const items = x.clips.map((c, i) => {
+      const us = c['s' + x.side], them = c['s' + (x.side === 'a' ? 'b' : 'a')], dif = us - them;
+      const st = dif > 0 ? `up ${dif}` : dif < 0 ? `down ${-dif}` : 'tied';
+      const f = esc(x.mid + '/' + c.f);
+      return `<li><button type="button" class="pvc-it${i === 0 ? ' on' : ''}" data-pvc="${i}" data-f="${f}" data-cap="${esc(pvcWhen(c) + ' · ' + c.shot + ' · ' + (i + 1) + ' of ' + x.clips.length)}" aria-current="${i === 0}" aria-label="${esc(pvcWhen(c) + ', ' + c.shot + ', ' + us + '–' + them)}">
+        <span class="th"><img src="${base}${f}.jpg" alt="" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
+        <span class="tx"><b>${esc(c.shot)}</b><small>${pvcWhen(c)}${(c.tags || []).length ? ' · ' + c.tags.map(esc).join(' · ') : ''}</small></span>
+        <span class="pt p${c.pts}">+${c.pts}</span>
+        <span class="sc"><b>${us}–${them}</b><small>${st}</small></span></button></li>`;
+    }).join('');
+    const f0 = esc(x.mid + '/' + c0.f);
+    return `<div class="card pv-card pvc-game" data-pvc-game="${esc(x.mid)}">${head}
+      <div class="pvc-body">
+        <div class="pvc-stage"><video class="pvc-v" controls playsinline preload="none" data-i="0" poster="${base}${f0}.jpg" src="${base}${f0}.mp4" aria-label="${esc(personName(pid))} scoring"></video>
+          <div class="pvc-now">${esc(pvcWhen(c0) + ' · ' + c0.shot + ' · 1 of ' + x.clips.length)}</div></div>
+        <div class="pvc-side"><ol class="pvc-list">${items}</ol></div>
+      </div></div>`;
+  }).join('');
+  const src = [...new Set(G.map(x => x.m.src).filter(Boolean))].join(', ') || 'broadcast';
+  return pvSec('Scoring clips', sub, auto, games + `<div class="pv-note">Cut from each game's ${esc(src)} by the HoopStatsMY Film Room: every made two and three, free throws left out. A clip starts a few seconds before the shot. The score beside each basket is the one right after it, the player's team first.</div>`, 'pvc');
+}
+
+/* play basket i of one game in its own player; only one game plays at a time */
+function pvcPlay(box, i) {
+  const b = box && box.querySelector(`[data-pvc="${i}"]`), v = box && box.querySelector('.pvc-v');
+  if (!b || !v) return;
+  document.querySelectorAll('.pvc-v').forEach(x => { if (x !== v) x.pause(); });
+  const base = pvcBase();
+  v.dataset.i = i;
+  v.poster = base + b.dataset.f + '.jpg';
+  v.src = base + b.dataset.f + '.mp4';
+  const p = v.play();
+  if (p && p.catch) p.catch(() => {});
+  box.querySelectorAll('.pvc-it').forEach(x => { const on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-current', on); });
+  box.querySelector('.pvc-now').textContent = b.dataset.cap;
+  // the list scrolls inside its own box: bring the playing one into view there without moving the page
+  const ol = b.closest('.pvc-list'), li = b.parentNode;
+  if (ol && ol.scrollHeight > ol.clientHeight + 2) {
+    const top = li.getBoundingClientRect().top - ol.getBoundingClientRect().top + ol.scrollTop;
+    if (top < ol.scrollTop || top + li.offsetHeight > ol.scrollTop + ol.clientHeight) ol.scrollTo({ top: Math.max(0, top - 8), behavior: 'smooth' });
+  }
+}
+if (typeof document !== 'undefined' && document.addEventListener) {
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('[data-pvc]');
+    if (!b) return;
+    e.preventDefault();
+    pvcPlay(b.closest('.pvc-game'), +b.dataset.pvc);
+  });
+  document.addEventListener('change', e => { if (e.target.matches && e.target.matches('[data-pvc-auto]')) PVC.next = e.target.checked; });
+  // media events do not bubble, so they are caught on the way down: the playing row shows a pause mark
+  const pvcState = e => { const v = e.target; if (v.classList && v.classList.contains('pvc-v')) v.closest('.pvc-game').classList.toggle('playing', !v.paused); };
+  ['play', 'playing', 'pause', 'emptied'].forEach(t => document.addEventListener(t, pvcState, true));
+  document.addEventListener('ended', e => {
+    const v = e.target;
+    if (!PVC.next || !v.classList || !v.classList.contains('pvc-v')) return;
+    pvcPlay(v.closest('.pvc-game'), (+v.dataset.i || 0) + 1);
+  }, true);
+}
