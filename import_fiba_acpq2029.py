@@ -71,7 +71,7 @@ FIRST_ROUND = {
 }
 GROUP_F = ['THA', 'HKG', 'MGL', 'MAS', 'INA', 'FIJ']   # FIBA's own order before the Second Round
 # Second Round results in Group F as they come in (FIBA's schedule page), Malaysia's included
-SECOND_ROUND = [('THA', 94, 'MAS', 82), ('FIJ', 65, 'HKG', 106)]
+SECOND_ROUND = [('THA', 94, 'MAS', 82), ('FIJ', 65, 'HKG', 106), ('MGL', 72, 'INA', 64)]
 NAMES = {v: k for k, v in CODE.items()}
 NUM = ['pts', 'fgm', 'fga', 'twopm', 'twopa', 'tpm', 'tpa', 'ftm', 'fta', 'oreb', 'dreb', 'ast', 'pf', 'tov', 'stl',
        'blk', 'pm']
