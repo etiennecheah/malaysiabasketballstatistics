@@ -18,13 +18,15 @@ URL = 'https://www.fiba.basketball/en/events/' + EVENT
 CAP_E, CAP_SHORT = 'FIBA Asia Cup 2029 Pre-Qualifiers', 'FIBA Asia Cup Pre-Qualifiers'
 VENUE1 = 'Karisma Arena, Seremban'
 VENUE2 = 'MBank Arena, Ulaanbaatar'
-GAMES = {  # FIBA game id: (date and tip-off, Malaysia time, which is also local time in both venues; stage)
-    '134211': ('Aug 28, 2026, 7:00 PM', 'First Round · Group C · '),
-    '134213': ('Aug 30, 2026, 7:00 PM', 'First Round · Group C · '),
-    '134214': ('Aug 31, 2026, 7:00 PM', 'First Round · Group C · '),
+GAMES = {  # FIBA game id: (date and tip-off, Malaysia time, which is also local time in both venues; stage; venue)
+    '134211': ('Aug 28, 2026, 7:00 PM', 'First Round · Group C · ', VENUE1),
+    '134213': ('Aug 30, 2026, 7:00 PM', 'First Round · Group C · ', VENUE1),
+    '134214': ('Aug 31, 2026, 7:00 PM', 'First Round · Group C · ', VENUE1),
+    # read from the game page through the relay; FIBA's feed left three players' minutes at 0:00 (Lish, Biasumrit,
+    # Te): theirs are the team's 200:00 less everyone else's official minutes, split as the substitutions show
+    '132590': ('Nov 26, 2026, 4:00 PM', 'Second Round · Group F · ', 'MBank Arena, Ulaanbaatar'),
 }
 FIXTURES = [  # Second Round, Group F: (FIBA game id, tip-off, home, away)
-    ('132590', 'Nov 26, 2026, 4:00 PM', 'Thailand', 'Malaysia'),
     ('132592', 'Nov 27, 2026, 1:00 PM', 'Malaysia', 'Fiji'),
     ('132588', 'Nov 29, 2026, 7:00 PM', 'Mongolia', 'Malaysia'),
 ]
@@ -47,6 +49,13 @@ MAS = {
     216401: '2778711',   # Maegen Mahadevan Suresh Mahadevan
     224468: '2371573',   # Wei Yong Ong (captain)
     389791: '2252605',   # Shu Wen, Jayson Lee
+    # called up for the Second Round (Ulaanbaatar, Nov 2026)
+    336361: '620479',    # Chee Wei Lim
+    291083: '1845447',   # Zhen Jie Tem
+    212177: '1957810',   # Khai Chiek, John Wong
+    283223: '797690',    # Soon Kang Chong
+    414629: '1885900',   # Yi Hang Te
+    206408: '2371570',   # Zi Fueng Chang
 }
 # Called up for the Second Round window (Ulaanbaatar, 26-29 Nov 2026), not in the August squad: profile, shirt
 # number (read off the team photos the owner supplied), position (as the site has it). They join the roster now,
@@ -61,6 +70,8 @@ FIRST_ROUND = {
           ('THA', 69, 'MGL', 66), ('VIE', 57, 'FIJ', 69)],
 }
 GROUP_F = ['THA', 'HKG', 'MGL', 'MAS', 'INA', 'FIJ']   # FIBA's own order before the Second Round
+# Second Round results in Group F as they come in (FIBA's schedule page), Malaysia's included
+SECOND_ROUND = [('THA', 94, 'MAS', 82), ('FIJ', 65, 'HKG', 106)]
 NAMES = {v: k for k, v in CODE.items()}
 NUM = ['pts', 'fgm', 'fga', 'twopm', 'twopa', 'tpm', 'tpa', 'ftm', 'fta', 'oreb', 'dreb', 'ast', 'pf', 'tov', 'stl',
        'blk', 'pm']
@@ -100,12 +111,14 @@ def line(row, roster):
     return no, pid, st, secs(f[2]), v, ps
 
 
-def table(title, teams, results):
+def table(title, teams, results, ranked=False):
     rec = {t: collections.Counter() for t in teams}
     for a, sa, b, sb in results:
         for t, f, g in ((a, sa, sb), (b, sb, sa)):
             if t in rec:
                 rec[t]['gp'] += 1; rec[t]['w' if f > g else 'l'] += 1; rec[t]['for'] += f; rec[t]['agst'] += g
+    if ranked:   # by points, then point difference; FIBA breaks real ties head to head
+        teams = sorted(teams, key=lambda t: (-(2 * rec[t]['w'] + rec[t]['l']), -(rec[t]['for'] - rec[t]['agst']), teams.index(t)))
     rows = []
     for i, t in enumerate(teams):
         r = rec[t]
@@ -133,7 +146,7 @@ def main():
     rows, teams, tot, num, pos, players, fid = [], ['fx-mas'], collections.defaultdict(collections.Counter), {}, {}, [], {}
     for g in R['games']:
         gid = g['id']
-        date, note = GAMES[gid]
+        date, note, venue = GAMES[gid]
         h, a = g['sides']
         mid = 'fiba-' + gid
         sc = {}
@@ -173,7 +186,7 @@ def main():
                 else:
                     ln['name'] = ' '.join(x for x in roster[no][1:3] if x)
                 lines.append(ln)
-        rows.append([mid, 'COMPLETE', date, note + VENUE1, h['team'], str(sc[h['code']]), a['team'],
+        rows.append([mid, 'COMPLETE', date, note + venue, h['team'], str(sc[h['code']]), a['team'],
                      str(sc[a['code']]), 1])
         M['boxes'][mid] = {'p': lines, 'periods': [[x, y] for x, y in zip(h['q'], a['q'])]}
     for gid, date, home, away in FIXTURES:
@@ -205,15 +218,16 @@ def main():
         lead.append([cat, [[p, '%.1f' % val[p] if avg else '%d' % val[p]] for p in top]])
 
     stand = [table('Second Round · Group F (First Round records carried over)', GROUP_F,
-                   FIRST_ROUND['C'] + FIRST_ROUND['D']),
+                   FIRST_ROUND['C'] + FIRST_ROUND['D'] + SECOND_ROUND, ranked=True),
              table('First Round · Group C (final)', ['HKG', 'MAS', 'INA', 'SGP'], FIRST_ROUND['C'])]
     M['comps'].append({
         'id': CID, 'name': NAME, 'teams': teams, 'stand': stand, 'games': rows, 'lead': lead, 'players': players,
         'roster': [['fx-mas', [[p, num[p], '', '', '', '', pos[p], 'MAS'] for p in players]
                     + [[p, n, '', '', '', '', ps, 'MAS'] for p, n, ps in CALLUPS if p not in players]]],
         'src': 'FIBA (fiba.basketball)',
-        'standNote': 'Worked out here from FIBA\'s results (2 points a win, 1 a loss). Group F keeps every team\'s '
-                     'First Round games; the top two of Groups E and F go through.',
+        'standNote': 'Worked out here from FIBA\'s results (2 points a win, 1 a loss), ordered by points then point '
+                     'difference (FIBA breaks real ties head to head). Group F keeps every team\'s First Round games; '
+                     'the top two of Groups E and F go through.',
     })
     json.dump(M, open(os.path.join(D, 'manual_comps.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(CID, len(rows), 'games,', len(players), 'Malaysia players')
