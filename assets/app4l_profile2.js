@@ -709,14 +709,17 @@ function pvcTab(pid, d) {
   const base = pvcBase();
   const sub = `${all.length} made field goal${all.length === 1 ? '' : 's'} on film${threes ? `, ${threes} of them three${threes === 1 ? '' : 's'}` : ''} · newest game first`;
   const auto = `<label class="pvc-auto"><input type="checkbox" data-pvc-auto${PVC.next ? ' checked' : ''}> Play the next one</label>`;
-  const games = G.map(x => {
+  // each game opens and closes on its own (the user, 27 Nov 2026: "otherwise the page will be too long after upload
+  // multiple game clips"): the newest game open, the older ones shut until asked for
+  const games = G.map((x, gi) => {
+    const open = gi === 0;
     const c0 = x.clips[0], comp = COMP_BY_ID[x.cid], l = x.lg && x.lg.l, tag = x.lg ? 'a' : 'div';
     const head = `<div class="pv-games pvc-hd"><${tag} class="gm"${x.lg ? ` href="#/c/${x.cid}/box/${x.mid}"` : ''}>
       ${x.own != null ? `<span class="res ${x.win ? 'w' : 'l'}">${x.win ? 'W' : 'L'}</span>` : '<span></span>'}
       <div class="mid"><div class="o">${crest(x.oppRaw, 20)}<span>${x.home ? 'vs' : '@'} ${esc(x.oppName)}</span>${x.own != null ? `<span class="sc">${x.own}–${x.opp}</span>` : ''}</div>
         <div class="c">${x.date ? pvDay(x.date) : ''}${comp ? ' · ' + esc(pvShortKey(tierKey(comp))) : ''}${x.lg && x.lg.phase ? ' · ' + esc(x.lg.phase) : ''}</div></div>
       <div class="line">${l ? `<span><b>${fmt0(l.pts)}</b>pts</span> <span><i>${fmt0(l.fgm)}/${fmt0(l.fga)}</i> FG</span> <span><i>${fmt0(l.tpm)}/${fmt0(l.tpa)}</i> 3P</span>`
-        : `<span><b>${x.clips.length}</b>${x.clips.length === 1 ? 'basket' : 'baskets'}</span>`}</div></${tag}></div>`;
+        : `<span><b>${x.clips.length}</b>${x.clips.length === 1 ? 'basket' : 'baskets'}</span>`}</div></${tag}>${pvcToggleBtn(x, open)}</div>`;
     const items = x.clips.map((c, i) => {
       const us = c['s' + x.side], them = c['s' + (x.side === 'a' ? 'b' : 'a')], dif = us - them;
       const st = dif > 0 ? `up ${dif}` : dif < 0 ? `down ${-dif}` : 'tied';
@@ -728,15 +731,37 @@ function pvcTab(pid, d) {
         <span class="sc"><b>${us}–${them}</b><small>${st}</small></span></button></li>`;
     }).join('');
     const f0 = esc(x.mid + '/' + c0.f);
-    return `<div class="card pv-card pvc-game" data-pvc-game="${esc(x.mid)}">${head}
-      <div class="pvc-body">
-        <div class="pvc-stage"><video class="pvc-v" controls playsinline preload="none" data-i="0" poster="${base}${f0}.jpg" src="${base}${f0}.mp4" aria-label="${esc(personName(pid))} scoring"></video>
+    // a shut game loads nothing: its first clip and poster are set when it is opened (pvcToggle)
+    const media = `${open ? '' : 'data-'}poster="${base}${f0}.jpg" ${open ? '' : 'data-'}src="${base}${f0}.mp4"`;
+    return `<div class="card pv-card pvc-game${open ? '' : ' shut'}" data-pvc-game="${esc(x.mid)}">${head}
+      <div class="pvc-body" id="${pvcBodyId(x.mid)}"${open ? '' : ' hidden'}>
+        <div class="pvc-stage"><video class="pvc-v" controls playsinline preload="none" data-i="0" ${media} aria-label="${esc(personName(pid))} scoring"></video>
           <div class="pvc-now">${esc(pvcWhen(c0) + ' · ' + c0.shot + ' · 1 of ' + x.clips.length)}</div></div>
         <div class="pvc-side"><ol class="pvc-list">${items}</ol></div>
       </div></div>`;
   }).join('');
   const src = [...new Set(G.map(x => x.m.src).filter(Boolean))].join(', ') || 'broadcast';
   return pvSec('Scoring clips', sub, auto, games + `<div class="pv-note">Cut from each game's ${esc(src)} by the HoopStatsMY Film Room: every made two and three, free throws left out. A clip starts a few seconds before the shot. The score beside each basket is the one right after it, the player's team first.</div>`, 'pvc');
+}
+
+/* a game's open/close button in its header: how many clips it holds, and an arrow */
+const pvcBodyId = mid => 'pvcb-' + String(mid).replace(/[^\w-]/g, '');
+function pvcToggleBtn(x, open) {
+  const n = x.clips.length, what = `${n} clip${n === 1 ? '' : 's'}`;
+  return `<button type="button" class="pvc-tg" data-pvc-tg aria-expanded="${open}" aria-controls="${pvcBodyId(x.mid)}" aria-label="${open ? 'Hide' : 'Show'} the ${what} of this game"><span>${what}</span><i aria-hidden="true"></i></button>`;
+}
+
+/* open or close one game; closing stops its clip */
+function pvcToggle(box) {
+  if (!box) return;
+  const open = box.classList.toggle('shut') === false, body = box.querySelector('.pvc-body'), t = box.querySelector('[data-pvc-tg]'), v = box.querySelector('.pvc-v');
+  if (body) body.hidden = !open;
+  if (t) {
+    t.setAttribute('aria-expanded', open);
+    t.setAttribute('aria-label', (open ? 'Hide' : 'Show') + t.getAttribute('aria-label').replace(/^(Hide|Show)/, ''));
+  }
+  if (v && open && !v.getAttribute('src') && v.dataset.src) { v.poster = v.dataset.poster; v.src = v.dataset.src; }
+  if (v && !open) v.pause();
 }
 
 /* play basket i of one game in its own player; only one game plays at a time */
@@ -761,6 +786,8 @@ function pvcPlay(box, i) {
 }
 if (typeof document !== 'undefined' && document.addEventListener) {
   document.addEventListener('click', e => {
+    const t = e.target.closest && e.target.closest('[data-pvc-tg]');
+    if (t) { e.preventDefault(); pvcToggle(t.closest('.pvc-game')); return; }
     const b = e.target.closest && e.target.closest('[data-pvc]');
     if (!b) return;
     e.preventDefault();

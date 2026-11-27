@@ -11,9 +11,16 @@ Layup, Driving layup, Floater, Fadeaway, Pull-up jumper, Hook shot, Jump shot, U
 tags (Fast break, Off a turnover, Second chance), +2 or +3, and the score right after, the player's team first. A click
 plays it; "Play the next one" (on by default) runs through the game. On phones the list sits under the player.
 
+**Since 27 Nov 2026 each game opens and closes** (the owner: "otherwise the page will be too long after upload multiple
+game clips"). Every game card has a button at the right of its header ("4 clips" with an arrow); the newest game starts
+open and the older ones shut, as just their header row. Opening a game loads its first clip and poster (a shut game loads
+nothing); closing it stops its clip. The game details on the left of the header still link to the box score.
+MBL games (LiveStats ids, e.g. 2951451) carry both teams' clips: the index's per-clip `sa`/`sb` are then the scorer's
+team first (games[mid].persp = "player", team "A"), and the result/opponent come from the player's own game log.
+
 ## Where things are
 - **Code (this repo):** `assets/app4l_profile2.js`, the section "Clips tab" at the end (PVC, PVC_HOME, pvcLoad, pvcTab,
-  pvcPlay), and three lines in `renderPlayer`: `pvcLoad()` + the tab, the body (`tab === 'clips' ? pvcTab(pid, d)`),
+  pvcToggleBtn, pvcToggle, pvcPlay), and three lines in `renderPlayer`: `pvcLoad()` + the tab, the body (`tab === 'clips' ? pvcTab(pid, d)`),
   and the count in the tab bar. `assets/style.css`: the block "player profile: the Clips tab" at the end (`.pvc-*`).
 - **Video and the clip list (not in this repo):** Cloudflare R2, bucket `hoopstats-clips` (APAC), served at
   `https://clips.hoopstats.my/` (custom domain on the hoopstats.my zone): `index.json` and `<mid>/<NNN>.mp4|.jpg`.
@@ -32,8 +39,10 @@ index.json = { games:   { <mid>: { cid, date, team: 'A'|'B' (FIBA side clipped),
 ## Adding a game
 Nothing to do in this repo. The clips come from the HoopStatsMY Film Room on the owner's laptop: there,
 `app/site_clips.py <session> <FIBA json or link> --team A|B --mid <site game id> --cid <comp> --date <YYYY-MM-DD>`
-encodes the clips (720p, 30 fps, about 2.4 MB each), cuts the posters, adds the game to index.json and uploads all of
-it to the bucket with Cloudflare's wrangler; the game is on the profiles when it finishes.
+encodes the clips (720p at the broadcast's 60 fps, about 5 MB each: 30 fps looked choppy), cuts the posters, adds the
+game to index.json and uploads all of it to the bucket with Cloudflare's wrangler; the game is on the profiles when it
+finishes. Clips are uploaded under names that carry their content (`004-ea6bf5b8.mp4`), so a clip made again never
+shows an old copy from a browser's cache.
 
 ## Cleanup from the first attempt
 The first packing put the clips in this repo under `assets/vendor/clips/` (split in six parts; parts 1 and 2 were

@@ -8557,9 +8557,21 @@ a.td-feat:hover{ transform:translateY(-3px); box-shadow:var(--shadow-2); text-de
 .pvc-auto{ display:inline-flex; align-items:center; gap:7px; cursor:pointer; user-select:none; }
 .pvc-auto input{ accent-color:var(--accent); width:15px; height:15px; margin:0; }
 .pvc-game{ margin-bottom:22px; }
-.pvc-hd{ border-bottom:1px solid var(--hair); }
-.pvc-hd .gm{ padding:14px 18px; }
+.pvc-hd{ border-bottom:1px solid var(--hair); display:flex; flex-direction:row; align-items:stretch; }   /* .pv-games is a column */
+.pvc-hd .gm{ padding:14px 18px; flex:1; min-width:0; border-bottom:0; }
+.pvc-body[hidden]{ display:none; }                                         /* .pvc-body's own display would win otherwise */
 .pvc-hd div.gm:hover{ background:none; }
+/* each game opens and closes: the button on the right of its header; a shut game is just that header */
+.pvc-tg{ flex:none; display:inline-flex; align-items:center; gap:9px; padding:0 18px; border:0; border-left:1px solid var(--hair);
+  background:none; color:var(--text-muted); font:inherit; font-size:13px; font-weight:600; white-space:nowrap; cursor:pointer;
+  transition:background .15s var(--ease), color .15s var(--ease); }
+.pvc-tg:hover{ background:var(--surface-alt); color:var(--text); }
+.pvc-tg:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
+.pvc-tg i{ width:7px; height:7px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:translateY(2px) rotate(-135deg);
+  transition:transform .2s var(--ease); }
+.pvc-game.shut .pvc-tg i{ transform:translateY(-2px) rotate(45deg); }
+.pvc-game.shut .pvc-hd{ border-bottom:0; }
+.pvc-game.shut{ margin-bottom:12px; }
 .pvc-body{ display:grid; grid-template-columns:minmax(0,1.7fr) minmax(290px,1fr); }
 .pvc-stage{ background:var(--void); min-width:0; }
 .pvc-v{ display:block; width:100%; aspect-ratio:16/9; background:#000; }
@@ -8595,7 +8607,8 @@ a.td-feat:hover{ transform:translateY(-3px); box-shadow:var(--shadow-2); text-de
 @media (max-width:640px){
   .pvc .pv-sec-h .r{ margin-left:0; }
   .pvc-hd .gm{ padding:12px 14px; }
+  .pvc-tg{ padding:0 12px; gap:7px; }
   .pvc-it{ grid-template-columns:76px minmax(0,1fr) auto auto; gap:9px; }
   .pvc-it .th{ width:76px; }
 }
-@media (prefers-reduced-motion: reduce){ .pvc-it{ transition:none; } }
+@media (prefers-reduced-motion: reduce){ .pvc-it, .pvc-tg, .pvc-tg i{ transition:none; } }
