@@ -22325,6 +22325,19 @@
       [
        "3",
        "",
+       "Malaysia",
+       "5",
+       "3",
+       "2",
+       "404",
+       "370",
+       "+34",
+       "60",
+       "8"
+      ],
+      [
+       "4",
+       "",
        "Mongolia",
        "4",
        "3",
@@ -22336,20 +22349,20 @@
        "7"
       ],
       [
-       "4",
+       "5",
        "",
-       "Malaysia",
+       "Fiji",
+       "5",
+       "1",
        "4",
-       "2",
-       "2",
        "313",
-       "290",
-       "+23",
-       "50",
+       "450",
+       "-137",
+       "20",
        "6"
       ],
       [
-       "5",
+       "6",
        "",
        "Indonesia",
        "4",
@@ -22358,19 +22371,6 @@
        "267",
        "274",
        "-7",
-       "25",
-       "5"
-      ],
-      [
-       "6",
-       "",
-       "Fiji",
-       "4",
-       "1",
-       "3",
-       "233",
-       "359",
-       "-126",
        "25",
        "5"
       ]
@@ -22494,14 +22494,14 @@
     ],
     [
      "fiba-132592",
-     "SCHEDULED",
+     "COMPLETE",
      "Nov 27, 2026, 1:00 PM",
      "Second Round · Group F · MBank Arena, Ulaanbaatar",
      "Malaysia",
-     "",
+     "91",
      "Fiji",
-     "",
-     0
+     "80",
+     1
     ],
     [
      "fiba-132588",
@@ -22520,43 +22520,43 @@
      "Average points",
      [
       [
-       "2252562",
-       "14.8"
+       "2370342",
+       "14.2"
       ],
       [
-       "2370342",
-       "13.0"
+       "2252562",
+       "13.8"
       ],
       [
        "107204",
        "12.0"
       ],
       [
-       "1845447",
-       "10.0"
+       "620479",
+       "11.5"
       ],
       [
-       "1885900",
-       "10.0"
+       "2371570",
+       "8.5"
       ],
       [
        "2371569",
-       "7.8"
+       "8.4"
       ],
       [
-       "620479",
-       "7.0"
-      ],
-      [
-       "2371573",
-       "6.0"
+       "1845447",
+       "8.0"
       ],
       [
        "2302680",
        "5.8"
       ],
       [
-       "2371570",
+       "2371573",
+       "5.2"
+      ],
+      [
+       "1885900",
        "5.0"
       ]
      ]
@@ -22566,7 +22566,7 @@
      [
       [
        "2370342",
-       "8.5"
+       "8.6"
       ],
       [
        "2778711",
@@ -22574,34 +22574,34 @@
       ],
       [
        "2252562",
-       "5.5"
-      ],
-      [
-       "2371570",
-       "5.0"
+       "5.2"
       ],
       [
        "620479",
-       "3.0"
+       "4.5"
       ],
       [
-       "2302680",
-       "2.5"
-      ],
-      [
-       "2371573",
-       "2.5"
+       "2371570",
+       "4.0"
       ],
       [
        "2778709",
        "2.5"
       ],
       [
-       "2371569",
-       "2.2"
+       "2302680",
+       "2.4"
       ],
       [
-       "1885900",
+       "2371569",
+       "2.4"
+      ],
+      [
+       "2341474",
+       "2.0"
+      ],
+      [
+       "2371573",
        "2.0"
       ]
      ]
@@ -22610,31 +22610,27 @@
      "Average assists",
      [
       [
-       "2092917",
+       "2370342",
        "3.0"
       ],
       [
-       "2370342",
+       "620479",
+       "3.0"
+      ],
+      [
+       "2092917",
        "2.8"
       ],
       [
        "2252562",
-       "2.5"
+       "2.6"
       ],
       [
        "2371573",
        "2.2"
       ],
       [
-       "1885900",
-       "2.0"
-      ],
-      [
        "2778709",
-       "2.0"
-      ],
-      [
-       "620479",
        "2.0"
       ],
       [
@@ -22646,8 +22642,12 @@
        "1.5"
       ],
       [
-       "2371569",
-       "1.2"
+       "1885900",
+       "1.5"
+      ],
+      [
+       "1957810",
+       "1.0"
       ]
      ]
     ],
@@ -22656,23 +22656,31 @@
      [
       [
        "2370342",
-       "70"
+       "98"
       ],
       [
        "2252562",
-       "58"
+       "68"
       ],
       [
        "2371573",
-       "36"
+       "35"
+      ],
+      [
+       "2302680",
+       "34"
       ],
       [
        "107204",
        "33"
       ],
       [
-       "2302680",
-       "24"
+       "620479",
+       "30"
+      ],
+      [
+       "2371569",
+       "28"
       ],
       [
        "2778711",
@@ -22680,19 +22688,11 @@
       ],
       [
        "2092917",
-       "18"
+       "20"
       ],
       [
-       "2371569",
-       "18"
-      ],
-      [
-       "2341474",
-       "12"
-      ],
-      [
-       "1885900",
-       "11"
+       "2371570",
+       "15"
       ]
      ]
     ]
@@ -23314,24 +23314,24 @@
   "fiba-wac-2027-seaba:2615599": "Malaysia\t\t\t\t2\t1\t\t2\t\t0\t0\t0\t0\t\t15:14\t\t\t\t\t1\t\t0\t\t\t2\t1\t2\t75\t2\t\t0\t0\t2\t1\t2\t3\t3\t1\t3\t0\t7",
   "fiba-wac-2027-seaba:27500": "Malaysia\t\t\t\t15\t7\t\t6\t\t8\t7\t2\t0\t\t51:58\t\t\t\t\t12\t\t2\t\t\t6\t2\t18.5\t62.1\t6\t\t9\t5\t2\t12\t2\t23\t6\t14\t2\t0\t30",
   "fiba-wac-2027-seaba:2786776": "Malaysia\t\t\t\t13\t2\t\t2\t\t2\t1\t0\t0\t\t25:24\t\t\t\t\t4\t\t2\t\t\t6\t0\t13.9\t18\t3\t\t7\t2\t2\t4\t2\t5\t0\t6\t6\t0\t2",
-  "fiba-acpq-2029:2092917": "Malaysia\t\t\t\t14\t5\t\t6\t\t3\t2\t0\t2\t\t76:32\t\t\t\t\t2\t\t3\t\t\t7\t2\t15.3\t45.7\t7\t\t7\t3\t2\t15\t4\t14\t12\t5\t4\t0\t18",
+  "fiba-acpq-2029:2092917": "Malaysia\t\t\t\t22\t8\t\t7\t\t5\t2\t0\t2\t\t89:48\t\t\t\t\t2\t\t3\t\t\t11\t3\t24.2\t43.4\t7\t\t11\t5\t3\t25\t5\t21\t14\t5\t4\t0\t20",
   "fiba-acpq-2029:107204": "Malaysia\t\t\t\t19\t12\t\t3\t\t2\t2\t0\t1\t\t39:19\t\t\t\t\t1\t\t1\t\t\t17\t10\t19.9\t90.5\t0\t\t2\t2\t2\t16\t3\t36\t1\t2\t1\t0\t33",
   "fiba-acpq-2029:2778711": "Malaysia\t\t\t\t15\t6\t\t9\t\t6\t3\t2\t1\t\t45:26\t\t\t\t\t7\t\t10\t\t\t0\t0\t17.6\t42.5\t2\t\t15\t6\t2\t31\t3\t15\t1\t17\t4\t1\t24",
   "fiba-acpq-2029:2252605": "Malaysia\t\t\t\t10\t1\t\t8\t\t4\t3\t2\t1\t\t38:34\t\t\t\t\t4\t\t0\t\t\t7\t1\t11.8\t25.5\t1\t\t3\t0\t2\t-6\t3\t6\t5\t4\t1\t0\t5",
   "fiba-acpq-2029:2778709": "Malaysia\t\t\t\t13\t3\t\t4\t\t0\t0\t0\t1\t\t31:45\t\t\t\t\t3\t\t2\t\t\t9\t2\t13\t30.8\t2\t\t4\t1\t1\t1\t2\t8\t4\t5\t1\t0\t6",
-  "fiba-acpq-2029:2371569": "Malaysia\t\t\t\t35\t11\t\t6\t\t9\t7\t0\t2\t\t63:17\t\t\t\t\t5\t\t4\t\t\t10\t2\t39\t39.8\t6\t\t25\t9\t2\t7\t4\t31\t5\t9\t4\t1\t18",
-  "fiba-acpq-2029:2370342": "Malaysia\t\t\t\t51\t22\t\t7\t\t6\t5\t4\t2\t\t123:38\t\t\t\t\t26\t\t8\t\t\t14\t3\t53.6\t48.5\t6\t\t37\t19\t2\t4\t4\t52\t11\t34\t8\t1\t70",
+  "fiba-acpq-2029:2371569": "Malaysia\t\t\t\t43\t15\t\t8\t\t11\t8\t0\t2\t\t84:36\t\t\t\t\t8\t\t4\t\t\t14\t4\t47.8\t43.9\t7\t\t29\t11\t3\t9\t5\t42\t5\t12\t6\t1\t28",
+  "fiba-acpq-2029:2370342": "Malaysia\t\t\t\t62\t28\t\t9\t\t13\t11\t5\t2\t\t155:42\t\t\t\t\t32\t\t11\t\t\t18\t4\t67.7\t52.4\t9\t\t44\t24\t3\t25\t5\t71\t15\t43\t12\t2\t98",
   "fiba-acpq-2029:2341474": "Malaysia\t\t\t\t4\t2\t\t6\t\t2\t1\t1\t1\t\t31:55\t\t\t\t\t5\t\t1\t\t\t0\t0\t4.9\t51.2\t1\t\t4\t2\t2\t21\t3\t5\t1\t6\t2\t2\t12",
-  "fiba-acpq-2029:2302680": "Malaysia\t\t\t\t20\t10\t\t8\t\t6\t3\t2\t2\t\t62:51\t\t\t\t\t7\t\t3\t\t\t0\t0\t22.6\t50.8\t0\t\t20\t10\t2\t-16\t4\t23\t3\t10\t1\t0\t24",
+  "fiba-acpq-2029:2302680": "Malaysia\t\t\t\t23\t13\t\t10\t\t6\t3\t3\t2\t\t75:00\t\t\t\t\t9\t\t3\t\t\t0\t0\t25.6\t56.6\t1\t\t23\t13\t3\t-6\t5\t29\t5\t12\t2\t0\t34",
   "fiba-acpq-2029:1286737": "Malaysia\t\t\t\t5\t2\t\t2\t\t3\t3\t0\t1\t\t22:50\t\t\t\t\t1\t\t0\t\t\t3\t1\t6.3\t63.3\t0\t\t2\t1\t1\t-2\t2\t8\t3\t1\t0\t0\t9",
-  "fiba-acpq-2029:2252562": "Malaysia\t\t\t\t52\t19\t\t10\t\t13\t9\t4\t2\t\t110:56\t\t\t\t\t15\t\t7\t\t\t30\t12\t57.7\t51.1\t6\t\t22\t7\t2\t29\t4\t59\t10\t22\t9\t1\t58",
-  "fiba-acpq-2029:2371573": "Malaysia\t\t\t\t14\t10\t\t4\t\t4\t2\t4\t2\t\t72:41\t\t\t\t\t7\t\t3\t\t\t3\t2\t15.8\t76.1\t10\t\t11\t8\t2\t43\t4\t24\t9\t10\t8\t1\t36",
-  "fiba-acpq-2029:620479": "Malaysia\t\t\t\t6\t3\t\t1\t\t0\t0\t0\t1\t\t17:54\t\t\t\t\t1\t\t2\t\t\t3\t1\t6\t58.3\t2\t\t3\t2\t0\t1\t1\t7\t2\t3\t1\t0\t8",
-  "fiba-acpq-2029:1845447": "Malaysia\t\t\t\t7\t4\t\t2\t\t0\t0\t0\t1\t\t14:29\t\t\t\t\t1\t\t0\t\t\t5\t2\t7\t71.4\t1\t\t2\t2\t0\t-4\t1\t10\t0\t1\t0\t0\t7",
-  "fiba-acpq-2029:1957810": "Malaysia\t\t\t\t1\t0\t\t1\t\t0\t0\t0\t1\t\t6:14\t\t\t\t\t0\t\t0\t\t\t0\t0\t1\t0\t0\t\t1\t0\t0\t-4\t1\t0\t1\t0\t0\t0\t0",
-  "fiba-acpq-2029:797690": "Malaysia\t\t\t\t0\t0\t\t3\t\t0\t0\t0\t1\t\t7:40\t\t\t\t\t1\t\t1\t\t\t0\t0\t0\t\t2\t\t0\t0\t0\t-16\t1\t0\t0\t2\t0\t0\t0",
-  "fiba-acpq-2029:1885900": "Malaysia\t\t\t\t9\t5\t\t1\t\t0\t0\t0\t1\t\t12:08\t\t\t\t\t1\t\t1\t\t\t0\t0\t9\t55.6\t0\t\t9\t5\t0\t0\t1\t10\t2\t2\t1\t0\t11",
-  "fiba-acpq-2029:2371570": "Malaysia\t\t\t\t8\t2\t\t2\t\t0\t0\t1\t1\t\t21:51\t\t\t\t\t4\t\t1\t\t\t6\t1\t8\t31.2\t0\t\t2\t1\t0\t-5\t1\t5\t0\t5\t0\t0\t4"
+  "fiba-acpq-2029:2252562": "Malaysia\t\t\t\t62\t23\t\t10\t\t15\t9\t5\t2\t\t142:00\t\t\t\t\t19\t\t7\t\t\t37\t14\t68.6\t50.3\t7\t\t25\t9\t3\t39\t5\t69\t13\t26\t11\t1\t68",
+  "fiba-acpq-2029:2371573": "Malaysia\t\t\t\t16\t11\t\t6\t\t4\t2\t5\t2\t\t88:12\t\t\t\t\t7\t\t3\t\t\t3\t2\t17.8\t73.2\t14\t\t13\t9\t3\t32\t5\t26\t11\t10\t8\t1\t35",
+  "fiba-acpq-2029:620479": "Malaysia\t\t\t\t13\t7\t\t1\t\t8\t6\t0\t1\t\t44:02\t\t\t\t\t6\t\t3\t\t\t5\t3\t16.5\t69.6\t3\t\t8\t4\t1\t20\t2\t23\t6\t9\t3\t0\t30",
+  "fiba-acpq-2029:1845447": "Malaysia\t\t\t\t13\t6\t\t3\t\t0\t0\t1\t1\t\t25:47\t\t\t\t\t1\t\t0\t\t\t10\t4\t13\t61.5\t4\t\t3\t2\t1\t-5\t2\t16\t0\t1\t0\t0\t6",
+  "fiba-acpq-2029:1957810": "Malaysia\t\t\t\t1\t0\t\t1\t\t0\t0\t0\t1\t\t10:26\t\t\t\t\t1\t\t0\t\t\t0\t0\t1\t0\t0\t\t1\t0\t1\t-7\t2\t0\t2\t1\t1\t0\t3",
+  "fiba-acpq-2029:797690": "Malaysia\t\t\t\t3\t1\t\t6\t\t0\t0\t0\t1\t\t16:13\t\t\t\t\t3\t\t1\t\t\t1\t0\t3\t33.3\t3\t\t2\t1\t1\t-18\t2\t2\t0\t4\t1\t0\t2",
+  "fiba-acpq-2029:1885900": "Malaysia\t\t\t\t10\t5\t\t1\t\t0\t0\t0\t1\t\t17:16\t\t\t\t\t1\t\t1\t\t\t0\t0\t10\t50\t0\t\t10\t5\t1\t-3\t2\t10\t3\t2\t1\t0\t11",
+  "fiba-acpq-2029:2371570": "Malaysia\t\t\t\t16\t6\t\t2\t\t0\t0\t1\t1\t\t41:09\t\t\t\t\t6\t\t2\t\t\t14\t5\t16\t53.1\t1\t\t2\t1\t1\t-2\t2\t17\t0\t8\t0\t1\t15"
  },
  "boxes": {
   "2457644": {
@@ -168281,6 +168281,616 @@
      25
     ]
    ]
+  },
+  "fiba-132592": {
+   "p": [
+    {
+     "pts": "16",
+     "fgm": "4",
+     "fga": "7",
+     "twopm": "2",
+     "twopa": "5",
+     "tpm": "2",
+     "tpa": "2",
+     "ftm": "6",
+     "fta": "8",
+     "oreb": "1",
+     "dreb": "5",
+     "ast": "4",
+     "pf": "0",
+     "tov": "1",
+     "stl": "2",
+     "blk": "0",
+     "pm": "19",
+     "pid": "620479",
+     "team": "Malaysia",
+     "num": "0",
+     "min": "26:08",
+     "eff": "22.0"
+    },
+    {
+     "pts": "7",
+     "fgm": "3",
+     "fga": "8",
+     "twopm": "2",
+     "twopa": "4",
+     "tpm": "1",
+     "tpa": "4",
+     "ftm": "0",
+     "fta": "2",
+     "oreb": "0",
+     "dreb": "0",
+     "ast": "2",
+     "pf": "1",
+     "tov": "0",
+     "stl": "0",
+     "blk": "0",
+     "pm": "10",
+     "pid": "2092917",
+     "team": "Malaysia",
+     "num": "1",
+     "min": "13:16",
+     "eff": "2.0"
+    },
+    {
+     "pts": "6",
+     "fgm": "2",
+     "fga": "6",
+     "twopm": "0",
+     "twopa": "1",
+     "tpm": "2",
+     "tpa": "5",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "0",
+     "ast": "0",
+     "pf": "1",
+     "tov": "3",
+     "stl": "0",
+     "blk": "0",
+     "pm": "-1",
+     "pid": "1845447",
+     "team": "Malaysia",
+     "num": "7",
+     "min": "11:18",
+     "eff": "-1.0"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "0",
+     "twopm": "0",
+     "twopa": "0",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "1",
+     "ast": "1",
+     "pf": "0",
+     "tov": "0",
+     "stl": "1",
+     "blk": "0",
+     "pm": "-3",
+     "pid": "1957810",
+     "team": "Malaysia",
+     "num": "8",
+     "min": "4:12",
+     "eff": "3.0"
+    },
+    {
+     "pts": "11",
+     "fgm": "4",
+     "fga": "8",
+     "twopm": "2",
+     "twopa": "4",
+     "tpm": "2",
+     "tpa": "4",
+     "ftm": "1",
+     "fta": "2",
+     "oreb": "0",
+     "dreb": "3",
+     "ast": "0",
+     "pf": "2",
+     "tov": "1",
+     "stl": "2",
+     "blk": "0",
+     "pm": "2",
+     "pid": "2371569",
+     "team": "Malaysia",
+     "num": "11",
+     "min": "21:19",
+     "eff": "10.0"
+    },
+    {
+     "pts": "19",
+     "fgm": "6",
+     "fga": "11",
+     "twopm": "5",
+     "twopa": "7",
+     "tpm": "1",
+     "tpa": "4",
+     "ftm": "6",
+     "fta": "7",
+     "oreb": "3",
+     "dreb": "6",
+     "ast": "4",
+     "pf": "2",
+     "tov": "3",
+     "stl": "4",
+     "blk": "1",
+     "pm": "21",
+     "pid": "2370342",
+     "team": "Malaysia",
+     "num": "12",
+     "min": "32:04",
+     "eff": "28.0"
+    },
+    {
+     "pts": "6",
+     "fgm": "3",
+     "fga": "3",
+     "twopm": "3",
+     "twopa": "3",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "2",
+     "ast": "2",
+     "pf": "2",
+     "tov": "1",
+     "stl": "1",
+     "blk": "0",
+     "pm": "10",
+     "pid": "2302680",
+     "team": "Malaysia",
+     "num": "18",
+     "min": "12:09",
+     "eff": "10.0"
+    },
+    {
+     "pts": "2",
+     "fgm": "1",
+     "fga": "3",
+     "twopm": "1",
+     "twopa": "2",
+     "tpm": "0",
+     "tpa": "1",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "2",
+     "ast": "0",
+     "pf": "3",
+     "tov": "1",
+     "stl": "1",
+     "blk": "0",
+     "pm": "-2",
+     "pid": "797690",
+     "team": "Malaysia",
+     "num": "20",
+     "min": "8:33",
+     "eff": "2.0"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "1",
+     "twopm": "0",
+     "twopa": "1",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "0",
+     "ast": "1",
+     "pf": "0",
+     "tov": "0",
+     "stl": "0",
+     "blk": "0",
+     "pm": "-3",
+     "pid": "1885900",
+     "team": "Malaysia",
+     "num": "21",
+     "min": "5:08",
+     "eff": "0.0"
+    },
+    {
+     "pts": "12",
+     "fgm": "4",
+     "fga": "8",
+     "twopm": "0",
+     "twopa": "0",
+     "tpm": "4",
+     "tpa": "8",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "1",
+     "dreb": "2",
+     "ast": "0",
+     "pf": "0",
+     "tov": "1",
+     "stl": "0",
+     "blk": "1",
+     "pm": "3",
+     "pid": "2371570",
+     "team": "Malaysia",
+     "num": "22",
+     "min": "19:18",
+     "eff": "11.0"
+    },
+    {
+     "pts": "10",
+     "fgm": "4",
+     "fga": "10",
+     "twopm": "2",
+     "twopa": "3",
+     "tpm": "2",
+     "tpa": "7",
+     "ftm": "0",
+     "fta": "2",
+     "oreb": "0",
+     "dreb": "4",
+     "ast": "3",
+     "pf": "0",
+     "tov": "1",
+     "stl": "2",
+     "blk": "0",
+     "pm": "10",
+     "pid": "2252562",
+     "team": "Malaysia",
+     "num": "27",
+     "min": "31:04",
+     "eff": "10.0"
+    },
+    {
+     "pts": "2",
+     "fgm": "1",
+     "fga": "2",
+     "twopm": "1",
+     "twopa": "2",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "0",
+     "ast": "2",
+     "pf": "2",
+     "tov": "4",
+     "stl": "0",
+     "blk": "0",
+     "pm": "-11",
+     "pid": "2371573",
+     "team": "Malaysia",
+     "num": "71",
+     "min": "15:31",
+     "eff": "-1.0"
+    },
+    {
+     "pts": "16",
+     "fgm": "6",
+     "fga": "11",
+     "twopm": "3",
+     "twopa": "8",
+     "tpm": "3",
+     "tpa": "3",
+     "ftm": "1",
+     "fta": "2",
+     "oreb": "0",
+     "dreb": "4",
+     "ast": "1",
+     "pf": "2",
+     "tov": "3",
+     "stl": "0",
+     "blk": "0",
+     "pm": "-11",
+     "pid": "",
+     "team": "Fiji",
+     "num": "0",
+     "min": "27:01",
+     "eff": "12.0",
+     "name": "Isaac Sewabu"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "0",
+     "twopm": "0",
+     "twopa": "0",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "0",
+     "ast": "0",
+     "pf": "0",
+     "tov": "0",
+     "stl": "0",
+     "blk": "0",
+     "pm": "2",
+     "pid": "",
+     "team": "Fiji",
+     "num": "1",
+     "min": "1:25",
+     "eff": "0.0",
+     "name": "Ioane Naivalurua"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "0",
+     "twopm": "0",
+     "twopa": "0",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "1",
+     "ast": "0",
+     "pf": "0",
+     "tov": "0",
+     "stl": "0",
+     "blk": "0",
+     "pm": "0",
+     "pid": "",
+     "team": "Fiji",
+     "num": "2",
+     "min": "0:52",
+     "eff": "1.0",
+     "name": "Ratu Atirieli Tuivanuavou"
+    },
+    {
+     "pts": "10",
+     "fgm": "3",
+     "fga": "12",
+     "twopm": "1",
+     "twopa": "6",
+     "tpm": "2",
+     "tpa": "6",
+     "ftm": "2",
+     "fta": "2",
+     "oreb": "0",
+     "dreb": "1",
+     "ast": "0",
+     "pf": "3",
+     "tov": "1",
+     "stl": "1",
+     "blk": "0",
+     "pm": "-6",
+     "pid": "",
+     "team": "Fiji",
+     "num": "3",
+     "min": "20:47",
+     "eff": "2.0",
+     "name": "Nikhil Okon Peters"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "0",
+     "twopm": "0",
+     "twopa": "0",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "0",
+     "ast": "0",
+     "pf": "0",
+     "tov": "0",
+     "stl": "0",
+     "blk": "0",
+     "pm": "0",
+     "pid": "",
+     "team": "Fiji",
+     "num": "4",
+     "min": "0:00",
+     "eff": "0.0",
+     "name": "Gabriel Tuivanuavou"
+    },
+    {
+     "pts": "11",
+     "fgm": "4",
+     "fga": "10",
+     "twopm": "4",
+     "twopa": "7",
+     "tpm": "0",
+     "tpa": "3",
+     "ftm": "3",
+     "fta": "4",
+     "oreb": "2",
+     "dreb": "3",
+     "ast": "3",
+     "pf": "2",
+     "tov": "2",
+     "stl": "5",
+     "blk": "0",
+     "pm": "-2",
+     "pid": "",
+     "team": "Fiji",
+     "num": "5",
+     "min": "30:02",
+     "eff": "15.0",
+     "name": "Filimone Waqabaca"
+    },
+    {
+     "pts": "2",
+     "fgm": "1",
+     "fga": "6",
+     "twopm": "1",
+     "twopa": "3",
+     "tpm": "0",
+     "tpa": "3",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "1",
+     "dreb": "1",
+     "ast": "1",
+     "pf": "1",
+     "tov": "2",
+     "stl": "2",
+     "blk": "0",
+     "pm": "-20",
+     "pid": "",
+     "team": "Fiji",
+     "num": "6",
+     "min": "20:04",
+     "eff": "0.0",
+     "name": "Hayden Carr"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "0",
+     "twopm": "0",
+     "twopa": "0",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "1",
+     "ast": "1",
+     "pf": "2",
+     "tov": "0",
+     "stl": "0",
+     "blk": "0",
+     "pm": "-10",
+     "pid": "",
+     "team": "Fiji",
+     "num": "7",
+     "min": "5:41",
+     "eff": "2.0",
+     "name": "Orisi Naivalurua"
+    },
+    {
+     "pts": "14",
+     "fgm": "5",
+     "fga": "11",
+     "twopm": "4",
+     "twopa": "7",
+     "tpm": "1",
+     "tpa": "4",
+     "ftm": "3",
+     "fta": "6",
+     "oreb": "1",
+     "dreb": "4",
+     "ast": "0",
+     "pf": "2",
+     "tov": "2",
+     "stl": "2",
+     "blk": "0",
+     "pm": "-5",
+     "pid": "",
+     "team": "Fiji",
+     "num": "8",
+     "min": "31:20",
+     "eff": "10.0",
+     "name": "Tyrone Mclennan"
+    },
+    {
+     "pts": "12",
+     "fgm": "6",
+     "fga": "6",
+     "twopm": "6",
+     "twopa": "6",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "1",
+     "oreb": "1",
+     "dreb": "5",
+     "ast": "6",
+     "pf": "4",
+     "tov": "7",
+     "stl": "1",
+     "blk": "0",
+     "pm": "10",
+     "pid": "",
+     "team": "Fiji",
+     "num": "9",
+     "min": "24:13",
+     "eff": "17.0",
+     "name": "Jordan Willie Alfred Lum Kon"
+    },
+    {
+     "pts": "15",
+     "fgm": "6",
+     "fga": "10",
+     "twopm": "6",
+     "twopa": "10",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "3",
+     "fta": "6",
+     "oreb": "6",
+     "dreb": "12",
+     "ast": "3",
+     "pf": "2",
+     "tov": "5",
+     "stl": "1",
+     "blk": "0",
+     "pm": "-13",
+     "pid": "",
+     "team": "Fiji",
+     "num": "10",
+     "min": "38:35",
+     "eff": "25.0",
+     "name": "Joshua Fox"
+    },
+    {
+     "pts": "0",
+     "fgm": "0",
+     "fga": "0",
+     "twopm": "0",
+     "twopa": "0",
+     "tpm": "0",
+     "tpa": "0",
+     "ftm": "0",
+     "fta": "0",
+     "oreb": "0",
+     "dreb": "0",
+     "ast": "0",
+     "pf": "0",
+     "tov": "0",
+     "stl": "0",
+     "blk": "0",
+     "pm": "0",
+     "pid": "",
+     "team": "Fiji",
+     "num": "55",
+     "min": "0:00",
+     "eff": "0.0",
+     "name": "Zechariah Tuivanuavou"
+    }
+   ],
+   "periods": [
+    [
+     22,
+     17
+    ],
+    [
+     23,
+     19
+    ],
+    [
+     25,
+     23
+    ],
+    [
+     21,
+     21
+    ]
+   ]
   }
  },
  "caps": {
@@ -169097,14 +169707,14 @@
     "short": "FIBA Asia Cup Pre-Qualifiers",
     "lv": "Senior",
     "rank": "",
-    "gp": 4,
+    "gp": 5,
     "fid": "316248",
-    "pts": 14,
+    "pts": 21,
     "reb": 5,
-    "ast": 12,
+    "ast": 14,
     "stl": 4,
     "blk": 0,
-    "min": 76,
+    "min": 89,
     "url": "https://www.fiba.basketball/en/events/fiba-asia-cup-2029-pre-qualifiers"
    }
   ],
@@ -169187,14 +169797,14 @@
     "short": "FIBA Asia Cup Pre-Qualifiers",
     "lv": "Senior",
     "rank": "",
-    "gp": 4,
+    "gp": 5,
     "fid": "212178",
-    "pts": 31,
-    "reb": 9,
+    "pts": 42,
+    "reb": 12,
     "ast": 5,
-    "stl": 4,
+    "stl": 6,
     "blk": 1,
-    "min": 63,
+    "min": 84,
     "url": "https://www.fiba.basketball/en/events/fiba-asia-cup-2029-pre-qualifiers"
    }
   ],
@@ -169205,14 +169815,14 @@
     "short": "FIBA Asia Cup Pre-Qualifiers",
     "lv": "Senior",
     "rank": "",
-    "gp": 4,
+    "gp": 5,
     "fid": "357439",
-    "pts": 52,
-    "reb": 34,
-    "ast": 11,
-    "stl": 8,
-    "blk": 1,
-    "min": 123,
+    "pts": 71,
+    "reb": 43,
+    "ast": 15,
+    "stl": 12,
+    "blk": 2,
+    "min": 155,
     "url": "https://www.fiba.basketball/en/events/fiba-asia-cup-2029-pre-qualifiers"
    }
   ],
@@ -169241,14 +169851,14 @@
     "short": "FIBA Asia Cup Pre-Qualifiers",
     "lv": "Senior",
     "rank": "",
-    "gp": 4,
+    "gp": 5,
     "fid": "235851",
-    "pts": 23,
-    "reb": 10,
-    "ast": 3,
-    "stl": 1,
+    "pts": 29,
+    "reb": 12,
+    "ast": 5,
+    "stl": 2,
     "blk": 0,
-    "min": 62,
+    "min": 75,
     "url": "https://www.fiba.basketball/en/events/fiba-asia-cup-2029-pre-qualifiers"
    }
   ],
@@ -169277,14 +169887,14 @@
     "short": "FIBA Asia Cup Pre-Qualifiers",
     "lv": "Senior",
     "rank": "",
-    "gp": 4,
+    "gp": 5,
     "fid": "212179",
-    "pts": 59,
-    "reb": 22,
-    "ast": 10,
-    "stl": 9,
+    "pts": 69,
+    "reb": 26,
+    "ast": 13,
+    "stl": 11,
     "blk": 1,
-    "min": 110,
+    "min": 142,
     "url": "https://www.fiba.basketball/en/events/fiba-asia-cup-2029-pre-qualifiers"
    }
   ],
@@ -169295,14 +169905,14 @@
     "short": "FIBA Asia Cup Pre-Qualifiers",
     "lv": "Senior",
     "rank": "",
-    "gp": 4,
+    "gp": 5,
     "fid": "224468",
-    "pts": 24,
+    "pts": 26,
     "reb": 10,
-    "ast": 9,
+    "ast": 11,
     "stl": 8,
     "blk": 1,
-    "min": 72,
+    "min": 88,
     "url": "https://www.fiba.basketball/en/events/fiba-asia-cup-2029-pre-qualifiers"
    }
   ],
@@ -169313,14 +169923,14 @@
     "short": "FIBA Asia Cup Pre-Qualifiers",
     "lv": "Senior",
     "rank": "",
-    "gp": 1,
+    "gp": 2,
     "fid": "336361",
-    "pts": 7,
-    "reb": 3,
-    "ast": 2,
-    "stl": 1,
+    "pts": 23,
+    "reb": 9,
+    "ast": 6,
+    "stl": 3,
     "blk": 0,
-    "min": 17,
+    "min": 44,
     "url": "https://www.fiba.basketball/en/events/fiba-asia-cup-2029-pre-qualifiers"
    }
   ],
@@ -169331,14 +169941,14 @@
     "short": "FIBA Asia Cup Pre-Qualifiers",
     "lv": "Senior",
     "rank": "",
-    "gp": 1,
+    "gp": 2,
     "fid": "291083",
-    "pts": 10,
+    "pts": 16,
     "reb": 1,
     "ast": 0,
     "stl": 0,
     "blk": 0,
-    "min": 14,
+    "min": 25,
     "url": "https://www.fiba.basketball/en/events/fiba-asia-cup-2029-pre-qualifiers"
    }
   ],
@@ -169349,14 +169959,14 @@
     "short": "FIBA Asia Cup Pre-Qualifiers",
     "lv": "Senior",
     "rank": "",
-    "gp": 1,
+    "gp": 2,
     "fid": "212177",
     "pts": 0,
-    "reb": 0,
-    "ast": 1,
-    "stl": 0,
+    "reb": 1,
+    "ast": 2,
+    "stl": 1,
     "blk": 0,
-    "min": 6,
+    "min": 10,
     "url": "https://www.fiba.basketball/en/events/fiba-asia-cup-2029-pre-qualifiers"
    }
   ],
@@ -169367,14 +169977,14 @@
     "short": "FIBA Asia Cup Pre-Qualifiers",
     "lv": "Senior",
     "rank": "",
-    "gp": 1,
+    "gp": 2,
     "fid": "283223",
-    "pts": 0,
-    "reb": 2,
+    "pts": 2,
+    "reb": 4,
     "ast": 0,
-    "stl": 0,
+    "stl": 1,
     "blk": 0,
-    "min": 7,
+    "min": 16,
     "url": "https://www.fiba.basketball/en/events/fiba-asia-cup-2029-pre-qualifiers"
    }
   ],
@@ -169385,14 +169995,14 @@
     "short": "FIBA Asia Cup Pre-Qualifiers",
     "lv": "Senior",
     "rank": "",
-    "gp": 1,
+    "gp": 2,
     "fid": "414629",
     "pts": 10,
     "reb": 2,
-    "ast": 2,
+    "ast": 3,
     "stl": 1,
     "blk": 0,
-    "min": 12,
+    "min": 17,
     "url": "https://www.fiba.basketball/en/events/fiba-asia-cup-2029-pre-qualifiers"
    }
   ],
@@ -169403,14 +170013,14 @@
     "short": "FIBA Asia Cup Pre-Qualifiers",
     "lv": "Senior",
     "rank": "",
-    "gp": 1,
+    "gp": 2,
     "fid": "206408",
-    "pts": 5,
-    "reb": 5,
+    "pts": 17,
+    "reb": 8,
     "ast": 0,
     "stl": 0,
-    "blk": 0,
-    "min": 21,
+    "blk": 1,
+    "min": 41,
     "url": "https://www.fiba.basketball/en/events/fiba-asia-cup-2029-pre-qualifiers"
    }
   ]

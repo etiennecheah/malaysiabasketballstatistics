@@ -25,9 +25,10 @@ GAMES = {  # FIBA game id: (date and tip-off, Malaysia time, which is also local
     # read from the game page through the relay; FIBA's feed left three players' minutes at 0:00 (Lish, Biasumrit,
     # Te): theirs are the team's 200:00 less everyone else's official minutes, split as the substitutions show
     '132590': ('Nov 26, 2026, 4:00 PM', 'Second Round · Group F · ', 'MBank Arena, Ulaanbaatar'),
+    # read from the game page (the box score and play-by-play it loads); FIBA's minutes add up to 200:00 a side
+    '132592': ('Nov 27, 2026, 1:00 PM', 'Second Round · Group F · ', 'MBank Arena, Ulaanbaatar'),
 }
 FIXTURES = [  # Second Round, Group F: (FIBA game id, tip-off, home, away)
-    ('132592', 'Nov 27, 2026, 1:00 PM', 'Malaysia', 'Fiji'),
     ('132588', 'Nov 29, 2026, 7:00 PM', 'Mongolia', 'Malaysia'),
 ]
 TEAM_ID = {'MAS': 'fx-mas', 'HKG': 'fx-hkg', 'SGP': 'fx-sgp', 'INA': 'fx-ina', 'THA': 'fx-tha', 'FIJ': 'fx-fij',
@@ -71,7 +72,7 @@ FIRST_ROUND = {
 }
 GROUP_F = ['THA', 'HKG', 'MGL', 'MAS', 'INA', 'FIJ']   # FIBA's own order before the Second Round
 # Second Round results in Group F as they come in (FIBA's schedule page), Malaysia's included
-SECOND_ROUND = [('THA', 94, 'MAS', 82), ('FIJ', 65, 'HKG', 106), ('MGL', 72, 'INA', 64)]
+SECOND_ROUND = [('THA', 94, 'MAS', 82), ('FIJ', 65, 'HKG', 106), ('MGL', 72, 'INA', 64), ('MAS', 91, 'FIJ', 80)]
 NAMES = {v: k for k, v in CODE.items()}
 NUM = ['pts', 'fgm', 'fga', 'twopm', 'twopa', 'tpm', 'tpa', 'ftm', 'fta', 'oreb', 'dreb', 'ast', 'pf', 'tov', 'stl',
        'blk', 'pm']
