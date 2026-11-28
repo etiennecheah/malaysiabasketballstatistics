@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1795826040.0912075,
-  "fp": "0dd2630e04dfe328727a"
+  "at": 1795855861.3113723,
+  "fp": "c15f83bf21e468e51cb2"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -39,7 +39,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-17 10:06  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
   "2026-11-17 10:08  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 8 teams]",
   "2026-11-17 10:11  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
   "2026-11-18 10:25  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
@@ -78,7 +77,8 @@
   "2026-11-27 08:34  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport  [rosters published for 6 of 8 teams]",
   "2026-11-27 08:37  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
   "2026-11-28 04:02  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 6 of 8 teams]",
-  "2026-11-28 08:34  sync: Dream Ball Championship 2026 \u2014 Vigor x TARUMT 105-69 Brayden x MG Living Sport  [2896903: the source's box score replaces the one from the live feed]"
+  "2026-11-28 08:34  sync: Dream Ball Championship 2026 \u2014 Vigor x TARUMT 105-69 Brayden x MG Living Sport  [2896903: the source's box score replaces the one from the live feed]",
+  "2026-11-28 16:51  sync: Dream Ball Championship 2026 \u2014 Brayden x MG Living Sport 81-85 Trapo; shot charts of 1 game  [2896906: final 81-85 read from the live feed (the schedule page does not show it as final yet)]"
  ],
  "overdue_at": {
   "48654": 1794815815.7582607,
@@ -98,7 +98,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1795841729.9348435,
+  "21375": 1795852550.4621038,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
