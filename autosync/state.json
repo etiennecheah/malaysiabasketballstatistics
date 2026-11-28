@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1795867967.3874576,
-  "fp": "84a1a6fb0a6ea051b0e6"
+  "at": 1795868569.1980338,
+  "fp": "bf72ea66c43312c21620"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -39,7 +39,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-17 10:11  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
   "2026-11-18 10:25  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
   "2026-11-21 18:01  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated",
   "2026-11-21 18:36  sync: Dream Ball Championship 2026 \u2014 Vigor x TARUMT 105-69 Brayden x MG Living Sport; shot charts of 1 game  [2896903: final 105-69 read from the live feed (the schedule page does not show it as final yet); 2896903: box score taken from the live feed (the source's box score is not complete: Brayden x MG Living Sport players' points add to 63, scoreboard says 69)]",
@@ -78,21 +77,15 @@
   "2026-11-28 04:02  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 6 of 8 teams]",
   "2026-11-28 08:34  sync: Dream Ball Championship 2026 \u2014 Vigor x TARUMT 105-69 Brayden x MG Living Sport  [2896903: the source's box score replaces the one from the live feed]",
   "2026-11-28 16:51  sync: Dream Ball Championship 2026 \u2014 Brayden x MG Living Sport 81-85 Trapo; shot charts of 1 game  [2896906: final 81-85 read from the live feed (the schedule page does not show it as final yet)]",
-  "2026-11-28 20:12  sync: Dream Ball Championship 2026 \u2014 Vigor x TARUMT 72-83 Ai Play  [2896904: final 72-83 read from the live feed (the schedule page does not show it as final yet); 2896904: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 72 (Vigor x TARUMT))]"
+  "2026-11-28 20:12  sync: Dream Ball Championship 2026 \u2014 Vigor x TARUMT 72-83 Ai Play  [2896904: final 72-83 read from the live feed (the schedule page does not show it as final yet); 2896904: box score taken from the live feed (the source's box score is not complete: box total  is not the scoreboard's 72 (Vigor x TARUMT))]",
+  "2026-11-28 20:22  sync: Dream Ball Championship 2026 \u2014 Vigor x TARUMT 72-83 Ai Play; shot charts of 1 game  [2896904: the source's box score replaces the one from the live feed]"
  ],
  "overdue_at": {
   "48654": 1794815815.7582607,
   "49965": 1794061173.6645193,
   "50247": 1791743461.92955
  },
- "pending": {
-  "2896904": {
-   "cid": "49965",
-   "kind": "box",
-   "next": 1795868410.4611676,
-   "since": 1795867810.4611676
-  }
- },
+ "pending": {},
  "rechecked": {
   "1312929": "25340",
   "1312947": "25341",
@@ -105,7 +98,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1795863426.3743076,
+  "21375": 1795867999.6963818,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
@@ -188,7 +181,7 @@
   "49645": 1792147425.7033217,
   "49646": 1792147425.7033217,
   "49683": 1792147425.7033217,
-  "49965": 1794218147.3705218,
+  "49965": 1795867999.6963818,
   "50247": 1792317691.5245516,
   "50248": 1792147831.0700762,
   "50457": 1794228241.6296322,
