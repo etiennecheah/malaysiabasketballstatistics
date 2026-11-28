@@ -1,7 +1,7 @@
 {
  "built": {
-  "at": 1795809769.832507,
-  "fp": "5e6c2d3fbc1787e185e9"
+  "at": 1795826040.0912075,
+  "fp": "0dd2630e04dfe328727a"
  },
  "daily": {
   "21374": "2026-10-10",
@@ -23,7 +23,7 @@
   "50247": "2026-10-21",
   "50248": "2026-10-21",
   "50457": "2026-11-12",
-  "50458": "2026-11-27"
+  "50458": "2026-11-28"
  },
  "fail": {},
  "full": {
@@ -39,7 +39,6 @@
  },
  "lines_retry": {},
  "log": [
-  "2026-11-16 15:59  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 EST JERSEY x VALUEVEST 92-108 SUPERSPORTS x REX BBA; SUPERSPORTS x REX BBA 89-88 EST JERSEY x VALUEVEST; shot charts of 2 games",
   "2026-11-17 10:06  sync: 1st Selangor Basketball League (SBL) U20 Men's \u2014 fixtures, standings or season lines updated",
   "2026-11-17 10:08  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 5 of 8 teams]",
   "2026-11-17 10:11  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
@@ -78,21 +77,15 @@
   "2026-11-26 07:19  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport  [rosters published for 6 of 8 teams]",
   "2026-11-27 08:34  sync: Dream Ball Championship 2026 \u2014 play-by-play of Vigor x TARUMT v Brayden x MG Living Sport  [rosters published for 6 of 8 teams]",
   "2026-11-27 08:37  sync: Major Basketball League \u2014 fixtures, standings or season lines updated",
-  "2026-11-28 04:02  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 6 of 8 teams]"
+  "2026-11-28 04:02  sync: Dream Ball Championship 2026 \u2014 fixtures, standings or season lines updated  [rosters published for 6 of 8 teams]",
+  "2026-11-28 08:34  sync: Dream Ball Championship 2026 \u2014 Vigor x TARUMT 105-69 Brayden x MG Living Sport  [2896903: the source's box score replaces the one from the live feed]"
  ],
  "overdue_at": {
   "48654": 1794815815.7582607,
   "49965": 1794061173.6645193,
   "50247": 1791743461.92955
  },
- "pending": {
-  "2896903": {
-   "cid": "49965",
-   "kind": "box",
-   "next": 1795825914.6439595,
-   "since": 1795257271.3151884
-  }
- },
+ "pending": {},
  "rechecked": {
   "1312929": "25340",
   "1312947": "25341",
@@ -105,7 +98,7 @@
  "shots_at": {
   "17827": 1792166973.37678,
   "21374": 1792166973.37678,
-  "21375": 1795809219.1448872,
+  "21375": 1795823710.6220524,
   "22128": 1792154560.3850763,
   "22289": 1792155557.840366,
   "23277": 1792155557.840366,
